@@ -5,9 +5,15 @@
             <a href="{{ route('home') }}">Conférence d'été 2026 - Montréal</a>
         </h1>
         <nav class="hidden md:flex items-center space-x-4">
-            <a href="{{ route('about') }}" class="text-white hover:underline py-2">About </a> |
-            <a href="{{ route('events') }}" class="text-white hover:underline py-2">Events </a> |
-            <a href="dashboard.html" class="text-white hover:underline py-2">
+            <a href="{{ route('about') }}"
+                class="text-white hover:underline py-2 {{ request()->routeIs('about') ? 'font-bold' : '' }}"
+                {{ request()->routeIs('about') ? 'aria-disabled=true tabindex=-1' : '' }}>About </a> |
+            <a href="{{ route('events') }}"
+                class="text-white hover:underline py-2 {{ request()->routeIs('events') ? 'font-bold' : '' }}"
+                {{ request()->routeIs('events') ? 'aria-disabled=true tabindex=-1' : '' }}">Events </a> |
+            <a href="dashboard.html"
+                class="text-white hover:underline py-2 {{ request()->routeIs('admin') ? 'font-bold' : '' }}"
+                {{ request()->routeIs('admin') ? 'aria-disabled=true tabindex=-1' : '' }}">
                 <i class="fa fa-gauge mr-1"></i>Admin
             </a>
         </nav>
