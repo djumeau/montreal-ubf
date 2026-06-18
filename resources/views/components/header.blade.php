@@ -5,16 +5,12 @@
             <a href="index.html">Workopia</a>
         </h1>
         <nav class="hidden md:flex items-center space-x-4">
-            <a href="jobs.html" class="text-white hover:underline py-2">All Jobs</a>
-            <a href="saved-jobs.html" class="text-white hover:underline py-2">Saved Jobs</a>
-            <a href="login.html" class="text-white hover:underline py-2">Login</a>
+            <a href="jobs.html" class="text-white hover:underline py-2">Home</a>
+            <a href="saved-jobs.html" class="text-white hover:underline py-2">About</a>
+            <a href="login.html" class="text-white hover:underline py-2">Events</a>
             <a href="register.html" class="text-white hover:underline py-2">Register</a>
             <a href="dashboard.html" class="text-white hover:underline py-2">
-                <i class="fa fa-gauge mr-1"></i> Dashboard
-            </a>
-            <a href="create-job.html"
-                class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded hover:shadow-md transition duration-300">
-                <i class="fa fa-edit"></i> Create Job
+                <i class="fa fa-gauge mr-1"></i> Admin
             </a>
         </nav>
         <button id="hamburger" class="text-white md:hidden flex items-center">
