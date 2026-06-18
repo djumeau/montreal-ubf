@@ -6,6 +6,7 @@
 
     <p>Welcome to our website! We are dedicated to providing valuable resources and insights on various topics. Our
         mission is to educate, inspire, and empower our audience through high-quality content and engaging discussions.
+        This is a placeholder text. God bless you!
     </p>
 
 </x-layout>

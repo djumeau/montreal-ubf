@@ -19,6 +19,8 @@ class Layout extends Component
     /**
      * Get the view / contents that represent the component.
      */
+
+    /* This component is located at the root of the "views" directory */
     public function render(): View|Closure|string
     {
         return view('layout');

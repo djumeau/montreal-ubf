@@ -9,7 +9,7 @@
     <title>{{ $title ?? '2026 CBU | UBF conférence d\'été - Montréal' }}</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
     <x-header />
 
