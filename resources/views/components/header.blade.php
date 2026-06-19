@@ -8,13 +8,22 @@
 
         <nav class="hidden md:flex items-center space-x-4">
 
-            <x-nav-link url="/" :active="request()->routeIs('home')"> Home</x-nav-link>
+            <x-nav-link url="/" :active="request()->routeIs('home')">Home</x-nav-link>
 
             <x-nav-link url="/about" :active="request()->routeIs('about')"> About</x-nav-link>
 
             <x-nav-link url="/events" :active="request()->routeIs('events')"> Events</x-nav-link>
 
+            <x-nav-link url="/language" :active="request()->routeIs('language')" icon="globe"> FR</x-nav-link>
+
             <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="gauge">Admin</x-nav-link>
+
+            <!-- <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="user">Login</x-nav-link> -->
+
+            <x-button-link type="primary" url="/login" size="md" icon="user" bgColor="slate"
+                hoverColor="slate" :disabled="false">
+                Login
+            </x-button-link>
 
         </nav>
 
