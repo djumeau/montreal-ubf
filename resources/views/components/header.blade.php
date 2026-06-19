@@ -26,9 +26,12 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
-        <a href="saved-jobs.html" class="block px-4 py-2 hover:bg-blue-700">About</a>
-        <a href="login.html" class="block px-4 py-2 hover:bg-blue-700">Events</a>
-        <a href="register.html" class="block px-4 py-2 hover:bg-blue-700">Admin</a>
+    <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
+        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>About</x-nav-link>
+        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>Events</x-nav-link>
+        <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link>
+
+        <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
+            textColor="text-white" :block="true">Login</x-button-link>
     </nav>
 </header>
