@@ -16,7 +16,7 @@
     <x-header />
 
     @if (request()->is('/'))
-        <x-hero />
+        <x-hero>Welcome to Montreal UBF!</x-hero>
     @endif
 
     <h1 class="text-3xl font-bold text-center mt-6">
