@@ -6,7 +6,7 @@
             <a href="{{ route('home') }}" class="inline-flex items-center p-0">
                 <img src="{{ asset('images/icons/logo_ubf_white.svg') }}" style="width: 60px; height: 60px;"
                     alt="UBF Logo" />
-                <h1 class="ml-10 font-bold">CBU Montréal UBF</h1>
+                <h1 class="ml-2 font-bold">CBU Montréal UBF</h1>
             </a>
         </div>
 
