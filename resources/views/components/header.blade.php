@@ -16,7 +16,7 @@
 
             <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="gauge">Admin</x-nav-link>
 
-            <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="blue" hoverColor="blue"
+            <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="sky" hoverColor="sky"
                 textColor="white">Login</x-button-link>
 
         </nav>
