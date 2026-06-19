@@ -14,11 +14,8 @@
 
             <x-nav-link url="/events" :active="request()->routeIs('events')"> Events</x-nav-link>
 
-            <a href="dashboard.html"
-                class="text-white hover:underline py-2 {{ request()->routeIs('admin') ? 'font-bold' : '' }}"
-                {{ request()->routeIs('admin') ? 'aria-disabled=true tabindex=-1' : '' }}">
-                <i class="fa fa-gauge mr-1"></i>Admin
-            </a>
+            <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="gauge">Admin</x-nav-link>
+
         </nav>
 
         <button id="hamburger" class="text-white md:hidden flex items-center">
