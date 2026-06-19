@@ -1,26 +1,32 @@
 <!-- Header -->
 <header class="bg-blue-900 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
+
         <h1 class="text-3xl font-semibold">
             <a href="{{ route('home') }}">Conférence d'été 2026 - Montréal</a>
         </h1>
+
         <nav class="hidden md:flex items-center space-x-4">
-            <a href="{{ route('about') }}"
-                class="text-white hover:underline py-2 {{ request()->routeIs('about') ? 'font-bold' : '' }}"
-                {{ request()->routeIs('about') ? 'aria-disabled=true tabindex=-1' : '' }}>About </a> |
-            <a href="{{ route('events') }}"
-                class="text-white hover:underline py-2 {{ request()->routeIs('events') ? 'font-bold' : '' }}"
-                {{ request()->routeIs('events') ? 'aria-disabled=true tabindex=-1' : '' }}">Events </a> |
+
+            <x-nav-link url="/" :active="request()->routeIs('home')"> Home</x-nav-link>
+
+            <x-nav-link url="/about" :active="request()->routeIs('about')"> About</x-nav-link>
+
+            <x-nav-link url="/events" :active="request()->routeIs('events')"> Events</x-nav-link>
+
             <a href="dashboard.html"
                 class="text-white hover:underline py-2 {{ request()->routeIs('admin') ? 'font-bold' : '' }}"
                 {{ request()->routeIs('admin') ? 'aria-disabled=true tabindex=-1' : '' }}">
                 <i class="fa fa-gauge mr-1"></i>Admin
             </a>
         </nav>
+
         <button id="hamburger" class="text-white md:hidden flex items-center">
             <i class="fa fa-bars text-2xl"></i>
         </button>
+
     </div>
+
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
         <a href="saved-jobs.html" class="block px-4 py-2 hover:bg-blue-700">About</a>
