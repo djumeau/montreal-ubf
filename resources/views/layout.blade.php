@@ -16,11 +16,8 @@
     <x-header />
 
     @if (request()->is('/'))
-        <x-hero>Welcome to Montreal UBF!</x-hero>
+        <x-hero>Bienvenue à l'église de la communion biblique universitaire de Montréal!</x-hero>
     @endif
-
-    <h1 class="text-3xl font-bold text-center mt-6">
-        {{ $title ?? 'Église de la communion biblique universitaire – Montréal' }}</h1>
 
     <main class="container mx-auto p-4 mt-4">
         {{ $slot }}
