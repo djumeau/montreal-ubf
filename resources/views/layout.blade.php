@@ -16,7 +16,9 @@
     <x-header />
 
     @if (request()->is('/'))
-        <x-hero>Bienvenue à l'église de la communion biblique universitaire de Montréal!</x-hero>
+        <x-hero image="./images/montreal_skyline-desktop.jpg">Bienvenue à l'église de la communion biblique
+            universitaire de
+            Montréal!</x-hero>
     @endif
 
     <main class="container mx-auto p-4 mt-4">
