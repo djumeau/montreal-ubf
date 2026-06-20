@@ -13,7 +13,7 @@
     </a>
 @else
     <a href="{{ $url }}"
-        class="inline-flex justify-between items-center text-white py-2 {{ $active ? 'font-bold' : '' }}"
+        class="inline-flex justify-between items-center text-white {{ $active ? 'font-bold' : '' }}"
         {{ $active ? 'aria-disabled=true tabindex=-1' : '' }}>
 
         @if ($icon)

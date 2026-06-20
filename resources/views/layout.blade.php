@@ -16,12 +16,14 @@
     <x-header />
 
     @if (request()->is('/'))
+        <!-- Mobile Hero -->
         <div class='block md:hidden'>
             <x-hero image="./images/montreal_skyline-mobile.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
                 l'église de la communion biblique
                 universitaire de Montréal!</x-hero>
         </div>
 
+        <!-- Desktop Hero -->
         <div class='hidden md:block'>
             <x-hero image="./images/montreal_skyline-desktop.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
                 l'église de la communion biblique

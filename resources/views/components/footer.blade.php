@@ -13,12 +13,11 @@
             </div>
 
             <!-- Column 2 -->
-            <div class="flex flex-col items-left text-left py-0">
+            <div class="flex flex-col items-left text-left">
                 <h3 class="font-bold">Liens</h3>
-                <div class="py-0"><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">À propos</x-nav-link>
+                <div><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">À propos</x-nav-link>
                 </div>
-                <div class="py-0"><x-nav-link url="/events" :active="request()->routeIs('events')"
-                        icon="angle-right">Événements</x-nav-link></div>
+                <div><x-nav-link url="/events" :active="request()->routeIs('events')" icon="angle-right">Événements</x-nav-link></div>
             </div>
         </div>
 
