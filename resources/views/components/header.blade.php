@@ -16,7 +16,7 @@
 
             <x-nav-link url="/events" :active="request()->routeIs('events')">Événements</x-nav-link>
 
-            <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link>
+            <!--<x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link>-->
 
             <x-nav-link url="/dashboard" icon="globe">EN</x-nav-link>
 
