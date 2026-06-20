@@ -16,9 +16,17 @@
     <x-header />
 
     @if (request()->is('/'))
-        <x-hero image="./images/montreal_skyline-desktop.jpg">Bienvenue à l'église de la communion biblique
-            universitaire de
-            Montréal!</x-hero>
+        <div class='block md:hidden'>
+            <x-hero image="./images/montreal_skyline-mobile.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
+                l'église de la communion biblique
+                universitaire de Montréal!</x-hero>
+        </div>
+
+        <div class='hidden md:block'>
+            <x-hero image="./images/montreal_skyline-desktop.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
+                l'église de la communion biblique
+                universitaire de Montréal!</x-hero>
+        </div>
     @endif
 
     <main class="container mx-auto p-4 mt-4">
