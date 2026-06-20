@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="bg-blue-900 text-white p-4">
+<header class="sticky top-0 z-50 bg-blue-900 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
 
         <div class="inline-flex">
@@ -16,9 +16,9 @@
 
             <x-nav-link url="/events" :active="request()->routeIs('events')">Événements</x-nav-link>
 
-            <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="gauge">Admin</x-nav-link>
+            <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link>
 
-            <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe">EN</x-nav-link>
+            <x-nav-link url="/dashboard" icon="globe">EN</x-nav-link>
 
             <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
                 textColor="text-white">Se connecter</x-button-link>
