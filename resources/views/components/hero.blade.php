@@ -1,6 +1,9 @@
 @props([
     'image' => './images/montreal_skyline-mobile.jpg',
+    'subtitle' => 'Adoration les dimanches',
+    'cat_1' => 'Jeunes: ',
     'cbf_time' => '9h00',
+    'cat_2' => 'Générale: ',
     'worship_time' => '11h00',
 ])
 
@@ -9,25 +12,40 @@
     style="background-image: url('{{ asset($image) }}')">
     <div class="overlay bg-black/75"></div>
     <div class="container mx-auto text-center z-10">
+
         <div class="flex flex-col">
+
             <!-- top row -->
             <div class="mb-2 mx-4">
                 <h2 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h2>
-                <p class="text-white italic underline pt-6 pb-0">Adoration les dimanches</p>
+                <p class="text-white italic pt-4 pb-0">{{ $subtitle }}</p>
             </div>
 
-            <!-- Bottom Row -->
-            <div class="grid grid-cols-2 gap-4 p-0">
+            <!-- Middle Row -->
+            <div class="grid grid-cols-2 gap-2 p-0">
                 <!-- First column: Right Justified -->
                 <div class="flex items-center justify-end text-right">
-                    <i class="fas fa-clock text-white"></i><span class="text-white">Jeunes: {{ $cbf_time }}</span>
+                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_1 . $cbf_time }}</span>
                 </div>
 
                 <!-- Second column: Left Justified -->
                 <div class="flex items-center justify-start text-left">
-                    <i class="fas fa-clock text-white"></i><span class="text-white">Générale: {{ $worship_time }}</span>
+                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_2 . $worship_time }}</span>
                 </div>
 
+            </div>
+
+            <!-- Bottom Row: Social Media Icons -->
+            <div class="mx-2 pt-6">
+                <a href="https://instagram.com/montrealubf" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram text-white"></i>
+                </a>
+                <a href="https://facebook.com/montrealubf" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook text-white"></i>
+                </a>
+                <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)">
+                    <i class="fa-brands fa-x-twitter text-white"></i>
+                </a>
             </div>
 
         </div>

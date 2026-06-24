@@ -8,7 +8,7 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo_ubf_favicon.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <title>{{ $title ?? 'CBU - Montréal' }}</title>
+    <title>{{ $title ?? 'CBU Montréal UBF' }}</title>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -18,16 +18,22 @@
     @if (request()->is('/'))
         <!-- Mobile Hero -->
         <div class='block md:hidden'>
-            <x-hero image="./images/montreal_skyline-mobile.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
+            <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
+                worship_time="11h00">Bienvenue à
                 l'église de la communion biblique
                 universitaire de Montréal!</x-hero>
+            <x-events image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
+                Francophone</x-events>
         </div>
 
         <!-- Desktop Hero -->
         <div class='hidden md:block'>
-            <x-hero image="./images/montreal_skyline-desktop.jpg" cbf_time="9h00" worship_time="11h00">Bienvenue à
+            <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
+                worship_time="11h00">Bienvenue à
                 l'église de la communion biblique
                 universitaire de Montréal!</x-hero>
+            <x-events image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
+                Francophone</x-events>
         </div>
     @endif
 

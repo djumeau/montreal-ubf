@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="sticky top-0 z-50 bg-blue-900 text-white p-4">
+<header class="sticky top-0 z-50 bg-blue-900/90 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
 
         <div class="inline-flex">

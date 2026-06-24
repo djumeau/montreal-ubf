@@ -1,15 +1,15 @@
 <x-layout>
 
-    <x-slot name="title">About Us</x-slot>
+    <x-slot name="title">À propos de nous</x-slot>
 
-    <h1>About Us</h1>
+    <h1>À propos de nous</h1>
 
     <h2>History</h2>
 
     <p>University Bible Fellowship begain in South Korea in 1961 by Dr. Samuel Lee (a presybterian pastor) and
         Missionary Sarah Barry. Originally, they served South Korean students through a Bible reading club, the minsitry
         expanded to various cities in the country and eventually became an international ministry expanding, to Germany,
-        North America, Latin America, and more. </p>
+        North America, Latin America, and more. UBF currently has chapters in 96 countries.</p>
 
     <p>Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.
         The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</p>
