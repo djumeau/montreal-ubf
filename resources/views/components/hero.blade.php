@@ -37,13 +37,13 @@
 
             <!-- Bottom Row: Social Media Icons -->
             <div class="mx-2 pt-6">
-                <a href="https://instagram.com/montrealubf" aria-label="Instagram">
+                <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
                     <i class="fa-brands fa-instagram text-white"></i>
                 </a>
-                <a href="https://facebook.com/montrealubf" aria-label="Facebook">
+                <a href="https://facebook.com/montrealubf" aria-label="Facebook" target="_blank">
                     <i class="fa-brands fa-facebook text-white"></i>
                 </a>
-                <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)">
+                <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
                     <i class="fa-brands fa-x-twitter text-white"></i>
                 </a>
             </div>

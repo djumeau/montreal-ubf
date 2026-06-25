@@ -14,10 +14,11 @@
 
             <!-- Column 2 -->
             <div class="flex flex-col items-left text-left">
-                <h3 class="font-bold">Liens</h3>
-                <div><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">À propos</x-nav-link>
+                <h3 class="font-bold pl-4">Liens</h3>
+                <div class="pl-4"><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">À propos</x-nav-link>
                 </div>
-                <div><x-nav-link url="/events" :active="request()->routeIs('events')" icon="angle-right">Événements</x-nav-link></div>
+                <div class="pl-4"><x-nav-link url="/events" :active="request()->routeIs('events')"
+                        icon="angle-right">Événements</x-nav-link></div>
             </div>
         </div>
 

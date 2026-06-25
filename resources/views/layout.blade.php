@@ -20,8 +20,8 @@
         <div class='block md:hidden'>
             <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
                 worship_time="11h00">Bienvenue à
-                l'église de la communion biblique
-                universitaire de Montréal!</x-hero>
+                l'église<br />de la communion biblique
+                universitaire<br />de Montréal!</x-hero>
             <x-events image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
                 Francophone</x-events>
         </div>
@@ -30,8 +30,8 @@
         <div class='hidden md:block'>
             <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
                 worship_time="11h00">Bienvenue à
-                l'église de la communion biblique
-                universitaire de Montréal!</x-hero>
+                l'église<br />de la communion biblique
+                universitaire <br />de Montréal!</x-hero>
             <x-events image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
                 Francophone</x-events>
         </div>
