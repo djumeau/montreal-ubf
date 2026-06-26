@@ -2,35 +2,56 @@
 
     <x-slot name="title">À propos de nous</x-slot>
 
-    <h1>À propos de nous</h1>
+    <h1 class='flex justify-center text-center font-bold text-3xl'>À propos de nous</h1>
 
-    <h2>History</h2>
+    <br/>
 
-    <p>University Bible Fellowship begain in South Korea in 1961 by Dr. Samuel Lee (a presybterian pastor) and
-        Missionary Sarah Barry. Originally, they served South Korean students through a Bible reading club.</p>
+    <h2 class='flex justify-center text-center font-bold text-2xl'>History</h2>
 
-    <p>The ministry grew to various cities within the country and in the 1970s expanded to Germany, North America,
-        Latin America, and the world. UBF currently has chapters in 96 countries.</p>
+    <x-text-image :toggleLeft="true" 
+    img="./images/history/lee-barry.jpg"
+    alt="Dr. Samuel Lee and Missionary Sarah Barry"
+    :imageSize="75">University Bible Fellowship begain in South Korea in 1961 under Dr. Samuel Lee (a presybterian pastor) and
+        Missionary Sarah Barry.</x-text-image>
+
+    <x-text-image :toggleLeft="false" 
+    img="./images/history/bible-reading-class-ubf-korea.jpg"
+    alt="Bible Reading Class"
+    :imageSize="80">Originally, they served South Korean students through a Bible reading club.</x-text-image>
+
+    <x-text-image :toggleLeft="true" 
+    img="./images/history/first-cis-conference.jpg"
+    alt="Bible Reading Class"
+    :imageSize="80">The ministry grew to various cities within the country and in the 1970s expanded to Germany, America,
+        Latin America, and the world. UBF currently has chapters in 96 countries.</x-text-image>
 
     <p>Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.
     </p>
 
     <p>The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</p>
 
-    <h2>Mission and Vision</h2>
+    <br/>
+
+    <h2 class='flex justify-center text-center font-bold text-2xl'>Mission and Vision</h2>
+
+    <br/>
 
     <p>Our main mission statement is student-oriented to bring the gospel to campus
         students. We believe that our students are our future leaders. Once coming to believe in
         Jesus Christ as Lord and Saviour, they can be influential in all aspects of life and to transmit the good news
         of the gospel to their peers, the nation, and for the whole world.</p>
 
-    <p>For more inforation on the minstry, visit <a href="https://ubf.org/about/origin" target="_blank">ubf.org</a>.</p>
+    <p>For more inforation about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
 
-    <h2>Statement of Faith</h2>
+    <br/>
 
-    <h3>We believe:</h3>
+    <h2 class='flex justify-center text-center font-bold text-2xl'>Statement of Faith</h2>
 
-    <ul>
+    <br/>
+
+    <h3 class='flex justify-left text-left font-bold text-xl'>We believe:</h3>
+
+    <ul class='list-disc list-outside p-5 space-y-4'>
         <li>There is one God in three Persons: God the Father, God the Son, and God the Holy Spirit.</li>
         <li>God created the heavens and the earth and all other things in the universe: that He is the Sovereign Ruler
             of all things; that the Sovereign God reveals Himself; we believe in his redemptive work and in his final
