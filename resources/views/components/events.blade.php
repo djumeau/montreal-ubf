@@ -3,6 +3,7 @@
     'title' => 'Événements',
     'startDate' => '16 juillet',
     'endDate' => '19 juillet',
+    'year' => '2026',
     'place' => 'CEGEP John Abbott - Ste-Anne-de-Bellevue, QC',
 ]) <!-- Events Section -->
 <section id='{{ $title }}' {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
@@ -12,12 +13,13 @@
     <div class='absolute top-2 left-3 md:top-3 md:left-4
        text-white
         drop-shadow-lg'>
-        <h2 class='text-sm md:text-lg'>{{ $title }}</h2>
+        <h2 class='text-sm italic md:text-lg'>{{ $title }}</h2>
         <p class='font-semibold text-base md:text-xl'>{{ $slot }}</p>
         <div>
             <i class="fa-solid fa-calendar" aria-hidden="true"></i>
             <span class="date-text">{{ $startDate }}</span> au
             <span class="date-text">{{ $endDate }}</span>
+            <span class="date-text">{{ $year }}</span>
         </div>
         <div>
             <i class="fa-solid fa-map-marker" aria-hidden="true"></i>

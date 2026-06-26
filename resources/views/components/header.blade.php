@@ -37,7 +37,7 @@
         <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>Événements</x-nav-link>
         <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link>
 
-        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'>FR</x-nav-link>
+        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'>EN</x-nav-link>
 
         <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
             textColor="text-white" :block="true">Se connecter</x-button-link>

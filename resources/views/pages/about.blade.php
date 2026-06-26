@@ -6,7 +6,7 @@
 
     <br/>
 
-    <h2 class='flex justify-center text-center font-bold text-2xl'>History</h2>
+    <x-blurb title='History' :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
@@ -22,7 +22,7 @@
     <x-text-image :toggleLeft="true" 
     img="./images/history/first-cis-conference.jpg"
     alt="1993 CIS Conference"
-    :imageSize="75">The ministry grew to various cities within the country and in the 1970s expanded to Germany, America,
+    :imageSize="75">The ministry grew to various cities within the country and from the 1970s expanded to Germany, America,
         Latin America, and the world. UBF currently has chapters in 96 countries.</x-text-image>
 
 
@@ -36,24 +36,20 @@
     alt="Presentation in Montreal"
     :imageSize="80">The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</x-text-image>
 
-    <p></p>
-
     <br/>
 
-    <h2 class='flex justify-center text-center font-bold text-2xl'>Mission and Vision</h2>
-
-    <br/>
-
-    <p>Our main mission statement is student-oriented to bring the gospel to campus
+    <x-blurb title='Mission and Vision' :variant="['slate-900', '#1e3a8a']">
+        <p>Our main mission is to bring the gospel to campus
         students. We believe that our students are our future leaders. Once coming to believe in
         Jesus Christ as Lord and Saviour, they can be influential in all aspects of life and to transmit the good news
         of the gospel to their peers, the nation, and for the whole world.</p>
+        
+        <p>For more inforation about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
+    </x-blurb>
 
-    <p>For more inforation about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
+    <br/><br/>
 
-    <br/>
-
-    <h2 class='flex justify-center text-center font-bold text-2xl'>Statement of Faith</h2>
+    <x-blurb title='Statement of Faith' :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <br/>
 
