@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout class="bg-slate-900">
 
     <div class='w-full flex justify-center px-4 pt-2 pb-6'>
 

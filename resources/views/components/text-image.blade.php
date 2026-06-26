@@ -35,7 +35,7 @@
     </div>
 
     {{-- Text/Slot Container --}}
-    <div class="prose max-w-none text-gray-700 flex flex-col justify-center w-full">
+    <div class="prose max-w-none flex flex-col justify-center w-full">
         {{ $slot }}
     </div>
 

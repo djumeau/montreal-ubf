@@ -1,5 +1,33 @@
+@props([
+    'bgSolid' => 'bg-gray-800', 
+    'bgGradient' => null,       
+    'textColor' => 'text-black' 
+])
+
+@php
+    // Tailwind scans this literal map and guarantees both classes compile into app.css
+    $colorMap = [
+        'light' => 'text-black',
+        'dark' => 'text-white'
+    ];
+
+    // Gather all backgrounds passed down via props or direct 'class=""' attributes
+    $customClasses = $attributes->get('class', '');
+    $combinedBg = implode(' ', array_filter([$bgSolid, $bgGradient, $customClasses]));
+
+    // Match dark numbers (700-950) or the word black
+    $isDark = preg_match('/-(700|800|900|950)\b|black/', $combinedBg);
+
+    // Apply the mutually exclusive choice
+    $finalTextColor = $textColor ?? ($isDark ? $colorMap['dark'] : $colorMap['light']);
+
+    // Set fallback layout background if none was passed anywhere
+    $hasBgClass = preg_match('/\bbg-/', $combinedBg);
+    $fallbackBg = !$hasBgClass ? 'bg-gray-100' : '';
+@endphp
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +39,11 @@
     <title>{{ $title ?? 'CBU Montréal UBF' }}</title>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+{{-- Merge classes while cleanly isolating variables to prevent style duplication conflicts --}}
+<body 
+    style="--layout-text: {{ $finalTextColor === 'text-white' ? '#ffffff' : '#000000' }};"
+    {{ $attributes->merge(['class' => implode(' ', array_filter([$fallbackBg, $bgSolid, $bgGradient, $finalTextColor, 'min-h-screen']))]) }}
+>
 
     <x-header />
 

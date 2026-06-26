@@ -1,8 +1,8 @@
-<x-layout>
+<x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">À propos de nous</x-slot>
 
-    <h1 class='flex justify-center text-center font-bold text-3xl'>À propos de nous</h1>
+    <h1 class='text-right text-4xl font-bold pb-8'>À propos de nous</h1>
 
     <br/>
 
@@ -11,7 +11,7 @@
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
     alt="Dr. Samuel Lee and Missionary Sarah Barry"
-    :imageSize="75">University Bible Fellowship begain in South Korea in 1961 under Dr. Samuel Lee (a presybterian pastor) and
+    :imageSize="75">University Bible Fellowship began in South Korea in 1961 under Dr. Samuel Lee (a Presybterian pastor) and 
         Missionary Sarah Barry.</x-text-image>
 
     <x-text-image :toggleLeft="false" 
@@ -23,7 +23,7 @@
     img="./images/history/first-cis-conference.jpg"
     alt="1993 CIS Conference"
     :imageSize="75">The ministry grew to various cities within the country and from the 1970s expanded to Germany, America,
-        Latin America, and the world. UBF currently has chapters in 96 countries.</x-text-image>
+        Latin America, and the world. UBF evolved from a parachurch organization into its own denomination. UBF currently has chapters in 96 countries.</x-text-image>
 
 
     <x-text-image :toggleLeft="false" 
@@ -44,7 +44,7 @@
         Jesus Christ as Lord and Saviour, they can be influential in all aspects of life and to transmit the good news
         of the gospel to their peers, the nation, and for the whole world.</p>
         
-        <p>For more inforation about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
+        <p>For more information about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
     </x-blurb>
 
     <br/><br/>
