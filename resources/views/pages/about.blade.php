@@ -21,14 +21,22 @@
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/first-cis-conference.jpg"
-    alt="Bible Reading Class"
-    :imageSize="80">The ministry grew to various cities within the country and in the 1970s expanded to Germany, America,
+    alt="1993 CIS Conference"
+    :imageSize="75">The ministry grew to various cities within the country and in the 1970s expanded to Germany, America,
         Latin America, and the world. UBF currently has chapters in 96 countries.</x-text-image>
 
-    <p>Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.
-    </p>
 
-    <p>The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</p>
+    <x-text-image :toggleLeft="false" 
+    img="./images/history/cdn-campus-mission-1982.jpeg"
+    alt="Prayer Circle"
+    :imageSize="80">Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.</x-text-image>
+
+    <x-text-image :toggleLeft="true" 
+    img="./images/ministry/20240825-presentation-euro-report.jpg"
+    alt="Presentation in Montreal"
+    :imageSize="80">The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</x-text-image>
+
+    <p></p>
 
     <br/>
 
