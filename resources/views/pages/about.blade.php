@@ -6,75 +6,73 @@
 
     <br/>
 
-    <x-blurb title='History' :variant="['slate-900', '#1e3a8a']"></x-blurb>
+    <x-blurb title='Historique' :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
-    alt="Dr. Samuel Lee and Missionary Sarah Barry"
-    :imageSize="75">University Bible Fellowship began in South Korea in 1961 under Dr. Samuel Lee (a Presybterian pastor) and 
-        Missionary Sarah Barry.</x-text-image>
+    alt="Dr. Samuel Lee et Sarah Barry"
+    :imageSize="75">La communion biblique universitaire - CBU ('University Bible Fellowship (UBF)' en anglais) a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).</x-text-image>
 
     <x-text-image :toggleLeft="false" 
     img="./images/history/bible-reading-class-ubf-korea.jpg"
-    alt="Bible Reading Class"
-    :imageSize="80">Originally, they served South Korean students through a Bible reading club.</x-text-image>
+    alt="Lecture biblique en classe"
+    :imageSize="80">À l&apos;origine, le ministère s&apos;adressaient aux étudiants sud-coréens par un club de lecture biblique.</x-text-image>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/first-cis-conference.jpg"
-    alt="1993 CIS Conference"
-    :imageSize="75">The ministry grew to various cities within the country and from the 1970s expanded to Germany, America,
-        Latin America, and the world. UBF evolved from a parachurch organization into its own denomination. UBF currently has chapters in 96 countries.</x-text-image>
+    alt="1993 conférence en Russie"
+    :imageSize="75">Le ministère s&apos;est étendu à diverses villes du pays et, à partir des années 1970, le ministère envoya des missionaires en Allemagne, en Amérique, en Amérique latine, et puis, au monde entier. L&apos;église s'est passée du statut para-ecclésiastique à celui d'un dénomination. Elle compte actuellement des ministères dans 96 pays.</x-text-image>
 
 
     <x-text-image :toggleLeft="false" 
     img="./images/history/cdn-campus-mission-1982.jpeg"
-    alt="Prayer Circle"
-    :imageSize="80">Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.</x-text-image>
+    alt="Cercle de prière"
+    :imageSize="80">Le ministère canadien a vu le jour en 1982 à Winnipeg, au Manitoba, et s&apos;est répandu à plusieurs villes à travers le pays.</x-text-image>
 
     <x-text-image :toggleLeft="true" 
     img="./images/ministry/20240825-presentation-euro-report.jpg"
-    alt="Presentation in Montreal"
-    :imageSize="80">The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</x-text-image>
+    alt="Présentation à Montreal"
+    :imageSize="80">Le ministère de Montréal était établit en 1991. L&apos;église est composée de professionnels, de familles et de jeunes adultes.</x-text-image>
 
     <br/>
 
-    <x-blurb title='Mission and Vision' :variant="['slate-900', '#1e3a8a']">
-        <p>Our main mission is to bring the gospel to campus
-        students. We believe that our students are our future leaders. Once coming to believe in
-        Jesus Christ as Lord and Saviour, they can be influential in all aspects of life and to transmit the good news
-        of the gospel to their peers, the nation, and for the whole world.</p>
+    <x-blurb title='Mission et vision' :variant="['slate-900', '#1e3a8a']">
+        <p>Notre mission principale est d&apos;apporter l&apos;Évangile aux étudiants des campus car l&apos;Évanigile offre le salut à tous le monde pour ceux qui croit (Ro 1.16). Également, nous croyons que nos étudiants sont nos futurs leaders. Une fois qu&apos;ils auront mis leur foi en Jésus-Christ comme Seigneur et Sauveur, ils pourront exercer une influence dans tous les aspects de la vie et transmettre la bonne nouvelle de l&apos;Évangile à leurs pairs, à la nation et au monde entier.</p>
         
-        <p>For more information about the ministry, visit <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>.</p>
+        <p>Pour plus d&apos;information sur le ministère, visitez <a href='https://ubf.org/about/origin' class='underline' target='_blank'>ubf.org</a>. (En anglais.)</p>
     </x-blurb>
 
     <br/><br/>
 
-    <x-blurb title='Statement of Faith' :variant="['slate-900', '#1e3a8a']"></x-blurb>
+    <x-blurb title='Déclaration de foi' :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <br/>
 
-    <h3 class='flex justify-left text-left font-bold text-xl'>We believe:</h3>
+    <h3 class='flex justify-left text-left font-bold text-xl'>Nous croyons :</h3>
 
     <ul class='list-disc list-outside p-5 space-y-4'>
-        <li>There is one God in three Persons: God the Father, God the Son, and God the Holy Spirit.</li>
-        <li>God created the heavens and the earth and all other things in the universe: that He is the Sovereign Ruler
-            of all things; that the Sovereign God reveals Himself; we believe in his redemptive work and in his final
-            judgment.</li>
-        <li>The Bible is inspired by God; that it is the truth; that it is the final authority in faith and practice.
-        </li>
-        <li>Since the fall of Adam, all people have been under the bondage and power of sin and are deserving of the
-            judgment and wrath of God.</li>
-        <li>Jesus Christ, who is God and man, through his atoning, sacrificial death on the cross for our sins and his
-            resurrection, is the only way of salvation; he alone saves us from sin and judgment and purifies us from the
-            contamination of the world caused by sin.</li>
-        <li>Jesus Christ rose from the dead, ascended into heaven and sits at the right hand of God the Father.</li>
-        <li>Regeneration is by the work of the Holy Spirit, and that it is necessary if one is to enter the kingdom of
-            God. We believe that God sent his Holy Spirit to empower his church to witness to Jesus to the ends of the
-            earth.</li>
-        <li>We are made righteous by grace alone, through faith alone.</li>
-        <li>The Holy Spirit works in the heart of every believer to lead him.</li>
-        <li>The church is the body of Christ and that all Christians are members of it.</li>
-        <li>Jesus will come again in glory to judge the living and the dead.</li>
+        <li>Qu&apos;il existe un seul Dieu en trois Personnes : Dieu le Père, Dieu le Fils et Dieu le Saint-Esprit.</li>
+
+        <li>Dieu a créé les cieux, la terre et toutes les autres choses de l&apos;univers; qu&apos;Il est le Souverain de toutes choses; que ce Dieu souverain se révèle; nous croyons en son œuvre rédemptrice et en son dernier jugement.</li>
+
+        <li>La Bible est inspirée par Dieu; elle est la vérité; elle est l&apos;autorité suprême en matière de foi et de pratique.</li>
+
+        <li>Depuis la chute d&apos;Adam, toute l'humanité est sous l’esclavage et la puissance du péché et méritent le jugement et la colère de Dieu.</li>
+
+        <li>Jésus-Christ, qui est à la fois Dieu et homme, par sa mort expiatoire et sacrificielle sur la croix pour nos péchés et par sa résurrection, est le seul chemin du salut; (Jn 14.6) lui seul nous sauve du péché et du jugement et nous purifie de la souillure du monde causée par le péché.</li>
+
+        <li>Jésus-Christ est ressuscité des morts, est monté au ciel et se siège à la droite de Dieu le Père.</li>
+
+        <li>La régénération est l&apos;œuvre du Saint-Esprit, et elle est nécessaire pour entrer dans le royaume de Dieu. Nous croyons que Dieu a envoyé son Saint-Esprit pour donner à son Église la puissance de témoigner de Jésus jusqu&apos;aux extrémités de la terre.</li>
+
+        <li>Nous sommes justifiés par la grâce seule, par la foi seule.</li>
+
+        <li>Le Saint-Esprit agit dans le cœur de chaque croyant pour le guider.</li>
+
+        <li>L&apos;Église universelle est le corps du Christ et tous les chrétiens en sont membres.</li>
+
+        <li>Jésus reviendra dans la gloire pour juger les vivants et les morts.</li>
+
     </ul>
 
 </x-layout>

@@ -18,26 +18,25 @@
                 <ul class='space-y-2'>
                     <li class='flex items-start gap-x-1'>
                         <span>&bull;</span>
-                        <span>Étudiants (CEGEP, écoles professionelles et l'université)</span>
+                        <span>Les étudiants (CEGEP, écoles professionelles et l'université)</span>
                     </li>
                     <li class='flex items-start gap-x-1.5'>
                         <span>&bull;</span>
-                        <span>Jeunes adultes / professionels</span>
+                        <span>Les jeunes adultes et professionels</span>
                     </li>
                     <li class='flex items-start gap-x-1.5'>
                         <span>&bull;</span>
-                        <span>Enfants (école primaire)</span>
+                        <span>Les enfants (école primaire)</span>
                     </li>
                     <li class='flex items-start gap-x-1.5'>
                         <span>&bull;</span>
-                        <span>Adolescents (école secondaire)</span>
+                        <span>Les adolescents (école secondaire)</span>
                     </li>
                 </ul>
                 </p>
                 <br />
                 <p>Nos études bibliques est parvenu en groupe et en personne. On préfère de se réunir à notre église
-                    mais
-                    on offre aussi les études en ligne.</p>
+                    mais on offre aussi les études en ligne.</p>
             </x-card>
 
             <x-card image='./images/other/earth-from-space-card.jpg' title='Pour le monde' alt='Monde'
