@@ -3,6 +3,7 @@
     'title' => 'Événements',
     'startDate' => '16 juillet',
     'endDate' => '19 juillet',
+    'place' => 'CEGEP John Abbott - Ste-Anne-de-Bellevue, QC',
 ]) <!-- Events Section -->
 <section id='{{ $title }}' {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
     style="background-image: url('{{ asset($image) }}')">
@@ -17,6 +18,10 @@
             <i class="fa-solid fa-calendar" aria-hidden="true"></i>
             <span class="date-text">{{ $startDate }}</span> au
             <span class="date-text">{{ $endDate }}</span>
+        </div>
+        <div>
+            <i class="fa-solid fa-map-marker" aria-hidden="true"></i>
+            <span class="date-text">{{ $place }}</span>
         </div>
     </div>
 

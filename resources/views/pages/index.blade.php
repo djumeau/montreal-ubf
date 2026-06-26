@@ -14,8 +14,30 @@
 
             <x-card image='./images/other/classroom-circle-card.jpg' title='Ministères' alt="Groupe d'étude"
                 class="w-full max-w-sml md:w-[30%] md:max-w-none">
-                Nos études bibliques est parvenu en groupe et en personne. On préfère de se réunir à notre église mais
-                on offre aussi les études en ligne.
+                <p>On offre l'étude biblique pour:
+                <ul class='space-y-2'>
+                    <li class='flex items-start gap-x-1'>
+                        <span>&bull;</span>
+                        <span>Étudiants (CEGEP, écoles professionelles et l'université)</span>
+                    </li>
+                    <li class='flex items-start gap-x-1.5'>
+                        <span>&bull;</span>
+                        <span>Jeunes adultes / professionels</span>
+                    </li>
+                    <li class='flex items-start gap-x-1.5'>
+                        <span>&bull;</span>
+                        <span>Enfants (école primaire)</span>
+                    </li>
+                    <li class='flex items-start gap-x-1.5'>
+                        <span>&bull;</span>
+                        <span>Adolescents (école secondaire)</span>
+                    </li>
+                </ul>
+                </p>
+                <br />
+                <p>Nos études bibliques est parvenu en groupe et en personne. On préfère de se réunir à notre église
+                    mais
+                    on offre aussi les études en ligne.</p>
             </x-card>
 
             <x-card image='./images/other/earth-from-space-card.jpg' title='Pour le monde' alt='Monde'

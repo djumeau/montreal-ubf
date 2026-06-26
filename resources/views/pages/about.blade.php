@@ -7,28 +7,24 @@
     <h2>History</h2>
 
     <p>University Bible Fellowship begain in South Korea in 1961 by Dr. Samuel Lee (a presybterian pastor) and
-        Missionary Sarah Barry. Originally, they served South Korean students through a Bible reading club, the minsitry
-        expanded to various cities in the country and eventually became an international ministry expanding, to Germany,
-        North America, Latin America, and more. UBF currently has chapters in 96 countries.</p>
+        Missionary Sarah Barry. Originally, they served South Korean students through a Bible reading club.</p>
+
+    <p>The ministry grew to various cities within the country and in the 1970s expanded to Germany, North America,
+        Latin America, and the world. UBF currently has chapters in 96 countries.</p>
 
     <p>Canadian ministry began in 1982 in Winnipeg Manitoba and has since expanded to several cities across the country.
-        The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</p>
+    </p>
 
-    <p>Although our ministry has expanded, our main mission statement is student-oriented to bring the gospel to campus
-        students. We believe that our students in all education levels are our future, and once coming to believe in
+    <p>The Montreal ministry began in 1991. The church is composed of laymen, families and young adults.</p>
+
+    <h2>Mission and Vision</h2>
+
+    <p>Our main mission statement is student-oriented to bring the gospel to campus
+        students. We believe that our students are our future leaders. Once coming to believe in
         Jesus Christ as Lord and Saviour, they can be influential in all aspects of life and to transmit the good news
         of the gospel to their peers, the nation, and for the whole world.</p>
 
-    <p>For more inforation on the minstry, visit ubf.org.</p>
-
-    <h2>Ministries</h2>
-
-    <p>We serve several demographics:</p>
-    <ul>
-        <li>Professionals</li>
-        <li>Young Adults</li>
-        <li>Youth</li>
-    </ul>
+    <p>For more inforation on the minstry, visit <a href="https://ubf.org/about/origin" target="_blank">ubf.org</a>.</p>
 
     <h2>Statement of Faith</h2>
 

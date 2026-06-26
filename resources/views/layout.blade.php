@@ -23,7 +23,7 @@
                 l'église<br />de la communion biblique
                 universitaire<br />de Montréal!</x-hero>
             <x-events image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
-                Francophone</x-events>
+                biblique francophone</x-events>
         </div>
 
         <!-- Desktop Hero -->
@@ -33,7 +33,7 @@
                 l'église<br />de la communion biblique
                 universitaire <br />de Montréal!</x-hero>
             <x-events image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
-                Francophone</x-events>
+                biblique francophone</x-events>
         </div>
     @endif
 

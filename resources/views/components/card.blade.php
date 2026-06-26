@@ -13,11 +13,11 @@
     </div>
 
     <!-- Content Wrapper -->
-    <div class="p-5 text-center">
-        <h3 class="text-xl font-bold text-slate-900 mb-2 tracking-tight">
+    <div class="p-5">
+        <h3 class="text-xl text-center font-bold text-slate-900 mb-2 tracking-tight">
             {{ $title }}
         </h3>
-        <p class="text-sm text-slate-700 leading-relaxed">
+        <p class="text-slate-700 leading-relaxed">
             {{ $slot }}
         </p>
     </div>
