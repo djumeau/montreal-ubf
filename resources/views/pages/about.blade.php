@@ -4,8 +4,6 @@
 
     <h1 class='text-right text-4xl font-bold pb-8'>À propos de nous</h1>
 
-    <br/>
-
     <x-blurb title='Historique' :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <x-text-image :toggleLeft="true" 

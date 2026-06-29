@@ -54,18 +54,18 @@
                 worship_time="11h00">Bienvenue à
                 l'église<br />de la communion biblique
                 universitaire<br />de Montréal!</x-hero>
-            <x-events image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
-                biblique francophone d'été</x-events>
+            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
+                biblique francophone d&apos;été</x-events>
         </div>
 
         <!-- Desktop Hero -->
         <div class='hidden md:block'>
             <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
                 worship_time="11h00">Bienvenue à
-                l'église<br />de la communion biblique
+                l&apos;église<br />de la communion biblique
                 universitaire <br />de Montréal!</x-hero>
-            <x-events image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
-                biblique francophone d'été</x-events>
+            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
+                biblique francophone d&apos;été</x-events>
         </div>
     @endif
 

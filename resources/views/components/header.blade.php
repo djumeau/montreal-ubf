@@ -39,7 +39,7 @@
 
         <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'>EN</x-nav-link>
 
-        <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
-            textColor="text-white" :block="true">Se connecter</x-button-link>
+        {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
+            textColor="text-white" :block="true">Se connecter</x-button-link> --}}
     </nav>
 </header>

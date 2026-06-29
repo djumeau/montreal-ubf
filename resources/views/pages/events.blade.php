@@ -4,11 +4,16 @@
 
     <h1 class='text-right text-4xl font-bold pb-8'>Événements</h1>
 
+    <x-blurb title='À venir' :variant="['slate-900', '#1e3a8a']"></x-blurb>
+
     <br/>
 
-    <!-- 
-        <x-events image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements" class="md:hidden">2026 Conférence biblique francophone d'été</x-events> -->
-    
-    <x-events image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements" class="hidden md:block">2026 Conférence biblique francophone d'été</x-events>
+    <div class="block md:hidden">
+        <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg'>2026 Conférence biblique francophone d&apos;été</x-events>
+    </div>
+
+    <div class="hidden md:block">
+        <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg'>2026 Conférence biblique francophone d&apos;été</x-events>
+    </div>
 
 </x-layout>
