@@ -10,7 +10,7 @@
     style="background-image: url('{{ asset($image) }}')">
 
 
-    <div class='absolute top-2 left-3 md:top-3 md:left-4
+    <div class='absolute top-2 left-3 md:top-3
        text-white
         drop-shadow-lg'>
         <h2 class='text-sm italic md:text-lg'>{{ $title }}</h2>
