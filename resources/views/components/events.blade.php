@@ -5,6 +5,7 @@
     'endDate' => '19 juillet',
     'year' => '2026',
     'place' => 'CEGEP John Abbott - Ste-Anne-de-Bellevue, QC',
+    'href' => 'https://montrealubf.org/franco2026'
 ]) <!-- Events Section -->
 <section id='{{ $title }}' {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
     style="background-image: url('{{ asset($image) }}')">
