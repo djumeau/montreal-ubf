@@ -24,7 +24,7 @@
     alt="Cercle de prière">Le ministère canadien a vu le jour en 1982 à Winnipeg, au Manitoba, et s&apos;est répandu à plusieurs villes à travers le pays.</x-text-image>
 
     <x-text-image :toggleLeft="true" 
-    img="./images/ministry/20240825-presentation-euro-report.jpg"
+    img="./images/history/20240825-presentation.jpg"
     alt="Présentation à Montreal">Le ministère de Montréal était établit en 1991. L&apos;église est composée de professionnels, de familles et de jeunes adultes.</x-text-image>
 
     <br/>
