@@ -35,7 +35,7 @@
     $textColor = $isDarkBg ? 'text-white/90' : 'text-slate-600';
 @endphp
 
-<div {{ $attributes->merge(['class' => "w-full py-12 px-4 $bgClass"]) }} style="{{ $style }}">
+<div {{ $attributes->merge(['class' => "w-full py-4 px-4 $bgClass"]) }} style="{{ $style }}">
     <div class="max-w-3xl mx-auto">
         <h3 class="text-2xl font-bold tracking-tight text-center sm:text-3xl {{ $titleColor }}">
             {{ $title }}

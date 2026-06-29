@@ -16,4 +16,6 @@
         <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg'>2026 Conférence biblique francophone d&apos;été</x-events>
     </div>
 
+    <br/>
+
 </x-layout>

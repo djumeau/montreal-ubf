@@ -8,29 +8,24 @@
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
-    alt="Dr. Samuel Lee et Sarah Barry"
-    :imageSize="75">La communion biblique universitaire - CBU ('University Bible Fellowship (UBF)' en anglais) a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).</x-text-image>
+    alt="Dr. Samuel Lee et Sarah Barry">La communion biblique universitaire - CBU ('University Bible Fellowship (UBF)' en anglais) a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).</x-text-image>
 
     <x-text-image :toggleLeft="false" 
     img="./images/history/bible-reading-class-ubf-korea.jpg"
-    alt="Lecture biblique en classe"
-    :imageSize="80">À l&apos;origine, le ministère s&apos;adressaient aux étudiants sud-coréens par un club de lecture biblique.</x-text-image>
+    alt="Lecture biblique en classe">À l&apos;origine, le ministère s&apos;adressaient aux étudiants sud-coréens par un club de lecture biblique.</x-text-image>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/first-cis-conference.jpg"
-    alt="1993 conférence en Russie"
-    :imageSize="75">Le ministère s&apos;est étendu à diverses villes du pays et, à partir des années 1970, le ministère envoya des missionaires en Allemagne, en Amérique, en Amérique latine, et puis, au monde entier. L&apos;église s'est passée du statut para-ecclésiastique à celui d'un dénomination. Elle compte actuellement des ministères dans 96 pays.</x-text-image>
+    alt="1993 conférence en Russie">Le ministère s&apos;est étendu à diverses villes du pays et, à partir des années 1970, le ministère envoya des missionaires en Allemagne, en Amérique, en Amérique latine, et puis, au monde entier. L&apos;église s'est passée du statut para-ecclésiastique à celui d'un dénomination. Elle compte actuellement des ministères dans 96 pays.</x-text-image>
 
 
     <x-text-image :toggleLeft="false" 
     img="./images/history/cdn-campus-mission-1982.jpeg"
-    alt="Cercle de prière"
-    :imageSize="80">Le ministère canadien a vu le jour en 1982 à Winnipeg, au Manitoba, et s&apos;est répandu à plusieurs villes à travers le pays.</x-text-image>
+    alt="Cercle de prière">Le ministère canadien a vu le jour en 1982 à Winnipeg, au Manitoba, et s&apos;est répandu à plusieurs villes à travers le pays.</x-text-image>
 
     <x-text-image :toggleLeft="true" 
     img="./images/ministry/20240825-presentation-euro-report.jpg"
-    alt="Présentation à Montreal"
-    :imageSize="80">Le ministère de Montréal était établit en 1991. L&apos;église est composée de professionnels, de familles et de jeunes adultes.</x-text-image>
+    alt="Présentation à Montreal">Le ministère de Montréal était établit en 1991. L&apos;église est composée de professionnels, de familles et de jeunes adultes.</x-text-image>
 
     <br/>
 
