@@ -2,9 +2,9 @@
     'image' => './images/montreal_skyline-mobile.jpg',
     'subtitle' => 'Adoration les dimanches',
     'cat_1' => 'Jeunes: ',
-    'cbf_time' => '9h00',
+    'cat_1_time' => '9h00',
     'cat_2' => 'Générale: ',
-    'worship_time' => '11h00',
+    'cat_2_time' => '11h00',
 ])
 
 <!-- Hero Section -->
@@ -25,12 +25,12 @@
             <div class="grid grid-cols-2 gap-2 p-0">
                 <!-- First column: Right Justified -->
                 <div class="flex items-center justify-end text-right">
-                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_1 . $cbf_time }}</span>
+                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_1 . ' ' . $cat_1_time }}</span>
                 </div>
 
                 <!-- Second column: Left Justified -->
                 <div class="flex items-center justify-start text-left">
-                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_2 . $worship_time }}</span>
+                    <i class="fas fa-clock text-white"></i><span class="text-white">{{ $cat_2 . ' ' . $cat_2_time }}</span>
                 </div>
 
             </div>

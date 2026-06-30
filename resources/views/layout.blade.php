@@ -50,22 +50,16 @@
     @if (request()->is('/'))
         <!-- Mobile Hero -->
         <div class='block md:hidden'>
-            <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
-                worship_time="11h00">Bienvenue à
-                l'église<br />de la communion biblique
-                universitaire<br />de Montréal!</x-hero>
-            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="Événements">2026 Conférence
-                biblique francophone d&apos;été</x-events>
+            <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
+                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}</x-hero>
+            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}</x-events>
         </div>
 
         <!-- Desktop Hero -->
         <div class='hidden md:block'>
-            <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="Adoration les dimanches" cbf_time="9h00"
-                worship_time="11h00">Bienvenue à
-                l&apos;église<br />de la communion biblique
-                universitaire <br />de Montréal!</x-hero>
-            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="Événements">2026 Conférence
-                biblique francophone d&apos;été</x-events>
+            <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
+                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}</x-hero>
+            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}</x-events>
         </div>
     @endif
 
