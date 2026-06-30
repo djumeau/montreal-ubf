@@ -6,19 +6,19 @@
             <a href="{{ route('home') }}" class="inline-flex items-center p-0">
                 <img src="{{ asset('images/icons/logo_ubf_white.svg') }}" style="width: 80px; height: 80px;"
                     alt="UBF Logo" />
-                <h1 class="ml-2 text-xl md:text-2xl font-bold">CBU Montréal UBF</h1>
+                <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
             </a>
         </div>
 
         <nav class="hidden md:flex items-center space-x-4">
 
-            <x-nav-link url="/about" :active="request()->routeIs('about')">À propos</x-nav-link>
+            <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('header.about_us')}}</x-nav-link>
 
-            <x-nav-link url="/events" :active="request()->routeIs('events')">Événements</x-nav-link>
+            <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('header.events')}}</x-nav-link>
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            <x-nav-link url="/dashboard" icon="globe">EN</x-nav-link>
+            <x-nav-link url="/dashboard" icon="globe"><strong>EN</strong> | FR</x-nav-link>
 
             {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
                 textColor="text-white">Se connecter</x-button-link> --}}
@@ -33,12 +33,12 @@
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
-        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>À propos</x-nav-link>
-        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>Événements</x-nav-link>
+        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('header.about_us')}}</x-nav-link>
+        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('header.events')}}</x-nav-link>
 
         {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
 
-        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'>EN</x-nav-link>
+        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
 
         {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
             textColor="text-white" :block="true">Se connecter</x-button-link> --}}
