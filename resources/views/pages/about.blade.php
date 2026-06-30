@@ -1,10 +1,10 @@
 <x-layout class="bg-slate-900" textColor="text-white">
 
-    <x-slot name="title">À propos de nous</x-slot>
+    <x-slot name="title">{{__('about/index.title')}}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pb-8'>À propos de nous</h1>
+    <h1 class='text-right text-4xl font-bold pb-8'>{{__('about/index.title')}}</h1>
 
-    <x-blurb title='Historique' :variant="['slate-900', '#1e3a8a']"></x-blurb>
+    <x-blurb title="{{__('about/index.history')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
