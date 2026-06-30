@@ -10,6 +10,10 @@
                 <h3 class="font-bold">{{__('footer.address')}}</h3>
                 <p>2627 rue Ryde</p>
                 <p>Montréal, QC, H3K 1R7</p>
+
+                <h3 class="pt-4">
+                    <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i> <span class="text-white"><a href="mailto:montrealubf@gmail.com">montrealubf@gmail.com</a></span>
+                </h3>
             </div>
 
             <!-- Column 2 -->
