@@ -21,10 +21,10 @@
             <!-- Column 2 -->
             <div class="flex flex-col items-left text-left">
                 <h3 class="font-bold pl-4">{{__('footer.links')}}</h3>
-                <div class="pl-4"><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">{{__('footer.about_us')}}</x-nav-link>
+                <div class="pl-4"><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">{{__('nav.about_us')}}</x-nav-link>
                 </div>
                 <div class="pl-4"><x-nav-link url="/events" :active="request()->routeIs('events')"
-                        icon="angle-right">{{__('footer.events')}}</x-nav-link></div>
+                        icon="angle-right">{{__('nav.events')}}</x-nav-link></div>
             </div>
         </div>
 

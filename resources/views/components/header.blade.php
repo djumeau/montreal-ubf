@@ -16,9 +16,9 @@
 
         <nav class="hidden md:flex items-center space-x-4">
 
-            <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('header.about_us')}}</x-nav-link>
+            <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('nav.about_us')}}</x-nav-link>
 
-            <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('header.events')}}</x-nav-link>
+            <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('nav.events')}}</x-nav-link>
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
@@ -47,8 +47,8 @@
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
-        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('header.about_us')}}</x-nav-link>
-        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('header.events')}}</x-nav-link>
+        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('nav.about_us')}}</x-nav-link>
+        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('nav.events')}}</x-nav-link>
 
         {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
 
