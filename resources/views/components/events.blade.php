@@ -28,7 +28,7 @@
 
     @if(!@empty($href))
 
-    <a href='{{$href}}'
+    <a href='{{$href}}' target="_blank"
         class='absolute bottom-3 right-3 md:bottom-6 md:right-6
             px-3 py-2 md:px-6 md:py-3
             bg-purple-700 hover:bg-purple-800
