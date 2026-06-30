@@ -39,35 +39,37 @@
 
     <x-blurb title="{{__('about/index.statement_faith.title')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
-    <br/>
+    <div class="container flex flex-col md:px-24">
 
-    <h3 class='flex justify-left text-left font-bold text-xl'>{{__('about/index.statement_faith.sf_blurb_1')}}</h3>
+        <h3 class='justify-left text-left font-bold text-xl md:text-2xl py-4'>{{__('about/index.statement_faith.sf_blurb_1')}}</h3>
 
-    <ul class='list-disc list-outside p-5 space-y-4 md:px-12'>
-        <li>{{__('about/index.statement_faith.sf_statement_1')}}</li>
+        <ul class='list-disc list-outside space-y-4 pl-4'>
+            <li>{{__('about/index.statement_faith.sf_statement_1')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_2')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_2')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_3')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_3')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_4')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_4')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_5')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_5')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_6')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_6')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_7')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_7')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_8')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_8')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_9')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_9')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_10')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_10')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_11')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_11')}}</li>
 
-        <li>{{__('about/index.statement_faith.sf_statement_12')}}</li>
+            <li>{{__('about/index.statement_faith.sf_statement_12')}}</li>
 
-    </ul>
+        </ul>
+
+    </div>
 
 </x-layout>
