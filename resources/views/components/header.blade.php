@@ -1,3 +1,7 @@
+@php
+    $locale = app()->getLocale();
+@endphp
+
 <!-- Header -->
 <header class="sticky top-0 z-50 bg-blue-900/90 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
@@ -18,7 +22,17 @@
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            <x-nav-link url="/dashboard" icon="globe"><strong>EN</strong> | FR</x-nav-link>
+            <!-- Current locale: {{$locale}} -->
+
+            <x-nav-link url="/dashboard" icon="globe">
+                <!-- EN Link/Text -->
+                <span @class(['font-bold' => $locale === 'en', '' => $locale !== 'en'])>EN</span>
+                
+                &nbsp;|&nbsp;
+
+                <!-- FR Link/Text -->
+                <span @class(['font-bold' => $locale === 'fr', '' => $locale !== 'fr'])>FR</span>
+            </x-nav-link>
 
             {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
                 textColor="text-white">Se connecter</x-button-link> --}}
@@ -37,6 +51,8 @@
         <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('header.events')}}</x-nav-link>
 
         {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
+
+        <!-- Current locale: {{app()->getLocale()}} -->
 
         <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
 

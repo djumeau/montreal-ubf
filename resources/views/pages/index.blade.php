@@ -4,7 +4,7 @@
 
         <!-- First Row: Heading -->
         <div class="flex flex-col md:flex-row justify-center items-center md:items-start pb-6">
-            <h2 class="text-xl md:text-3xl font-bold text-white">{{__('home/index.background')}}</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-white">{{__('home/index.background')}}</h2>
         </div>
 
         <!-- Responsive Grid Wrapper -->
@@ -37,10 +37,8 @@
                 <p>{{__('home/card_2.blurb_2')}}</p>
             </x-card>
 
-            <x-card image='./images/other/earth-from-space-card.jpg' title='Pour le monde' alt='Monde'
-                class="w-full max-w-sml md:w-[30%] md:max-w-none">
-                On participe aussi dans les conférences locales, nationales et internationales. On collabore avec nos
-                ministères dans plus de 90 pays.
+            <x-card image='./images/other/earth-from-space-card.jpg' title="{{__('home/card_3.title')}}" alt="{{__('home/card_3.blurb_1')}}"
+                class="w-full max-w-sml md:w-[30%] md:max-w-none">{{__('home/card_3.blurb_1')}}
             </x-card>
 
         </div>

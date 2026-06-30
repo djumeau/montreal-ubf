@@ -12,7 +12,9 @@
                 <p>Montréal, QC, H3K 1R7</p>
 
                 <h3 class="pt-4">
-                    <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i> <span class="text-white"><a href="mailto:montrealubf@gmail.com">montrealubf@gmail.com</a></span>
+                    <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i>
+                    <span class="text-white"><a href="mailto:montrealubf@gmail.com" target="_blank">montrealubf@gmail.com</a>
+                    </span>
                 </h3>
             </div>
 
