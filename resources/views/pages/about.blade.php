@@ -8,15 +8,15 @@
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/lee-barry.jpg"
-    alt="Dr. Samuel Lee et Sarah Barry">La communion biblique universitaire - CBU ('University Bible Fellowship (UBF)' en anglais) a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).</x-text-image>
+    alt="{{__('about/index.alt_1')}}">{{__('about/index.content_1')}}</x-text-image>
 
     <x-text-image :toggleLeft="false" 
     img="./images/history/bible-reading-class-ubf-korea.jpg"
-    alt="Lecture biblique en classe">À l&apos;origine, le ministère s&apos;adressaient aux étudiants sud-coréens par un club de lecture biblique.</x-text-image>
+    alt="{{__('about/index.alt_2')}}">{{__('about/index.content_2')}}</x-text-image>
 
     <x-text-image :toggleLeft="true" 
     img="./images/history/first-cis-conference.jpg"
-    alt="1993 conférence en Russie">Le ministère s&apos;est étendu à diverses villes du pays et, à partir des années 1970, le ministère envoya des missionaires en Allemagne, en Amérique, en Amérique latine, et puis, au monde entier. L&apos;église s'est passée du statut para-ecclésiastique à celui d'un dénomination. Elle compte actuellement des ministères dans 96 pays.</x-text-image>
+    alt="{{__('about/index.alt_3')}}">{{__('about/index.content_3')}}</x-text-image>
 
 
     <x-text-image :toggleLeft="false" 
