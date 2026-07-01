@@ -20,22 +20,17 @@
 
             <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('nav.events')}}</x-nav-link>
 
-            {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
+            <!-- {{ app()->getLocale() }} -->
 
-            <!-- Current locale: {{$locale}} -->
-
-            <x-nav-link url="/dashboard" icon="globe">
+            <x-nav-link url="{{route('lang.switch', app()->getLocale() === 'en' ? 'fr' : 'en')}}" icon="globe">
                 <!-- EN Link/Text -->
-                <span @class(['font-bold' => $locale === 'en', '' => $locale !== 'en'])>EN</span>
+                <span>EN</span>
                 
                 &nbsp;|&nbsp;
 
                 <!-- FR Link/Text -->
-                <span @class(['font-bold' => $locale === 'fr', '' => $locale !== 'fr'])>FR</span>
+                <span>FR</span>
             </x-nav-link>
-
-            {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
-                textColor="text-white">Se connecter</x-button-link> --}}
 
         </nav>
 
@@ -47,16 +42,21 @@
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
+
         <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('nav.about_us')}}</x-nav-link>
+
         <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('nav.events')}}</x-nav-link>
 
-        {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
+         <x-nav-link url=""{{route('language.switch')}}" icon="globe" :isMobile='true'>
+            <!-- EN Link/Text -->
+            <span)>EN</span>
+            
+            &nbsp;|&nbsp;
 
-        <!-- Current locale: {{app()->getLocale()}} -->
+            <!-- FR Link/Text -->
+            <span>FR</span>
+        </x-nav-link>
 
-        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
-
-        {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
-            textColor="text-white" :block="true">Se connecter</x-button-link> --}}
     </nav>
+
 </header>
