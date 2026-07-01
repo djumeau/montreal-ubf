@@ -1,5 +1,6 @@
 @php
     $locale = app()->getLocale();
+    $newLocale = ($locale === 'en' ? 'fr' : 'en');
 @endphp
 
 <!-- Header -->
@@ -23,8 +24,9 @@
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
             <!-- Current locale: {{$locale}} -->
+            <!-- New locale: {{$newLocale}} -->
 
-            <x-nav-link url="/dashboard" icon="globe">
+            <x-nav-link url="/language/{{$newLocale}}" icon="globe">
                 <!-- EN Link/Text -->
                 <span @class(['font-bold' => $locale === 'en', '' => $locale !== 'en'])>EN</span>
                 
@@ -54,7 +56,7 @@
 
         <!-- Current locale: {{app()->getLocale()}} -->
 
-        <x-nav-link url="/dashboard" :active="request()->routeIs('admin')" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
+        <x-nav-link url="#" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
 
         {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
             textColor="text-white" :block="true">Se connecter</x-button-link> --}}
