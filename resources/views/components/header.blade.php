@@ -54,9 +54,10 @@
 
         {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
 
-        <!-- Current locale: {{app()->getLocale()}} -->
+        <!-- Current locale: {{$locale}} -->
+        <!-- New locale: {{$newLocale}} -->
 
-        <x-nav-link url="#" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
+        <x-nav-link url="/language/{{$newLocale}}" icon="globe" :isMobile='true'><strong>EN</strong> | FR</x-nav-link>
 
         {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
             textColor="text-white" :block="true">Se connecter</x-button-link> --}}
