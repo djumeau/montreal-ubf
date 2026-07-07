@@ -19,7 +19,7 @@
             <!-- top row -->
             <div class="mb-2 mx-4">
                 <h2 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h2>
-                <p class="text-white italic pt-8 pb-0">{{ $subtitle }}</p>
+                <p class="text-white italic pt-6 pb-0">{{ $subtitle }}</p>
             </div>
 
             <!-- Middle Row -->
