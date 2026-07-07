@@ -5,6 +5,7 @@
     'cat_1_time' => '9h00',
     'cat_2' => 'Générale: ',
     'cat_2_time' => '11h00',
+    'social_media' => 'Social Media'
 ])
 
 <!-- Hero Section -->
@@ -18,7 +19,7 @@
             <!-- top row -->
             <div class="mb-2 mx-4">
                 <h2 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h2>
-                <p class="text-white italic pt-4 pb-0">{{ $subtitle }}</p>
+                <p class="text-white italic pt-8">{{ $subtitle }}</p>
             </div>
 
             <!-- Middle Row -->
@@ -36,7 +37,9 @@
             </div>
 
             <!-- Bottom Row: Social Media Icons -->
-            <div class="mx-2 pt-6">
+            <div class="pt-8 pb-2 text-white">{{ $social_media }}</div>
+            </div>
+            <div class="mx-4">
                 <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
                     <i class="fa-brands fa-instagram text-white"></i>
                 </a>

@@ -57,10 +57,10 @@
         <div class='block md:hidden'>
 
             <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
-                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}
+                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
+            {{-- <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
             </x-events>
 
         </div>
@@ -69,11 +69,11 @@
         <div class='hidden md:block'>
 
             <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
-                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}
+                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
                 
-            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
-            </x-events>
+            {{-- <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
+            </x-events> --}}
 
         </div>
         
