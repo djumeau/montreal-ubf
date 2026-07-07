@@ -6,6 +6,6 @@ return [
     "subtitle" => "Adoration les dimanches",
     "cat_1" => "Enfants:",
     "cat_2" => "Générale:",
-    "social_media" => "Médias sociaux",
+    "social_media" => "Réseaux sociaux",
 
 ];
