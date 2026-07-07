@@ -9,11 +9,11 @@
     <br/>
 
     <div class="block md:hidden">
-        <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="" dates="{{__('events/index.dates')}}" location="{{__('events/index.location')}}">{{__('events/index.content')}}</x-events>
+        <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="" dates="{{__('events/index.dates')}}" location="{{__('events/index.location')}}">{{__('events/index.content')}}</x-events>
     </div>
 
     <div class="hidden md:block">
-        <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="" dates="{{__('events/index.dates')}}" location="{{__('events/index.location')}}">{{__('events/index.content')}}</x-events>
+        <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="" dates="{{__('events/index.dates')}}" location="{{__('events/index.location')}}">{{__('events/index.content')}}</x-events>
     </div>
 
     <br/>

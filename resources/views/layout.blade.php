@@ -33,9 +33,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo_ubf_favicon.svg') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
     <title>{{ $title ?? 'CBU Montréal UBF' }}</title>
 </head>
 
@@ -56,7 +60,7 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
+            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
             </x-events>
 
         </div>
@@ -68,7 +72,7 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00">{{__('home/hero.welcome')}}
             </x-hero>
                 
-            <x-events href='https://montrealubf.org/franco2026' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
+            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
             </x-events>
 
         </div>
