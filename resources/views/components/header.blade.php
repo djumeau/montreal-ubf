@@ -4,6 +4,12 @@
     $locale = app()->getLocale();
     $newLocale = ($locale === 'en' ? 'fr' : 'en');
 
+    $logoFilePath = 'images/icons/logo_ubf_white.svg';
+
+    if ($locale === 'fr') {
+        $logoFilePath = 'images/icons/logo_cbu_white.svg';
+    }
+
 @endphp
 
 <!-- Header -->
@@ -12,8 +18,8 @@
 
         <div class="inline-flex">
             <a href="{{ route('home') }}" class="inline-flex items-center p-0">
-                <img src="{{ asset('images/icons/logo_ubf_white.svg') }}" style="width: 80px; height: 80px;"
-                    alt="UBF Logo" />
+                <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
+                    alt="{{__('header.logo_alt')}}" />
                 <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
             </a>
         </div>
