@@ -60,12 +60,14 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
+            <x-study image="{{asset('./images/john_04_samaritan_woman_well-mobile.jpg')}}"
+                heading="This week:"
+                book="John's Gospel">
+            </x-study>
+
             <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
             </x-events>
-
-            <x-study image="{{asset('./images/john_04_samaritan_woman_well-mobile.jpg')}}"
-                title="John's Gospel">
-            </x-study>
+          
 
         </div>
 
@@ -75,13 +77,14 @@
             <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
-                
-            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
-            </x-events>
 
             <x-study image="{{asset('./images/john_04_samaritan_woman_well-desktop.jpg')}}"
-                title="John's Gospel">
+                heading="This week..."
+                book="John's Gospel">
             </x-study>
+                
+            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
+            </x-events>            
 
         </div>
         

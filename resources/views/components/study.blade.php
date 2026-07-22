@@ -1,6 +1,7 @@
 @props([
     'image' => './images/montreal_skyline-mobile.jpg',
-    'title' => '',
+    'heading' => '',
+    'book' => '',
     'href' => null,
 ])
 
@@ -10,7 +11,7 @@
 
     <div class='absolute top-2 left-3 md:top-3 text-white drop-shadow-lg'>
 
-        <h2 @class(['hidden' => !isset($title), 'text-sm italic md:text-lg'])>{{ $title }}</h2>
+        <h2 @class(['hidden' => !isset($heading), 'text-sm italic md:text-lg'])>{{ $heading }}</h2>
 
         <p class='font-semibold text-base md:text-xl'>{{ $slot }}</p>
 

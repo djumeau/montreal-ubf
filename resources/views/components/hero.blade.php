@@ -23,7 +23,7 @@
             </div>
 
             <!-- Middle Row -->
-            <div class="grid grid-cols-2 gap-2 pt-0">
+            <div class="flex justify-center gap-6 pt-0">
                 <!-- First column: Right Justified -->
                 <div class="flex items-center justify-end text-right">
                     <i class="fas fa-clock text-white pr-2"></i> <span class="text-white">{{ $cat_1 . ' ' . $cat_1_time }}</span>
@@ -38,22 +38,24 @@
 
             <!-- Bottom Row: Social Media Icons -->
 
-            <div class="col-span-2 text-center text-white pt-6 pb-1">
+            <div class="col-span-2 text-center text-white pt-6 pb-2">
                 <p class="text-white italic">{{ $social_media }}</p>
             </div>
 
-            <div class="mx-2">
+            <div class="flex justify-center gap-4">
                 <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
-                    <i class="fa-brands fa-instagram text-white"></i>
+                    <i class="fa-brands fa-instagram text-white text-3xl"></i>
                 </a>
                 <a href="https://facebook.com/montrealubf" aria-label="Facebook" target="_blank">
-                    <i class="fa-brands fa-facebook text-white"></i>
+                    <i class="fa-brands fa-facebook text-white text-3xl"></i>
                 </a>
                 <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
-                    <i class="fa-brands fa-x-twitter text-white"></i>
+                    <i class="fa-brands fa-x-twitter text-white text-3xl"></i>
                 </a>
             </div>
 
         </div>
+
     </div>
+
 </section>
