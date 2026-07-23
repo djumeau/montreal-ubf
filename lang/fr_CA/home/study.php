@@ -9,5 +9,7 @@ return [
     "biblePassage" => "Jean 7.53-8.11",
     "bibleLink" => "https://www.biblegateway.com/passage/?search=Jean%207%3A53-8%3A11&version=SG21",
     "questionSheet" => "Questionnaire",
+    "pdfLink" => "app/public/questionnaires/nt/john_2026/jn_07.53-08.11.q.pdf",
+    "docLink" => "app/public/questionnaires/nt/john_2026/jn_07.53-08.11.q.docx",
 
 ];

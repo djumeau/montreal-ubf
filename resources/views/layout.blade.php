@@ -87,8 +87,8 @@
                 :dateStamp="__('home/study.dateStamp')"
                 :biblePassage="__('home/study.biblePassage')"
                 :bibleLink="__('home/study.bibleLink')"
-                pdfLink=""
-                docLink="">
+                :pdfURL="__('home/study.pdfLink')"
+                :docURL="__('home/study.docLink')">
                 {{__('home/study.title')}}
             </x-study>
                 

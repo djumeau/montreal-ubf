@@ -43,19 +43,22 @@
 
             <!-- Scripture Reference -->
             <p class="font-serif text-xs sm:text-sm md:text-base italic text-amber-100/90 mb-3">
-                <a href="{{ $bibleLink ?? '#' }}"><span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{$biblePassage}}</span></a>
+                <a href="{{ $bibleLink ?? '#' }}" target="_blank"><span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{$biblePassage}}</span></a>
             </p>
 
             <!-- Download Links -->
             <div class="flex flex-col gap-2 font-sans text-sm md:text-base text-white/90">
-                <a href="{{ $pdfUrl ?? '#' }}">
-                    <i class="fa-solid fa-file-pdf"></i>
+
+                <a href="{{ Storage::disk('public')->url($pdfURL) }}" target="_blank">
+                    <i class="fa-solid fa-file-pdf text-red-300"></i>
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.pdf)</span>
                 </a>
-                <a href="{{ $docUrl ?? '#' }}">
-                    <i class="fa-solid fa-file-word"></i>
+
+                <a href="{{ Storage::disk('public')->url($docURL) }}" target="_blank">
+                    <i class="fa-solid fa-file-word text-blue-300"></i>
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.docx)</span>
                 </a>
+
             </div>
             
         </div>
