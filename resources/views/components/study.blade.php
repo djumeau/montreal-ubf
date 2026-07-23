@@ -49,13 +49,29 @@
             <!-- Download Links -->
             <div class="flex flex-col gap-2 font-sans text-sm md:text-base text-white/90">
 
-                <a href="{{$pdfURL}}" target="_blank">
+                <a href="{{
+                    route('pdf.view', [
+
+                        'dir' => __('home/study.dir'), 
+                        'filename' => __('home/study.pdf'),
+                
+                    ])}}" target="_blank">
+
                     <i class="fa-solid fa-file-pdf text-red-300"></i>
+                    
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.pdf)</span>
                 </a>
 
-                <a href="{{ Storage::disk('public')->url($docURL) }}" target="_blank">
+                <a href="{{
+                    route('pdf.view', [
+                    
+                        'dir' => __('home/study.dir'), 
+                        'filename' => __('home/study.docx'),
+                
+                    ])}}" target="_blank">
+
                     <i class="fa-solid fa-file-word text-blue-300"></i>
+
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.docx)</span>
                 </a>
 
