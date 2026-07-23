@@ -61,8 +61,10 @@
             </x-hero>
 
             <x-study image="{{asset('./images/john_04_samaritan_woman_well-mobile.jpg')}}"
-                heading="This week:"
-                book="John's Gospel">
+                heading="{{__('home/study.heading')}}"
+                book="{{__('home/study.book')}}"
+                dateStamp="July 26th, 2026">
+                {{__('home/study.title')}}
             </x-study>
 
             <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
@@ -78,9 +80,16 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study image="{{asset('./images/john_04_samaritan_woman_well-desktop.jpg')}}"
-                heading="This week..."
-                book="John's Gospel">
+            <x-study 
+                :image="asset('./images/john_04_samaritan_woman_well-desktop.jpg')"
+                :heading="__('home/study.heading')"
+                :book="__('home/study.book')"
+                :dateStamp="__('home/study.dateStamp')"
+                :biblePassage="__('home/study.biblePassage')"
+                :bibleLink="__('home/study.bibleLink')"
+                pdfLink=""
+                docLink="">
+                {{__('home/study.title')}}
             </x-study>
                 
             <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}

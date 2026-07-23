@@ -9,7 +9,7 @@ class SwitchLanguageController extends Controller
 {
     public function setLocale(string $locale): RedirectResponse
     {
-        if (in_array($locale, ['en', 'fr'])) {
+        if (in_array($locale, ['en_CA', 'fr_CA'])) {
             Session::put('Locale', $locale);
         }
 

@@ -11,7 +11,9 @@
 <!-- Hero Section -->
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80 flex items-center']) }}
     style="background-image: url('{{ asset($image) }}')">
+
     <div class="overlay bg-black/75"></div>
+    
     <div class="container mx-auto text-center z-10">
 
         <div class="flex flex-col">

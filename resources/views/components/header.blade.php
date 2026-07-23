@@ -2,18 +2,18 @@
     use Illuminate\Support\Str;
 
     $locale = app()->getLocale();
-    $newLocale = ($locale === 'en' ? 'fr' : 'en');
+    $newLocale = ($locale === 'en_CA' ? 'fr_CA' : 'en_CA');
 
     $logoFilePath = 'images/icons/logo_ubf_white.svg';
 
-    if ($locale === 'fr') {
+    if ($locale === 'fr_CA') {
         $logoFilePath = 'images/icons/logo_cbu_white.svg';
     }
 
 @endphp
 
-<!-- Header -->
 <header class="sticky top-0 z-50 bg-blue-900/90 text-white p-4">
+    
     <div class="container mx-auto flex justify-between items-center">
 
         <div class="inline-flex">
@@ -24,6 +24,7 @@
             </a>
         </div>
 
+        <!-- Desktop Menu -->
         <nav class="hidden md:flex items-center space-x-4">
 
             <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('nav.about_us')}}</x-nav-link>
@@ -33,7 +34,7 @@
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
             <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
-                {{Str::upper($newLocale)}}
+                {{Str::upper(Str::before($newLocale, '_'))}}
             </x-nav-link>
 
             {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
@@ -55,7 +56,7 @@
         {{-- <x-nav-link url="/admin" :active="request()->routeIs('admin')" :isMobile='true'>Admin</x-nav-link> --}}
 
         <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true'>
-            {{Str::upper($newLocale)}}
+            {{Str::upper(Str::before($newLocale, '_'))}}
         </x-nav-link>
 
         {{-- <x-button-link url="/login" :active="request()->routeIs('login')" icon="user" bgColor="bg-sky-500" hoverColor="bg-sky-700"
