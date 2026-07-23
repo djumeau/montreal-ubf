@@ -49,7 +49,7 @@
             <!-- Download Links -->
             <div class="flex flex-col gap-2 font-sans text-sm md:text-base text-white/90">
 
-                <a href="{{storage('public')->response('questionnaires/nt/john_2026/jn_07.53-08.11.q.pdf')}}" target="_blank">
+                <a href="{{$pdfURL}}" target="_blank">
                     <i class="fa-solid fa-file-pdf text-red-300"></i>
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.pdf)</span>
                 </a>
