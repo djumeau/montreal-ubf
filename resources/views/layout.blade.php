@@ -60,7 +60,7 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study image="{{asset('./images/john_04_samaritan_woman_well-mobile.jpg')}}"
+            <x-study image="{{asset('./images/john_08_woman_jesus-mobile.jpg')}}"
                 heading="{{__('home/study.heading')}}"
                 book="{{__('home/study.book')}}"
                 dateStamp="July 26th, 2026">
@@ -81,7 +81,7 @@
             </x-hero>
 
             <x-study 
-                :image="asset('./images/john_04_samaritan_woman_well-desktop.jpg')"
+                :image="asset('./images/john_08_woman_jesus-desktop.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 :dateStamp="__('home/study.dateStamp')"
