@@ -27,7 +27,7 @@
         <div class="flex-col text-center translate-y-18 z-10">
             
             <!-- Main Title -->
-            <h2 class="text-xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
+            <h2 class="text-3xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
                 {{$book}}
             </h2>
 
