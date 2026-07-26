@@ -8,7 +8,6 @@
         </div>
 
         <!-- Responsive Grid Wrapper -->
-
         <div class='flex flex-col md:flex-row md:items-start flex-wrap justify-center items-center gap-6 pb-6'>
 
             <x-card image='./images/ministry/montreal_ministry_20190616-original.jpg' title="{{__('home/card_1.title')}}"
