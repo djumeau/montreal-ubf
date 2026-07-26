@@ -4,7 +4,7 @@ return [
 
     "heading" => "Bible Study Series",
     "book" => "John’s Gospel",
-    "title" => "Go Now and Leave Your Life of Sin",
+    "title" => "Jesus is the Light of the World",
     "dateStamp" => "August 2nd, 2026",
     "biblePassage" => "John 8.12-30",
     "bibleLink" => "https://www.biblegateway.com/passage/?search=John%208%3A12-30&version=NIV",
