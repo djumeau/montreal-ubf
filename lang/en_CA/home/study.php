@@ -5,7 +5,7 @@ return [
     "heading" => "Bible Study Series",
     "book" => "John’s Gospel",
     "title" => "The Truth Will Set You Free",
-    "dateStamp" => "August 2nd, 2026",
+    "dateStamp" => "August 9th, 2026",
     "biblePassage" => "John 8.31-59",
     "bibleLink" => "https://www.biblegateway.com/passage/?search=John%208%3A31-59&version=NIV",
     "questionSheet" => "Questionnaire",

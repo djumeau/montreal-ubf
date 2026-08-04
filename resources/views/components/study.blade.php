@@ -11,7 +11,7 @@
 ])
 
 <!-- Bible Study Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat min-h-75 md:min-h-85']) }}
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-slate-900/60"></div>
@@ -27,27 +27,27 @@
         <div class="flex-col text-center translate-y-18 z-10">
             
             <!-- Main Title -->
-            <h2 class="text-3xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
+            <h2 class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
                 {{$book}}
             </h2>
 
             <!-- Date Stamp - {{$dateStamp}} -->
-            <p class="font-sans text-xs md:text-sm tracking-wider text-white mt-4">
+            <p class="font-sans text-xs md:text-base tracking-wider text-white mt-4">
                 {{$dateStamp}}
             </p>
 
             <!-- Sermon Title -->
-            <h3 class="font-serif text-base sm:text-xl md:text-2xl lg:text-3xl font-bold italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] text-white mb-1">
+            <h3 class="font-serif text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] text-white mb-1">
             {{$slot}}
             </h3>
 
             <!-- Scripture Reference -->
-            <p class="font-serif text-xs sm:text-sm md:text-base italic text-amber-100/90 mb-3">
+            <p class="font-serif text-xs sm:text-base md:text-base italic text-amber-100/90 mb-3">
                 <a href="{{ $bibleLink ?? '#' }}" target="_blank"><span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{$biblePassage}}</span></a>
             </p>
 
             <!-- Download Links -->
-            <div class="flex flex-col gap-2 font-sans text-sm md:text-base text-white/90">
+            <div id="download-links" class="flex flex-col gap-2 font-sans text-sm md:text-base mb-5 text-white/90">
 
                 <a href="{{
                     route('pdf.view', [

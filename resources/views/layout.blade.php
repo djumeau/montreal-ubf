@@ -60,10 +60,14 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study image="{{asset('./images/john/jn_08_31-32-mobile.png')}}"
-                heading="{{__('home/study.heading')}}"
-                book="{{__('home/study.book')}}"
-                dateStamp="July 26th, 2026">
+            <x-study :image="asset('./images/john/jn_08_31-32-mobile.png')"
+                :heading="__('home/study.heading')"
+                :book="__('home/study.book')"
+                :dateStamp="__('home/study.dateStamp')"
+                :biblePassage="__('home/study.biblePassage')"
+                :bibleLink="__('home/study.bibleLink')"
+                :pdfURL="__('home/study.pdfLink')"
+                :docURL="__('home/study.docLink')">
                 {{__('home/study.title')}}
             </x-study>
 
@@ -84,7 +88,7 @@
                 :image="asset('./images/john/jn_08_31-32-desktop.png')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
-                :dateStamp="__('home/study.dateStamp')"
+                dateStamp="{{__('home/study.dateStamp')}}"
                 :biblePassage="__('home/study.biblePassage')"
                 :bibleLink="__('home/study.bibleLink')"
                 :pdfURL="__('home/study.pdfLink')"
