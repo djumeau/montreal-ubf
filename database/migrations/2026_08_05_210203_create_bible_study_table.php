@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('bible_study', function (Blueprint $table) {
             $table->id();
+            $table->string('study_series_id');
             $table->integer('book_id')->unsigned();
             $table->string('bible_passage');
             $table->string('title');
