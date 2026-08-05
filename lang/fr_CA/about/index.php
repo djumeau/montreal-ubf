@@ -6,7 +6,7 @@ return [
     "history" => [
 
         "title" => "Historique",
-        "content_1" => "La communion biblique universitaire (CBU), donc 'University Bible Fellowship (UBF)' en anglais, a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).",
+        "content_1" => "La communion biblique universitaire (CBU), soit 'University Bible Fellowship (UBF)' en anglais, a pris son début en Corée du Sud en 1961 sous Dr Samuel Lee (un pasteur presbytérien) et Sarah Barry (missionnaire américaine).",
         "alt_1" => "Dr. Samuel Lee et Sarah Barry",
         "content_2" => "À l'origine, le ministère s'adressaient aux étudiants sud-coréens par un club de lecture biblique.",
         "alt_2" => "Lecture biblique en classe.",
@@ -17,7 +17,7 @@ return [
         "content_5" => "Le ministère de Montréal était établit en 1991. L'église est composée de professionnels, de familles et de jeunes adultes.",
         "alt_5" => "Présentation",
 
-    ], 
+    ],
 
     "mission_vision" => [
 
@@ -27,7 +27,7 @@ return [
         "mv_blurb_3" => ". (En anglais.)",
 
     ],
-    
+
     "statement_faith" => [
 
         "title" => "Déclaration de foi",
@@ -46,6 +46,6 @@ return [
         "sf_statement_12" => "Jésus reviendra dans la gloire pour juger les vivants et les morts.",
 
     ],
-    
-    
+
+
 ];
