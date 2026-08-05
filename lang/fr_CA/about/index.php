@@ -23,7 +23,7 @@ return [
 
         "title" => "Mission et vision",
         "mv_blurb_1" => "Notre mission principale est d'apporter l'Évangile aux étudiants des campus car elle offre le salut à tous qui croient (Ro 1.16). Également, nous croyons que nos étudiants sont nos futurs leaders. Ils peuvent exercer une bonne influence et de transmettre la bonne nouvelle à leurs pairs, à la nation et au monde entier.",
-        "mv_blurb_2" => "Pour plus d'information sur le ministère, visitez",
+        "mv_blurb_2" => "Pour plus d'information sur notre ministère, visitez",
         "mv_blurb_3" => ". (En anglais.)",
 
     ],
