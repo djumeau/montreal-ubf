@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bible_study', function (Blueprint $table) {
+        Schema::create('bible_studies', function (Blueprint $table) {
             $table->id();
             $table->string('study_series_id');
             $table->integer('book_id')->unsigned();
