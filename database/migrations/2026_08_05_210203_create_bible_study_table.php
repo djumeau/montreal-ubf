@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('bible_studies', function (Blueprint $table) {
             $table->id();
-            $table->string('study_series_id');
-            $table->integer('book_id')->unsigned();
-            $table->string('bible_passage');
+            $table->string('study_series_id')->nullable();
+            $table->unsignedInteger('book_id')->nullable();
+            $table->string('bible_passage')->nullable();
             $table->string('title');
-            $table->json('image_links');
-            $table->json('passage_links');
-            $table->json('question_sheet');
-            $table->json('lecture');
+            $table->json('image_links')->nullable();
+            $table->json('passage_links')->nullable();
+            $table->json('question_sheet')->nullable();
+            $table->json('lecture')->nullable();
             $table->timestamps();
         });
     }
