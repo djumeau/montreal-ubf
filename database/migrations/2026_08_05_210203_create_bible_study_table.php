@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('study_series_id')->nullable();
             $table->unsignedInteger('book_id')->nullable();
             $table->string('bible_passage')->nullable();
-            $table->string('title');
+            $table->json('title')->nullable();
             $table->json('image_links')->nullable();
             $table->json('passage_links')->nullable();
             $table->json('question_sheet')->nullable();
