@@ -9,7 +9,7 @@ class BibleStudy extends Model
 
     protected $table = 'bible_studies'; // Points to the table name in the database
 
-    protected $fillable = [
+    protected $fillable = [ // Specifies which attributes should be mass-assignable
         'study_series_id',
         'book_id',
         'bible_passage',
