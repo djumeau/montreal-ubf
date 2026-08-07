@@ -20,3 +20,5 @@ Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])
 Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
+
+Route::get('/bible-studies', [App\Http\Controllers\BibleStudyController::class, 'index'])->name('bible-studies');

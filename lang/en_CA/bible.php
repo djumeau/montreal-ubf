@@ -1,5 +1,7 @@
 <?php
 
+// Source: https://www.crosswire.org/ftpmirror/pub/sword/raw/locales.d/fr_abbrev.conf
+
 return [
     1 => ['name' => 'Genesis', 'abbreviation' => 'Gen', 'testament' => 'ot', 'chapters' => 50],
     2 => ['name' => 'Exodus', 'abbreviation' => 'Ex', 'testament' => 'ot', 'chapters' => 40],

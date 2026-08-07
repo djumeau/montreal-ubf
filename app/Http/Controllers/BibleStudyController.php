@@ -10,6 +10,6 @@ class BibleStudyController extends Controller
     public function index()
     {
         $biblestudies = BibleStudy::all();
-        return view('pages.bible-study', compact('biblestudies'));
+        return view('pages.bible-study')->with('biblestudies', $biblestudies);
     }
 }
