@@ -4,13 +4,13 @@ return [
 
     "heading" => "Bible Study Series",
     "book" => "John’s Gospel",
-    "title" => "The Truth Will Set You Free",
-    "dateStamp" => "August 9th, 2026",
-    "biblePassage" => "John 8.31-59",
-    "bibleLink" => "https://www.biblegateway.com/passage/?search=John%208%3A31-59&version=NIV",
+    "title" => "Do The Work of the Light",
+    "dateStamp" => "August 16th, 2026",
+    "biblePassage" => "John 9.1-12",
+    "bibleLink" => "https://www.biblegateway.com/passage/?search=John%209%3A1-12&version=NIV",
     "questionSheet" => "Questionnaire",
     "dir" => "nt/john_2026",
-    "pdf" => "jn_08.31-59.q.pdf",
-    "docx" => "jn_08.31-59.q.docx",
+    "pdf" => "jn_09.01-12.q.pdf",
+    "docx" => "jn_09.01-12.q.docx",
 
 ];

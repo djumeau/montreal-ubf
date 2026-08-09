@@ -1,7 +1,7 @@
 @props([
-    'bgSolid' => 'bg-gray-800', 
-    'bgGradient' => null,       
-    'textColor' => 'text-black' 
+    'bgSolid' => 'bg-gray-800',
+    'bgGradient' => null,
+    'textColor' => 'text-black'
 ])
 
 @php
@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo_ubf_favicon.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -44,7 +44,7 @@
 </head>
 
 {{-- Merge classes while cleanly isolating variables to prevent style duplication conflicts --}}
-<body 
+<body
     style="--layout-text: {{ $finalTextColor === 'text-white' ? '#ffffff' : '#000000' }};"
     {{ $attributes->merge(['class' => implode(' ', array_filter([$fallbackBg, $bgSolid, $bgGradient, $finalTextColor, 'min-h-screen']))]) }}
 >
@@ -60,7 +60,7 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study :image="asset('./images/john/jn_08_31-32-mobile.png')"
+            <x-study :image="asset('./images/john/jn_09.01-12_man_born_blind-mobile.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 :dateStamp="__('home/study.dateStamp')"
@@ -73,7 +73,7 @@
 
             <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
             </x-events>
-          
+
 
         </div>
 
@@ -84,8 +84,8 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study 
-                :image="asset('./images/john/jn_08_31-32-desktop.png')"
+            <x-study
+                :image="asset('./images/john/jn_09.01-12_man_born_blind-desktop.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 dateStamp="{{__('home/study.dateStamp')}}"
@@ -95,12 +95,12 @@
                 :docURL="__('home/study.docLink')">
                 {{__('home/study.title')}}
             </x-study>
-                
+
             <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
-            </x-events>            
+            </x-events>
 
         </div>
-        
+
     @endif
 
     <main class="container mx-auto p-4 mt-4">
