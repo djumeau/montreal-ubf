@@ -23,4 +23,6 @@ Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'
 
 Route::get('/bible-studies', [App\Http\Controllers\BibleStudyController::class, 'index'])->name('bible-studies');
 
+Route::get('/bible-studies/create', [App\Http\Controllers\BibleStudyController::class, 'create'])->name('bible-studies.create');
+
 Route::get('/bible-studies/{id}', [App\Http\Controllers\BibleStudyController::class, 'show'])->name('bible-studies.show');

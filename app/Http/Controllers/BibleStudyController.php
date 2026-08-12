@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\BibleStudy;
+
 use Illuminate\View\View as IlluminateView;
+
+use App\Models\BibleStudy;
 
 class BibleStudyController extends Controller
 {
@@ -21,4 +23,25 @@ class BibleStudyController extends Controller
 
         return view('pages.bible-study.show')->with('biblestudy', $biblestudy);
     }
+
+    public function create():IlluminateView
+    {
+        return view('pages.bible-study.create');
+    }
+
+    public function store(Request $request)
+    {
+        // $validatedData = $request->validate([
+        //     'title' => 'required|string',
+        //     'content' => 'required|string',
+        // ]);
+
+        // $biblestudy = new BibleStudy();
+        // $biblestudy->title = json_encode($validatedData['title']);
+        // $biblestudy->content = json_encode($validatedData['content']);
+        // $biblestudy->save();
+
+        // return redirect()->route('bible-studies.show', ['id' => $biblestudy->id]);
+    }
+
 }
