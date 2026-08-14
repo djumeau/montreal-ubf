@@ -13,15 +13,25 @@
 @endphp
 
 <header class="sticky top-0 z-50 bg-blue-900/90 text-white p-4">
-    
+
     <div class="container mx-auto flex justify-between items-center">
 
         <div class="inline-flex">
-            <a href="{{ route('home') }}" class="inline-flex items-center p-0">
-                <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
+
+            @if (request()->routeIs('home'))
+                <div class="inline-flex items-center p-0">
+                    <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
                     alt="{{__('header.logo_alt')}}" />
-                <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
-            </a>
+                    <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                </div>
+            @else
+                <a href="{{ route('home') }}" class="inline-flex items-center p-0">
+                    <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
+                    alt="{{__('header.logo_alt')}}" />
+                    <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                </a>
+            @endif
+
         </div>
 
         <!-- Desktop Menu -->
@@ -30,6 +40,10 @@
             <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('nav.about_us')}}</x-nav-link>
 
             <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('nav.events')}}</x-nav-link>
+
+            <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
+
+            <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link>
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
