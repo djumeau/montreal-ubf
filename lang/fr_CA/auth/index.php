@@ -2,10 +2,11 @@
 
 return [
     "title" => "Enregistrement",
-    "register" => "S'inscrire",
+    "register" => "Enregistrer",
     "login" => "Connexion",
     "submit" => "Soumettre",
     "email" => "Courriel",
     "username" => "Nom d'utilisateur",
     "password" => "Mot de passe",
+    "confirm_password" => "Confirmer",
 ];

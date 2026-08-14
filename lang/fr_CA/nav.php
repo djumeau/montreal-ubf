@@ -5,4 +5,5 @@ return [
     "events" => "Événements",
     "login" => "Connexion",
     "register" => "Enregistrement",
+    "logout" => "Déconnexion",
 ];

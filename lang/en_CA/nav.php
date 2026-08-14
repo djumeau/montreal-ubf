@@ -5,4 +5,5 @@ return [
     "events" => "Events",
     "login" => "Login",
     "register" => "Register",
+    "logout" => "Logout",
 ];

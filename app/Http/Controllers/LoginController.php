@@ -12,7 +12,7 @@ class LoginController extends Controller
     // @route GET /login
     public function login(): View
     {
-        return view('auth.login');
+        return view('pages.auth.login');
     }
 
     public function authenticate(Request $request): RedirectResponse

@@ -45,6 +45,8 @@
 
             <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link>
 
+            <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link>
+
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
             <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
