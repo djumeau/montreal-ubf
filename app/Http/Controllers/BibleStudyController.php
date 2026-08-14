@@ -31,10 +31,31 @@ class BibleStudyController extends Controller
 
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'title' => 'required|string',
-        //     'content' => 'required|string',
-        // ]);
+        $validatedData = $request->validate([
+
+            'study_series_id' => 'nullable|string',
+
+            'book_id' => 'required|integer',
+
+            'title.en' => 'required|string|max:255',
+            'title.fr' => 'required|string|max:255',
+
+            'image_links.en' => 'nullable|string',
+            'image_links.fr' => 'nullable|string',
+
+            'bible_passage.en' => 'required|string|max:255',
+            'bible_passage.fr' => 'required|string|max:255',
+
+            'passage_links.en' => 'nullable|string|max:255',
+            'passage_links.fr' => 'nullable|string|max:255',
+
+            'question_sheet.en' => 'nullable|string|max:255',
+            'question_sheet.fr' => 'nullable|string|max:255',
+
+            'lecture.en' => 'nullable|string|max:255',
+            'lecture.fr' => 'nullable|string|max:255',
+
+        ]);
 
         // $biblestudy = new BibleStudy();
         // $biblestudy->title = json_encode($validatedData['title']);
