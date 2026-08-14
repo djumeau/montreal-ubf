@@ -15,6 +15,8 @@ class RegisterController extends Controller
         return view('pages.auth.register');
     }
 
+    // @desc Store User registration data
+    // @route POST /register
     public function store(Request $request): RedirectResponse
     {
         // Validate the incoming request data
@@ -32,7 +34,7 @@ class RegisterController extends Controller
         ]);
 
         // Log the user in (optional)
-        auth()->login($user);
+        // auth()->login($user);
 
         // Redirect to a desired page after registration
         return redirect()->route('home')->with('success', 'Registration successful!');

@@ -10,6 +10,8 @@ use App\Models\BibleStudy;
 
 class BibleStudyController extends Controller
 {
+    // @desc Show all bible studies
+    // @route GET /bible-study
     public function index()
     {
         $biblestudies = BibleStudy::all();
@@ -17,6 +19,8 @@ class BibleStudyController extends Controller
         return view('pages.bible-study.index')->with('biblestudies', $biblestudies);
     }
 
+    // @desc Show bible study id
+    // @route GET /bible-study/{id}
     public function show(int $id):IlluminateView
     {
         $biblestudy = BibleStudy::findOrFail($id);
@@ -24,11 +28,15 @@ class BibleStudyController extends Controller
         return view('pages.bible-study.show')->with('biblestudy', $biblestudy);
     }
 
+    // @desc Create bible study lesson
+    // @route GET /bible-study/create
     public function create():IlluminateView
     {
         return view('pages.bible-study.create');
     }
 
+    // @desc Save bible study lesson
+    // @route POST /bible-study
     public function store(Request $request)
     {
         $validatedData = $request->validate([

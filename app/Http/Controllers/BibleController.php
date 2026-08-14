@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class BibleController extends Controller
 {
+    // @desc Show the bible-books page
+    // @route GET /bible-studies
     public function index()
     {
         // Fetches the entire array from lang/{locale}/bible.php matching current middleware locale

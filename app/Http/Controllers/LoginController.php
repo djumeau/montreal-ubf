@@ -15,6 +15,8 @@ class LoginController extends Controller
         return view('pages.auth.login');
     }
 
+    // @desc Show home page (index)
+    // @route POST /authenticate
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([

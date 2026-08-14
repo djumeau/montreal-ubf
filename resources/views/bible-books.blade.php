@@ -1,31 +1,47 @@
-<x-layout>
+<x-layout class="bg-slate-900" textColor="text-white">
 
     <div class="bible-container">
 
         {{-- Display Old Testament Books --}}
-        @if ($testaments->has('ancien'))
-            <h2>Old Testament</h2>
+        @if ($testaments->has('ot'))
+            <h2 class="text-2xl">{{ __('bible-study/index.old_testament') }}</h2>
             <div class="book-grid">
-                @foreach ($testaments->get('ancien') as $id => $book)
+                @foreach ($testaments->get('ot') as $id => $book)
+
                     <div class="book-card">
-                        <h3>{{ $book['name'] }} ({{ $book['abbreviation'] }})</h3>
-                        <p>{{ $book['chapters'] }} Chapters</p>
-                        <a href="{{ url('/bible/book/' . $id) }}">Read</a>
+
+                        <h3>
+                            <a href="{{ url('/bible/book/' . $id) }}">
+                                {{ __('bible-study/index.read') }} >
+                                {{ $book['name'] }} ({{ $book['abbreviation'] }}) - {{ $book['chapters'] }} {{ Str::lower(__('bible-study/index.chapters')) }}
+                            </a>
+                        </h3>
+
                     </div>
+
                 @endforeach
             </div>
         @endif
 
+        <br/><br/>
+
         {{-- Display New Testament Books --}}
         @if ($testaments->has('nt'))
-            <h2>New Testament</h2>
+            <h2 class="text-2xl">{{ __('bible-study/index.new_testament') }}</h2>
             <div class="book-grid">
                 @foreach ($testaments->get('nt') as $id => $book)
+
                     <div class="book-card">
-                        <h3>{{ $book['name'] }} ({{ $book['abbreviation'] }})</h3>
-                        <p>{{ $book['chapters'] }} Chapters</p>
-                        <a href="{{ url('/bible/book/' . $id) }}">Read</a>
+
+                        <h3>
+                            <a href="{{ url('/bible/book/' . $id) }}">
+                                {{ __('bible-study/index.read') }}>
+                                {{ $book['name'] }} ({{ $book['abbreviation'] }}) - {{ $book['chapters'] }} {{ Str::lower(__('bible-study/index.chapters')) }}
+                            </a>
+                        </h3>
+
                     </div>
+
                 @endforeach
             </div>
         @endif

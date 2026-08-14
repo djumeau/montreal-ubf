@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class QuestionnaireController extends Controller
 {
+    // @desc Show questionnaire PDF
+    // @route GET /
     public function show(string $dir, string $filename): BinaryFileResponse
     {
         // $dir can now look like: "nt/john_2026" or "nt/medical/2026"
