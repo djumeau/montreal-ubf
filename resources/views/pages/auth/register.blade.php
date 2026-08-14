@@ -1,10 +1,10 @@
-<x-layout>
+<x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.title') }} - {{ __('auth/index.register') }}</x-slot>
 
-    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class='text-right text-4xl font-bold pb-8'>{{ __('auth/index.register') }}</h1>
 
-        <h2 class="text-2xl font-bold mb-4">{{ __('auth/index.register') }}</h2>
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
 
         <form action="{{ route('register.store') }}" method="POST">
             @csrf
