@@ -140,7 +140,7 @@ return [
     'prohibited_unless' => 'Le champ :attribute est interdit à moins que :other ne soit dans :values.',
     'prohibits' => 'Le champ :attribute empêche :other d\'être présent.',
     'regex' => 'Le format du champ :attribute est invalide.',
-    'required' => 'Le champ :attribute est requis.',
+    'required' => 'Le champ est requis.',
     'required_array_keys' => 'Le champ :attribute doit contenir des entrées pour: :values.',
     'required_if' => 'Le champ :attribute est requis lorsque :other est :value.',
     'required_if_accepted' => 'Le champ :attribute est requis lorsque :other est accepté.',

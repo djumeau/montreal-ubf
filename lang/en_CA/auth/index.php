@@ -22,5 +22,6 @@ return [
         "password_required" => "Password is required.",
         "password_min" => "Password must be at least 8 characters.",
         "password_confirmed" => "Password confirmation does not match.",
+        "not_matched" => "The credentials provided are not found in our records.",
     ],
 ];

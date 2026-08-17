@@ -42,8 +42,5 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows the login form
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
 
-Route::get('/logout', function () {
-    // auth()->logout();
-    return redirect()->route('home');
-})->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

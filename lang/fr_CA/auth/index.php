@@ -22,5 +22,6 @@ return [
         "password_required" => "Le mot de passe est requis.",
         "password_min" => "Le mot de passe doit contenir au moins 8 caractères.",
         "password_confirmed" => "La confirmation du mot de passe ne correspond pas.",
+        "not_matched" => "Les identifiants fournis ne se trouvent pas dans nos dossiers.",
     ],
 ];
