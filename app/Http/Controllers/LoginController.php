@@ -20,8 +20,8 @@ class LoginController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string|min:8',
         ]);
 
         // if (auth()->attempt($credentials)) {

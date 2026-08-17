@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -21,22 +24,19 @@ class RegisterController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|max:100',
+            'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Create a new user (assuming you have a User model)
-        $user = \App\Models\User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-        ]);
+        // Hash the password before storing it
+        $validatedData['password'] = Hash::make($validatedData['password']);
 
-        // Log the user in (optional)
-        // auth()->login($user);
+        // Create a new user
+        $user = User::create($validatedData);
 
-        // Redirect to a desired page after registration
-        return redirect()->route('home')->with('success', 'Registration successful!');
+        // Redirect to login pae after registration
+        return redirect()->route('login')->with('success', __('auth/index.registered_successfully'));
     }
+
 }
