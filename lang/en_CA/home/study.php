@@ -5,7 +5,7 @@ return [
     "heading" => "Bible Study Series",
     "book" => "John’s Gospel",
     "title" => "Jesus is the Good Shepherd",
-    "dateStamp" => "August 23rd, 2026",
+    "dateStamp" => "August 30th, 2026",
     "biblePassage" => "John 10.1-21",
     "bibleLink" => "https://www.biblegateway.com/passage/?search=John%2010%3A1-21&version=NIV",
     "questionSheet" => "Questionnaire",
