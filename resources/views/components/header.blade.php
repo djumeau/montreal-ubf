@@ -45,13 +45,13 @@
 
                 {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-                <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link>
+                {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link> --}}
 
             @else
 
-                <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
+                {{-- <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
 
-                <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link>
+                <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link> --}}
 
             @endauth
 
@@ -78,13 +78,13 @@
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link>
+            {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link> --}}
 
         @else
 
-            <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link>
+            {{-- <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link>
 
-            <x-nav-link url="/register" :active="request()->routeIs('register')" :isMobile='true'>{{__('nav.register')}}</x-nav-link>
+            <x-nav-link url="/register" :active="request()->routeIs('register')" :isMobile='true'>{{__('nav.register')}}</x-nav-link> --}}
 
         @endauth
 
