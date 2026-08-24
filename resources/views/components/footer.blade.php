@@ -14,7 +14,7 @@
 
                     <!-- Left Side: Clickable Thumbnail Image -->
                     <a href="https://www.google.com/maps/@45.4751853,-73.5663695,17z?entry=ttu&g_ep=EgoyMDI2MDgyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="flex-shrink: 0;">
-                        <img src="{{ asset('images/mtl-ubf-map.jpg') }}" alt="Location Map" class="map-thumbnail" style="width: 120px; height: auto; display: block; border-radius: 4px;">
+                        <img src="{{ asset('images/mtl-ubf-map.jpg') }}" alt="Location Map" class="map-thumbnail" style="width: 120px; height: auto; display: block; border-radius: 8px;">
                     </a>
 
                     <!-- Right Side: Address Text -->
