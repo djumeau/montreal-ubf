@@ -49,11 +49,10 @@
 
             @else
 
-            {{--
                 <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
 
                 <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link>
-            --}}
+
             @endauth
 
             <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
@@ -72,7 +71,22 @@
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
 
         <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('nav.about_us')}}</x-nav-link>
+
         <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('nav.events')}}</x-nav-link>
+
+        @auth
+
+            {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
+
+            <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link>
+
+        @else
+
+            <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link>
+
+            <x-nav-link url="/register" :active="request()->routeIs('register')" :isMobile='true'>{{__('nav.register')}}</x-nav-link>
+
+        @endauth
 
         <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true'>
             {{Str::upper(Str::before($newLocale, '_'))}}

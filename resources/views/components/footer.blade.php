@@ -5,17 +5,33 @@
 
         <!-- Row-1 - Main Footer Content -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+
             <!-- Column 1 -->
             <div class="pl-4">
-                <h3 class="font-bold">{{__('footer.address')}}</h3>
-                <p>2627 rue Ryde</p>
-                <p>Montréal, QC, H3K 1R7</p>
+
+                <!--Address Container -->
+                <div class="address-container" style="display: flex; align-items: center; gap: 15px;">
+
+                    <!-- Left Side: Clickable Thumbnail Image -->
+                    <a href="https://www.google.com/maps/@45.4751853,-73.5663695,17z?entry=ttu&g_ep=EgoyMDI2MDgyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="flex-shrink: 0;">
+                        <img src="{{ asset('images/mtl-ubf-map.jpg') }}" alt="Location Map" class="map-thumbnail" style="width: 120px; height: auto; display: block; border-radius: 4px;">
+                    </a>
+
+                    <!-- Right Side: Address Text -->
+                    <div class="address-text">
+                        <h3 class="font-bold">{{__('footer.address')}}</h3>
+                        <p>2627 rue Ryde</p>
+                        <p>Montréal, QC, H3K 1R7</p>
+                    </div>
+
+                </div>
 
                 <h3 class="pt-4">
                     <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i>
                     <span class="text-white"><a href="mailto:montrealubf@gmail.com" target="_blank">montrealubf@gmail.com</a>
                     </span>
                 </h3>
+
             </div>
 
             <!-- Column 2 -->
@@ -26,6 +42,7 @@
                 <div class="pl-4"><x-nav-link url="/events" :active="request()->routeIs('events')"
                         icon="angle-right">{{__('nav.events')}}</x-nav-link></div>
             </div>
+
         </div>
 
         <!-- Bottom Copyright Row -->
