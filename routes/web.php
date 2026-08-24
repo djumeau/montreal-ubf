@@ -43,4 +43,3 @@ Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-

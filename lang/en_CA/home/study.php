@@ -4,13 +4,13 @@ return [
 
     "heading" => "Bible Study Series",
     "book" => "John’s Gospel",
-    "title" => "One Thing I Do Know!",
+    "title" => "Jesus is the Good Shepherd",
     "dateStamp" => "August 23rd, 2026",
-    "biblePassage" => "John 9.13-41",
-    "bibleLink" => "https://www.biblegateway.com/passage/?search=John%209%3A13-41&version=NIV",
+    "biblePassage" => "John 10.1-21",
+    "bibleLink" => "https://www.biblegateway.com/passage/?search=John%2010%3A1-21&version=NIV",
     "questionSheet" => "Questionnaire",
     "dir" => "nt/john_2026",
-    "pdf" => "jn_09.13-41.q.pdf",
-    "docx" => "jn_09.13-41.q.docx",
+    "pdf" => "jn_10.01-21.q.pdf",
+    "docx" => "jn_10.01-21.q.docx",
 
 ];

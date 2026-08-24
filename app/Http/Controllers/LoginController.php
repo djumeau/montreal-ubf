@@ -23,7 +23,7 @@ class LoginController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken(); // Regenerate CSRF token to prevent CSRF attacks.
 
         return redirect(route('home'));
     }

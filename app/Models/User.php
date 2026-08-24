@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\UserPrivilege;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -14,6 +16,14 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'privileges',
+    ];
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
@@ -27,6 +37,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'privileges' => UserPrivilege::class, // Cast to Enum
         ];
     }
 }
