@@ -13,7 +13,7 @@
                 <div class="address-container" style="display: flex; align-items: center; gap: 15px;">
 
                     <!-- Left Side: Clickable Thumbnail Image -->
-                    <a href="https://www.google.com/maps/@45.4751853,-73.5663695,17z?entry=ttu&g_ep=EgoyMDI2MDgyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="flex-shrink: 0;">
+                    <a href="https://www.google.com/maps/place/University+Bible+Fellowship+Missionary+Church/@45.4755238,-73.5676033,17z/data=!3m1!4b1!4m6!3m5!1s0x4cc9107f9e01be35:0x3487a6c7fa11c19!8m2!3d45.4755201!4d-73.5650284!16s%2Fg%2F1tz75ldw?entry=ttu&g_ep=EgoyMDI2MDgyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="flex-shrink: 0;">
                         <img src="{{ asset('images/mtl-ubf-map.jpg') }}" alt="Location Map" class="map-thumbnail" style="width: 120px; height: auto; display: block; border-radius: 8px;">
                     </a>
 

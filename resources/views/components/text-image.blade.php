@@ -25,7 +25,7 @@
 
 {{-- md:max-w-[80%] limits desktop width to 80%. mx-auto centers it. gap-4 tightens the spacing. --}}
 
-<div class="grid grid-cols-1 md:grid-cols-2 w-full md:max-w-[80%] mx-auto p-4">
+<div class="grid grid-cols-1 md:grid-cols-2 w-full {{ $selectedSizeClass }} mx-auto p-4">
 
     {{-- Image Container --}}
     <div class="{{ $toggleLeft ? 'md:order-first' : 'md:order-last' }} flex items-center justify-center mb-2">
