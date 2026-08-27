@@ -16,9 +16,14 @@ use App\Http\Controllers\QuestionnaireController;
 
 use App\Http\Controllers\SwitchLanguageController;
 
+use App\Http\Controllers\GivingController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/events', [EventController::class, 'index'])->name('events');
+
+Route::get('/giving', [GivingController::class, 'index'])->name('giving');
+Route::get('/donnez', [GivingController::class, 'index'])->name('donnez'); // QC FR requirement
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 
