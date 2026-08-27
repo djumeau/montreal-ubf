@@ -9,7 +9,7 @@ return [
 
     "inperson" => ["title" => "In person", "instructions" => "During our offering time during Sunday worship."],
 
-    "online" => ["title" => "Online", "instructions" => "We have created a Zeffy account to provide access to online giving. Either scan the QR code on the screen with your phone or select the button below to access the site. Note: You are not obligated to pay a service fee. Please read the instructions from the video to learn how to avoid doing so."],
+    "online" => ["title" => "Online", "instructions" => "We have created a Zeffy account to provide access to online giving. Either scan the QR code on the screen with your phone or select the button below to access the site.", "note" => "Note: You are not obligated to pay a service fee. Please read the instructions from the video to learn how to avoid doing so."],
 
     "charity" => "Unfortunately, we cannot issue tax receipts because Montreal UBF is not registered as a charity with the Federal government. This was decided among our community membership so that we can freely support our ministries worldwide.",
 
