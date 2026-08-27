@@ -13,11 +13,11 @@
     <div class='flex flex-col md:flex-row md:items-start flex-wrap justify-center items-center gap-4 pb-6'>
 
         <x-card image='./images/ministry/sws_20260315.jpg' title="{{__('giving.inperson.title')}}"
-            alt='Montréal 2019' class="w-full max-w-sml md:w-[33%] md:max-w-none">{{__('giving.inperson.instructions')}}
+            alt='Montréal 2019' class="w-full max-w-sml md:w-[40%] md:max-w-none">{{__('giving.inperson.instructions')}}
         </x-card>
 
         <x-card image='./images/giving_debit_card.jpg' title="{{__('giving.online.title')}}" alt="{{__('giving.online.title')}}"
-            class="w-full max-w-sml md:w-[33%] md:max-w-none">{{__('giving.online.instructions')}}
+            class="w-full max-w-sml md:w-[40%] md:max-w-none">{{__('giving.online.instructions')}}
 
             <div class="flex align-center justify-center">
                 <a class="hover:none active:none" href="https://www.zeffy.com/en-CA/donation-form/world-mission-bible-canada" target="_blank"><img  src="./images/offering_qr_code.png" /></a>
