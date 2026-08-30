@@ -1,7 +1,22 @@
+@php
+
+    $path = "donation_via_zeffy_en.mp4";
+    $videoDirPath = Storage::disk('public')->url('./videos/'.$path);
+    // dd($filePath);
+    // dd(Storage::disk('public')->exists('videos\donation_via_zeffy_en.mp4'));
+
+    //dd(Storage::disk('public')->exists($videoDirPath));
+
+    // dd($videoDirPath);
+
+@endphp
+
 <x-layout x-data="{ isOpen: false,
                     videoSrc: './videos/donation_via_zeffy_en.mp4' }"
         class="giving bg-slate-900"
         textColor="text-white">
+
+    <!-- Video source: {{ $videoDirPath }} -->
 
     <x-slot name="title">{{ __('giving.title') }}</x-slot>
 

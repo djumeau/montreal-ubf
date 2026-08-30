@@ -20,4 +20,6 @@ return [
 
     "instructions" => "Guide en vidéo",
 
+    "filename" => "donation_via_zeffy_en.mp4",
+
 ];
