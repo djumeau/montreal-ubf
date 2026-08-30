@@ -34,11 +34,21 @@
 
                 </div>
 
-                <h3 class="pt-4">
+                <h3 class="pt-4 pb-2">
                     <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i>
                     <span class="text-white"><a href="mailto:montrealubf@gmail.com" target="_blank">montrealubf@gmail.com</a>
                     </span>
                 </h3>
+
+                <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
+                    <i class="fa-brands fa-instagram text-white text-2xl"></i>
+                </a>
+                <a href="https://facebook.com/montrealubf" aria-label="Facebook" target="_blank">
+                    <i class="fa-brands fa-facebook text-white text-2xl"></i>
+                </a>
+                <!-- <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
+                    <i class="fa-brands fa-x-twitter text-white text-2xl"></i>
+                </a> -->
 
             </div>
 
