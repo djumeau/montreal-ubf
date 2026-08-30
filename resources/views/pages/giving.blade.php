@@ -1,7 +1,7 @@
 @php
 
     $path = "donation_via_zeffy_en.mp4";
-    $videoDirPath = Storage::disk('public')->url('./videos/'.$path);
+    $videoDirPath = Storage::url('videos/'.$path);
     // dd($filePath);
     // dd(Storage::disk('public')->exists('videos\donation_via_zeffy_en.mp4'));
 
