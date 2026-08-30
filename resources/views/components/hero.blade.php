@@ -13,7 +13,7 @@
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-black/75"></div>
-    
+
     <div class="container mx-auto text-center z-10">
 
         <div class="flex flex-col">
@@ -51,9 +51,9 @@
                 <a href="https://facebook.com/montrealubf" aria-label="Facebook" target="_blank">
                     <i class="fa-brands fa-facebook text-white text-3xl"></i>
                 </a>
-                <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
+                <!-- <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
                     <i class="fa-brands fa-x-twitter text-white text-3xl"></i>
-                </a>
+                </a> -->
             </div>
 
         </div>

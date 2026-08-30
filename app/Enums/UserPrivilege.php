@@ -5,6 +5,7 @@ namespace App\Enums;
 enum UserPrivilege: string
 {
     case GUEST = 'guest';
+    case USER = 'user';
     case MEMBER = 'member';
     case MUSIC = 'music';
     case ELDER = 'elder';

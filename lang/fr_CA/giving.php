@@ -14,4 +14,10 @@ return [
 
     "charity" => "Malheureusement, nous ne pouvons pas remettre de reçus fiscaux, car notre ministère n’est pas enregistré à titre d’organisme de bienfaisance auprès du gouvernement fédéral. Cette décision a été prise par l’ensemble des membres de notre communauté afin que nous puissions soutenir librement nos ministères sœurs partout dans le monde.",
 
+    "video" => "Vidéo",
+
+    "close" => "Fermer",
+
+    "instructions" => "Guide en vidéo",
+
 ];

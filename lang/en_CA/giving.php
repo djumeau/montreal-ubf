@@ -13,4 +13,10 @@ return [
 
     "charity" => "Unfortunately, we cannot issue tax receipts because Montreal UBF is not registered as a charity with the Federal government. This was decided among our community membership so that we can freely support our ministries worldwide.",
 
+    "video" => "Video",
+
+    "close" => "Close",
+
+    "instructions" => "Video Walkthrough",
+
 ];

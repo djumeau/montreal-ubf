@@ -31,7 +31,7 @@
     <div class="{{ $toggleLeft ? 'md:order-first' : 'md:order-last' }} flex items-center justify-center mb-2">
         @if ($img)
             <img src="{{ asset($img) }}"
-                class="h-auto rounded-md shadow-md object-cover pointer-events-none select-none {{ $selectedSizeClass }} mb-2 md:mb-0"
+                class="h-auto rounded-lg shadow-md object-cover pointer-events-none select-none {{ $selectedSizeClass }} mb-2 md:mb-0"
                 role="img" @if (empty($alt)) aria-hidden="true" @endif>
         @endif
     </div>
