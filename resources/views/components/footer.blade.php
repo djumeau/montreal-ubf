@@ -1,3 +1,11 @@
+@php
+
+    $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
+    $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
+    $givingActive = request()->routeIs('giving') || request()->routeIs('donnez');
+
+@endphp
+
 <!-- Footer -->
 <footer class="bg-blue-900 text-white pt-6 pb-2">
 
@@ -36,11 +44,20 @@
 
             <!-- Column 2 -->
             <div class="flex flex-col items-left text-left">
+
                 <h3 class="font-bold pl-4">{{__('footer.links')}}</h3>
-                <div class="pl-4"><x-nav-link url="/about" :active="request()->routeIs('about')" icon="angle-right">{{__('nav.about_us')}}</x-nav-link>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" icon="angle-right">{{__('nav.about_us.title')}}</x-nav-link>
                 </div>
-                <div class="pl-4"><x-nav-link url="/events" :active="request()->routeIs('events')"
-                        icon="angle-right">{{__('nav.events')}}</x-nav-link></div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive"
+                        icon="angle-right">{{__('nav.events.title')}}</x-nav-link>
+                </div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive"
+                        icon="angle-right">{{__('nav.giving.title')}}</x-nav-link>
+                </div>
+
             </div>
 
         </div>

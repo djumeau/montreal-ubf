@@ -1,9 +1,22 @@
 <?php
 
 return [
-    "about_us" => "About Us",
-    "events" => "Events",
-    "login" => "Login",
-    "register" => "Register",
-    "logout" => "Logout",
+    "about_us" => [ "title" => "About Us",
+                    "url" => "/about",
+                ],
+    "events" => [ "title" => "Events",
+                    "url" => "/events",
+                ],
+    "giving" => [ "title" => "Giving",
+                    "url" => "/giving",
+                ],
+    "login" => [ "title" => "Login",
+                     "url" => "/login",
+                ],
+    "register" => [ "title" => "Register",
+                    "url" => "/register",
+                ],
+    "logout" => [ "title" =>"Logout",
+                    "url" => "/logout",
+                ],
 ];

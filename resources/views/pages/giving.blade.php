@@ -76,7 +76,7 @@
             x-transition:leave-end="scale-95 translate-y-4"
             class="modal flex flex-col"
             x-cloak>
-            <span class="text-sm font-semibold text-slate-900">{{ __('giving.instructions') }}</span>
+            <span class="text-sm font-semibold text-slate-900 mb-2">{{ __('giving.instructions') }}</span>
 
             <!-- Video Wrapper -->
             <div class="w-full bg-black aspect-[346/766] max-h-[75vh] mx-auto overflow-hidden">
@@ -86,7 +86,7 @@
                 -->
                 <template x-if="isOpen">
                    <video
-                    class="w-full h-full object-cover hide-video-audio"
+                    class="w-full h-full object-cover hide-video-audio outline-2 outline-black"
                     controls
                     autoplay
                     muted

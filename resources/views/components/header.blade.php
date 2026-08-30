@@ -6,6 +6,10 @@
 
     $logoFilePath = 'images/icons/logo_ubf_white.svg';
 
+    $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
+    $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
+    $givingActive = request()->routeIs('giving') || request()->routeIs('donnez');
+
     if ($locale === 'fr_CA') {
         $logoFilePath = 'images/icons/logo_cbu_white.svg';
     }
@@ -37,9 +41,11 @@
         <!-- Desktop Menu -->
         <nav class="hidden md:flex items-center space-x-4">
 
-            <x-nav-link url="/about" :active="request()->routeIs('about')">{{__('nav.about_us')}}</x-nav-link>
+            <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" >{{__('nav.about_us.title')}}</x-nav-link>
 
-            <x-nav-link url="/events" :active="request()->routeIs('events')">{{__('nav.events')}}</x-nav-link>
+            <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
+
+            <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" >{{__('nav.giving.title')}}</x-nav-link>
 
             @auth
 
@@ -70,9 +76,11 @@
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
 
-        <x-nav-link url="/about" :active="request()->routeIs('about')" :isMobile='true'>{{__('nav.about_us')}}</x-nav-link>
+        <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
 
-        <x-nav-link url="/events" :active="request()->routeIs('events')" :isMobile='true'>{{__('nav.events')}}</x-nav-link>
+        <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
+
+        <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.events.giving')}}</x-nav-link>
 
         @auth
 
