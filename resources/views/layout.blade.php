@@ -60,7 +60,7 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
-            <x-study :image="asset('./images/john/jn_10.01-21-mobile.jpg')"
+            <x-study :image="asset('./images/john/jn_10.22-42-mobile.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 :dateStamp="__('home/study.dateStamp')"
@@ -85,7 +85,7 @@
             </x-hero>
 
             <x-study
-                :image="asset('./images/john/jn_10.01-21-desktop.jpg')"
+                :image="asset('./images/john/jn_10.22-42-desktop.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 dateStamp="{{__('home/study.dateStamp')}}"
