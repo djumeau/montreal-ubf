@@ -60,6 +60,14 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
+            <x-events
+                image="{{ __('home/events.image_mobile') }}"
+                title="{{__('home/events.title')}}"
+                dates="{{__('home/events.dates')}}"
+                location="{{__('home/events.location')}}" >
+                {{__('home/events.content')}}
+            </x-events>
+
             <x-study :image="asset('./images/john/jn_10.22-42-mobile.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
@@ -71,10 +79,6 @@
                 {{__('home/study.title')}}
             </x-study>
 
-            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-mobile.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
-            </x-events>
-
-
         </div>
 
         <!-- Desktop Hero -->
@@ -83,6 +87,14 @@
             <x-hero image="./images/montreal_skyline-desktop.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
+
+            <x-events
+                image="{{ __('home/events.image_desktop') }}"
+                title="{{__('home/events.title')}}"
+                dates="{{__('home/events.dates')}}"
+                location="{{__('home/events.location')}}" >
+                {{__('home/events.content')}}
+            </x-events>
 
             <x-study
                 :image="asset('./images/john/jn_10.22-42-desktop.jpg')"
@@ -95,9 +107,6 @@
                 :docURL="__('home/study.docLink')">
                 {{__('home/study.title')}}
             </x-study>
-
-            <x-events href='https://franco2026.university-bible-fellowship.ca' image='./images/2026_conf/2026-conf_franco_titre-desktop.jpg' title="{{__('home/events.title')}}" dates="{{__('home/events.dates')}}" location="{{__('home/events.location')}}">{{__('home/events.content')}}
-            </x-events>
 
         </div>
 

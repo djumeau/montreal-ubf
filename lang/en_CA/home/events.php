@@ -1,9 +1,12 @@
 <?php
 
 return [
-    'title' => 'Events',
-    "content" => "Conférence biblique francophone d'été 2026",
-    "dates" => "July 16 to 19, 2026",    
-    "location" => "John Abbott College - Ste-Anne-de-Bellevue, QC",
-    "more_info" => "More Information",
+
+    "title" => "Events",
+    "image_desktop" => "images/events/2026-09_welcome_week_en-desktop.jpg",
+    "image_mobile" => "images/events/2026-09_welcome_week_en-mobile.jpg",
+    "content" => "Welcome Back!",
+    "dates" => "September 11th and 18th, 2026",
+    "location" => "Montreal UBF Church",
+
 ];

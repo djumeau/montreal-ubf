@@ -10,7 +10,7 @@
         <!-- Responsive Grid Wrapper -->
         <div class='flex flex-col md:flex-row md:items-start flex-wrap justify-center items-center gap-6 pb-6'>
 
-            <x-card image='./images/ministry/montreal_ministry_20190616-original.jpg' title="{{__('home/card_1.title')}}"
+            <x-card image='./images/ministry/2026-08-11_mtl_ubf.jpeg' title="{{__('home/card_1.title')}}"
                 alt='Montréal 2019' class="w-full max-w-sml md:w-[30%] md:max-w-none">{{__('home/card_1.content')}}
             </x-card>
 

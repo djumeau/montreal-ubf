@@ -1,20 +1,29 @@
 @props([
-    'image' => './images/montreal_skyline-mobile.jpg',
+    'image' => '',
     'title' => '',
-    'dates' => '16 juillet au 19 juillet 2026',
-    'location' => 'CEGEP John Abbott - Ste-Anne-de-Bellevue, QC',
+    'dates' => '',
+    'location' => '',
     'href' => null,
-]) <!-- Events Section -->
+    'isMobile' => false,
+])
+
+@php
+
+@endphp
+
+<!-- Events Section -->
+
+<!-- image_desktop "{{ $image }}" -->
 
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
-    style="background-image: url('{{ asset($image) }}')">
+    style="background-image: url( '{{ $image }}' )">
 
     <div class='absolute top-2 left-3 md:top-3 text-white drop-shadow-lg'>
 
         <h2 @class(['hidden' => !isset($title),
                    'text-sm italic md:text-lg'
                     ])>{{ $title }}</h2>
-       
+
        <p class='font-semibold text-base md:text-xl'>{{ $slot }}</p>
         <div>
             <i class="fa-solid fa-calendar" aria-hidden="true"></i>

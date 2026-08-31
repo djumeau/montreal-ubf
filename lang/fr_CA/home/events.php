@@ -1,9 +1,12 @@
 <?php
 
 return [
+
     "title" => "Événements",
-    "content" => "Conférence biblique francophone d'été 2026",
-    "dates" => "Le 16 juillet au 19 juillet 2026",
-    "location" => "CEGEP John Abbott – Ste-Anne-de-Bellevue, QC",
-    "more_info" => "Plus d'info",     
+    "image_desktop" => "images/events/2026-09_welcome_week_fr-desktop.jpg",
+    "image_mobile" => "images/events/2026-09_welcome_week_fr-mobile.jpg",
+    "content" => "Bonne rentrée!",
+    "dates" => "Le 11 et 18 septembre 2026",
+    "location" => "Église CBU Montréal",
+
 ];
