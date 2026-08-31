@@ -1,8 +1,12 @@
 @php
 
-    $path = "donation_via_zeffy_en.mp4";
-    $videoDirPath = Storage::url('videos/'.$path);
+    $filename = __('giving.filename');
+    // $videoDirPath = asset('storage/videos/' . {{ __('giving.filename') }});
+
+    $filePath = Storage::url('videos/' . __('giving.filename'));
+
     // dd($filePath);
+
     // dd(Storage::disk('public')->exists('videos\donation_via_zeffy_en.mp4'));
 
     //dd(Storage::disk('public')->exists($videoDirPath));
@@ -12,11 +16,11 @@
 @endphp
 
 <x-layout x-data="{ isOpen: false,
-                    videoSrc: './videos/donation_via_zeffy_en.mp4' }"
+                    videoSrc: '{{ $filePath }}' }"
         class="giving bg-slate-900"
         textColor="text-white">
 
-    <!-- Video source: {{ $videoDirPath }} -->
+    <!-- Video source: {{ $filePath }} -->
 
     <x-slot name="title">{{ __('giving.title') }}</x-slot>
 
@@ -107,7 +111,7 @@
                     muted
                     playsinline
                     >
-                    <source :src="videoSrc" type="video/mp4">
+                    <source src="{{ asset('storage/videos/donation_via_zeffy_en.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
                     </video>
                 </template>
@@ -117,7 +121,5 @@
         </div>
 
     </div> <!-- End Modal -->
-
-
 
 </x-layout>
