@@ -24,7 +24,7 @@
 
     <x-slot name="title">{{ __('giving.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pb-8'>{{ __('giving.title') }}</h1>
+    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('giving.title') }}</h1>
 
     <x-blurb title="{{ __('giving.scripture') }}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 

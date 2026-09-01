@@ -8,5 +8,6 @@ return [
     "content" => "Welcome Back!",
     "dates" => "September 11th and 18th, 2026",
     "location" => "Montreal UBF Church",
+    "more_info" => "More Info",
 
 ];

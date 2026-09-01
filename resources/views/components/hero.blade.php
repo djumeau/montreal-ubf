@@ -9,7 +9,7 @@
 ])
 
 <!-- Hero Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80 flex items-center']) }}
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-85 md:h-90 flex items-center pt-8']) }}
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-black/75"></div>
@@ -19,7 +19,7 @@
         <div class="flex flex-col">
 
             <!-- top row -->
-            <div class="mb-2 mx-4">
+            <div class="mb-2 mx-4 pt-22 md:pt-25">
                 <h2 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h2>
                 <p class="text-white italic pt-6 pb-0">{{ $subtitle }}</p>
             </div>
@@ -40,11 +40,11 @@
 
             <!-- Bottom Row: Social Media Icons -->
 
-            <div class="col-span-2 text-center text-white pt-6 pb-2">
+            <div class="col-span-2 text-center text-white pt-2 pb-2">
                 <p class="text-white italic">{{ $social_media }}</p>
             </div>
 
-            <div class="flex justify-center gap-4">
+            <div class="flex justify-center gap-4 mb-4">
                 <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
                     <i class="fa-brands fa-instagram text-white text-3xl"></i>
                 </a>

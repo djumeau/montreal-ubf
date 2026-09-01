@@ -56,8 +56,12 @@
         <!-- Mobile Hero -->
         <div class='block md:hidden'>
 
-            <x-hero image="./images/montreal_skyline-mobile.jpg" subtitle="{{__('home/hero.subtitle')}}" cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
-                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
+            <x-hero
+                image="./images/montreal_skyline-mobile.jpg"
+                subtitle="{{__('home/hero.subtitle')}}"
+                cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
+                cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">
+                {{__('home/hero.welcome')}}
             </x-hero>
 
             <x-events

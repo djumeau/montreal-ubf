@@ -8,5 +8,6 @@ return [
     "content" => "Bonne rentrée!",
     "dates" => "Le 11 et 18 septembre 2026",
     "location" => "Église CBU Montréal",
+    "more_info" => "Plus d'Info",
 
 ];

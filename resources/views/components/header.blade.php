@@ -16,7 +16,9 @@
 
 @endphp
 
-<header class="sticky top-0 z-50 bg-blue-900/90 text-white p-4">
+<header
+    id="main-header"
+    class="bg-slate-900/95 fixed top-0 left-0 w-full z-50 text-white p-4">
 
     <div class="container mx-auto flex justify-between items-center">
 
@@ -74,7 +76,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="hidden md:hidden bg-blue-900 text-white mt-5 pb-4 space-y-2">
+    <nav id="mobile-menu" class="hidden md:hidden bg-slate-900/95 text-white mt-5 pb-4 space-y-2">
 
         <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
 

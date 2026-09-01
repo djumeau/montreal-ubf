@@ -7,7 +7,7 @@
 @endphp
 
 <!-- Footer -->
-<footer class="bg-blue-900 text-white pt-6 pb-2">
+<footer class="border-t border-white bg-slate-800 text-white pt-6 pb-2">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 

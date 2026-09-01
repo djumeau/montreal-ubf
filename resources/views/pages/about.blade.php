@@ -2,7 +2,7 @@
 
     <x-slot name="title">{{__('about/index.title')}}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold p-8'>{{__('about/index.title')}}</h1>
+    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{__('about/index.title')}}</h1>
 
     <x-blurb title="{{__('about/index.history.title')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
