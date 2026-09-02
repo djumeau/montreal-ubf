@@ -98,7 +98,7 @@
             <span class="text-sm font-semibold text-slate-900 mb-2">{{ __('giving.instructions') }}</span>
 
             <!-- Video Wrapper -->
-            <div class="w-full bg-black aspect-[350/775] max-h-[80vh] mx-auto overflow-hidden">
+            <div class="w-full bg-black aspect-350/775 max-h-[80vh] mx-auto overflow-hidden">
                 <!--
                 Binding the 'src' attribute ensures the iframe unloads/stops playing
                 instantly when 'isOpen' becomes false.
