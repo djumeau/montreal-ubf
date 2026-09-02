@@ -11,7 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bible_studies', function (Blueprint $table) {
+        Schema::create('bible_studies_en', function (Blueprint $table) {
+            $table->id();
+            $table->string('study_series_id')->nullable();
+            $table->unsignedInteger('book_id')->nullable();
+            $table->string('bible_passage')->nullable();
+            $table->json('title')->nullable();
+            $table->json('image_links')->nullable();
+            $table->json('passage_links')->nullable();
+            $table->json('question_sheet')->nullable();
+            $table->json('lecture')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('bible_studies_fr', function (Blueprint $table) {
             $table->id();
             $table->string('study_series_id')->nullable();
             $table->unsignedInteger('book_id')->nullable();
@@ -30,6 +43,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bible_study');
+        Schema::dropIfExists('bible_studies_en');
+        Schema::dropIfExists('bible_studies_fr');
     }
 };
