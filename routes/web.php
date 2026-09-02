@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
-use App\Http\Controllers\BibleController;
+use App\Http\Controllers\BibleBookController;
 use App\Http\Controllers\BibleStudyController;
 
 use App\Http\Controllers\AboutController;
@@ -36,7 +36,7 @@ Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
 
-Route::get('/bible-books', [BibleController::class, 'index'])->name('bible-books');
+Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');
 
 Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
 

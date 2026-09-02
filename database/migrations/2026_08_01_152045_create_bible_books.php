@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('abbreviation_en');
             $table->string('name_fr');
             $table->string('abbreviation_fr');
+            $table->enum('testament', ['ot', 'nt']);
             $table->integer('chapters')->unsigned();
             $table->timestamps();
         });
