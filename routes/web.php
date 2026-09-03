@@ -56,6 +56,22 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Migrations
+
+Route::get('/fresh-migrations-xyz', function () {
+    try {
+        //1. clear config cache
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        //2. rollback migrations
+        Artisan::call('migrate:fresh', ['--force' => true]);
+        return 'Success: ' . Artisan::output();
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
 Route::get('/run-migrations-xyz', function () {
     try {
         //1. clear config cache
