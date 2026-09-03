@@ -88,8 +88,15 @@ Route::get('/run-migrations-xyz', function () {
 
 Route::get('/run-seeders', function () {
 
-    Artisan::call('db:seed', ['--force' => true]);
+    try {
+        // Force the seeder to run
+        Artisan::call('db:seed', ['--force' => true]);
 
-    return 'Database seeding completed successfully!';
+        // Fetch the raw error output if the artisan command caught it internally
+        return response('<pre>' . Artisan::output() . '</pre>');
+    } catch (\Exception $e) {
+        // This will print the exact SQL error MySQL is throwing out
+        return response('Failed: ' . $e->getMessage(), 500);
+    }
 
 });
