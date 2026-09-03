@@ -57,7 +57,6 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Migrations -- Comment out when not in use.
-
 /*
 Route::get('/fresh-migrations-xyz', function () {
     try {
