@@ -39,7 +39,7 @@ Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
 // ca-FR
-    Route::get('/visionnez-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
+    Route::get('/visionner-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
 
