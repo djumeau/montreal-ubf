@@ -85,3 +85,9 @@ Route::get('/run-migrations-xyz', function () {
         return 'Error: ' . $e->getMessage();
     }
 });
+
+Route::get('/run-seeders', function () {
+    Artisan::call('db:seed');
+
+    return 'Database seeding completed successfully!';
+});
