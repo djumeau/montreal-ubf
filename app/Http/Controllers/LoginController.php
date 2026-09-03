@@ -16,18 +16,6 @@ class LoginController extends Controller
         return view('pages.auth.login');
     }
 
-    // @desc Logout User
-    // @route POST / Logout
-    public function logout(Request $request): RedirectResponse
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken(); // Regenerate CSRF token to prevent CSRF attacks.
-
-        return redirect(route('home'));
-    }
-
     // @desc Authenticate User
     // @route POST /login
     public function authenticate(Request $request): RedirectResponse
@@ -49,4 +37,17 @@ class LoginController extends Controller
             'email' => __('auth/index.validation.not_matched'),
         ])->onlyInput('email');
     }
+
+    // @desc Logout User
+    // @route POST / Logout
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken(); // Regenerate CSRF token to prevent CSRF attacks.
+
+        return redirect(route('home'));
+    }
+
 }

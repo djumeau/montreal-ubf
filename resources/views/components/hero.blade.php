@@ -9,7 +9,7 @@
 ])
 
 <!-- Hero Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-85 md:h-90 flex items-center pt-8']) }}
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-85 md:h-90 flex items-center pt-6']) }}
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-black/75"></div>

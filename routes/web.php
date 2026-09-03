@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
@@ -36,18 +34,35 @@ Route::get('/donnez', [GivingController::class, 'index'])->name('donnez');
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 
+// ca-EN
 Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
+// ca-FR
+    Route::get('/visionnez-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
+    ->where('dir', '.*') // Allows slashes inside the dir parameter
+    ->name('pdf.view');
 
+// Bible Books and Study Series
 Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');
 Route::get('/study-series', [StudySeriesController::class, 'index'])->name('study-series');
 
+// Bible Studies
+// ca-EN
 Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
 Route::get('/bible-studies/create', [BibleStudyController::class, 'create'])->name('bible-studies.create');
 Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('bible-studies.store');
 Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
 
+// ca-FR
+Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
+Route::get('/bible-studies/create', [BibleStudyController::class, 'create'])->name('bible-studies.create');
+Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('bible-studies.store');
+Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
+
+// Authentication Routes
+
+// ca-EN
 Route::get('/register', [RegisterController::class, 'register'])->name('register'); // Shows the form
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); // Handles form submission
 
@@ -55,6 +70,15 @@ Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// ca-FR
+Route::get('/enregister', [RegisterController::class, 'register'])->name('enregistrer'); // Shows the form
+Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgardez'); // Handles form submission
+
+Route::get('/connexion', [LoginController::class, 'login'])->name('connexion'); // Shows the login form
+Route::post('/connexion', [LoginController::class, 'authenticate'])->name('connexion.authentifier'); // Handles login submission
+
+Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexion');
 
 // Migrations -- Comment out when not in use.
 /*
