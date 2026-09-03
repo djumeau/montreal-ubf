@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_en');
             $table->string('name_fr');
-            $table->json('dates')->nullable();
+            $table->string('dates')->nullable();
             $table->timestamps();
         });
     }

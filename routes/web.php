@@ -7,6 +7,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
 use App\Http\Controllers\BibleBookController;
+
+use App\Http\Controllers\StudySeriesController;
+
 use App\Http\Controllers\BibleStudyController;
 
 use App\Http\Controllers\AboutController;
@@ -37,13 +40,11 @@ Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'
     ->name('pdf.view');
 
 Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');
+Route::get('/study-series', [StudySeriesController::class, 'index'])->name('study-series');
 
 Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
-
 Route::get('/bible-studies/create', [BibleStudyController::class, 'create'])->name('bible-studies.create');
-
 Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('bible-studies.store');
-
 Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
 
 Route::get('/register', [RegisterController::class, 'register'])->name('register'); // Shows the form

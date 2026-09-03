@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         // Remove tables
         DB::table('users')->truncate();
+        DB::table('study_series')->truncate();
         DB::table('bible_books')->truncate();
 
         User::factory()->create([
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(BibleBookSeeder::class);
+        $this->call(StudySeriesSeeder::class);
 
     }
 }
