@@ -87,7 +87,9 @@ Route::get('/run-migrations-xyz', function () {
 });
 
 Route::get('/run-seeders', function () {
-    Artisan::call('db:seed');
+
+    Artisan::call('db:seed', ['--force' => true]);
 
     return 'Database seeding completed successfully!';
+
 });
