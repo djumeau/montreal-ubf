@@ -55,10 +55,10 @@ Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->nam
 Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
 
 // ca-FR
-Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
-Route::get('/bible-studies/create', [BibleStudyController::class, 'create'])->name('bible-studies.create');
-Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('bible-studies.store');
-Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
+Route::get('/etudes-bibliques', [BibleStudyController::class, 'index'])->name('etudes-bibliques');
+Route::get('/etudes-bibliques/create', [BibleStudyController::class, 'create'])->name('etudes-bibliques.creer');
+Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('etudes-bibliques.sauvarder');
+Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('etudes-bibliques.visionner');
 
 // Authentication Routes
 
@@ -73,7 +73,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // ca-FR
 Route::get('/enregister', [RegisterController::class, 'register'])->name('enregistrer'); // Shows the form
-Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgardez'); // Handles form submission
+Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgarder'); // Handles form submission
 
 Route::get('/connexion', [LoginController::class, 'login'])->name('connexion'); // Shows the login form
 Route::post('/connexion', [LoginController::class, 'authenticate'])->name('connexion.authentifier'); // Handles login submission
