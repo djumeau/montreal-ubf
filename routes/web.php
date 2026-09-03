@@ -58,6 +58,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/run-migrations-xyz', function () {
     try {
+        //1. clear config cache
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        //2. run migrations
         Artisan::call('migrate', ['--force' => true]);
         return 'Success: ' . Artisan::output();
     } catch (\Exception $e) {
