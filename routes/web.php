@@ -56,8 +56,9 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Migrations
+// Migrations -- Comment out when not in use.
 
+/*
 Route::get('/fresh-migrations-xyz', function () {
     try {
         //1. clear config cache
@@ -100,3 +101,4 @@ Route::get('/run-seeders', function () {
     }
 
 });
+*/
