@@ -10,12 +10,13 @@ class BibleBookController extends Controller
 {
     // @desc Show the bible-books page
     // @route GET /bible-books
-    public function index()
+    public function index(): View
     {
         // Fetches the entire array from lang/{locale}/bible.php matching current middleware locale
-        $bible_books = BibleBook::all();
+        $ot = BibleBook::where('testament', 'ot')->get();
+        $nt = BibleBook::where('testament', 'nt')->get();
 
         // 3. Pass the grouped collection to the view
-        return view('bible-books', compact('bible_books'));
+        return view('bible-books', compact('ot', 'nt'));
     }
 }

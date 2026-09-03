@@ -8,4 +8,6 @@ return [
     "chapters" => "Chapitres",
     "verses" => "Versets",
     "read" => "Lisez",
+    "books" => "Livres",
+    "bible_books" => "Livres bibliques",
 ];

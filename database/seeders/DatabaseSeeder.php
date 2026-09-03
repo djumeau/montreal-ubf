@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\BibleBook;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Enums\UserPrivilege;
+
+use Database\Seeders\InitUserSeeder;
+use Database\Seeders\StudySeriesSeeder;
+use Database\Seeders\BibleBookSeeder;
 
 use Illuminate\Support\Facades\DB;
 
@@ -24,15 +25,9 @@ class DatabaseSeeder extends Seeder
         DB::table('study_series')->truncate();
         DB::table('bible_books')->truncate();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@test.com',
-            'password' => bcrypt('123456'), // Replace with a secure password
-            'privileges' => UserPrivilege::GUEST,
-        ]);
-
-        $this->call(BibleBookSeeder::class);
+        $this->call(InitUserSeeder::class);
         $this->call(StudySeriesSeeder::class);
+        $this->call(BibleBookSeeder::class);
 
     }
 }

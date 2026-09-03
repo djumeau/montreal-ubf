@@ -13,7 +13,7 @@ class StudySeriesSeeder extends Seeder
      */
     public function run(): void
     {
-         // Load English Bible books data
+        // Load Init Study Series data
         $study_series = require database_path('seeders/data/study_series.php');
 
         // Insert Bible books into the database
