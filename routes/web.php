@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
@@ -54,3 +55,12 @@ Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/run-migrations-xyz', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        return 'Success: ' . Artisan::output();
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
