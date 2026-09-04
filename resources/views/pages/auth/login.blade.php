@@ -27,7 +27,7 @@
             </button>
 
             <p class="mt-4 text-gray-200 italic">
-                {{ __('auth/index.dont_have_account') }} <a href="{{ $isFrench ? route('enregistrer') : route('register') }}"
+                {{ __('auth/index.dont_have_account') }} <a href="{{ __('nav.login.url') }}"
                     class="text-blue-200 hover:text-blue-500">{{ __('auth/index.register') }}</a>
             </p>
 

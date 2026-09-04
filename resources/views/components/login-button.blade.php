@@ -16,7 +16,7 @@ $loginIsNotActive = request()->routeIs('login') || request()->routeIs('connexion
     </div>
 @else
     <a href="{{ route(__('nav.login.name')) }}"
-        class=" {{ $isMobile ? 'block text-center' : '' }} bg-sky-900/50 justify-right hover:bg-sky-950/50 text-white font-bold py-2 px-2 rounded
+        class=" {{ $isMobile ? 'block text-center' : '' }} bg-sky-900/50 justify-right hover:bg-sky-950/50 text-white font-bold py-2 px-2 rounded cursor-pointer
         outline-1 outline-white focus:shadow-outline">
         <i class="fa fa-user p-0 mr-1"></i>
         {{ __('nav.login.title') }}
