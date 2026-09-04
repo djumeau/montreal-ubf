@@ -4,39 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\View\View as IlluminateView;
+use Illuminate\View\View;
 
 use App\Models\BibleStudy;
 
 class BibleStudyController extends Controller
 {
     // @desc Show all bible studies
-    // @route GET /bible-study
-    public function index()
+    // @route GET /bible-studies
+    public function index(): View
     {
         $biblestudies = BibleStudy::all();
 
-        return view('pages.bible-study.index')->with('biblestudies', $biblestudies);
+        return view('pages.bible-studies.index')->with('biblestudies', $biblestudies);
     }
 
     // @desc Show bible study id
-    // @route GET /bible-study/{id}
-    public function show(int $id):IlluminateView
+    // @route GET /bible-studies/{id}
+    public function show(int $id):View
     {
         $biblestudy = BibleStudy::findOrFail($id);
 
-        return view('pages.bible-study.show')->with('biblestudy', $biblestudy);
+        return view('pages.bible-studies.show')->with('biblestudy', $biblestudy);
     }
 
     // @desc Create bible study lesson
-    // @route GET /bible-study/create
-    public function create():IlluminateView
+    // @route GET /bible-studies/create
+    public function create(): View
     {
-        return view('pages.bible-study.create');
+        return view('pages.bible-studies.create');
     }
 
     // @desc Save bible study lesson
-    // @route POST /bible-study
+    // @route POST /bible-studies/store
     public function store(Request $request)
     {
         $validatedData = $request->validate([

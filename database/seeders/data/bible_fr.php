@@ -1,6 +1,5 @@
 <?php
 
-
 // Source: https://www.crosswire.org/ftpmirror/pub/sword/raw/locales.d/fr_abbrev.conf
 
 return [
