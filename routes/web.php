@@ -81,6 +81,12 @@ Route::post('/connexion', [LoginController::class, 'authenticate'])->name('conne
 
 Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexion');
 
+// User Dashboard
+Route::middleware('auth')->group(function () {
+    Route::get('/user-dashboard', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('user-dashboard');
+    Route::get('/tableau-utilisateur', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('tableau-utilisateur');
+});
+
 // Migrations -- Comment out when not in use.
 /*
 Route::get('/fresh-migrations-xyz', function () {

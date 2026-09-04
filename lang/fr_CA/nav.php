@@ -26,5 +26,9 @@ return [
                     "url" => "/deconnexion",
                     "name" => "deconnexion",
                 ],
+    "dashboard" => [ "title" => "Tableau de bord",
+                    "url" => "/tableau-utilisateur",
+                    "name" => "tableau-utilisateur",
+                ],
 
 ];

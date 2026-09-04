@@ -24,21 +24,33 @@
 
     <div class="container mx-auto flex justify-between items-center">
 
-        <div class="inline-flex">
+        <div>
 
-            @if (request()->routeIs('home'))
-                <div class="inline-flex items-center p-0">
-                    <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
-                    alt="{{__('header.logo_alt')}}" />
-                    <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
-                </div>
-            @else
-                <a href="{{ route('home') }}" class="inline-flex items-center p-0">
-                    <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 80px;"
-                    alt="{{__('header.logo_alt')}}" />
-                    <h1 class="ml-2 text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
-                </a>
-            @endif
+            <!-- Row 1: Logo and Site Name -->
+            <div id="row 1" class="flex items-center">
+                @if (request()->routeIs('home'))
+                    <div class="mt-2 mb-0 inline-flex items-center">
+                        <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
+                        alt="{{__('header.logo_alt')}}" />
+                        <h1 class="text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                    </div>
+                @else
+                    <a href="{{ route('home') }}" class="inline-flex items-center">
+                        <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
+                        alt="{{__('header.logo_alt')}}" />
+                        <h1 class="text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                    </a>
+                @endif
+            </div>
+
+            <!-- Row 2: Welcome Message -->
+            <div id="row 2">
+                @auth
+                    @if($homeActive)
+                        <span class="italic ml-3">{{ __('home/index.hello') }}, <a href="{{ __('nav.dashboard.url') }}" id="msg" class="text-blue-300 hover:text-blue-500 underline">{{ Auth::User()->name }}!</a></span>
+                    @endif
+                @endauth
+            </div>
 
         </div>
 
@@ -57,8 +69,6 @@
 
             @auth
 
-                {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
-
                 <x-logout-button />
 
             @else
@@ -74,12 +84,6 @@
         </button>
 
     </div>
-
-    @auth
-        @if($homeActive)
-            <div id="msg" class="container pl-1 italic">{{ __('home/index.hello') }}, {{ Auth::User()->name }}!</div>
-        @endif
-    @endauth
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden text-white space-y-1">
