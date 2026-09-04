@@ -5,6 +5,7 @@ return [
     "register" => "Enregistrer",
     "login" => "Connexion",
     "submit" => "Soumettre",
+    "name" => "Nom complet",
     "email" => "Courriel",
     "username" => "Nom d'utilisateur",
     "password" => "Mot de passe",

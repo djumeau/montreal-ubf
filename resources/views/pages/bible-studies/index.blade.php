@@ -9,19 +9,4 @@
 
     <h1 class='text-right text-4xl font-bold pb-8 pt-18'>{{ __('bible-study/index.title') }}</h1>
 
-    <ul>
-        @forelse($biblestudies as $biblestudy)
-            @php
-                $jsonData = json_decode($biblestudy->title);
-                $value = data_get($jsonData, $locale, 'Default Feedback');
-            @endphp
-
-            <li>
-                {{ $value }}
-            </li>
-        @empty
-            <li>No Bible studies available.</li>
-        @endforelse
-    </ul>
-
 </x-layout>

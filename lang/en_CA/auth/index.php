@@ -5,6 +5,7 @@ return [
     "register" => "Register",
     "login" => "Login",
     "submit" => "Submit",
+    "name" => "Full Name",
     "email" => "Email",
     "username" => "Username",
     "password" => "Password",
