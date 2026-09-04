@@ -64,8 +64,8 @@ Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('
 // Authentication Routes
 
 // ca-EN
-Route::get('/register', [RegisterController::class, 'register'])->name('register'); // Shows the form
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); // Handles form submission
+// Route::get('/register', [RegisterController::class, 'register'])->name('register'); // Shows the form
+// Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); // Handles form submission
 
 Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows the login form
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
@@ -73,8 +73,8 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // ca-FR
-Route::get('/enregister', [RegisterController::class, 'register'])->name('enregistrer'); // Shows the form
-Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgarder'); // Handles form submission
+// Route::get('/enregister', [RegisterController::class, 'register'])->name('enregistrer'); // Shows the form
+// Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgarder'); // Handles form submission
 
 Route::get('/connexion', [LoginController::class, 'login'])->name('connexion'); // Shows the login form
 Route::post('/connexion', [LoginController::class, 'authenticate'])->name('connexion.authentifier'); // Handles login submission
