@@ -2,7 +2,7 @@
 
 return [
 
-    "title" => "Donnez",
+    "title" => "Donner",
     "scripture" => "« ...puisqu’il a lui-même dit: ‘Il y a plus de bonheur à donner qu’à recevoir.’ » - Actes 20.35",
 
     "introduction" => "Merci de votre intérêt à aider notre ministère. Comme nous sommes encouragés à donner librement, conformément au commandement de Jésus, tout soutien financier est apprécié pour faire avancer l’œuvre de Dieu à Montréal, au Québec, au Canada et dans le monde entier. Ces ressources servent à couvrir les dépenses liées à l’entretien de notre église et à soutenir la mission mondiale des campus. Il existe plusieurs façons de donner :",
