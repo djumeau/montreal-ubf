@@ -10,9 +10,9 @@
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('auth/index.login') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pb-8 mt-18'>{{ __('auth/index.login') }}</h1>
+    <h1 class='text-right text-4xl font-bold pb-8 pt-18'>{{ __('auth/index.login') }}</h1>
 
-    <div class="max-w-md mx-auto bg-slate-800 p-6 m-6 rounded-lg shadow-md text-white outline-2">
+    <div class="max-w-md mx-auto bg-slate-800 p-6 mb-6 rounded-lg shadow-md text-white outline-2">
 
         <form novalidate action="{{ $isFrench ? route('connexion.authentifier') : route('login.authenticate')}}" method="POST">
             @csrf

@@ -75,7 +75,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="hidden md:hidden bg-slate-900/90 text-white mt-5 pb-4 space-y-2">
+    <nav id="mobile-menu" class="hidden md:hidden text-white space-y-1">
 
         <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
 
@@ -83,21 +83,21 @@
 
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>
 
+        <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true'>
+            {{Str::upper(Str::before($newLocale, '_'))}}
+        </x-nav-link>
+
         @auth
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            <x-logout-button />
+            <x-logout-button isMobile='true' />
 
         @else
 
-            <x-login-button />
+            <x-login-button isMobile='true' />
 
         @endauth
-
-        <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true'>
-            {{Str::upper(Str::before($newLocale, '_'))}}
-        </x-nav-link>
 
     </nav>
 

@@ -1,3 +1,11 @@
+@php
+    use Illuminate\Support\Str;
+
+    $locale = app()->getLocale();
+    $isFrench = ($locale === 'fr_CA');
+
+@endphp
+
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('auth/index.register') }}</x-slot>
@@ -22,6 +30,10 @@
                 class="bg-blue-500 align-right hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
                 outline-1 outline-white hover:outline-2 focus:shadow-outline">{{ __('auth/index.register') }}
             </button>
+
+            <p class="mt-4 text-gray-200 italic">
+                {{ __('auth/index.already_have_account') }} <a href="{{ $isFrench ? route('connexion') : route('login') }}"
+                    class="text-blue-200 hover:text-blue-500">{{ __('auth/index.login') }}</a>
 
         </form>
     </div>
