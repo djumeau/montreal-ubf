@@ -1,3 +1,10 @@
+@php
+    use Illuminate\Support\Str;
+
+    $locale = app()->getLocale();
+    $isFrench = ($locale === 'fr_CA');
+@endphp
+
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('auth/index.login') }}</x-slot>
@@ -6,7 +13,7 @@
 
     <div class="max-w-md mx-auto bg-slate-800 p-6 m-6 rounded-lg shadow-md text-white outline-2">
 
-        <form novalidate action="{{ route('login.authenticate') }}" method="POST">
+        <form novalidate action="{{ $isFrench ? route('connexion.authentifier') : route('login.authenticate')}}" method="POST">
             @csrf
 
             <x-inputs.text id="email" name="email" type="email" placeholder="{{ __('auth/index.email') }}" value="{{ old('email') }}" />
@@ -19,7 +26,7 @@
             </button>
 
             <p class="mt-4 text-gray-200 italic">
-                {{ __('auth/index.dont_have_account') }} <a href="{{ route('register') }}"
+                {{ __('auth/index.dont_have_account') }} <a href="{{ $isFrench ? route('enregistrer') : route('register') }}"
                     class="text-blue-200 hover:text-blue-500">{{ __('auth/index.register') }}</a>
             </p>
 

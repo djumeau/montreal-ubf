@@ -2,6 +2,7 @@
     use Illuminate\Support\Str;
 
     $locale = app()->getLocale();
+    $isFrench = ($locale === 'fr_CA');
     $newLocale = ($locale === 'en_CA' ? 'fr_CA' : 'en_CA');
 
     $logoFilePath = 'images/icons/logo_ubf_white.svg';
@@ -49,23 +50,21 @@
 
             <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" >{{__('nav.giving.title')}}</x-nav-link>
 
+            <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
+                {{Str::upper(Str::before($newLocale, '_'))}}
+            </x-nav-link>
+
             @auth
 
                 {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-                {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link> --}}
+                <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link>
 
             @else
 
-                {{-- <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
-
-                <x-nav-link url="/register" :active="request()->routeIs('register')">{{__('nav.register')}}</x-nav-link> --}}
+                <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link>
 
             @endauth
-
-            <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
-                {{Str::upper(Str::before($newLocale, '_'))}}
-            </x-nav-link>
 
         </nav>
 
@@ -88,13 +87,11 @@
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link> --}}
+            <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link>
 
         @else
 
-            {{-- <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link>
-
-            <x-nav-link url="/register" :active="request()->routeIs('register')" :isMobile='true'>{{__('nav.register')}}</x-nav-link> --}}
+            <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link>
 
         @endauth
 
