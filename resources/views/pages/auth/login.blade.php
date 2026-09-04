@@ -26,10 +26,10 @@
                 outline-1 outline-white hover:outline-2 focus:shadow-outline">{{ __('auth/index.submit') }}
             </button>
 
-            <p class="mt-4 text-gray-200 italic">
+            {{-- <p class="mt-4 text-gray-200 italic">
                 {{ __('auth/index.dont_have_account') }} <a href="{{ __('nav.login.url') }}"
                     class="text-blue-200 hover:text-blue-500">{{ __('auth/index.register') }}</a>
-            </p>
+            </p> --}}
 
         </form>
 
