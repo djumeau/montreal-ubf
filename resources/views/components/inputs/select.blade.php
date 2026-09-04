@@ -1,4 +1,4 @@
-@props(['id', 'name', 'label' => null, 'value' => '', 'placeholder' => '', rows => '7', cols => '30'])
+@props(['id', 'name', 'label' => null, 'value' => '', 'options' => []])
 
 <div class="mb-4">
 
@@ -7,10 +7,16 @@
             for="{{ $id }}">{{ $label }}</label>
     @endif
 
-    <textarea cols="{{ $cols }}" rows="{{ $rows }}" id="{{ $id }}" name="{{ $name }}" placeholder="{{ $placeholder }}"
+    <select id="{{ $id }}" name="{{ $name }}"
         class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline @error($name) border-red-500 @else border-slate-300 @enderror text-sm">
-        {{ old($name, $value) }}
-    </textarea>
+
+        @foreach ($options as $optionValue => $optionLabel)
+            <option value="{{ $optionValue }}" {{ old($name, $value) == $optionValue ? 'selected' : '' }}>
+                {{ $optionLabel }}
+            </option>
+        @endforeach
+
+    </select>
 
     @error($name)
         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
