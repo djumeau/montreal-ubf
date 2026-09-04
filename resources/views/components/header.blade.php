@@ -47,7 +47,7 @@
             <div id="row 2">
                 @auth
                     @if($homeActive)
-                        <span class="italic ml-3">{{ __('home/index.hello') }}, <a href="{{ __('nav.dashboard.url') }}" id="msg" class="text-blue-300 hover:text-blue-500 underline">{{ Auth::User()->name }}</a>!</span>
+                         <i class="ml-3 fa fa-user p-0 mr-1"></i><span class="italic">{{ __('home/index.hello') }}, <a href="{{ __('nav.dashboard.url') }}" id="msg" class="text-blue-300 hover:text-blue-500 underline">{{ Auth::User()->name }}</a>{{ $isFrench ? ' !' : '!' }}</span>
                     @endif
                 @endauth
             </div>

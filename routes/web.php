@@ -83,8 +83,13 @@ Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexi
 
 // User Dashboard
 Route::middleware('auth')->group(function () {
+
     Route::get('/user-dashboard', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('user-dashboard');
+    Route::put('/user-dashboard/update-password', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('password.update');
+
     Route::get('/tableau-utilisateur', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('tableau-utilisateur');
+    // Route::put('/user-password.update', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('update-password');
+
 });
 
 // Migrations -- Comment out when not in use.
