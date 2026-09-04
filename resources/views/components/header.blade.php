@@ -58,12 +58,11 @@
 
                 {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-                // This is wrong, it should be a form with a POST method to logout, not a link. But for now, we will keep it as is.
-                <x-nav-link url="{{ __('nav.logout.url') }}" icon="arrow-right-from-bracket">{{__('nav.logout.title')}}</x-nav-link>
+                <x-logout-button />
 
             @else
 
-                <x-nav-link url="{{ __('nav.login.url') }}" icon="user">{{__('nav.login.title')}}</x-nav-link>
+                <x-login-button />
 
             @endauth
 
@@ -88,12 +87,11 @@
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            // This is wrong, it should be a form with a POST method to logout, not a link. But for now, we will keep it as is.
-            <x-nav-link url="{{ __('nav.logout.url') }}" icon="arrow-right-from-bracket" :isMobile='true'>{{__('nav.logout.title')}}</x-nav-link>
+            <x-logout-button />
 
         @else
 
-            <x-nav-link url="{{ __('nav.login.url') }}" icon="user" :isMobile='true'>{{__('nav.login.title')}}</x-nav-link>
+            <x-login-button />
 
         @endauth
 
