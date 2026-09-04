@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
+
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\RedirectResponse;
 
 class SwitchLanguageController extends Controller
@@ -12,7 +13,7 @@ class SwitchLanguageController extends Controller
     public function setLocale(string $locale): RedirectResponse
     {
         if (in_array($locale, ['en_CA', 'fr_CA'])) {
-            Session::put('Locale', $locale);
+            Cookie::queue('locale', $locale, 43200); // 30 days
         }
 
         return redirect()->back();

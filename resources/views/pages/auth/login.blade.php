@@ -3,6 +3,7 @@
 
     $locale = app()->getLocale();
     $isFrench = ($locale === 'fr_CA');
+
 @endphp
 
 <x-layout class="bg-slate-900" textColor="text-white">
@@ -21,7 +22,7 @@
             <x-inputs.text id="password" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
             <button type="submit"
-                class="bg-blue-500 justify-right hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
+                class="bg-sky-900 justify-right hover:bg-sky-950 text-white font-bold py-2 px-4 rounded
                 outline-1 outline-white hover:outline-2 focus:shadow-outline">{{ __('auth/index.submit') }}
             </button>
 

@@ -75,7 +75,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="hidden md:hidden bg-slate-900/95 text-white mt-5 pb-4 space-y-2">
+    <nav id="mobile-menu" class="hidden md:hidden bg-slate-900/90 text-white mt-5 pb-4 space-y-2">
 
         <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
 

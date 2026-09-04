@@ -42,12 +42,15 @@ class LoginController extends Controller
     // @route POST / Logout
     public function logout(Request $request): RedirectResponse
     {
+        $locale = app()->getLocale();
+        $isFrench = ($locale === 'fr_CA');
+
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken(); // Regenerate CSRF token to prevent CSRF attacks.
 
-        return redirect(route('home'));
+        return redirect('/')->with('success', 'You have been logged out.');
     }
 
 }
