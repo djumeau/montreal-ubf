@@ -31,7 +31,7 @@ Route::get('/giving', [GivingController::class, 'index'])->name('giving');
 // ca-FR
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');
 Route::get('/evenements', [EventController::class, 'index'])->name('evenements');
-Route::get('/donnez', [GivingController::class, 'index'])->name('donnez');
+Route::get('/donner', [GivingController::class, 'index'])->name('donner');
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 
