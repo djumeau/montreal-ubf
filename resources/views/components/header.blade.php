@@ -7,6 +7,7 @@
 
     $logoFilePath = 'images/icons/logo_ubf_white.svg';
 
+    $homeActive = request()->routeIs('home');
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donnez');
@@ -73,6 +74,12 @@
         </button>
 
     </div>
+
+    @auth
+        @if($homeActive)
+            <div id="msg" class="container pl-4 italic">{{ __('home/index.hello') }}, {{ Auth::User()->name }}!</div>
+        @endif
+    @endauth
 
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden text-white space-y-1">

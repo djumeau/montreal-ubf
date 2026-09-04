@@ -9,7 +9,7 @@
 ])
 
 <!-- Hero Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-85 md:h-90 flex items-center pt-6']) }}
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-[425px] flex items-center pt-12']) }}
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-black/75"></div>
@@ -44,7 +44,7 @@
                 <p class="text-white italic">{{ $social_media }}</p>
             </div>
 
-            <div class="flex justify-center gap-4 mb-4">
+            <div class="flex justify-center gap-4 ">
                 <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
                     <i class="fa-brands fa-instagram text-white text-3xl"></i>
                 </a>
