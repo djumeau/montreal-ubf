@@ -82,7 +82,7 @@ Route::post('/connexion', [LoginController::class, 'authenticate'])->name('conne
 Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexion');
 
 // Migrations -- Comment out when not in use.
-/*
+
 Route::get('/fresh-migrations-xyz', function () {
     try {
         //1. clear config cache
@@ -125,4 +125,3 @@ Route::get('/run-seeders', function () {
     }
 
 });
-*/
