@@ -77,7 +77,7 @@
 
     @auth
         @if($homeActive)
-            <div id="msg" class="container pl-4 italic">{{ __('home/index.hello') }}, {{ Auth::User()->name }}!</div>
+            <div id="msg" class="container pl-1 italic">{{ __('home/index.hello') }}, {{ Auth::User()->name }}!</div>
         @endif
     @endauth
 
