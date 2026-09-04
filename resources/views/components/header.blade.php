@@ -58,11 +58,11 @@
 
                 {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-                {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')">{{__('nav.logout')}}</x-nav-link> --}}
+                <x-nav-link url="{{ __('nav.logout.url') }}" icon="arrow-right-from-bracket">{{__('nav.logout.title')}}</x-nav-link>
 
             @else
 
-                {{-- <x-nav-link url="/login" :active="request()->routeIs('login')">{{__('nav.login')}}</x-nav-link> --}}
+                <x-nav-link url="{{ __('nav.login.url') }}" icon="user">{{__('nav.login.title')}}</x-nav-link>
 
             @endauth
 
@@ -87,11 +87,11 @@
 
             {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
-            {{-- <x-nav-link url="/logout" :active="request()->routeIs('logout')" :isMobile='true'>{{__('nav.logout')}}</x-nav-link> --}}
+            <x-nav-link url="{{ __('nav.logout.url') }}" icon="arrow-right-from-bracket" :isMobile='true'>{{__('nav.logout.title')}}</x-nav-link>
 
         @else
 
-            {{-- <x-nav-link url="/login" :active="request()->routeIs('login')" :isMobile='true'>{{__('nav.login')}}</x-nav-link> --}}
+            <x-nav-link url="{{ __('nav.login.url') }}" icon="user" :isMobile='true'>{{__('nav.login.title')}}</x-nav-link>
 
         @endauth
 
