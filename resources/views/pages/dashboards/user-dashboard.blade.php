@@ -16,7 +16,7 @@
             </div>
 
             <!-- User Details - {{ $user->name }} -->
-            <h2 class="text-xl font-bold text-black mb-2>{{ $user->name }}</h2>
+            <h2 class="text-xl font-bold text-black">{{ $user->name }}</h2>
             <p class="text-sm text-gray-900 mb-4">{{ $user->email }}</p>
 
             <!-- Profile Category -->
