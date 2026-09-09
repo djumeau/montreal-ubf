@@ -72,7 +72,7 @@
                 {{__('home/events.content')}}
             </x-events>
 
-            <x-study :image="asset('./images/john/jn_10.22-42-mobile.jpg')"
+            <x-study :image="asset('./images/john/jn_11.01-16-mobile.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 :dateStamp="__('home/study.dateStamp')"
@@ -101,7 +101,7 @@
             </x-events>
 
             <x-study
-                :image="asset('./images/john/jn_10.22-42-desktop.jpg')"
+                :image="asset('./images/john/jn_11.01-16-desktop.jpg')"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 dateStamp="{{__('home/study.dateStamp')}}"

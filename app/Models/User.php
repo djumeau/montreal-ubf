@@ -40,4 +40,9 @@ class User extends Authenticatable
             'privileges' => UserPrivilege::class, // Cast to Enum
         ];
     }
+
+    public function isAdmin(): bool {
+        return $this->privileges === 'admin';
+    }
+
 }

@@ -1,37 +1,47 @@
+@use('App\Enums\UserPrivilege')
+
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{__('about/index.title')}}</x-slot>
 
     <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{__('about/index.title')}}</h1>
 
-    <x-blurb title="{{__('about/index.history.title')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
+    @auth
 
-    <x-text-image :toggleLeft="true"
-    img="./images/history/lee-barry.jpg"
-    alt="{{__('about/index.alt_1')}}"
-    imageSize="66">{{__('about/index.history.content_1')}}</x-text-image>
+        @if (auth()->user()->privileges !== UserPrivilege::GUEST)
 
-    <x-text-image :toggleLeft="false"
-    img="./images/history/bible-reading-class-ubf-korea.jpg"
-    alt="{{__('about/index.alt_2')}}"
-    imageSize="66">{{__('about/index.history.content_2')}}</x-text-image>
+            <x-blurb title="{{__('about/index.history.title')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
-    <x-text-image :toggleLeft="true"
-    img="./images/history/first-cis-conference.jpg"
-    alt="{{__('about/index.alt_3')}}"
-    imageSize="66">{{__('about/index.history.content_3')}}</x-text-image>
+            <x-text-image :toggleLeft="true"
+            img="./images/history/lee-barry.jpg"
+            alt="{{__('about/index.alt_1')}}"
+            imageSize="90">{{__('about/index.history.content_1')}}</x-text-image>
 
-    <x-text-image :toggleLeft="false"
-    img="./images/history/cdn-campus-mission-1982.jpeg"
-    alt="{{__('about/index.alt_4')}}"
-    imageSize="66">{{__('about/index.history.content_4')}}</x-text-image>
+            <x-text-image :toggleLeft="false"
+            img="./images/history/bible-reading-class-ubf-korea.jpg"
+            alt="{{__('about/index.alt_2')}}"
+            imageSize="90">{{__('about/index.history.content_2')}}</x-text-image>
 
-    <x-text-image :toggleLeft="true"
-    img="./images/history/20240825-presentation.jpg"
-    alt="{{__('about/index.alt_5')}}"
-    imageSize="66">{{__('about/index.history.content_5')}}</x-text-image>
+            <x-text-image :toggleLeft="true"
+            img="./images/history/first-cis-conference.jpg"
+            alt="{{__('about/index.alt_3')}}"
+            imageSize="90">{{__('about/index.history.content_3')}}</x-text-image>
 
-    <br/>
+            <x-text-image :toggleLeft="false"
+            img="./images/history/cdn-campus-mission-1982.jpeg"
+            alt="{{__('about/index.alt_4')}}"
+            imageSize="90">{{__('about/index.history.content_4')}}</x-text-image>
+
+            <x-text-image :toggleLeft="true"
+            img="./images/history/20240825-presentation.jpg"
+            alt="{{__('about/index.alt_5')}}"
+            imageSize="90">{{__('about/index.history.content_5')}}</x-text-image>
+
+            <br/>
+
+        @endif
+
+    @endauth
 
     <x-blurb title="{{__('about/index.mission_vision.title')}}" :variant="['#1e3a8a', 'slate-900']">
         <p>{{__('about/index.mission_vision.mv_blurb_1')}}</p>
