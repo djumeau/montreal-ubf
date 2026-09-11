@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\BibleBookController;
 
@@ -91,17 +92,17 @@ Route::middleware('auth')->group(function () {
 
     // Profile related routes - Avatar, User name and User Password
 
-        // en_CA
+    // 2. The missing Profile Text Update Route
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update'); // <-- This fixes your current error!
 
-        // Avatar related routes
-        Route::get('/dashboard/avatar', [DashboardController::class, 'showAvatar'])->name('avatar.show');
-        Route::put('/dashboard/update-avatar', [DashboardController::class, 'updateAvatar'])->name('avatar.update');
+    // 3. The Avatar Upload Route (from your modal form)
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])
+        ->name('profile.avatar');
 
-        // Password related routes
-        Route::put('/dashboard/update-password', [DashboardController::class, 'updatePassword'])->name('password.update');
-
-    // User Management routes
-    // Route::put('/dashboard/add-user', [DashboardController::class, 'addUser'])->name('add.user');
+    // 4. The Secure Avatar Streaming Route
+    Route::get('/private/avatar/{filename}', [ProfileController::class, 'streamAvatar'])
+        ->name('private.avatar');
 
 });
 

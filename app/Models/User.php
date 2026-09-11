@@ -6,11 +6,13 @@ use App\Enums\Role;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 #[Fillable(['name', 'email', 'password', 'role', 'avatar_file'])]
 #[Hidden(['password', 'remember_token'])]
@@ -48,9 +50,24 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute(): string
     {
-        $filename = $this->avatar_file ? basename($this->avatar_file) : 'user.jpg';
 
-        return route('avatar.show', $filename);
+        // 1. If the user has uploaded their own unique avatar, stream it
+        if ($this->avatar_path && Storage::disk('private')->exists($this->avatar_path)) {
+            return route('private.avatar', [
+                'filename' => basename($this->avatar_path)
+            ]);
+        }
+
+        // 2. Check if a default user.jpg exists in storage/app/private/avatar/
+        if (Storage::disk('private')->exists('avatar/user.jpg')) {
+            return route('private.avatar', [
+                'filename' => 'user.jpg'
+            ]);
+        }
+
+        // 3. Absolute fallback to the public asset folder
+        return asset('images/user.jpg');
+
     }
 
     public function isAdmin(): bool {

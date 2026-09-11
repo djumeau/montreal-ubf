@@ -4,7 +4,162 @@
 
     <x-slot name="title">{{ __('dashboard/index.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}
-    </h1>
+    <h2 class='text-right text-2xl font-bold pt-18 pb-6'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}
+    </h2>
+
+    <div x-data="{
+        sidebarOpen: true,
+        activeTab: 'profile',
+        showAvatarModal: false
+    }"
+        class="flex min-h-screen text-white">
+
+        <!-- Left Column: Collapsible Sidebar -->
+        <aside
+            :class="{
+                'w-full block': sidebarOpen,
+                'md:block md:w-16': !sidebarOpen,
+                'md:w-64': sidebarOpen && window.innerWidth >= 768
+            }"
+
+            class="transition-all duration-300 ease-in-out border rounded-sm border-slate-100 flex flex-col justify-between">
+            <div>
+                <!-- Header & Toggle Chevron Button -->
+                <div class="p-2 flex items-center justify-between border-b-2">
+                    <span x-show="sidebarOpen" class="font-bold text-lg text-slate-100">
+                        {{ __('Dashboard') }}
+                    </span>
+                    <button @click="sidebarOpen = !sidebarOpen" class="grid place-items-center size-10 pl-2 text-slate-100 hover:text-slate-300 transition-colors focus:outline-none cursor-pointer">
+                        <i class="fas" :class="sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                    </button>
+                </div>
+
+                <!-- Profile Info Block -->
+                <div class="p-4 flex flex-col items-center text-center overflow-hidden">
+                    <img src="{{ auth()->user()->avatar_url }}"
+                        alt="Avatar"
+                        :class="sidebarOpen ? 'w-20 h-20' : 'w-10 h-10'"
+                        class="rounded-full object-cover border-4 border-slate-100 shadow-sm transition-all duration-300">
+
+                    <div x-show="sidebarOpen" class="mt-3 transition-opacity duration-300">
+                        <h3 class="font-semibold text-base leading-tight truncate max-w-[200px]">{{ auth()->user()->name }}</h3>
+                        <p class="text-xs text-slate-100 truncate max-w-[200px] mb-2">{{ auth()->user()->email }}</p>
+                        <span class="inline-block border-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full bg-black text-slate-100">
+                            {{ auth()->user()->role->value }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Context Dynamic Links -->
+                <nav class="space-y-1">
+                    <button @click="activeTab = 'profile'"
+                            :class="activeTab === 'profile' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
+                            class="w-full flex items-center p-3 transition-colors focus:outline-none">
+                        <i class="fas fa-user-cog w-6 text-center"></i>
+                        <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('Update Profile') }}</span>
+                    </button>
+
+                    <!-- Placeholder for future modules (e.g. Schedule, Ministries) -->
+                    <button @click="activeTab = 'ministries'"
+                            :class="activeTab === 'ministries' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
+                            class="w-full flex items-center p-3 transition-colors focus:outline-none">
+                        <i class="fas fa-church w-6 text-center"></i>
+                        <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('Ministries') }}</span>
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Right Column: Interactive Work Space Context -->
+        <main
+            :class="sidebarOpen ? 'hidden md:block' : 'block'"
+            class="flex-1 p-6 lg:p-8 overflow-y-auto">
+
+            <!-- Display Success Notifications -->
+            @if (session('status'))
+                <div class="mb-4 p-4 bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-lg text-sm">
+                    {{ __(session('status')) }}
+                </div>
+            @endif
+
+            <!-- UI Segment: Update Profile Form -->
+            <div x-show="activeTab === 'profile'" x-cloak class="max-w-2xl bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700">
+                <h2 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">{{ __('Update Profile') }}</h2>
+
+                <form action="{{ route('profile.update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Trigger for Avatar Upload Modal -->
+                    <div class="mb-6 flex items-center space-x-4">
+                        <img src="{{ auth()->user()->avatar_url ?? asset('images/default-avatar.png') }}" class="w-16 h-16 rounded-full object-cover">
+                        <button type="button" @click="showAvatarModal = true" class="px-4 py-2 text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+                            <i class="fas fa-camera mr-2"></i>{{ __('Change Avatar') }}
+                        </button>
+                    </div>
+
+                    <!-- Input Fields Grid -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">{{ __('Name') }}</label>
+                            <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
+                            @error('name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-1">{{ __('Email Address') }}</label>
+                            <input type="email" name="email" value="{{ old('email', auth()->user()->email) }}" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
+                            @error('email') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">{{ __('New Password') }}</label>
+                                <input type="password" name="password" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
+                                @error('password') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">{{ __('Confirm Password') }}</label>
+                                <input type="password" name="password_confirmation" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-xs transition-colors cursor-pointer">
+                            {{ __('Update') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!-- AlpineJS Modal for Image Interception -->
+        <div x-show="showAvatarModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity" x-transition>
+            <div @click.away="showAvatarModal = false" class="bg-white dark:bg-slate-800 rounded-xl max-w-md w-full p-6 shadow-xl border border-slate-200 dark:border-slate-700">
+                <h3 class="text-lg font-bold mb-4">{{ __('Upload New Avatar') }}</h3>
+
+                <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-6 text-center hover:border-emerald-500 transition-colors">
+                        <input type="file" name="avatar" id="avatar" class="hidden" required accept="image/*" @change="/* optional image preview logic */">
+                        <label for="avatar" class="cursor-pointer flex flex-col items-center">
+                            <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 mb-2"></i>
+                            <span class="text-sm font-medium">{{ __('Click to browse image file') }}</span>
+                        </label>
+                    </div>
+
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <button type="button" @click="showAvatarModal = false" class="px-4 py-2 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                            {{ __('Upload') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </x-layout>
