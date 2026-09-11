@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('role')->default(Role::GUEST->value)->after('email');
 
             $table->string('avatar_file')
-                    ->default('user.jpg')->after('privileges');
+                    ->default('user.jpg')->after('role');
         });
     }
 
