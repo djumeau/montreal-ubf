@@ -54,15 +54,15 @@
                 <nav class="space-y-1">
                     <button @click="activeTab = 'profile'"
                             :class="activeTab === 'profile' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
-                            class="w-full flex items-center p-3 transition-colors focus:outline-none">
+                            class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
                         <i class="fas fa-user-cog w-6 text-center"></i>
-                        <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('Update Profile') }}</span>
+                        <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('dashboard/index.update_profile') }}</span>
                     </button>
 
                     <!-- Placeholder for future modules (e.g. Schedule, Ministries) -->
                     <button @click="activeTab = 'ministries'"
                             :class="activeTab === 'ministries' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
-                            class="w-full flex items-center p-3 transition-colors focus:outline-none">
+                            class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
                         <i class="fas fa-church w-6 text-center"></i>
                         <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('Ministries') }}</span>
                     </button>
@@ -73,79 +73,78 @@
         <!-- Right Column: Interactive Work Space Context -->
         <main
             :class="sidebarOpen ? 'hidden md:block' : 'block'"
-            class="flex-1 p-6 lg:p-8 overflow-y-auto">
-
-            <!-- Display Success Notifications -->
-            @if (session('status'))
-                <div class="mb-4 p-4 bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-lg text-sm">
-                    {{ __(session('status')) }}
-                </div>
-            @endif
+            class="flex-1 pl-6 overflow-y-auto">
 
             <!-- UI Segment: Update Profile Form -->
-            <div x-show="activeTab === 'profile'" x-cloak class="max-w-2xl bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xs border border-slate-200 dark:border-slate-700">
-                <h2 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">{{ __('Update Profile') }}</h2>
+            <div x-show="activeTab === 'profile'" x-cloak class="w-full border rounded-sm border-slate-100">
+                <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.update_profile') }}</h2>
+
+                <!-- Display Success Notifications -->
+                @if (session('status'))
+                    <div class="w-full mb-4 p-4 border rounded-sm border-slate-100 text-emerald-400 text-sm">
+                        {{ __(session('status')) }}
+                    </div>
+                @endif
 
                 <form action="{{ route('profile.update') }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <!-- Trigger for Avatar Upload Modal -->
-                    <div class="mb-6 flex items-center space-x-4">
-                        <img src="{{ auth()->user()->avatar_url ?? asset('images/default-avatar.png') }}" class="w-16 h-16 rounded-full object-cover">
-                        <button type="button" @click="showAvatarModal = true" class="px-4 py-2 text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
-                            <i class="fas fa-camera mr-2"></i>{{ __('Change Avatar') }}
+                    <div class="ml-4 mb-6 flex items-center space-x-2">
+
+                        <img src="{{ auth()->user()->avatar_url }}" class="size-16 rounded-full object-cover border-4">
+
+                        <button type="button" @click="showAvatarModal = true" class="px-2 py-2 text-sm  bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                            <i class="fas fa-camera mr-2"></i>{{ __('dashboard/index.change_avatar') }}
                         </button>
+
                     </div>
 
                     <!-- Input Fields Grid -->
                     <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">{{ __('Name') }}</label>
-                            <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
-                            @error('name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
 
-                        <div>
-                            <label class="block text-sm font-medium mb-1">{{ __('Email Address') }}</label>
-                            <input type="email" name="email" value="{{ old('email', auth()->user()->email) }}" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
-                            @error('email') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                        </div>
+                        <x-inputs.text id="name" name="name" value="{{ auth()->user()->name }}" />
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">{{ __('New Password') }}</label>
-                                <input type="password" name="password" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
-                                @error('password') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">{{ __('Confirm Password') }}</label>
-                                <input type="password" name="password_confirmation" class="w-full p-2.5 border rounded-lg bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-hidden">
-                            </div>
+                        <x-inputs.text id="email" name="email" type="email" value="{{ auth()->user()->email }}" />
+
+                        <div class="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-y-0">
+
+                            <x-inputs.text id="password" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
+
+                            <x-inputs.text id="password_confirmation" name="password_confirmation" type="password" placeholder="{{ __('auth/index.confirm_password') }}" value="{{ old('password_confirmation') }}" />
+
                         </div>
                     </div>
 
-                    <div class="mt-6 flex justify-end">
-                        <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-xs transition-colors cursor-pointer">
-                            {{ __('Update') }}
+                    <div class="m-4 flex justify-end">
+
+                        <button type="submit"
+                            class="p-2 bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">{{ __('dashboard/index.update') }}
                         </button>
+
                     </div>
+
                 </form>
+
             </div>
+
         </main>
 
         <!-- AlpineJS Modal for Image Interception -->
         <div x-show="showAvatarModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity" x-transition>
-            <div @click.away="showAvatarModal = false" class="bg-white dark:bg-slate-800 rounded-xl max-w-md w-full p-6 shadow-xl border border-slate-200 dark:border-slate-700">
-                <h3 class="text-lg font-bold mb-4">{{ __('Upload New Avatar') }}</h3>
+
+            <div @click.away="showAvatarModal = false" class="bg-white rounded-md w-full p-6 shadow-xl border border-slate-100">
+
+                <h3 class="text-lg font-bold mb-4 text-black">{{ __('dashboard/index.upload_new_avatar') }}</h3>
 
                 <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-6 text-center hover:border-emerald-500 transition-colors">
+                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-blue-900 transition-colors">
                         <input type="file" name="avatar" id="avatar" class="hidden" required accept="image/*" @change="/* optional image preview logic */">
                         <label for="avatar" class="cursor-pointer flex flex-col items-center">
                             <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 mb-2"></i>
-                            <span class="text-sm font-medium">{{ __('Click to browse image file') }}</span>
+                            <span class="text-sm font-medium text-slate-400 hover:text-slate-700">{{ __('dashboard/index.browse_files') }}</span>
                         </label>
                     </div>
 
@@ -153,8 +152,8 @@
                         <button type="button" @click="showAvatarModal = false" class="px-4 py-2 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                             {{ __('Cancel') }}
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
-                            {{ __('Upload') }}
+                        <button type="submit"
+                            class="p-2 bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">{{ __('dashboard/index.upload') }}
                         </button>
                     </div>
                 </form>

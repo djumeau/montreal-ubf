@@ -1,6 +1,6 @@
 @props(['id', 'name', 'label' => null, 'type' => 'text', 'value' => '', 'placeholder' => ''])
 
-<div class="mb-4">
+<div class="mx-4">
 
     @if( $label )
     <label class="block text-sm font-medium text-slate-700 mb-1.5" for="{{ $id }}">{{ $label }}</label>
