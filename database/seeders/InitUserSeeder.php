@@ -23,7 +23,8 @@ class InitUserSeeder extends Seeder
                     'name' => $series['name'],
                     'email' => $series['email'],
                     'password' => $series['password'],
-                    'privileges' => $series['privileges'],
+                    'role' => $series['role'],
+                    'avatar_file' => $series['avatar_file'],
 
                     'created_at' => now(),
                     'updated_at' => now(),

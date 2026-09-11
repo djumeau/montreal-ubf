@@ -32,6 +32,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo_ubf_favicon.svg') }}">
@@ -64,11 +66,21 @@
                 {{__('home/hero.welcome')}}
             </x-hero>
 
+            <x-events image="./images/events/2026-09_ubf_picnic-mobile.jpg"
+                title="{{__('home/activities.title')}}"
+                dates="{{__('home/activities.dates')}}"
+                location="{{__('home/activities.location')}}"
+                location_url="{{__('home/activities.location_url')}}"
+                :hasOverlay=true >
+                {{__('home/activities.content')}}
+            </x-events>
+
             <x-events
                 image="{{ __('home/events.image_mobile') }}"
                 title="{{__('home/events.title')}}"
                 dates="{{__('home/events.dates')}}"
-                location="{{__('home/events.location')}}" >
+                location="{{__('home/events.location')}}"
+                location_url="{{__('home/events.location_url')}}">
                 {{__('home/events.content')}}
             </x-events>
 
@@ -92,11 +104,21 @@
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00" social_media="{{__('home/hero.social_media')}}">{{__('home/hero.welcome')}}
             </x-hero>
 
+            <x-events image="./images/events/2026-09_ubf_picnic-desktop.jpg"
+                title="{{__('home/activities.title')}}"
+                dates="{{ __('home/activities.dates') }}"
+                location="{{__('home/activities.location')}}"
+                location_url="{{__('home/activities.location_url')}}"
+                :hasOverlay=true >
+                {{__('home/activities.content')}}
+            </x-events>
+
             <x-events
                 image="{{ __('home/events.image_desktop') }}"
                 title="{{__('home/events.title')}}"
                 dates="{{__('home/events.dates')}}"
-                location="{{__('home/events.location')}}" >
+                location="{{__('home/events.location')}}"
+                location_url="{{__('home/events.location_url')}}">
                 {{__('home/events.content')}}
             </x-events>
 

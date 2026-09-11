@@ -3,8 +3,10 @@
     'title' => '',
     'dates' => '',
     'location' => '',
+    'location_url' => '',
     'href' => null,
     'isMobile' => false,
+    'hasOverlay' => false,
 ])
 
 @php
@@ -18,7 +20,11 @@
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-80']) }}
     style="background-image: url( '{{ $image }}' )">
 
-    <div class='absolute top-2 left-3 md:top-3 text-white drop-shadow-lg'>
+    @if ($hasOverlay)
+        <div class="overlay bg-linear-to-r from-black from-5% to-black-50%"></div>
+    @endif
+
+    <div class='z-10 absolute top-2 left-3 md:top-3 text-white drop-shadow-lg'>
 
         <h2 @class(['hidden' => !isset($title),
                    'text-sm italic md:text-lg'
@@ -27,11 +33,15 @@
        <p class='font-semibold text-base md:text-xl'>{{ $slot }}</p>
         <div>
             <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-            <span class="text-sm md:text-base"> {{ $dates }}</span>
+            <span class="text-sm md:text-base"> {!! $dates !!}</span>
         </div>
         <div>
             <i class="fa-solid fa-map-marker" aria-hidden="true"></i>
-            <span class="text-sm md:text-base"> {{ $location }}</span>
+            @if ($location_url !== '')
+                <span class="text-sm md:text-base"><a href="{{ $location_url }}" target="_blank" class="hover:underline">{{ $location }}</a></span>
+            @else
+                <span class="text-sm md:text-base"> {{ $location }}</span>
+            @endif
         </div>
     </div>
 

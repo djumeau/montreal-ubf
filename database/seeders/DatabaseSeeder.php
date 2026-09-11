@@ -8,8 +8,10 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\InitUserSeeder;
 use Database\Seeders\StudySeriesSeeder;
 use Database\Seeders\BibleBookSeeder;
+use Database\Seeders\BibleStudySeeder;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,16 +22,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // 1. Temporarily disable database foreign key constraints
+        Schema::disableForeignKeyConstraints();
+
         // Remove tables
         DB::table('users')->truncate();
         DB::table('study_series')->truncate();
         DB::table('bible_books')->truncate();
-        DB::table('bible_studies_en')->truncate();
-        DB::table('bible_studies_fr')->truncate();
+        DB::table('bible_studies')->truncate();
+        DB::table('study_attachments')->truncate();
 
         $this->call(InitUserSeeder::class);
         $this->call(StudySeriesSeeder::class);
         $this->call(BibleBookSeeder::class);
+        $this->call(BibleStudySeeder::class); // Your attachments get created implicitly here
 
     }
 }

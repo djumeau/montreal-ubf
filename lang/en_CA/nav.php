@@ -26,7 +26,7 @@ return [
                     "name" => "logout",
                 ],
     "dashboard" => [ "title" => "Dashboard",
-                    "url" => "/user-dashboard",
-                    "name" => "user-dashboard",
+                    "url" => "/dashboard",
+                    "name" => "dashboard",
                 ],
 ];

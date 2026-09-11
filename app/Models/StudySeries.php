@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StudySeries extends Model
 {
@@ -13,4 +14,12 @@ class StudySeries extends Model
         'name_fr',
         'dates'
     ];
+
+    /**
+     * Get all Bible Studies assigned to this particular series.
+     */
+    public function bibleStudies(): HasMany
+    {
+        return $this->hasMany(BibleStudy::class, 'study_series_id');
+    }
 }

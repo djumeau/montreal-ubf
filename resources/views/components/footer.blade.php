@@ -36,7 +36,7 @@
 
                 <h3 class="pt-4 pb-2">
                     <i class="fas fa-envelope text-white pr-2" aria-hidden="true"></i>
-                    <span class="text-white"><a href="mailto:montrealubf@gmail.com" target="_blank">montrealubf@gmail.com</a>
+                    <span class="text-white"><a href="mailto:montrealubf@gmail.com" target="_blank" class="hover:underline">montrealubf@gmail.com</a>
                     </span>
                 </h3>
 

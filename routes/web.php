@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
+
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\BibleBookController;
 
@@ -23,23 +24,23 @@ use App\Http\Controllers\GivingController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// ca-EN
+// en_CA
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/events', [EventController::class, 'index'])->name('events');
 Route::get('/giving', [GivingController::class, 'index'])->name('giving');
 
-// ca-FR
+// fr_CA
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');
 Route::get('/evenements', [EventController::class, 'index'])->name('evenements');
 Route::get('/donner', [GivingController::class, 'index'])->name('donner');
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 
-// ca-EN
+// en_CA
 Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
-// ca-FR
+// fr_CA
     Route::get('/visionner-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
@@ -49,13 +50,13 @@ Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-b
 Route::get('/study-series', [StudySeriesController::class, 'index'])->name('study-series');
 
 // Bible Studies
-// ca-EN
+// en_CA
 Route::get('/bible-studies', [BibleStudyController::class, 'index'])->name('bible-studies');
 Route::get('/bible-studies/create', [BibleStudyController::class, 'create'])->name('bible-studies.create');
 Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('bible-studies.store');
 Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('bible-studies.show');
 
-// ca-FR
+// fr_CA
 Route::get('/etudes-bibliques', [BibleStudyController::class, 'index'])->name('etudes-bibliques');
 Route::get('/etudes-bibliques/create', [BibleStudyController::class, 'create'])->name('etudes-bibliques.creer');
 Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('etudes-bibliques.sauvarder');
@@ -63,16 +64,13 @@ Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('
 
 // Authentication Routes
 
-// ca-EN
-// Route::get('/register', [RegisterController::class, 'register'])->name('register'); // Shows the form
-// Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); // Handles form submission
-
+// en_CA
 Route::get('/login', [LoginController::class, 'login'])->name('login'); // Shows the login form
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate'); // Handles login submission
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// ca-FR
+// en_CA
 // Route::get('/enregister', [RegisterController::class, 'register'])->name('enregistrer'); // Shows the form
 // Route::post('/enregister', [RegisterController::class, 'store'])->name('enregistrer.sauvgarder'); // Handles form submission
 
@@ -84,17 +82,46 @@ Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexi
 // User Dashboard
 Route::middleware('auth')->group(function () {
 
-    Route::get('/user-dashboard', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('user-dashboard');
-    Route::put('/user-dashboard/update-password', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('password.update');
+    //Dashboard related routes
+    // en_CA
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/tableau-utilisateur', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('tableau-utilisateur');
-    // Route::put('/user-password.update', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('update-password');
+    // fr_CA
+    Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
+
+    // Profile related routes - Avatar, User name and User Password
+
+        // en_CA
+
+        // Avatar related routes
+        Route::get('/dashboard/avatar', [DashboardController::class, 'showAvatar'])->name('avatar.show');
+        Route::put('/dashboard/update-avatar', [DashboardController::class, 'updateAvatar'])->name('avatar.update');
+
+        // Password related routes
+        Route::put('/dashboard/update-password', [DashboardController::class, 'updatePassword'])->name('password.update');
+
+    // User Management routes
+    // Route::put('/dashboard/add-user', [DashboardController::class, 'addUser'])->name('add.user');
 
 });
 
 // Migrations -- Comment out when not in use.
-/*
-Route::get('/fresh-migrations-xyz', function () {
+
+Route::get('/reset-migrations', function () {
+    try {
+        //1. clear config cache
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        //2. rollback migrations
+        Artisan::call('migrate:reset', ['--force' => true]);
+        return 'Success: ' . Artisan::output();
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/fresh-migrations', function () {
     try {
         //1. clear config cache
         Artisan::call('config:clear');
@@ -108,7 +135,7 @@ Route::get('/fresh-migrations-xyz', function () {
     }
 });
 
-Route::get('/run-migrations-xyz', function () {
+Route::get('/run-migrations', function () {
     try {
         //1. clear config cache
         Artisan::call('config:clear');
@@ -136,4 +163,3 @@ Route::get('/run-seeders', function () {
     }
 
 });
-*/

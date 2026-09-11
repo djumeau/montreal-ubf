@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserPrivilege;
+use App\Enums\Role;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -29,7 +29,8 @@ class RegisterController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'privileges' => ['nullable', new Enum(UserPrivilege::class)], // Optional
+            'roles' => ['nullable', new Enum(Role::class)], // Optional
+            'avatar_file' => 'nullable|string|max:50', // Optional
         ]);
 
         // Hash the password before storing it

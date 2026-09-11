@@ -1,4 +1,4 @@
-@use('App\Enums\UserPrivilege')
+@use('App\Enums\Role')
 
 <x-layout class="bg-slate-900" textColor="text-white">
 
@@ -8,7 +8,7 @@
 
     @auth
 
-        @if (auth()->user()->privileges !== UserPrivilege::GUEST)
+        @if (auth()->user()->role !== Role::GUEST)
 
             <x-blurb title="{{__('about/index.history.title')}}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
