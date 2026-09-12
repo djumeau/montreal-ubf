@@ -52,20 +52,29 @@ class ProfileController extends Controller
         $user = $request->user();
 
         if ($request->hasFile('avatar')) {
-            // Remove old avatar file if present to save private storage clean space
-            if ($user->avatar_path) {
+            // 1. Extract the file extension dynamically (e.g., jpg, png)
+            $extension = $request->file('avatar')->getClientOriginalExtension();
+
+            // 2. Build your custom file name
+            $filename = 'avatar_' . $user->id . '.' . $extension;
+
+            // 3. Remove old avatar file if present to keep storage clean
+            if ($user->avatar_path && Storage::disk('private')->exists($user->avatar_path)) {
                 Storage::disk('private')->delete($user->avatar_path);
             }
 
-            // Saves directly to storage/app/private/avatar via explicit custom local private disk allocation
-            $path = $request->file('avatar')->store('avatar', 'private');
+            // 4. Save file to storage/app/private/avatar using storeAs()
+            $path = $request->file('avatar')->storeAs('avatar', $filename, 'private');
 
+            // 5. Update user table column link
             $user->update([
-                'avatar_path' => $path
+                'avatar_file' => $path
             ]);
+
+            $user->refresh();
         }
 
-        return back()->with('status', 'avatar-updated');
+        return back()->with('status', __('dashboard/index.avatar_updated'));
     }
 
     /**

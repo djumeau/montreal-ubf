@@ -12,17 +12,17 @@
 
     <h1 class='text-right text-4xl font-bold pb-8 pt-18'>{{ __('auth/index.login') }}</h1>
 
-    <div class="max-w-md mx-auto bg-white p-6 mb-6 rounded-lg shadow-md text-black outline-2">
+    <div class="max-w-md mx-auto p-6 mb-6 rounded-lg shadow-md text-white border border-white gap-y-4">
 
-        <form novalidate action="{{ $isFrench ? route('connexion.authentifier') : route('login.authenticate')}}" method="POST">
+        <form class="flex flex-col gap-y-4 items-center" novalidate action="{{ $isFrench ? route('connexion.authentifier') : route('login.authenticate')}}" method="POST">
             @csrf
 
-            <x-inputs.text id="email" name="email" type="email" label="{{ __('auth/index.email') }}" value="{{ old('email') }}" />
+            <x-inputs.text id="email" width="100" name="email" type="email" placeholder="{{ __('auth/index.email') }}" value="{{ old('email') }}" />
 
-            <x-inputs.text id="password" name="password" type="password" label="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
+            <x-inputs.text id="password" width="100" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
             <button type="submit"
-                class="w-full bg-sky-900 justify-right hover:bg-sky-950 text-white font-bold py-2 px-4 rounded
+                class="w-.75 px-16 bg-sky-900 justify-right hover:bg-sky-950 text-white font-bold py-2 rounded
                 outline-1 outline-white hover:outline-2 focus:shadow-outline">{{ __('auth/index.submit') }}
             </button>
 

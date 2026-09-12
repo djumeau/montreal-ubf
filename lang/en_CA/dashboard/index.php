@@ -12,5 +12,7 @@ return [
     "confirm_password" => "Confirm Password",
     "upload" => "Upload",
     "upload_new_avatar" => "Upload New Avatar",
-    "browse_files" => "Parcourir les fichiers image (.jpg, .png)",
+    "select_image" => "Select image (jpeg, png, jpg, webp)",
+    "cancel" => "Cancel",
+    "avatar_updated" => "Avatar updated.",
 ];

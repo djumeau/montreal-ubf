@@ -3,7 +3,7 @@
 return [
     "title" => "Tableau de bord",
     "welcome" => "Bienvenue, :name!",
-    "change_avatar" => "Changer d'avatar",
+    "change_avatar" => "Changer l'avatar",
     "update" => "Mettre à jour",
     "update_profile" => "Mettre à jour votre profil",
     "name" => "Nom complet",
@@ -12,5 +12,7 @@ return [
     "confirm_password" => "Confirmer le mot de passe",
     "upload" => "Télécharger",
     "upload_new_avatar" => "Télécharger un nouveau avatar",
-    "browse_files" => "Browse Image Files (.jpg, .png)",
+    "select_image" => "Selectionnez l'image (jpeg, png, jpg, webp)",
+    "cancel" => "Fermer",
+    "avatar_updated" => "L'avatar est à jour.",
 ];

@@ -52,9 +52,9 @@ class User extends Authenticatable
     {
 
         // 1. If the user has uploaded their own unique avatar, stream it
-        if ($this->avatar_path && Storage::disk('private')->exists($this->avatar_path)) {
+        if ($this->avatar_file && Storage::disk('private')->exists($this->avatar_file)) {
             return route('private.avatar', [
-                'filename' => basename($this->avatar_path)
+                'filename' => basename($this->avatar_file)
             ]);
         }
 
