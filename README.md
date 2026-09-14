@@ -79,4 +79,4 @@ Routes and content are duplicated for English (`en_CA`) and French (`fr_CA`) —
 
 ### Maintenance routes (dev only)
 
-`routes/web.php` includes unguarded helper routes for local/dev use — `/reset-migrations`, `/fresh-migrations`, `/run-migrations`, `/run-seeders`. These wrap `artisan migrate`/`db:seed` over HTTP and should be removed or protected before deploying to a public environment.
+`routes/web.php` contains a commented-out block of helper routes for local/dev use — `/reset-migrations`, `/fresh-migrations`, `/run-migrations`, `/run-seeders`. They wrap `artisan migrate`/`db:seed` over HTTP and are disabled by default; uncomment them only for local/dev use, and never leave them enabled in a public environment since they're unauthenticated.
