@@ -3,6 +3,7 @@
 return [
     "title" => "Tableau de bord",
     "welcome" => "Bienvenue, :name!",
+    "dashboard" => "Tableau",
     "change_avatar" => "Changer l'avatar",
     "update" => "Mettre à jour",
     "update_profile" => "Mettre à jour votre profil",
@@ -15,4 +16,5 @@ return [
     "select_image" => "Selectionnez l'image (jpeg, png, jpg, webp)",
     "cancel" => "Fermer",
     "avatar_updated" => "L'avatar est à jour.",
+    "manage_roles" => "Gestion des rôles",
 ];

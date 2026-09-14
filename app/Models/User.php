@@ -79,4 +79,13 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
+    /**
+     * Determine if the user can manage church member platform roles.
+     */
+    public function canManageRoles(): bool
+    {
+        // Check against your explicit Enum values
+        return in_array($this->role->value, ['admin', 'elder']);
+    }
+
 }

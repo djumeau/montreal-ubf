@@ -3,6 +3,7 @@
 return [
     "title" => "Dashboard",
     "welcome" => "Welcome, :name!",
+    "dashboard" => "Dashboard",
     "change_avatar" => "Change Avatar",
     "update" => "Update",
     "update_profile" => "Update Your Profile",
@@ -15,4 +16,5 @@ return [
     "select_image" => "Select image (jpeg, png, jpg, webp)",
     "cancel" => "Cancel",
     "avatar_updated" => "Avatar updated.",
+    "manage_roles" => "Role Management",
 ];

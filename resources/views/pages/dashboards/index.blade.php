@@ -30,7 +30,7 @@
                 <!-- Header & Toggle Chevron Button -->
                 <div class="p-2 flex items-center justify-between border-b-2">
                     <span x-show="sidebarOpen" class="font-bold text-lg text-slate-100">
-                        {{ __('Dashboard') }}
+                        {{ __('dashboard/index.dashboard') }}
                     </span>
                     <button @click="sidebarOpen = !sidebarOpen" class="grid place-items-center size-10 pl-2 text-slate-100 hover:text-slate-300 transition-colors focus:outline-none cursor-pointer">
                         <i class="fas" :class="sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
@@ -56,13 +56,23 @@
                 </div>
 
                 <!-- Context Dynamic Links -->
-                <nav class="space-y-1">
+                <nav id="features" class="space-y-1">
+
                     <button @click="activeTab = 'profile'"
                             :class="activeTab === 'profile' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
                             class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
                         <i class="fas fa-user-cog w-6 text-center"></i>
                         <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('dashboard/index.update_profile') }}</span>
                     </button>
+
+                    @if(auth()->user()->canManageRoles())
+                        <button @click="activeTab = 'roles'"
+                                :class="activeTab === 'roles' ? 'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' : 'text-slate-100'"
+                                class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
+                            <i class="fas fa-users-cog w-6 text-center"></i>
+                            <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('dashboard/index.manage_roles') }}</span>
+                        </button>
+                    @endif
 
                     <!-- Placeholder for future modules (e.g. Schedule, Ministries) -->
                     <button @click="activeTab = 'ministries'"
@@ -132,6 +142,31 @@
                 </form>
 
             </div>
+            <!-- END UI Segment - User Profile -->
+
+            <!-- UI Segment: Role Management -->
+            @if(auth()->user()->canManageRoles())
+
+                <div x-show="activeTab === 'roles'" x-cloak class="w-full border rounded-sm border-slate-100">
+                    <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.manage_roles') }}</h2>
+
+                    <!-- Display Success Notifications -->
+                    @if (session('status'))
+                        <div class="flex items-center justify-left ml-4 mb-4">
+                            <div class="w-100 p-2 border rounded-sm border-emerald-600 text-emerald-400 text-sm">
+                                {{ __(session('status')) }}
+                            </div>
+                        </div>
+                    @endif
+
+
+
+                </div>
+
+            @endif
+            <!-- END UI Segment: Role Management -->
+
+
 
         </main>
 
