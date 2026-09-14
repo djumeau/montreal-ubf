@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Migrations -- Comment out when not in use.
-
+/*
 Route::get('/reset-migrations', function () {
     try {
         //1. clear config cache
@@ -164,3 +164,5 @@ Route::get('/run-seeders', function () {
     }
 
 });
+
+*/
