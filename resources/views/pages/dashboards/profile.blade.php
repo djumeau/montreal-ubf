@@ -1,8 +1,15 @@
 @props(['user' => null])
 
-<x-layout class="bg-slate-900" textColor="text-white">
+@php
 
-    <!-- dashboard/index.blade.php -->
+    $isProfileActive = request()->routeIs('dashboard') || request()->routeIs('tableau');
+    $profileName = __('nav.dashboard.name');
+
+    $isManageUsersActive = request()->routeIs('manage-users') || request()->routeIs('gerer-utilisateurs');
+
+@endphp
+
+<x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('dashboard/index.title') }}</x-slot>
 
@@ -37,37 +44,25 @@
                     </button>
                 </div>
 
-                <!-- Profile Info Block -->
-                <div class="p-4 flex flex-col items-center text-center overflow-hidden">
-                    <!-- {{ auth()->user()->avatar_url }} -->
-                    <img src="{{ auth()->user()->avatar_url }}?v={{ time() }}" alt="Avatar"
-                        :class="sidebarOpen ? 'size-20' : 'size-10 md:size-10'"
-                        class="rounded-full object-cover border-2 border-white shadow-xs transition-all duration-300">
-
-
-                    <div x-show="sidebarOpen" class="mt-3 transition-opacity duration-300">
-                        <h3 class="font-semibold text-base leading-tight truncate max-w-50">{{ auth()->user()->name }}
-                        </h3>
-                        <p class="text-xs text-slate-100 truncate max-w-50 mb-2">{{ auth()->user()->email }}</p>
-                        <span
-                            class="inline-block border-2 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-black text-slate-100">
-                            {{ auth()->user()->role->value }}
-                        </span>
-                    </div>
-                </div>
-                <!-- End of Profile Block -->
+                <x-profile-info-block/>
 
                 <!-- Context Dynamic Links -->
                 <nav id="features" class="space-y-1">
 
-                    <button @click="activeTab = 'profile'"
-                        :class="activeTab === 'profile' ?
-                            'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' :
-                            'text-slate-100'"
-                        class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
+                    <!-- Update Profile Link -->
+                    <button @click="window.location.href = '{{ route($profileName) }}'"
+                        @class([
+                            'w-full flex items-center p-3 transition-colors focus:outline-none',
+                            'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' => $isProfileActive,
+                            'text-slate-100 cursor-pointer' => !$isProfileActive,
+                        ])
+
+                        @disabled($isProfileActive)>
+
                         <i class="fas fa-user-cog w-6 text-center"></i>
                         <span x-show="sidebarOpen"
                             class="ml-3 text-sm">{{ __('dashboard/index.update_profile') }}</span>
+
                     </button>
 
                     @if (auth()->user()->canManageRoles())

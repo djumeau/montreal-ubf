@@ -83,12 +83,16 @@ Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexi
 // User Dashboard
 Route::middleware('auth')->group(function () {
 
-    //Dashboard related routes
+    //Dashboard related routes - Default View Personal Profile
     // en_CA
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/manage-users', [DashboardController::class, 'manageUsers'])->name('manage-users');
+
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
+
+    Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
 
     // Profile related routes - Avatar, User name and User Password
 

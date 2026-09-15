@@ -22,7 +22,6 @@ class RoleController extends Controller
             abort(403, __('home/index.unauthorized'));
         }
 
-
     }
 
     public function update(Request $request, User $user)
