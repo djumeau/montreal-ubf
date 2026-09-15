@@ -94,13 +94,11 @@
 
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>
 
-        <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true'>
+        <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true' class="mb-2">
             {{Str::upper(Str::before($newLocale, '_'))}}
         </x-nav-link>
 
         @auth
-
-            {{-- <x-nav-link url="/dashboard" icon="gauge">Admin</x-nav-link> --}}
 
             <x-logout-button isMobile='true' />
 
