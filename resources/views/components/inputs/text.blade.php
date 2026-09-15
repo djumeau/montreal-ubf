@@ -5,8 +5,6 @@
     'type' => 'text',
     'value' => '',
     'placeholder' => '',
-    'width' => '80',
-    'fit' => false,
 ])
 
 <div>
@@ -22,7 +20,10 @@
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
 
-        class="w-{{ $width }} shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-30 @error($name) border-red-500 @enderror text-sm" />
+        {{ $attributes-> merge([ 'class' => 'shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-30 text-sm ']) }}
+
+        class="@error($name) 'border-red-500' @enderror ])"
+    />
 
     @error($name)
         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
