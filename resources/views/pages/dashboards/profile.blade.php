@@ -4,7 +4,7 @@
 
     <!-- dashboard/index.blade.php -->
 
-    <x-slot name="title">{{ __('dashboard/index.title') }}</x-slot>
+    <x-slot name="title">{{ __('header.name') }} - {{ __('dashboard/index.title') }}</x-slot>
 
     <h2 class='text-right text-2xl font-bold pt-18 pb-6'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}
     </h2>

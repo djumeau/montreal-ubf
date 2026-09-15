@@ -5,17 +5,23 @@
     'type' => 'text',
     'value' => '',
     'placeholder' => '',
-    'width' => '100',
+    'width' => '80',
 ])
 
-<div class="mx-4">
+<div>
 
     @if( $label )
     <label class="block text-sm font-medium text-slate-700 mb-1.5" for="{{ $id }}">{{ $label }}</label>
     @endif
 
-    <input id="{{ $id }}" name="{{ $name }}" type="{{ $type }}" value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}"
-        class="shadow appearance-none border rounded w-{{ $width }} py-2 px-3 leading-tight focus:outline-none focus:shadow-outline @error($name) border-red-500 @else border-slate-300 @enderror text-sm" />
+    <input
+        id="{{ $id }}"
+        name="{{ $name }}"
+        type="{{ $type }}"
+        value="{{ old($name, $value) }}"
+        placeholder="{{ $placeholder }}"
+
+        class="w-{{ $width }} mx-autoshadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline @error($name) border-red-500 @else border-slate-300 @enderror text-sm" />
 
     @error($name)
         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
