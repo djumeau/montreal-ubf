@@ -21,7 +21,7 @@
 
             <x-inputs.text class="w-80 md:w-82" id="password" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" :width=80 />
 
-            <x-submit>Submit</x-submit>
+            <x-submit>{{ __("auth/index.submit") }}</x-submit>
 
             {{-- <p class="mt-4 text-gray-200 italic">
                 {{ __('auth/index.dont_have_account') }} <a href="{{ __('nav.login.url') }}"
