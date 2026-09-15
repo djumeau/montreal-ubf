@@ -13,10 +13,8 @@
 
 <!-- Bible Study Section -->
 
-<!-- Images Directory [{{ $imagesDir }}] Image File [{{ $image }}] -->
-
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat min-h-75 md:min-h-85']) }}
-    style="background-image: url('{{ asset( $imagesDir . "/" . $image ) }}')">
+    style="background-image: url('{{ asset( "storage/" . $imagesDir . "/" . $image ) }}')">
 
     <div class="overlay bg-slate-900/60"></div>
 
