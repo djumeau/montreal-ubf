@@ -106,6 +106,12 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// Route to clear cache and views altogether
+Route::get('/clear-all', function () {
+    Artisan::call('optimize:clear');
+    return 'All caches and compiled views have been cleared!';
+});
+
 // Migrations -- Comment out when not in use.
 /*
 Route::get('/reset-migrations', function () {
