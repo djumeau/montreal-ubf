@@ -126,16 +126,16 @@
 
                     <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 border rounded-sm outline-white mb-8">
 
-                        <x-inputs.text :width=60 id="name" name="name"
+                        <x-inputs.text :width=80 id="name" name="name"
                             value="{{ auth()->user()->name }}" />
 
-                        <x-inputs.text :width=60 id="email" name="email" type="email"
+                        <x-inputs.text :width=80 id="email" name="email" type="email"
                             value="{{ auth()->user()->email }}" />
 
-                        <x-inputs.text :width=60 id="password" name="password" type="password"
+                        <x-inputs.text :width=80 id="password" name="password" type="password"
                             placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                        <x-inputs.text :width=60 id="password_confirmation" name="password_confirmation"
+                        <x-inputs.text :width=80 id="password_confirmation" name="password_confirmation"
                             type="password" placeholder="{{ __('auth/index.confirm_password') }}"
                             value="{{ old('password_confirmation') }}" />
 
