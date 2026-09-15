@@ -6,6 +6,7 @@
     'value' => '',
     'placeholder' => '',
     'width' => '80',
+    'fit' => false,
 ])
 
 <div>

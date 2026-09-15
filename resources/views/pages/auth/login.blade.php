@@ -17,9 +17,9 @@
         <form class="flex flex-col rounded-sm shadow-md text-white border border-white p-4 w-90 justify-self-center gap-y-4 items-center" novalidate action="{{ $isFrench ? route('connexion.authentifier') : route('login.authenticate')}}" method="POST">
             @csrf
 
-            <x-inputs.text id="email" name="email" type="email" placeholder="{{ __('auth/index.email') }}" value="{{ old('email') }}" :width=80 />
+            <x-inputs.text :width=60 id="email" name="email" type="email" placeholder="{{ __('auth/index.email') }}" value="{{ old('email') }}" :width=80 />
 
-            <x-inputs.text id="password" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" :width=80 />
+            <x-inputs.text :width=60 id="password" name="password" type="password" placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" :width=80 />
 
             <x-submit>Submit</x-submit>
 

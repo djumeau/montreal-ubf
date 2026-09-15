@@ -6,6 +6,7 @@
     $profileName = __('nav.dashboard.name');
 
     $isManageUsersActive = request()->routeIs('manage-users') || request()->routeIs('gerer-utilisateurs');
+    $manageUsersName = __('nav.manage-users.name');
 
 @endphp
 
@@ -106,12 +107,12 @@
                     </div>
                 @endif
 
-                <form action="{{ route('profile.update') }}" method="POST">
+                <form class="ml-4" action="{{ route('profile.update') }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <!-- Trigger for Avatar Upload Modal -->
-                    <div class="ml-4 mb-6 flex items-center space-x-2">
+                    <div class="mb-6 flex items-center space-x-2">
 
                         <img src="{{ auth()->user()->avatar_url }}?v={{ time() }}"
                             class="size-16 border-2 rounded-full object-cover">
@@ -123,24 +124,24 @@
 
                     </div>
 
-                    <x-inputs.text width="100" id="name" name="name"
-                        value="{{ auth()->user()->name }}" />
+                    <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 border rounded-sm outline-white mb-8">
 
-                    <x-inputs.text width="100" id="email" name="email" type="email"
-                        value="{{ auth()->user()->email }}" />
+                        <x-inputs.text :width=60 id="name" name="name"
+                            value="{{ auth()->user()->name }}" />
 
-                    <x-inputs.text width="100" id="password" name="password" type="password"
-                        placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
+                        <x-inputs.text :width=60 id="email" name="email" type="email"
+                            value="{{ auth()->user()->email }}" />
 
-                    <x-inputs.text width="100" id="password_confirmation" name="password_confirmation"
-                        type="password" placeholder="{{ __('auth/index.confirm_password') }}"
-                        value="{{ old('password_confirmation') }}" />
+                        <x-inputs.text :width=60 id="password" name="password" type="password"
+                            placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                    <div class="m-4 flex justify-center">
+                        <x-inputs.text :width=60 id="password_confirmation" name="password_confirmation"
+                            type="password" placeholder="{{ __('auth/index.confirm_password') }}"
+                            value="{{ old('password_confirmation') }}" />
 
-                        <button type="submit"
-                            class="w-80 p-2 bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">{{ __('dashboard/index.update') }}
-                        </button>
+                        <x-submit>
+                            {{ __('dashboard/index.update') }}
+                        </x-submit>
 
                     </div>
 

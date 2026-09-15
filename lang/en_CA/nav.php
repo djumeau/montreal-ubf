@@ -29,4 +29,8 @@ return [
                     "url" => "/dashboard",
                     "name" => "dashboard",
                 ],
+    "manage-users" => [ 'title' => "Manage Users",
+                    "url" => "/manage-users",
+                    "name" => "manage-users",
+                ],
 ];

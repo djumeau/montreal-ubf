@@ -30,5 +30,9 @@ return [
                     "url" => "/tableau",
                     "name" => "tableau",
                 ],
+    "manage-users" => [ 'title' => "Gérer les utilisateurs",
+                    "url" => "/gerer-utilisateurs",
+                    "name" => "gerer-utilisateurs",
+                ],
 
 ];
