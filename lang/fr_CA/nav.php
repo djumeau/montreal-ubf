@@ -30,6 +30,11 @@ return [
                     "url" => "/tableau",
                     "name" => "tableau",
                 ],
+    "update-profile" => [
+                    "title" => "Mettre à jour votre profil",
+                    "url" => "/tableau",
+                    "name" => "tableau",
+                ],
     "manage-users" => [ 'title' => "Gérer les utilisateurs",
                     "url" => "/gerer-utilisateurs",
                     "name" => "gerer-utilisateurs",

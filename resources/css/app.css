@@ -11,7 +11,7 @@
 
 /* Your custom CSS goes here */
 a[aria-disabled="true"] {
-  color: rgb(160, 217, 255);
+  opacity: .75;
   pointer-events: none; /* Disables mouse clicks */
   cursor: not-allowed;
 }

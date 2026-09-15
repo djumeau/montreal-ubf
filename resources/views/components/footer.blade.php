@@ -2,7 +2,7 @@
 
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
-    $givingActive = request()->routeIs('giving') || request()->routeIs('donnez');
+    $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
 
 @endphp
 

@@ -10,7 +10,7 @@
     $homeActive = request()->routeIs('home');
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
-    $givingActive = request()->routeIs('giving') || request()->routeIs('donnez');
+    $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
 
     if ($locale === 'fr_CA') {
         $logoFilePath = 'images/icons/logo_cbu_white.svg';

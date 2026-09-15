@@ -29,6 +29,11 @@ return [
                     "url" => "/dashboard",
                     "name" => "dashboard",
                 ],
+    "update-profile" => [
+                    "title" => "Update Profile",
+                    "url" => "/dashboard",
+                    "name" => "dashboard",
+                ],
     "manage-users" => [ 'title' => "Manage Users",
                     "url" => "/manage-users",
                     "name" => "manage-users",

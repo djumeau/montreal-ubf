@@ -48,45 +48,25 @@
                 <x-profile-info-block/>
 
                 <!-- Context Dynamic Links -->
-                <nav id="features" class="space-y-1">
+                <nav id="features">
 
-                    <!-- Update Profile Link -->
-                    <button @click="window.location.href = '{{ route($profileName) }}'"
-                        @class([
-                            'w-full flex items-center p-3 transition-colors focus:outline-none',
-                            'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' => $isProfileActive,
-                            'text-slate-100 cursor-pointer' => !$isProfileActive,
-                        ])
-
-                        @disabled($isProfileActive)>
-
-                        <i class="fas fa-user-cog w-6 text-center"></i>
-                        <span x-show="sidebarOpen"
-                            class="ml-3 text-sm">{{ __('dashboard/index.update_profile') }}</span>
-
-                    </button>
+                    <x-feature-button
+                        :url="__('nav.update-profile.url')"
+                        :isActive="$isProfileActive"
+                        icon="fa-user-cog"
+                        >{{ __('nav.update-profile.title') }}</x-feature-button>
 
                     @if (auth()->user()->canManageRoles())
-                        <button @click="activeTab = 'roles'"
-                            :class="activeTab === 'roles' ?
-                                'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' :
-                                'text-slate-100'"
-                            class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
-                            <i class="fas fa-users-cog w-6 text-center"></i>
-                            <span x-show="sidebarOpen"
-                                class="ml-3 text-sm">{{ __('dashboard/index.manage_roles') }}</span>
-                        </button>
+
+                        <!-- Active? {{ $isManageUsersActive }} -->
+                        <x-feature-button
+                            :url="__('nav.manage-users.url')"
+                            :isActive="$isManageUsersActive"
+                            icon="fa-users-cog"
+                            >{{ __('nav.manage-users.title') }}</x-feature-button>
+
                     @endif
 
-                    <!-- Placeholder for future modules (e.g. Schedule, Ministries) -->
-                    <button @click="activeTab = 'ministries'"
-                        :class="activeTab === 'ministries' ?
-                            'bg-slate-100 text-slate-900 font-medium border-b border-t border-slate-100' :
-                            'text-slate-100'"
-                        class="w-full flex items-center p-3 transition-colors focus:outline-none cursor-pointer">
-                        <i class="fas fa-church w-6 text-center"></i>
-                        <span x-show="sidebarOpen" class="ml-3 text-sm">{{ __('Ministries') }}</span>
-                    </button>
                 </nav>
             </div>
         </aside>
