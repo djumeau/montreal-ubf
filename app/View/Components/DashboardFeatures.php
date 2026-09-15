@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class FeatureButton extends Component
+class DashboardFeatures extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class FeatureButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('pages.dashboards.feature-button');
+        return view('pages.dashboards.dashboard-features');
     }
 }

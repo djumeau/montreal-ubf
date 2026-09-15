@@ -17,5 +17,6 @@ return [
     "cancel" => "Fermer",
     "avatar_updated" => "L'avatar est à jour.",
     "manage_roles" => "Gestion des rôles",
+    "manage_users" => "Gestion des utilisateurs",
     "role_updated" => "Rôle met à jour.",
 ];

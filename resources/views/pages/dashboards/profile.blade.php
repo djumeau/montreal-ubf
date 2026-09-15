@@ -1,15 +1,5 @@
 @props(['user' => null])
 
-@php
-
-    $isProfileActive = request()->routeIs('dashboard') || request()->routeIs('tableau');
-    $profileName = __('nav.dashboard.name');
-
-    $isManageUsersActive = request()->routeIs('manage-users') || request()->routeIs('gerer-utilisateurs');
-    $manageUsersName = __('nav.manage-users.name');
-
-@endphp
-
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('dashboard/index.title') }}</x-slot>
@@ -34,6 +24,7 @@
             class="transition-all duration-300 ease-in-out border rounded-sm border-slate-100 flex flex-col justify-between">
 
             <div>
+
                 <!-- Header & Toggle Chevron Button -->
                 <div class="p-2 flex items-center justify-between border-b-2">
                     <span x-show="sidebarOpen" class="font-bold text-lg text-slate-100">
@@ -47,28 +38,10 @@
 
                 <x-profile-info-block/>
 
-                <!-- Context Dynamic Links -->
-                <nav id="features">
+                <x-dashboard-features></x-dashboard-features>
 
-                    <x-feature-button
-                        :url="__('nav.update-profile.url')"
-                        :isActive="$isProfileActive"
-                        icon="fa-user-cog"
-                        >{{ __('nav.update-profile.title') }}</x-feature-button>
-
-                    @if (auth()->user()->canManageRoles())
-
-                        <!-- Active? {{ $isManageUsersActive }} -->
-                        <x-feature-button
-                            :url="__('nav.manage-users.url')"
-                            :isActive="$isManageUsersActive"
-                            icon="fa-users-cog"
-                            >{{ __('nav.manage-users.title') }}</x-feature-button>
-
-                    @endif
-
-                </nav>
             </div>
+
         </aside>
 
         <!-- Right Column: Interactive Work Space Context -->
