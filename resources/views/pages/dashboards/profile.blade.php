@@ -118,7 +118,7 @@
                             class="size-16 border-2 rounded-full object-cover">
 
                         <button type="button" @click="showAvatarModal = true"
-                            class="px-2 py-2 text-sm  bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                            class="w-fit px-2 py-2 text-sm  bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
                             <i class="fas fa-camera mr-2"></i>{{ __('dashboard/index.change_avatar') }}
                         </button>
 
@@ -126,16 +126,16 @@
 
                     <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 border rounded-sm outline-white mb-8">
 
-                        <x-inputs.text class="w-50 md:w-100" id="name" name="name"
+                        <x-inputs.text class="w-40 sm:w-50 md:w-100" id="name" name="name"
                             value="{{ auth()->user()->name }}" />
 
-                        <x-inputs.text class="w-50 md:w-100" id="email" name="email" type="email"
+                        <x-inputs.text class="w-40 sm:w-50 md:w-100" id="email" name="email" type="email"
                             value="{{ auth()->user()->email }}" />
 
-                        <x-inputs.text class="w-50 md:w-100" id="password" name="password" type="password"
+                        <x-inputs.text class="w-40 sm:w-50 md:w-100" id="password" name="password" type="password"
                             placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                        <x-inputs.text class="w-50 md:w-100" id="password_confirmation" name="password_confirmation"
+                        <x-inputs.text class="w-40 sm:w-50 md:w-100" id="password_confirmation" name="password_confirmation"
                             type="password" placeholder="{{ __('auth/index.confirm_password') }}"
                             value="{{ old('password_confirmation') }}" />
 
