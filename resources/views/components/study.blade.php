@@ -1,5 +1,6 @@
 @props([
-    'image' => './images/montreal_skyline-mobile.jpg',
+    'imagesDir' => 'images',
+    'image' => 'montreal_skyline-mobile.jpg',
     'heading' => '',
     'book' => '',
     'dateStamp' => '',
@@ -11,8 +12,11 @@
 ])
 
 <!-- Bible Study Section -->
+
+<!-- Images Directory [{{ $imagesDir }}] Image File [{{ $image }}] -->
+
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat min-h-75 md:min-h-85']) }}
-    style="background-image: url('{{ asset($image) }}')">
+    style="background-image: url('{{ asset( $imagesDir . "/" . $image ) }}')">
 
     <div class="overlay bg-slate-900/60"></div>
 
@@ -25,7 +29,7 @@
 
         <!-- Main Content Cluster -->
         <div class="flex-col text-center translate-y-18 z-10">
-            
+
             <!-- Main Title -->
             <h2 class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
                 {{$book}}
@@ -52,22 +56,22 @@
                 <a href="{{
                     route('pdf.view', [
 
-                        'dir' => __('home/study.dir'), 
+                        'dir' => __('home/study.dir'),
                         'filename' => __('home/study.pdf'),
-                
+
                     ])}}" target="_blank">
 
                     <i class="fa-solid fa-file-pdf text-red-300"></i>
-                    
+
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.pdf)</span>
                 </a>
 
                 <a href="{{
                     route('pdf.view', [
-                    
-                        'dir' => __('home/study.dir'), 
+
+                        'dir' => __('home/study.dir'),
                         'filename' => __('home/study.docx'),
-                
+
                     ])}}" target="_blank">
 
                     <i class="fa-solid fa-file-word text-blue-300"></i>
@@ -76,9 +80,9 @@
                 </a>
 
             </div>
-            
+
         </div>
-    
+
     </div>
 
 </section>

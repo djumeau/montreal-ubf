@@ -17,4 +17,5 @@ return [
     "cancel" => "Cancel",
     "avatar_updated" => "Avatar updated.",
     "manage_roles" => "Role Management",
+    "role_updated" => "Role updated.",
 ];
