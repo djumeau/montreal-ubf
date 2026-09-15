@@ -124,7 +124,7 @@
 
                     </div>
 
-                    <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 border rounded-sm outline-white mb-8">
+                    <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 mb-8">
 
                         <x-inputs.text class="w-fit sm:w-50 md:w-100" id="name" name="name"
                             value="{{ auth()->user()->name }}" />
