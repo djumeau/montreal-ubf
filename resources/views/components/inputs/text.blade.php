@@ -21,7 +21,7 @@
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
 
-        class="w-{{ $width }} mx-autoshadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline @error($name) border-red-500 @else border-slate-300 @enderror text-sm" />
+        class="w-{{ $width }} shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-30 @error($name) border-red-500 @enderror text-sm" />
 
     @error($name)
         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>

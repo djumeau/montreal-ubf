@@ -128,23 +128,18 @@
 
                     </div>
 
-                    <!-- Input Fields Grid -->
-                    <div class="space-y-4">
+                    <x-inputs.text width="100" id="name" name="name"
+                        value="{{ auth()->user()->name }}" />
 
-                        <x-inputs.text width="100" id="name" name="name"
-                            value="{{ auth()->user()->name }}" />
+                    <x-inputs.text width="100" id="email" name="email" type="email"
+                        value="{{ auth()->user()->email }}" />
 
-                        <x-inputs.text width="100" id="email" name="email" type="email"
-                            value="{{ auth()->user()->email }}" />
+                    <x-inputs.text width="100" id="password" name="password" type="password"
+                        placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                        <x-inputs.text width="100" id="password" name="password" type="password"
-                            placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
-
-                        <x-inputs.text width="100" id="password_confirmation" name="password_confirmation"
-                            type="password" placeholder="{{ __('auth/index.confirm_password') }}"
-                            value="{{ old('password_confirmation') }}" />
-
-                    </div>
+                    <x-inputs.text width="100" id="password_confirmation" name="password_confirmation"
+                        type="password" placeholder="{{ __('auth/index.confirm_password') }}"
+                        value="{{ old('password_confirmation') }}" />
 
                     <div class="m-4 flex justify-center">
 
