@@ -1,5 +1,5 @@
 <!-- Profile Info Block -->
-<div x-data="{ loaded: false }" class="p-4 flex flex-col items-center text-center overflow-hidden">
+<div x-data="{ loaded: false }" class="py-4 flex flex-col items-center text-center overflow-hidden">
     <!-- {{ auth()->user()->avatar_url }} -->
     <img
         src="{{ auth()->user()->avatar_url }}?v={{ time() }}"
@@ -8,7 +8,7 @@
         x-show="loaded"
         x-cloak
         alt="Avatar"
-        :class="[sidebarOpen ? 'size-20' : 'size-10', loaded ? 'opacity-100' : 'opacity-0']"
+        :class="[sidebarOpen ? 'size-35' : 'size-10', loaded ? 'opacity-100' : 'opacity-0']"
         class="rounded-full object-cover border-2 border-white shadow-xs transition-all duration-300">
 
 

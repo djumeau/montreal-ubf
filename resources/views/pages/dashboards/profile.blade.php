@@ -65,14 +65,14 @@
                     @method('PUT')
 
                     <!-- Trigger for Avatar Upload Modal -->
-                    <div class="mb-6 flex items-center space-x-2">
+                    <div class="mb-6 flex items-center justify-center space-x-2">
 
                         <img src="{{ auth()->user()->avatar_url }}?v={{ time() }}"
                             class="size-16 border-2 rounded-full object-cover">
 
                         <button type="button" @click="showAvatarModal = true"
-                            class="w-fit px-2 py-2 text-sm  bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
-                            <i class="fas fa-camera mr-2"></i>{{ __('dashboard/index.change_avatar') }}
+                            class="px-2 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                            <i class="fas fa-camera mr-1"></i>{{ __('dashboard/index.change_avatar') }}
                         </button>
 
                     </div>
@@ -88,7 +88,7 @@
                         <x-inputs.text class="w-fit sm:w-50 md:w-100" id="password" name="password" type="password"
                             placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                        <x-inputs.text class="w-fit sm:w-50 md:w-100" id="password_confirmation" name="password_confirmation"
+                        <x-inputs.text class="w-fit sm:w-50 md:w-100 mb-4" id="password_confirmation" name="password_confirmation"
                             type="password" placeholder="{{ __('auth/index.confirm_password') }}"
                             value="{{ old('password_confirmation') }}" />
 
