@@ -20,7 +20,7 @@
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
 
-        {{ $attributes-> merge([ 'class' => 'shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-30 text-sm ']) }}
+        {{ $attributes-> merge([ 'class' => 'shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-300 text-sm ']) }}
 
         class="@error($name) 'border-red-500' @enderror ])"
     />

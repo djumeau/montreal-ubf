@@ -39,7 +39,7 @@ class RoleController extends Controller
             'role' => $validated['role']
         ]);
 
-        return back()->with('status', __('dashboard/index.role-updated') );
+        return back()->with('status', __('dashboard/index.role_updated') );
     }
 
 }

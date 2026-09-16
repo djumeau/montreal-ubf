@@ -22,7 +22,8 @@ class DashboardController extends Controller
     public function manageUsers(): View
     {
         $user = Auth::user();
-        return view('pages.dashboards.manage-users', compact('user'));
+        $users = User::orderBy('name')->paginate(10);
+        return view('pages.dashboards.manage-users', compact('user', 'users'));
     }
 
 }

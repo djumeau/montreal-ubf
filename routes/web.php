@@ -7,6 +7,8 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserManagementController;
 
 use App\Http\Controllers\BibleBookController;
 
@@ -93,6 +95,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
 
     Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
+
+    // Manage Users actions - Add User, Change Role, Reset Password
+    Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
+    Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
+    Route::post('/manage-users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
 
     // Profile related routes - Avatar, User name and User Password
 

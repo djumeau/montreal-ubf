@@ -58,16 +58,23 @@ class User extends Authenticatable
             ]);
         }
 
-        // 2. Check if a default user.jpg exists in storage/app/private/avatar/
+        return static::defaultAvatarUrl();
+    }
+
+    /**
+     * The generic avatar shown for a user until they upload their own.
+     */
+    public static function defaultAvatarUrl(): string
+    {
+        // 1. Check if a default user.jpg exists in storage/app/private/avatar/
         if (Storage::disk('private')->exists('avatar/user.jpg')) {
             return route('private.avatar', [
                 'filename' => 'user.jpg'
             ]);
         }
 
-        // 3. Absolute fallback to the public asset folder
+        // 2. Absolute fallback to the public asset folder
         return asset('images/user.jpg');
-
     }
 
     public function isAdmin(): bool {
