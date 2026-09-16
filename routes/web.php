@@ -86,20 +86,21 @@ Route::post('/deconnexion', [LoginController::class, 'logout'])->name('deconnexi
 Route::middleware('auth')->group(function () {
 
     //Dashboard related routes - Default View Personal Profile
+
     // en_CA
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/manage-users', [DashboardController::class, 'manageUsers'])->name('manage-users');
 
-    // fr_CA
-    Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
-
-    Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
-
     // Manage Users actions - Add User, Change Role, Reset Password
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
     Route::post('/manage-users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
+
+    // fr_CA
+    Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
+
+    Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
 
     // Profile related routes - Avatar, User name and User Password
 

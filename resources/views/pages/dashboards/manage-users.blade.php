@@ -142,7 +142,7 @@
 
                 <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.add_new_user') }}</h3>
 
-                <form action="{{ route('users.store') }}" method="POST">
+                <form class="w-full" action="{{ route('users.store') }}" method="POST">
                     @csrf
 
                     <!-- New users start with the default avatar; they can change it once they log in -->
@@ -150,7 +150,7 @@
                         <img src="{{ \App\Models\User::defaultAvatarUrl() }}" class="size-16 border-2 rounded-full object-cover">
                     </div>
 
-                    <div class="flex flex-col items-center justify-center gap-y-2 mb-4">
+                    <div class="flex flex-col items-stretch justify-center gap-y-2 mb-4">
                         <x-inputs.text class="w-full" id="name" name="name" placeholder="{{ __('dashboard/index.name') }}"
                             value="{{ old('name') }}" />
 

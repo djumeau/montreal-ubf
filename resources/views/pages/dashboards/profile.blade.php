@@ -77,18 +77,18 @@
 
                     </div>
 
-                    <div class="flex flex-col mr-4 items-center justify-center gap-y-2 p-2 mb-8">
+                    <div class="flex flex-col mr-4 items-stretch md:items-center justify-center gap-y-2 p-2 mb-8">
 
-                        <x-inputs.text class="w-fit sm:w-50 md:w-100" id="name" name="name"
+                        <x-inputs.text class="w-full sm:w-50 md:w-100" id="name" name="name"
                             value="{{ auth()->user()->name }}" />
 
-                        <x-inputs.text class="w-fit sm:w-50 md:w-100" id="email" name="email" type="email"
+                        <x-inputs.text class="w-full sm:w-50 md:w-100" id="email" name="email" type="email"
                             value="{{ auth()->user()->email }}" />
 
-                        <x-inputs.text class="w-fit sm:w-50 md:w-100" id="password" name="password" type="password"
+                        <x-inputs.text class="w-full sm:w-50 md:w-100" id="password" name="password" type="password"
                             placeholder="{{ __('auth/index.password') }}" value="{{ old('password') }}" />
 
-                        <x-inputs.text class="w-fit sm:w-50 md:w-100 mb-4" id="password_confirmation" name="password_confirmation"
+                        <x-inputs.text class="w-full sm:w-50 md:w-100 mb-4" id="password_confirmation" name="password_confirmation"
                             type="password" placeholder="{{ __('auth/index.confirm_password') }}"
                             value="{{ old('password_confirmation') }}" />
 
