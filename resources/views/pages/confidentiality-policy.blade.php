@@ -5,6 +5,7 @@
 @endphp
 
 <x-layout class="bg-slate-900" textColor="text-white">
+
     <x-slot name="title">{{ __('header.name') }} – {{ __('nav.confidentiality.title') }}</x-slot>
 
     <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('nav.confidentiality.title') }}</h1>
@@ -21,12 +22,12 @@
     </p>
 
     {{-- Intro Statement --}}
-    <p class="text-xl leading-relaxed pt-8 mb-8 text-white dark:text-slate-300">
+    <p class="text-xl leading-relaxed px-8 pt-4 mb-8 text-white">
         {{ __('home/index.privacy.intro') }}
     </p>
 
     {{-- Dynamic Sections Loop --}}
-    <div class="space-y-8">
+    <div class="space-y-8 px-8">
         @foreach (__('home/index.privacy.sections') as $section)
             <section class="space-y-2">
                 <h2 class="text-lg font-bold text-white">
