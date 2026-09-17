@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Models\User;
 
 use Illuminate\View\View;
@@ -23,7 +24,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $users = User::orderBy('name')->paginate(10);
-        return view('pages.dashboards.manage-users', compact('user', 'users'));
+        $adminCount = User::where('role', Role::ADMIN)->count();
+        return view('pages.dashboards.manage-users', compact('user', 'users', 'adminCount'));
     }
 
 }

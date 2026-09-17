@@ -39,4 +39,12 @@ return [
     "new_user_email_line" => "Un compte a été créé pour vous.",
     "new_user_email_credentials" => "Vous pouvez vous connecter avec le courriel :email et le mot de passe temporaire : :password",
     "new_user_email_action" => "Veuillez vous connecter et changer votre mot de passe dès que possible.",
+    "delete_user" => "Supprimer l'utilisateur",
+    "delete_user_confirm" => "Êtes-vous certain?",
+    "yes" => "Oui",
+    "no" => "Non",
+    "account_deleted" => "Votre compte a été supprimé.",
+    "cannot_delete_last_admin" => "Vous êtes le seul administrateur, votre compte ne peut donc pas être supprimé.",
+    "user_deleted" => "Utilisateur :name supprimé.",
+    "cannot_delete_last_admin_role" => "Vous ne pouvez pas supprimer un administrateur s'il n'y a qu'un seul utilisateur assigné à ce rôle.",
 ];

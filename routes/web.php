@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
     Route::post('/manage-users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
+    Route::delete('/manage-users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
@@ -115,6 +116,10 @@ Route::middleware('auth')->group(function () {
     // 3. The Avatar Upload Route (from your modal form)
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])
         ->name('profile.avatar');
+
+    // 3b. Account Deletion Route (from the Delete User confirmation modal)
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 
     // 4. The Secure Avatar Streaming Route
     Route::get('/private/avatar/{filename}', [ProfileController::class, 'streamAvatar'])

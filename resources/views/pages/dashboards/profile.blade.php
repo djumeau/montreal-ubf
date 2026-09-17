@@ -4,13 +4,15 @@
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('dashboard/index.title') }}</x-slot>
 
-    <h2 class='text-right text-2xl font-bold pt-18 pb-6'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}
-    </h2>
+    <div class="flex justify-between items-center pt-18 pb-6">
+
+        <h2 class='text-right text-2xl font-bold'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}</h2>
+
+    </div>
 
     <!-- UI - Left sidebar with main area -->
     <div x-data="{
         sidebarOpen: true,
-        activeTab: 'profile',
         showAvatarModal: false
     }" class="flex min-h-screen text-white">
 
@@ -48,8 +50,49 @@
         <main :class="sidebarOpen ? 'hidden md:block' : 'block'" class="flex-1 pl-6 overflow-y-auto">
 
             <!-- UI Segment: Update Profile Form -->
-            <div x-show="activeTab === 'profile'" x-cloak class="w-full border rounded-sm border-slate-100">
-                <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.update_profile') }}</h2>
+            <div class="w-full border rounded-sm border-slate-100">
+
+                <div
+                    x-data="{ showDeleteModal: false }"
+                    class="flex flex-row justify-between items-center">
+
+                    <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.update_profile') }}</h2>
+
+                    <button type="button" @click="showDeleteModal = true"
+                        class="px-2 py-2 mr-4 bg-red-700 hover:bg-red-800 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                        {{ __('dashboard/index.delete_user') }}
+                    </button>
+
+                    <!-- AlpineJS Modal for Delete User Confirmation -->
+                    <div
+                        x-show="showDeleteModal" x-cloak
+                        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
+                        x-transition>
+
+                        <div @click.away="showDeleteModal = false"
+                            class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700">
+
+                            <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.delete_user_confirm') }}</h3>
+
+                            <form action="{{ route('profile.destroy') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <div class="flex justify-end space-x-3">
+                                    <button type="button" @click="showDeleteModal = false"
+                                        class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                                        {{ __('dashboard/index.no') }}
+                                    </button>
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium rounded-sm transition-colors cursor-pointer">
+                                        {{ __('dashboard/index.yes') }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
 
                 <!-- Display Notification - If applicable -->
                 @if (session('status'))
@@ -102,30 +145,6 @@
 
             </div>
             <!-- END UI Segment - User Profile -->
-
-            <!-- UI Segment: Role Management -->
-            @if (auth()->user()->canManageRoles())
-
-                <div x-show="activeTab === 'roles'" x-cloak class="w-full border rounded-sm border-slate-100">
-                    <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.manage_roles') }}</h2>
-
-                    <!-- Display Success Notifications -->
-                    @if (session('status'))
-                        <div class="flex items-center justify-left ml-4 mb-4">
-                            <div class="w-100 p-2 border rounded-sm border-emerald-600 text-emerald-400 text-sm">
-                                {{ __(session('status')) }}
-                            </div>
-                        </div>
-                    @endif
-
-
-
-                </div>
-
-            @endif
-            <!-- END UI Segment: Role Management -->
-
-
 
         </main>
 

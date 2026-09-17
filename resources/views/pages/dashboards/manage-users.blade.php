@@ -96,8 +96,11 @@
                                         <td class="py-3 pr-4">
                                             <x-manage-users.role-select :user="$listedUser" />
                                         </td>
-                                        <td class="py-3 pr-4 text-right">
-                                            <x-manage-users.reset-password-button :user="$listedUser" />
+                                        <td class="py-3 pr-4 text-right whitespace-nowrap">
+                                            <div class="flex items-center justify-end gap-2">
+                                                <x-manage-users.reset-password-button :user="$listedUser" />
+                                                <x-manage-users.delete-user-button :user="$listedUser" :admin-count="$adminCount" />
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -114,6 +117,7 @@
                                 <div class="flex flex-wrap items-center gap-3">
                                     <x-manage-users.role-select :user="$listedUser" />
                                     <x-manage-users.reset-password-button :user="$listedUser" />
+                                    <x-manage-users.delete-user-button :user="$listedUser" :admin-count="$adminCount" />
                                 </div>
                             </div>
                         @endforeach

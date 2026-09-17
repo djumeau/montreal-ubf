@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 
@@ -75,6 +79,31 @@ class ProfileController extends Controller
         }
 
         return back()->with('status', __('dashboard/index.avatar_updated'));
+    }
+
+    /**
+     * Permanently delete the authenticated user's own account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->role === Role::ADMIN && User::where('role', Role::ADMIN)->count() <= 1) {
+            return back()->with('status', __('dashboard/index.cannot_delete_last_admin'));
+        }
+
+        if ($user->avatar_file && Storage::disk('private')->exists($user->avatar_file)) {
+            Storage::disk('private')->delete($user->avatar_file);
+        }
+
+        $user->delete();
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home')->with('success', __('dashboard/index.account_deleted'));
     }
 
     /**

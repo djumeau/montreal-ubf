@@ -9,6 +9,7 @@ use App\Notifications\NewUserWelcome;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
@@ -56,6 +57,27 @@ class UserManagementController extends Controller
         $user->notify(new AdminPasswordReset($newPassword));
 
         return back()->with('status', __('dashboard/index.password_reset_sent', ['name' => $user->name]));
+    }
+
+    public function destroy(Request $request, User $user): RedirectResponse
+    {
+        // Double layer check at the controller endpoint
+        if (!$request->user()->canManageRoles()) {
+            abort(403, __('home/index.unauthorized'));
+        }
+
+        if ($user->role === Role::ADMIN && User::where('role', Role::ADMIN)->count() <= 1) {
+            return back()->with('status', __('dashboard/index.cannot_delete_last_admin'));
+        }
+
+        if ($user->avatar_file && Storage::disk('private')->exists($user->avatar_file)) {
+            Storage::disk('private')->delete($user->avatar_file);
+        }
+
+        $name = $user->name;
+        $user->delete();
+
+        return back()->with('status', __('dashboard/index.user_deleted', ['name' => $name]));
     }
 
 }

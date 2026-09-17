@@ -39,4 +39,12 @@ return [
     "new_user_email_line" => "An account has been created for you.",
     "new_user_email_credentials" => "You can log in with email :email and temporary password: :password",
     "new_user_email_action" => "Please log in and change your password as soon as possible.",
+    "delete_user" => "Delete User",
+    "delete_user_confirm" => "Are you sure?",
+    "yes" => "Yes",
+    "no" => "No",
+    "account_deleted" => "Your account has been deleted.",
+    "cannot_delete_last_admin" => "You are the only Admin, so your account cannot be deleted.",
+    "user_deleted" => "User :name deleted.",
+    "cannot_delete_last_admin_role" => "You cannot delete an administrator if there is only one user assigned to that role.",
 ];
