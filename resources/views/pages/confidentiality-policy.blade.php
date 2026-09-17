@@ -21,7 +21,7 @@
     </p>
 
     {{-- Intro Statement --}}
-    <p class="text-base leading-relaxed py-2 mb-8 text-white dark:text-slate-300">
+    <p class="text-xl leading-relaxed pt-8 mb-8 text-white dark:text-slate-300">
         {{ __('home/index.privacy.intro') }}
     </p>
 
