@@ -13,15 +13,7 @@ enum Role: string
 
     public function label():string
     {
-        return match($this)
-        {
-            self::GUEST => 'Guest',
-            self::USER => 'User',
-            self::MUSIC => 'Music',
-            self::MEMBER => 'Member',
-            self::ELDER => 'Elder',
-            self::ADMIN => 'Administrator',
-        };
+        return __('enums/role.' . $this->value);
     }
 
     /**
