@@ -2,6 +2,7 @@
 
 return [
 
+    "info" => [ "title" => "Infos" ],
     "about_us" => [ "title" => "À propos",
                     "url" => "/apropos",
                     "name" => "apropos",

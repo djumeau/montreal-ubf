@@ -11,6 +11,7 @@
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
+    $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
 
     if ($locale === 'fr_CA') {
         $logoFilePath = 'images/icons/logo_cbu_white.svg';
@@ -57,7 +58,29 @@
         <!-- Desktop Menu -->
         <nav class="hidden md:flex items-center space-x-4">
 
-            <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" >{{__('nav.about_us.title')}}</x-nav-link>
+            <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.window="open = false">
+
+                <button type="button" @click="open = !open"
+                    class="inline-flex items-center text-white">
+                    <i class="fa-solid fa-caret-right text-xs mr-1 transition-transform duration-200" :class="{ 'rotate-90': open }"></i>
+                    <span class="hover:underline">{{ __('nav.info.title') }}</span>
+                </button>
+
+                <div x-show="open" x-transition x-cloak
+                    class="absolute left-0 mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-2 z-50">
+
+
+                    <div class="px-4 py-1">
+                        <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive">{{__('nav.about_us.title')}}</x-nav-link>
+                    </div>
+
+                    <div class="px-4 py-1">
+                        <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive">{{__('nav.confidentiality.title')}}</x-nav-link>
+                    </div>
+
+                </div>
+
+            </div>
 
             <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
 
@@ -88,7 +111,15 @@
     <!-- Mobile Menu -->
     <nav id="mobile-menu" class="hidden md:hidden text-white space-y-1">
 
-        <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
+        <div class="p-3 text-gray-300 font-semibold text-sm uppercase tracking-wide">{{ __('nav.info.title') }}</div>
+
+        <div class="pl-6">
+            <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
+        </div>
+
+        <div class="pl-6">
+            <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
+        </div>
 
         <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
 

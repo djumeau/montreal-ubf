@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "info" => [ "title" => "Info" ],
     "about_us" => [ "title" => "About Us",
                     "url" => "/about",
                     "name" => "about",

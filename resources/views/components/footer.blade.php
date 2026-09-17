@@ -63,6 +63,10 @@
                 <div class="pl-4"><x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" icon="angle-right">{{__('nav.about_us.title')}}</x-nav-link>
                 </div>
 
+                <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
+                        icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
+                </div>
+
                 <div class="pl-4"><x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive"
                         icon="angle-right">{{__('nav.events.title')}}</x-nav-link>
                 </div>
@@ -71,9 +75,6 @@
                         icon="angle-right">{{__('nav.giving.title')}}</x-nav-link>
                 </div>
 
-                <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
-                        icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
-                </div>
 
             </div>
 
