@@ -17,6 +17,7 @@ use App\Http\Controllers\StudySeriesController;
 use App\Http\Controllers\BibleStudyController;
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ConfidentialityPolicyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\QuestionnaireController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SwitchLanguageController;
 
 use App\Http\Controllers\GivingController;
+use App\View\Components\ConfidentialityPolicy;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -31,11 +33,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/events', [EventController::class, 'index'])->name('events');
 Route::get('/giving', [GivingController::class, 'index'])->name('giving');
+Route::get('/confidentiality', [ConfidentialityPolicyController::class, 'index'])->name('confidentiality');
 
 // fr_CA
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');
 Route::get('/evenements', [EventController::class, 'index'])->name('evenements');
 Route::get('/donner', [GivingController::class, 'index'])->name('donner');
+Route::get('/confidentialite', [ConfidentialityPolicyController::class, 'index'])->name('confidentialite');
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 

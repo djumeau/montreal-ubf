@@ -38,4 +38,7 @@ return [
                     "url" => "/manage-users",
                     "name" => "manage-users",
                 ],
+    "confidentiality" => ["title" => "Privacy Policy",
+                        "url" => "/confidentiality",
+                        "name" => "confidentiality"],
 ];

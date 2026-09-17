@@ -39,5 +39,9 @@ return [
                     "url" => "/gerer-utilisateurs",
                     "name" => "gerer-utilisateurs",
                 ],
+    "confidentiality" => [ "title" => "Politique de confidentialité",
+                        "url" => "/confidentialite",
+                        "name" => "confidentialite",
+                        ],
 
 ];

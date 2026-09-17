@@ -144,6 +144,8 @@
 
     <x-footer />
 
+    <x-compliance-requirement />
+
 </body>
 
 </html>

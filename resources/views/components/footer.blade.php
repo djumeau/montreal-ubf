@@ -3,6 +3,7 @@
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
+    $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
 
 @endphp
 
@@ -43,9 +44,11 @@
                 <a href="https://instagram.com/montrealubf" aria-label="Instagram" target="_blank">
                     <i class="fa-brands fa-instagram text-white text-2xl"></i>
                 </a>
+
                 <a href="https://facebook.com/montrealubf" aria-label="Facebook" target="_blank">
                     <i class="fa-brands fa-facebook text-white text-2xl"></i>
                 </a>
+
                 <!-- <a href="https://x.com/montrealubf" aria-label="X (formerly Twitter)" target="_blank">
                     <i class="fa-brands fa-x-twitter text-white text-2xl"></i>
                 </a> -->
@@ -66,6 +69,10 @@
 
                 <div class="pl-4"><x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive"
                         icon="angle-right">{{__('nav.giving.title')}}</x-nav-link>
+                </div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
+                        icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
                 </div>
 
             </div>
