@@ -81,7 +81,7 @@
         </div>
 
         <!-- Bottom Copyright Row -->
-        <div class="text-center pt-4">
+        <div class="text-center p-4">
             <p class="text-center p-0">&copy; {{ now()->year }} {{__('footer.name')}}</p>
         </div>
 
