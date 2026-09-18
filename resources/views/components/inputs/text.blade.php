@@ -7,10 +7,10 @@
     'placeholder' => '',
 ])
 
-<div>
+<div {{ $attributes->merge(['class' => 'w-full']) }}>
 
     @if( $label )
-    <label class="block text-sm font-medium text-slate-700 mb-1.5" for="{{ $id }}">{{ $label }}</label>
+    <label class="block text-sm font-medium text-slate-100 mb-1.5" for="{{ $id }}">{{ $label }}</label>
     @endif
 
     <input
@@ -19,10 +19,7 @@
         type="{{ $type }}"
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
-
-        {{ $attributes-> merge([ 'class' => 'shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline border-slate-300 text-sm ']) }}
-
-        class="@error($name) 'border-red-500' @enderror ])"
+        class="w-full shadow appearance-none border rounded-sm p-2 focus:outline-none focus:shadow-outline text-sm {{ $errors->has($name) ? 'border-red-500' : 'border-slate-300' }}"
     />
 
     @error($name)

@@ -40,7 +40,7 @@ return [
     "new_user_email_credentials" => "You can log in with email :email and temporary password: :password",
     "new_user_email_action" => "Please log in and change your password as soon as possible.",
     "delete_user" => "Delete User",
-    "delete_user_confirm" => "Are you sure?",
+    "delete_user_confirm" => "Are you sure? Contact us if you wish to register again.",
     "yes" => "Yes",
     "no" => "No",
     "account_deleted" => "Your account has been deleted.",

@@ -18,6 +18,7 @@ use App\Http\Controllers\BibleStudyController;
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ConfidentialityPolicyController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\QuestionnaireController;
@@ -27,13 +28,17 @@ use App\Http\Controllers\SwitchLanguageController;
 use App\Http\Controllers\GivingController;
 use App\View\Components\ConfidentialityPolicy;
 
+// en_CA and fr_CA
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
 // en_CA
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/confidentiality', [ConfidentialityPolicyController::class, 'index'])->name('confidentiality');
+
 Route::get('/events', [EventController::class, 'index'])->name('events');
 Route::get('/giving', [GivingController::class, 'index'])->name('giving');
-Route::get('/confidentiality', [ConfidentialityPolicyController::class, 'index'])->name('confidentiality');
 
 // fr_CA
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');

@@ -58,16 +58,16 @@
         <!-- Desktop Menu -->
         <nav class="hidden md:flex items-center space-x-4">
 
-            <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.window="open = false">
+            <div class="relative inline-flex items-center" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.window="open = false">
 
                 <button type="button" @click="open = !open"
                     class="inline-flex items-center text-white">
-                    <i class="fa-solid fa-caret-right text-xs mr-1 transition-transform duration-200" :class="{ 'rotate-90': open }"></i>
+                    <i class="fa-solid fa-caret-right mr-1 transition-transform duration-200" :class="{ 'rotate-90': open }"></i>
                     <span class="hover:underline">{{ __('nav.info.title') }}</span>
                 </button>
 
                 <div x-show="open" x-transition x-cloak
-                    class="absolute left-0 mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-2 z-50">
+                    class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-2 z-50">
 
 
                     <div class="px-4 py-1">

@@ -40,7 +40,7 @@ return [
     "new_user_email_credentials" => "Vous pouvez vous connecter avec le courriel :email et le mot de passe temporaire : :password",
     "new_user_email_action" => "Veuillez vous connecter et changer votre mot de passe dès que possible.",
     "delete_user" => "Supprimer l'utilisateur",
-    "delete_user_confirm" => "Êtes-vous certain?",
+    "delete_user_confirm" => "Êtes-vous certain? Contactez-nous si vous souhaitez vous réinscrire.",
     "yes" => "Oui",
     "no" => "Non",
     "account_deleted" => "Votre compte a été supprimé.",
