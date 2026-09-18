@@ -109,9 +109,9 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="hidden md:hidden text-white space-y-1">
+    <nav id="mobile-menu" class="hidden md:hidden text-white space-y-0.5">
 
-        <div class="p-3 text-gray-300 font-semibold uppercase tracking-wide">{{ __('nav.info.title') }}</div>
+        <div class="p-3 text-gray-300 font-semibold tracking-wide">{{ __('nav.info.title') }}</div>
 
         <div class="pl-6">
             <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>

@@ -7,5 +7,6 @@ return [
     "cat_1" => "Children:",
     "cat_2" => "General:",
     "social_media" => "Social Media",
+    "image_2" => "images/ig_qr_code_en.png",
 
 ];

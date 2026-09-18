@@ -165,7 +165,7 @@
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
                         <button type="button" @click="showAddUserModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
