@@ -25,14 +25,14 @@
             </div>
 
             <!-- Middle Row + QR code -->
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
 
-                <div id="WorshipTimeSocialMedia" class="text-white italic pt-6 pb-0">
+                <div id="GeneralInfo" class="text-white italic">
 
                     <!-- Worship Times -->
                     <p class="mb-2">{{ $subtitle }}</p>
 
-                    <div class="flex justify-center gap-6 pt-0">
+                    <div class="flex items-center justify-center gap-6 pt-0">
 
                         <!-- First column: Right Justified -->
                         <div class="flex items-center justify-end text-right">
@@ -69,8 +69,12 @@
 
                 </div>
 
-                <a href="https://startbiblestudy.org/montreal-ubf" target="_blank" class="cursor-pointer"><img src="{{ asset($image_2) }}"
-                    class="hidden md:block w-36 h-36"></a>
+                <!-- Side Image for QR Code Alt Bible Study site -->
+
+                <div id="SideImage">
+                    <a href="https://startbiblestudy.org/montreal-ubf" target="_blank" class="cursor-pointer"><img src="{{ asset($image_2) }}"
+                    class="pt-2 hidden md:block w-40 h-40"></a>
+                </div>
 
             </div>
 
