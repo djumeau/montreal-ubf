@@ -47,4 +47,5 @@ return [
     "cannot_delete_last_admin" => "Vous êtes le seul administrateur, votre compte ne peut donc pas être supprimé.",
     "user_deleted" => "Utilisateur :name supprimé.",
     "cannot_delete_last_admin_role" => "Vous ne pouvez pas supprimer un administrateur s'il n'y a qu'un seul utilisateur assigné à ce rôle.",
+    "cannot_demote_last_admin" => "Vous ne pouvez pas changer le rôle du seul administrateur.",
 ];

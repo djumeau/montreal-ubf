@@ -94,7 +94,7 @@
                                         <td class="py-3 pr-4">{{ $listedUser->name }}</td>
                                         <td class="py-3 pr-4 text-slate-300">{{ $listedUser->email }}</td>
                                         <td class="py-3 pr-4">
-                                            <x-manage-users.role-select :user="$listedUser" />
+                                            <x-manage-users.role-select :user="$listedUser" :admin-count="$adminCount" />
                                         </td>
                                         <td class="py-3 pr-4 text-right whitespace-nowrap">
                                             <div class="flex items-center justify-end gap-2">
@@ -115,7 +115,7 @@
                                 <div class="font-bold text-slate-100">{{ $listedUser->name }}</div>
                                 <div class="text-slate-300 text-sm mb-3">{{ $listedUser->email }}</div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <x-manage-users.role-select :user="$listedUser" />
+                                    <x-manage-users.role-select :user="$listedUser" :admin-count="$adminCount" />
                                     <x-manage-users.reset-password-button :user="$listedUser" />
                                     <x-manage-users.delete-user-button :user="$listedUser" :admin-count="$adminCount" />
                                 </div>

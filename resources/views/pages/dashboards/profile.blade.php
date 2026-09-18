@@ -70,7 +70,7 @@
                         x-transition>
 
                         <div @click.away="showDeleteModal = false"
-                            class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700">
+                            class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border text-center whitespace-normal">
 
                             <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.delete_user_confirm') }}</h3>
 
@@ -78,13 +78,13 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <div class="flex justify-end space-x-3">
+                                <div class="flex justify-center space-x-3">
                                     <button type="button" @click="showDeleteModal = false"
                                         class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
                                         {{ __('dashboard/index.no') }}
                                     </button>
                                     <button type="submit"
-                                        class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium rounded-sm transition-colors cursor-pointer">
+                                        class="px-4 py-2 bg-red-700 hover:bg-red-800 text-slate-100 border font-medium rounded-sm transition-colors cursor-pointer">
                                         {{ __('dashboard/index.yes') }}
                                     </button>
                                 </div>
@@ -206,11 +206,11 @@
                     <!-- Modal Action Controls -->
                     <div class="mt-6 flex justify-end space-x-3">
                         <button type="button" @click="showAvatarModal = false; avatarPreview = null"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
                             {{ __('dashboard/index.cancel') }}
                         </button>
                         <button type="submit"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100  border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
                             {{ __('dashboard/index.upload') }}
                         </button>
                     </div>

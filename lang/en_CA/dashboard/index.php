@@ -47,4 +47,5 @@ return [
     "cannot_delete_last_admin" => "You are the only Admin, so your account cannot be deleted.",
     "user_deleted" => "User :name deleted.",
     "cannot_delete_last_admin_role" => "You cannot delete an administrator if there is only one user assigned to that role.",
+    "cannot_demote_last_admin" => "You cannot change the role of the only Administrator.",
 ];
