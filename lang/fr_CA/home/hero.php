@@ -7,6 +7,6 @@ return [
     "cat_1" => "Enfants:",
     "cat_2" => "Générale:",
     "social_media" => "Réseaux sociaux",
-    "image_2" => "images/ig_qr_code_fr.png",
+    "image_2" => "images/mtl_study_qr_code_fr.png",
 
 ];

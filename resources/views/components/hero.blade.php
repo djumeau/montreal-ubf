@@ -69,7 +69,7 @@
 
                 </div>
 
-                <a href="https://www.instagram.com/montrealubf" class="cursor-pointer"><img src="{{ asset($image_2) }}"
+                <a href="https://startbiblestudy.org/montreal-ubf" class="cursor-pointer"><img src="{{ asset($image_2) }}"
                     class="hidden md:block w-36 h-36"></a>
 
             </div>
