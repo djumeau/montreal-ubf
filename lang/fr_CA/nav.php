@@ -43,6 +43,10 @@ return [
     "confidentiality" => [ "title" => "Politique de confidentialité",
                         "url" => "/confidentialite",
                         "name" => "confidentialite",
-                        ],
+                ],
+    "contact" => [ "title" => "Contact",
+                        "url" => "/contact",
+                        "name" => "contact",
+                 ],
 
 ];

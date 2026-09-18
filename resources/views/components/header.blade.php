@@ -12,6 +12,7 @@
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
+    $contactActive = request()->routeIs('contact');
 
     if ($locale === 'fr_CA') {
         $logoFilePath = 'images/icons/logo_cbu_white.svg';
@@ -67,11 +68,14 @@
                 </button>
 
                 <div x-show="open" x-transition x-cloak
-                    class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-2 z-50">
-
+                    class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-1 z-50">
 
                     <div class="px-4 py-1">
                         <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive">{{__('nav.about_us.title')}}</x-nav-link>
+                    </div>
+
+                    <div class="px-4 py-1">
+                        <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
                     </div>
 
                     <div class="px-4 py-1">
@@ -82,9 +86,9 @@
 
             </div>
 
-            <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
-
             <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" >{{__('nav.giving.title')}}</x-nav-link>
+
+            <x-nav-link url="{{ __('nav.contact.url') }}" :active="$contactActive" >{{__('nav.contact.title')}}</x-nav-link>
 
             <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe">
                 {{Str::upper(Str::before($newLocale, '_'))}}
@@ -118,12 +122,16 @@
         </div>
 
         <div class="pl-6">
+            <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
+        </div>
+
+        <div class="pl-6">
             <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
         </div>
 
-        <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
-
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>
+
+        <x-nav-link url="{{ __('nav.contact.url') }}" :active="$contactActive" :isMobile='true'>{{__('nav.contact.title')}}</x-nav-link>
 
         <x-nav-link url="{{route('locale', $newLocale)}}" icon="globe" :isMobile='true' class="mb-2">
             {{Str::upper(Str::before($newLocale, '_'))}}

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class StudyAttachment extends Model
 {
+    protected $table = 'study_attachments';
+
     protected $fillable = [
         'bible_study_id',
         'locale',

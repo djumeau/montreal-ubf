@@ -42,4 +42,9 @@ return [
     "confidentiality" => ["title" => "Privacy Policy",
                         "url" => "/confidentiality",
                         "name" => "confidentiality"],
+    "contact" => [ "title" => "Contact",
+                        "url" => "/contact",
+                        "name" => "contact",
+                ],
+
 ];
