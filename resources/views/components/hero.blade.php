@@ -72,7 +72,8 @@
                 <!-- Side Image for QR Code Alt Bible Study site -->
 
                 <div id="SideImage">
-                    <a href="https://startbiblestudy.org/montreal-ubf" target="_blank" class="cursor-pointer"><img src="{{ asset($image_2) }}"
+                    <a href="https://startbiblestudy.org/montreal-ubf"
+                    alt="{{ __('home/hero.image_2_alt_text') }}" target="_blank" class="cursor-pointer"><img src="{{ asset($image_2) }}"
                     class="pt-2 hidden md:block w-40 h-40"></a>
                 </div>
 

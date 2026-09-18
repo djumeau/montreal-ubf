@@ -73,6 +73,13 @@
                 {{__('home/hero.welcome')}}
             </x-hero>
 
+            <!-- QR Code (Bible Study site) placed under the hero on mobile -->
+            <div class="flex justify-center py-4">
+                <a href="https://startbiblestudy.org/montreal-ubf" target="_blank" class="cursor-pointer">
+                    <img src="{{ asset(__('home/hero.image_2')) }}" alt="{{ __('home/hero.image_2_alt_text') }}" class="w-40 h-40">
+                </a>
+            </div>
+
             <x-events image="./images/events/2026-09_ubf_picnic-mobile.jpg"
                 title="{{__('home/activities.title')}}"
                 dates="{{__('home/activities.dates')}}"
