@@ -4,6 +4,7 @@
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
+    $contactActive = request()->routeIs('confidentiality') || request()->routeIs('contact');
 
 @endphp
 
@@ -63,18 +64,21 @@
                 <div class="pl-4"><x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" icon="angle-right">{{__('nav.about_us.title')}}</x-nav-link>
                 </div>
 
-                <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
-                        icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
-                </div>
-
                 <div class="pl-4"><x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive"
                         icon="angle-right">{{__('nav.events.title')}}</x-nav-link>
+                </div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
+                        icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
                 </div>
 
                 <div class="pl-4"><x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive"
                         icon="angle-right">{{__('nav.giving.title')}}</x-nav-link>
                 </div>
 
+                <div class="pl-4"><x-nav-link url="{{ __('nav.contact.url') }}" :active="$contactActive"
+                        icon="angle-right">{{__('nav.contact.title')}}</x-nav-link>
+                </div>
 
             </div>
 
