@@ -29,7 +29,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             //Regenerate the session to prevent fixation attacks.
             $request->session()->regenerate();
-            return redirect()->intended(route('home'))->with('success', 'You are now logged in.');
+            return redirect()->intended(route('home'))->with('success', __('auth/index.logged_in'));
         }
 
         //If auth fails, redirect with errors.
@@ -50,7 +50,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken(); // Regenerate CSRF token to prevent CSRF attacks.
 
-        return redirect('/')->with('success', 'You have been logged out.');
+        return redirect('/')->with('success', __('auth/index.logged_out'));
     }
 
 }

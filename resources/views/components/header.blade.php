@@ -47,11 +47,19 @@
 
             <!-- Row 2: Welcome Message -->
             <div id="row 2">
+
                 @auth
                     @if($homeActive)
-                         <i class="ml-3 fa fa-user p-0 mr-1"></i><span class="italic">{{ __('home/index.hello') }}, <a href="{{ route(__('nav.dashboard.name')) }}" id="msg" class="text-blue-300 hover:text-blue-500 underline">{{ Auth::User()->name }}</a>{{ $isFrench ? ' !' : '!' }}</span>
+                            <i class="ml-3 fa fa-user p-0 mr-1"></i><span class="italic">{{ __('home/index.hello') }}, <a href="{{ route(__('nav.dashboard.name')) }}" id="msg" class="text-blue-300 hover:text-blue-500 underline">{{ Auth::User()->name }}</a>{{ $isFrench ? ' !' : '!' }}</span>
                     @endif
                 @endauth
+
+                 @if (session('success'))
+                        <span class="p-3 italic text-emerald-600 text-sm">
+                            {{ session('success') }}
+                        </span>
+                @endif
+
             </div>
 
         </div>

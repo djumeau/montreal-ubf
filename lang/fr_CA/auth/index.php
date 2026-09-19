@@ -4,6 +4,8 @@ return [
     "title" => "Enregistrement",
     "register" => "Enregistrer",
     "login" => "Connexion",
+    "logged_in" => "You have logged in.",
+    "logged_out" => "You have been logged out.",
     "submit" => "Soumettre",
     "name" => "Nom complet",
     "email" => "Courriel",

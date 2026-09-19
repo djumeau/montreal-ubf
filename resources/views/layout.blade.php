@@ -50,14 +50,6 @@
 
     <x-header />
 
-    @if (session('success'))
-        <div class="container mx-auto px-4 pt-18">
-            <div class="p-3 border rounded-sm border-emerald-600 text-emerald-400 text-sm text-center">
-                {{ session('success') }}
-            </div>
-        </div>
-    @endif
-
     @if(request()->is('/'))
 
         <!-- Mobile Hero -->

@@ -17,6 +17,8 @@ return [
     "updated" => "Password updated.",
     "already_have_account" => "Already have an account?",
     "dont_have_account" => "Don't have an account?",
+    "logged_in" => "You have logged in.",
+    "logged_out" => "You have been logged out.",
     "registered_successfully" => "Registered successfully!",
     "validation" => [
         "name_required" => "Name is required.",
