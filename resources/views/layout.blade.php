@@ -72,24 +72,6 @@
                 </a>
             </div>
 
-            <x-events image="./images/events/2026-09_ubf_picnic-mobile.jpg"
-                title="{{__('home/activities.title')}}"
-                dates="{{__('home/activities.dates')}}"
-                location="{{__('home/activities.location')}}"
-                location_url="{{__('home/activities.location_url')}}"
-                :hasOverlay=true >
-                {{__('home/activities.content')}}
-            </x-events>
-
-            <x-events
-                image="{{ __('home/events.image_mobile') }}"
-                title="{{__('home/events.title')}}"
-                dates="{{__('home/events.dates')}}"
-                location="{{__('home/events.location')}}"
-                location_url="{{__('home/events.location_url')}}">
-                {{__('home/events.content')}}
-            </x-events>
-
             <x-study
                 :imagesDir="__('home/study.imagesDir')"
                 :image="__('home/study.image.mobile')"
@@ -117,24 +99,6 @@
                 image_2="{{ __('home/hero.image_2') }}">
                 {{__('home/hero.welcome')}}
             </x-hero>
-
-            <x-events image="./images/events/2026-09_ubf_picnic-desktop.jpg"
-                title="{{__('home/activities.title')}}"
-                dates="{{ __('home/activities.dates') }}"
-                location="{{__('home/activities.location')}}"
-                location_url="{{__('home/activities.location_url')}}"
-                :hasOverlay=true >
-                {{__('home/activities.content')}}
-            </x-events>
-
-            <x-events
-                image="{{ __('home/events.image_desktop') }}"
-                title="{{__('home/events.title')}}"
-                dates="{{__('home/events.dates')}}"
-                location="{{__('home/events.location')}}"
-                location_url="{{__('home/events.location_url')}}">
-                {{__('home/events.content')}}
-            </x-events>
 
             <x-study
                 :imagesDir="__('home/study.imagesDir')"
