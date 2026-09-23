@@ -24,6 +24,7 @@ class StudySeriesSeeder extends Seeder
                     'name_en' => $series['name_en'],
                     'name_fr' => $series['name_fr'],
                     'dates' => $series['dates'] ?? null,
+                    'images' => $series['images'] ?? null, // Cast to JSON by the model
 
                     'created_at' => now(),
                     'updated_at' => now(),

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name_en');
             $table->string('name_fr');
             $table->string('dates')->nullable();
+            $table->json('images')->nullable(); // { "desktop": 16:9, "mobile": 3:2, "thumbnail": 1:1 }
             $table->timestamps();
         });
     }
