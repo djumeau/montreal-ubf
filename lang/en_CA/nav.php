@@ -46,5 +46,9 @@ return [
                         "url" => "/contact",
                         "name" => "contact",
                 ],
+    "manage-series" => [ "title" => "Manage Series",
+                    "url" => "/manage-series",
+                    "name" => "manage-series",
+                ],
 
 ];

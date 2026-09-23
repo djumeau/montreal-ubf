@@ -195,6 +195,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name_en' => 'Name (EN)',
+        'name_fr' => 'Name (FR)',
+        'book_id' => 'Related Book',
+        'desktop' => 'desktop image',
+        'mobile' => 'mobile image',
+    ],
 
 ];

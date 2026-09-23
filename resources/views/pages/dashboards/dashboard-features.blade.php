@@ -6,6 +6,9 @@
     $isManageUsersActive = request()->routeIs('manage-users') || request()->routeIs('gerer-utilisateurs');
     $manageUsersName = __('nav.manage-users.name');
 
+    $isManageSeriesActive = request()->routeIs('manage-series') || request()->routeIs('gerer-serie');
+    $manageSeriesName = __('nav.manage-series.name');
+
 @endphp
 
 <!-- Context Dynamic Links -->
@@ -17,6 +20,9 @@
     @if (auth()->user()->canManageRoles())
         <x-feature-button :url="__('nav.manage-users.url')" :isActive="$isManageUsersActive"
             icon="fa-users-cog">{{ __('nav.manage-users.title') }}</x-feature-button>
+
+        <x-feature-button :url="__('nav.manage-series.url')" :isActive="$isManageSeriesActive"
+            icon="fa-list">{{ __('nav.manage-series.title') }}</x-feature-button>
     @endif
 
 </nav>

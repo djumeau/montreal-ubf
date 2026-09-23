@@ -57,9 +57,8 @@ Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'
     ->where('dir', '.*') // Allows slashes inside the dir parameter
     ->name('pdf.view');
 
-// Bible Books and Study Series
+// Bible Books
 Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');
-Route::get('/study-series', [StudySeriesController::class, 'index'])->name('study-series');
 
 // Bible Studies
 // en_CA
@@ -101,16 +100,25 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-users', [DashboardController::class, 'manageUsers'])->name('manage-users');
 
+    Route::get('/manage-series', [DashboardController::class, 'studySeries'])->name('manage-series');
+
     // Manage Users actions - Add User, Change Role, Reset Password
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
     Route::post('/manage-users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
     Route::delete('/manage-users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 
+    // Manage Study Series actions - Add, Edit, Delete
+    Route::post('/manage-series', [StudySeriesController::class, 'store'])->name('series.store');
+    Route::put('/manage-series/{series}', [StudySeriesController::class, 'update'])->name('series.update');
+    Route::delete('/manage-series/{series}', [StudySeriesController::class, 'destroy'])->name('series.destroy');
+
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
 
     Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
+
+    Route::get('/gerer-serie', [DashboardController::class, 'studySeries'])->name('gerer-serie');
 
     // Profile related routes - Avatar, User name and User Password
 

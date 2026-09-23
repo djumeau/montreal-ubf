@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Role;
+use App\Models\BibleBook;
+use App\Models\StudySeries;
 use App\Models\User;
 
 use Illuminate\View\View;
@@ -26,6 +28,19 @@ class DashboardController extends Controller
         $users = User::orderBy('name')->paginate(10);
         $adminCount = User::where('role', Role::ADMIN)->count();
         return view('pages.dashboards.manage-users', compact('user', 'users', 'adminCount'));
+    }
+
+    // @desc Show the manage study series page
+    // @route GET /manage-series
+    public function studySeries(): View
+    {
+        $user = Auth::user();
+        $seriesList = StudySeries::withCount('bibleStudies')
+            ->with('book')
+            ->orderBy('id')
+            ->paginate(10);
+        $books = BibleBook::orderBy('id')->get(); // Canonical order, for the Related Book select
+        return view('pages.dashboards.manage-series', compact('user', 'seriesList', 'books'));
     }
 
 }

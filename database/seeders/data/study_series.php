@@ -4,6 +4,7 @@ return [
 
         1 =>  ["name_en" => "John's Gospel",
         "name_fr" => "L'évangile de Jean",
+        "book_id" => 43, // John
         "dates" => "2026-04-01 to present",
         "images" => [
             "desktop" => "johns-gospel-desktop.jpg",     // 16:9
@@ -13,6 +14,7 @@ return [
 
         2 => ["name_en" => "Joshua",
         "name_fr" => "Josué",
+        "book_id" => 6, // Joshua
         "dates" => "2026-01-10 to 2026-03-15",
         "images" => [
             "desktop" => "joshua-desktop.jpg",
@@ -22,6 +24,7 @@ return [
 
         3 => ["name_en" => "Ephesians",
         "name_fr" => "Éphésiens",
+        "book_id" => 49, // Ephesians
         "dates" => "2025-08-30 to 2025-11-08",
         "images" => [
             "desktop" => "ephesians-desktop.jpg",

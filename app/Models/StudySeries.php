@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class StudySeries extends Model
@@ -13,6 +15,7 @@ class StudySeries extends Model
     protected $fillable = [ // Specifies which attributes should be mass-assignable
         'name_en',
         'name_fr',
+        'book_id',
         'dates',
         'images',
     ];
@@ -30,6 +33,31 @@ class StudySeries extends Model
     }
 
     /**
+     * Related Bible book for this series; null means the series covers multiple books.
+     */
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(BibleBook::class, 'book_id');
+    }
+
+    /**
+     * Dates translated for display in the current locale.
+     * In French: "to present" becomes "à présent" and "to" becomes "à".
+     * Usage: $series->localized_dates
+     */
+    protected function localizedDates(): Attribute
+    {
+        return Attribute::get(function () {
+            if (!$this->dates || app()->getLocale() !== 'fr_CA') {
+                return $this->dates;
+            }
+
+            // "to present" first, so its "to" is not replaced on its own
+            return preg_replace(['/\bto present\b/i', '/\bto\b/i'], ['à présent', 'à'], $this->dates);
+        });
+    }
+
+    /**
      * Folder on the "public" disk holding this series' images.
      * Resolves to storage/app/public/images/study-series/series_{id}
      */
@@ -39,16 +67,19 @@ class StudySeries extends Model
     }
 
     /**
-     * Public URL for one of the series images, or null if not set.
+     * Public URL for one of the series images.
+     * Falls back to images/study-series/default-{type}.jpg when not set.
      * Usage: $series->imageUrl('desktop' | 'mobile' | 'thumbnail')
      */
-    public function imageUrl(string $type): ?string
+    public function imageUrl(string $type): string
     {
         $file = $this->images[$type] ?? null;
 
         /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
         $disk = Storage::disk('public');
 
-        return $file ? $disk->url($this->imageDirectory() . '/' . $file) : null;
+        return $file
+            ? $disk->url($this->imageDirectory() . '/' . $file)
+            : $disk->url("images/study-series/default-{$type}.jpg");
     }
 }
