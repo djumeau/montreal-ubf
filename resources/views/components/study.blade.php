@@ -6,8 +6,7 @@
     'dateStamp' => '',
     'biblePassage' => '',
     'bibleLink' => '',
-    'pdfURL' => '',
-    'docURL' => '',
+    'questionSheets' => null, // StudyAttachments keyed by extension ('pdf', 'docx')
     'href' => null,
 ])
 
@@ -51,31 +50,23 @@
             <!-- Download Links -->
             <div id="download-links" class="flex flex-col gap-2 font-sans text-sm md:text-base mb-5 text-white/90">
 
-                <a href="{{
-                    route('pdf.view', [
-
-                        'dir' => __('home/study.dir'),
-                        'filename' => __('home/study.pdf'),
-
-                    ])}}" target="_blank">
+                @if($pdf = $questionSheets?->get('pdf'))
+                <a href="{{ route('attachments.show', $pdf) }}" target="_blank">
 
                     <i class="fa-solid fa-file-pdf text-red-300"></i>
 
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.pdf)</span>
                 </a>
+                @endif
 
-                <a href="{{
-                    route('pdf.view', [
-
-                        'dir' => __('home/study.dir'),
-                        'filename' => __('home/study.docx'),
-
-                    ])}}" target="_blank">
+                @if($docx = $questionSheets?->get('docx'))
+                <a href="{{ route('attachments.show', $docx) }}" target="_blank">
 
                     <i class="fa-solid fa-file-word text-blue-300"></i>
 
                     <span class="hover:text-white hover:underline transition-all duration-200 drop-shadow-xs">{{__('home/study.questionSheet')}} (.docx)</span>
                 </a>
+                @endif
 
             </div>
 

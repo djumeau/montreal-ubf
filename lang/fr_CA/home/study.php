@@ -11,8 +11,6 @@ return [
     "imagesDir" => "images/nt/john_2026",
     "image" => ["desktop" => "jn_11.55-12.19-desktop.jpg", "mobile" => "jn_11.55-12.19-mobile.jpg"],
     "questionSheet" => "Questionnaire",
-    "dir" => "nt/john_2026",
-    "pdf" => "jn_11.55-12.19.q.fr.pdf",
-    "docx" => "jn_11.55-12.19.q.fr.docx",
+    "studyId" => "17", // Étude biblique dont les questionnaires sont liés (Jean 11.55-12.19); une chaîne, car __() ignore les nombres
 
 ];

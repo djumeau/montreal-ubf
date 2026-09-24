@@ -168,6 +168,48 @@ class StudyAttachmentsTest extends TestCase
             ->assertSee('1 attachment uploaded.');
     }
 
+    public function test_anyone_can_view_a_pdf_inline_and_download_a_docx_counting_views(): void
+    {
+        $pdf = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'pdf']);
+        $docx = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'docx']);
+        Storage::disk('local')->put($pdf->storage_path, 'pdf');
+        Storage::disk('local')->put($docx->storage_path, 'docx');
+
+        $this->get(route('attachments.show', $pdf))
+            ->assertOk()
+            ->assertHeader('content-disposition', 'inline; filename=jn_01.q.pdf');
+        $this->get(route('attachments.show', $docx))
+            ->assertOk()
+            ->assertDownload('jn_01.q.docx');
+
+        $this->assertSame(1, $pdf->fresh()->views);
+        $this->assertSame(1, $docx->fresh()->views);
+    }
+
+    public function test_missing_file_is_a_404_and_not_counted(): void
+    {
+        $attachment = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'lecture', 'filename' => 'jn_01.lec', 'extension' => 'pdf']);
+
+        $this->get(route('attachments.show', $attachment))->assertNotFound();
+
+        $this->assertSame(0, $attachment->fresh()->views);
+    }
+
+    public function test_home_page_links_the_featured_study_question_sheets_in_the_current_language(): void
+    {
+        $featured = BibleStudy::forceCreate(['id' => __('home/study.studyId'), 'title_en' => 'See Your King is Coming!']);
+        $en = $featured->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_11.55-12.19.q', 'extension' => 'pdf']);
+        $fr = $featured->attachments()->create(['locale' => 'fr_CA', 'type' => 'question_sheet', 'filename' => 'jn_11.55-12.19.q.fr', 'extension' => 'pdf']);
+
+        config(['app.locale' => 'en_CA']); // Default language when no 'locale' cookie is set (SetLocale)
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee(route('attachments.show', $en))
+            ->assertDontSee(route('attachments.show', $fr))
+            ->assertDontSee('(.docx)'); // No DOCX uploaded, no link
+    }
+
     public function test_non_managers_cannot_upload_or_delete(): void
     {
         $member = User::factory()->create(['role' => Role::MEMBER]);

@@ -73,10 +73,12 @@ class BibleStudyController extends Controller
 
         $validated = $request->validateWithBag('updateStudy', $this->rules());
 
-        // Images live under the series folder, so a new series means moving them
+        // Images and documents live under the series folder, so a new series means moving them
         $oldDirectory = $study->imageDirectory();
+        $oldDocumentDirectories = $study->documentDirectories();
         $study->fill($this->studyFields($validated));
         $study->moveImagesFrom($oldDirectory);
+        $study->moveDocumentsFrom($oldDocumentDirectories);
 
         $study->image_links = $this->storeImages($request, $study);
         $study->save();
@@ -84,7 +86,7 @@ class BibleStudyController extends Controller
         return back()->with('status', __('dashboard/index.study_updated', ['name' => $this->displayName($study)]));
     }
 
-    // @desc Delete a Bible study and its image folder
+    // @desc Delete a Bible study with its image and document folders
     // @route DELETE /manage-studies/{study}
     public function destroy(Request $request, BibleStudy $study): RedirectResponse
     {
@@ -93,8 +95,9 @@ class BibleStudyController extends Controller
             abort(403, __('home/index.unauthorized'));
         }
 
-        // Attachment rows go with it (cascadeOnDelete on study_attachments.bible_study_id)
+        // Attachment rows go with it (cascadeOnDelete on study_attachments.bible_study_id); their files don't
         Storage::disk('public')->deleteDirectory($study->imageDirectory());
+        $study->deleteDocuments();
 
         $name = $this->displayName($study);
         $study->delete();

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 
 class BibleStudy extends Model
@@ -112,14 +113,56 @@ class BibleStudy extends Model
     }
 
     /**
+     * This study's document folders on the "local" disk, keyed by locale.
+     * Capture them before changing study_series_id, then pass them to moveDocumentsFrom().
+     */
+    public function documentDirectories(): array
+    {
+        $directories = [];
+
+        foreach (StudyAttachment::LOCALES as $locale) {
+            $directories[$locale] = $this->documentDirectory($locale);
+        }
+
+        return $directories;
+    }
+
+    /**
      * Move this study's image folder from an old location (e.g. after its series changed) to imageDirectory().
      * Does nothing when the old folder doesn't exist or already matches.
      */
     public function moveImagesFrom(string $oldDirectory): void
     {
-        $disk = Storage::disk('public');
-        $newDirectory = $this->imageDirectory();
+        self::moveFolder(Storage::disk('public'), $oldDirectory, $this->imageDirectory());
+    }
 
+    /**
+     * Move this study's document folders from their old locations (taken from documentDirectories()) to documentDirectory(),
+     * so the attachments' storage_path still points at their files after the series changed.
+     */
+    public function moveDocumentsFrom(array $oldDirectories): void
+    {
+        foreach ($oldDirectories as $locale => $oldDirectory) {
+            self::moveFolder(Storage::disk('local'), $oldDirectory, $this->documentDirectory($locale));
+        }
+    }
+
+    /**
+     * Delete this study's document folders (every locale) from the "local" disk.
+     */
+    public function deleteDocuments(): void
+    {
+        foreach ($this->documentDirectories() as $directory) {
+            Storage::disk('local')->deleteDirectory($directory);
+        }
+    }
+
+    /**
+     * Move every file in a folder to a new folder on the same disk, then remove the old folder.
+     * Does nothing when the old folder doesn't exist or already matches.
+     */
+    private static function moveFolder(FilesystemAdapter $disk, string $oldDirectory, string $newDirectory): void
+    {
         if ($oldDirectory === $newDirectory || !$disk->directoryExists($oldDirectory)) {
             return;
         }

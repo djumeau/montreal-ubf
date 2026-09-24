@@ -1,4 +1,4 @@
-<x-layout class="bg-slate-900">
+<x-layout class="bg-slate-900" :questionSheets="$questionSheets">
 
     <div class='container mx-auto px-4'>
 

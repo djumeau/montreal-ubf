@@ -11,8 +11,6 @@ return [
     "imagesDir" => "images/nt/john_2026",
     "image" => ["desktop" => "jn_11.55-12.19-desktop.jpg", "mobile" => "jn_11.55-12.19-mobile.jpg"],
     "questionSheet" => "Questionnaire",
-    "dir" => "nt/john_2026",
-    "pdf" => "jn_11.55-12.19.q.pdf",
-    "docx" => "jn_11.55-12.19.q.docx",
+    "studyId" => "17", // Bible study whose question sheets are linked (John 11:55-12:19); a string, as __() ignores numbers
 
 ];

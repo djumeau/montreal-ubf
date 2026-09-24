@@ -1,7 +1,8 @@
 @props([
     'bgSolid' => 'bg-gray-800',
     'bgGradient' => null,
-    'textColor' => 'text-black'
+    'textColor' => 'text-black',
+    'questionSheets' => null, // Home page only: featured study's question sheets keyed by extension (HomeController)
 ])
 
 @php
@@ -80,8 +81,7 @@
                 :dateStamp="__('home/study.dateStamp')"
                 :biblePassage="__('home/study.biblePassage')"
                 :bibleLink="__('home/study.bibleLink')"
-                :pdfURL="__('home/study.pdfLink')"
-                :docURL="__('home/study.docLink')">
+                :questionSheets="$questionSheets">
                 {{__('home/study.title')}}
             </x-study>
 
@@ -108,8 +108,7 @@
                 dateStamp="{{__('home/study.dateStamp')}}"
                 :biblePassage="__('home/study.biblePassage')"
                 :bibleLink="__('home/study.bibleLink')"
-                :pdfURL="__('home/study.pdfLink')"
-                :docURL="__('home/study.docLink')">
+                :questionSheets="$questionSheets">
                 {{__('home/study.title')}}
             </x-study>
 

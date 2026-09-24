@@ -73,14 +73,18 @@ class StudySeriesController extends Controller
 
         // Bible studies in this series are kept; the foreign key sets study_series_id to null,
         // so move their images from images/series_{id}/study_{id} to images/series_none/study_{id}
+        // and their documents from documents/series_{id}/{locale}/study_{id} to documents/series_none/{locale}/study_{id}
         foreach ($series->bibleStudies as $study) {
             $oldDirectory = $study->imageDirectory();
+            $oldDocumentDirectories = $study->documentDirectories();
             $study->study_series_id = null;
             $study->moveImagesFrom($oldDirectory);
+            $study->moveDocumentsFrom($oldDocumentDirectories);
         }
 
         Storage::disk('public')->deleteDirectory($series->imageDirectory());
         Storage::disk('public')->deleteDirectory("images/series_{$series->id}"); // Now-empty folder that held the study images
+        Storage::disk('local')->deleteDirectory("documents/series_{$series->id}"); // Now-empty folder that held the study documents
 
         $name = $series->name_en;
         $series->delete();

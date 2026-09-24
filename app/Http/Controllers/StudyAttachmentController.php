@@ -11,9 +11,26 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class StudyAttachmentController extends Controller
 {
+    // @desc Show a PDF in the browser or download a DOCX, counting the view
+    // @route GET /documents/{attachment}
+    public function show(StudyAttachment $attachment): StreamedResponse
+    {
+        $disk = Storage::disk('local');
+        $path = $attachment->storage_path;
+
+        abort_unless($disk->exists($path), 404);
+
+        $attachment->increment('views');
+
+        return $attachment->extension === 'pdf'
+            ? $disk->response($path, $attachment->name_with_extension)
+            : $disk->download($path, $attachment->name_with_extension);
+    }
+
     // @desc Upload one or more attachments (PDF / DOCX) to a Bible study
     // @route POST /manage-studies/{study}/attachments
     public function store(Request $request, BibleStudy $study): RedirectResponse

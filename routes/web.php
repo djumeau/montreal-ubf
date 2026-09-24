@@ -22,7 +22,6 @@ use App\Http\Controllers\ConfidentialityPolicyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\QuestionnaireController;
 
 use App\Http\Controllers\SwitchLanguageController;
 
@@ -49,14 +48,8 @@ Route::get('/confidentialite', [ConfidentialityPolicyController::class, 'index']
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
 
-// en_CA
-Route::get('/view-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
-    ->where('dir', '.*') // Allows slashes inside the dir parameter
-    ->name('pdf.view');
-// fr_CA
-    Route::get('/visionner-pdf/{dir}/{filename}', [QuestionnaireController::class, 'show'])
-    ->where('dir', '.*') // Allows slashes inside the dir parameter
-    ->name('pdf.view');
+// Bible study attachments (question sheets, lectures...) kept in private storage
+Route::get('/documents/{attachment}', [StudyAttachmentController::class, 'show'])->name('attachments.show');
 
 // Bible Books
 Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');

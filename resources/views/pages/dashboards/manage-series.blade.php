@@ -158,53 +158,7 @@
                             </thead>
                             <tbody>
                                 @forelse ($seriesList as $series)
-                                    <tr class="border-b border-slate-800 align-middle">
-                                        <td class="py-3 px-2 text-slate-300">{{ $series->id }}</td>
-                                        <td class="py-3 px-2">
-                                            <img src="{{ $series->imageUrl('thumbnail') }}"
-                                                alt="{{ $series->name_en }}"
-                                                class="size-14 mx-auto rounded-sm object-cover border border-slate-700">
-                                        </td>
-                                        <td class="py-3 px-2">
-                                            <div class="text-slate-100">
-                                                {{ $isFrench ? $series->name_fr : $series->name_en }}</div>
-                                            <div class="text-slate-400 text-xs">
-                                                ({{ $isFrench ? $series->name_en : $series->name_fr }})
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-2">
-                                            @if ($book = $series->book)
-                                                <div class="text-slate-100">
-                                                    {{ $isFrench ? $book->name_fr : $book->name_en }}</div>
-                                                <div class="text-slate-400 text-xs">
-                                                    ({{ $isFrench ? $book->name_en : $book->name_fr }})</div>
-                                            @else
-                                                <span
-                                                    class="text-slate-100">{{ __('dashboard/index.multiple') }}</span>
-                                            @endif
-                                        </td>
-                                        <td class="py-3 px-2">
-                                            <!-- TODO: replace "#" with the route to this series' Bible studies -->
-                                            <a href="#" title="{{ __('dashboard/index.view_studies') }}"
-                                                aria-label="{{ __('dashboard/index.view_studies') }}: {{ $series->bible_studies_count }}"
-                                                class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $series->bible_studies_count }}
-                                            </a>
-                                        </td>
-                                        <td class="py-3 px-2 text-slate-300">{{ $series->localized_dates ?? '—' }}</td>
-                                        <td class="py-3 px-2 whitespace-nowrap">
-                                            <div class="flex items-center justify-center gap-2">
-                                                <button type="button" @click="openEdit(@js($rowData[$series->id]))"
-                                                    class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                                    <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
-                                                </button>
-                                                <button type="button" @click="openDelete(@js($rowData[$series->id]))" aria-label="{{ __('dashboard/index.delete_series') }}"
-                                                    class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <x-manage-series.series-list-item :series="$series" :row-data="$rowData[$series->id]" :striped="$loop->odd" />
                                 @empty
                                     <tr>
                                         <td colspan="7" class="py-6 text-center text-slate-400">
@@ -218,54 +172,7 @@
                     <!-- Mobile: Stacked Card Layout -->
                     <div class="md:hidden px-4 pb-4 space-y-3">
                         @forelse ($seriesList as $series)
-                            <div class="flex gap-3 border border-slate-800 rounded-sm p-3">
-                                <img src="{{ $series->imageUrl('thumbnail') }}" alt="{{ $series->name_en }}"
-                                    class="size-16 shrink-0 rounded-sm object-cover border border-slate-700">
-
-                                <div class="flex-1 min-w-0">
-                                    <div class="font-bold text-slate-100">
-                                        <span class="text-slate-400 font-normal">#{{ $series->id }}</span>
-                                        {{ $isFrench ? $series->name_fr : $series->name_en }}
-                                    </div>
-                                    <div class="text-slate-400 text-xs mb-2">
-                                        ({{ $isFrench ? $series->name_en : $series->name_fr }})
-                                    </div>
-
-                                    <div class="text-slate-300 text-sm">
-                                        {{ __('dashboard/index.related_book') }}:
-                                        @if ($book = $series->book)
-                                            {{ $isFrench ? $book->name_fr : $book->name_en }}
-                                            ({{ $isFrench ? $book->name_en : $book->name_fr }})
-                                        @else
-                                            {{ __('dashboard/index.multiple') }}
-                                        @endif
-                                    </div>
-                                    <div class="text-slate-300 text-sm flex items-center gap-2 my-1">
-                                        {{ __('dashboard/index.studies') }}:
-                                        <i class="fa-solid fs-pen"></i>
-                                        <!-- TODO: replace "#" with the route to this series' Bible studies -->
-                                        <a href="#" title="{{ __('dashboard/index.view_studies') }}"
-                                            aria-label="{{ __('dashboard/index.view_studies') }}: {{ $series->bible_studies_count }}"
-                                            class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $series->bible_studies_count }}
-                                        </a>
-                                    </div>
-                                    <div class="text-slate-300 text-sm mb-3">
-                                        {{ __('dashboard/index.dates') }}: {{ $series->localized_dates ?? '—' }}
-                                    </div>
-
-                                    <div class="flex items-center gap-2">
-                                        <button type="button" @click="openEdit(@js($rowData[$series->id]))"
-                                            class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                            <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
-                                        </button>
-                                        <button type="button" @click="openDelete(@js($rowData[$series->id]))" aria-label="{{ __('dashboard/index.delete_series') }}"
-                                            class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-manage-series.series-card-item :series="$series" :row-data="$rowData[$series->id]" />
                         @empty
                             <div class="py-6 text-center text-slate-400">{{ __('dashboard/index.no_series') }}</div>
                         @endforelse
