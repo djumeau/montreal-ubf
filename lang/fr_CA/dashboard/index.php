@@ -110,6 +110,8 @@ return [
     "attachment_lecture" => "Leçon",
     "attachment_other" => "Autre",
     "attachment_views" => "{0} Aucune consultation|{1} :count consultation|[2,*] :count consultations",
+    "preview_attachment" => "Aperçu dans un nouvel onglet",
+    "download_attachment" => "Télécharger",
     "no_attachments" => "Aucune pour le moment",
     "close" => "Fermer",
     "upload_attachments" => "Téléverser des pièces jointes",

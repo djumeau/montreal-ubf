@@ -17,9 +17,13 @@ return [
                 // Pure relational array structures easily ingested by loops
                 "attachments" => [
                         ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_01.01-18.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "jn_01.01-18.lec", "extension" => "docx"],
                         ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_01.01-18.q", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "jn_01.01-18.lec", "extension" => "pdf"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_01.01-18.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_01.01-18.lec.fr", "extension" => "docx"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_01.01-18.q.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_01.01-18.lec.fr", "extension" => "pdf"],
                 ]
         ],
 
@@ -33,6 +37,18 @@ return [
                         "square" => "jn_01.19-34-square.jpg",
                         "desktop" => "jn_01.19-34-desktop.jpg",
                         "mobile" => "jn_01.19-34-mobile.jpg"],
+
+                // Pure relational array structures easily ingested by loops
+                "attachments" => [
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_01.19-34.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "jn_01.19-34.lec", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_01.19-34.q", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "jn_01.19-34.lec", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_01.19-34.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_01.19-34.lec.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_01.19-34.q.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_01.19-34.lec.fr", "extension" => "pdf"],
+                ]
         ],
 
         3 => [

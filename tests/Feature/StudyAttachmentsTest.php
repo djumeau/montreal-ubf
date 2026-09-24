@@ -168,6 +168,21 @@ class StudyAttachmentsTest extends TestCase
             ->assertSee('1 attachment uploaded.');
     }
 
+    public function test_modal_view_button_links_each_file_with_its_view_count(): void
+    {
+        $pdf = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'pdf', 'views' => 7]);
+
+        // Modal data is JSON-escaped twice by @js: a quote comes out as backslash + "u0022", a slash as three backslashes + "/"
+        $q = chr(92) . 'u0022';
+        $slash = str_repeat(chr(92), 3) . '/';
+
+        $this->actingAs($this->admin)->get('/manage-studies')
+            ->assertOk()
+            ->assertSee("{$q}views{$q}:7,{$q}show_url{$q}", false)
+            ->assertSee("{$slash}documents{$slash}{$pdf->id}{$q}", false)
+            ->assertSee('fa-solid fa-eye', false);
+    }
+
     public function test_anyone_can_view_a_pdf_inline_and_download_a_docx_counting_views(): void
     {
         $pdf = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'pdf']);
@@ -193,6 +208,24 @@ class StudyAttachmentsTest extends TestCase
         $this->get(route('attachments.show', $attachment))->assertNotFound();
 
         $this->assertSame(0, $attachment->fresh()->views);
+    }
+
+    public function test_admin_and_elder_views_are_not_counted_but_members_are(): void
+    {
+        $pdf = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'pdf']);
+        Storage::disk('local')->put($pdf->storage_path, 'pdf');
+
+        foreach ([Role::ADMIN, Role::ELDER] as $role) {
+            $this->actingAs(User::factory()->create(['role' => $role]))
+                ->get(route('attachments.show', $pdf))
+                ->assertOk();
+        }
+        $this->assertSame(0, $pdf->fresh()->views);
+
+        $this->actingAs(User::factory()->create(['role' => Role::MEMBER]))
+            ->get(route('attachments.show', $pdf))
+            ->assertOk();
+        $this->assertSame(1, $pdf->fresh()->views);
     }
 
     public function test_home_page_links_the_featured_study_question_sheets_in_the_current_language(): void

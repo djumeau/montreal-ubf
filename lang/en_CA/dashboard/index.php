@@ -110,6 +110,8 @@ return [
     "attachment_lecture" => "Lecture",
     "attachment_other" => "Other",
     "attachment_views" => "{0} No views|{1} :count view|[2,*] :count views",
+    "preview_attachment" => "Preview in a new tab",
+    "download_attachment" => "Download",
     "no_attachments" => "None yet",
     "close" => "Close",
     "upload_attachments" => "Upload attachments",

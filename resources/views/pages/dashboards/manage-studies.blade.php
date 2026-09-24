@@ -53,7 +53,7 @@
     $attachmentLocales = \App\Models\StudyAttachment::LOCALES;
     $attachmentTypes = \App\Models\StudyAttachment::TYPES;
 
-    // A study's attachments as [locale][type] => [{id, name, extension, views}], for the Attachments modal
+    // A study's attachments as [locale][type] => [{id, name, extension, views, show_url}], for the Attachments modal
     $groupAttachments = fn ($study) => collect($attachmentLocales)->mapWithKeys(fn ($locale) => [
         $locale => collect($attachmentTypes)->mapWithKeys(fn ($type) => [
             $type => $study->attachments->where('locale', $locale)->where('type', $type)->values()
@@ -61,7 +61,8 @@
                     'id' => $attachment->id,
                     'name' => $attachment->name_with_extension,
                     'extension' => $attachment->extension,
-                    'views' => trans_choice('dashboard/index.attachment_views', $attachment->views, ['count' => $attachment->views]),
+                    'views' => $attachment->views,
+                    'show_url' => route('attachments.show', $attachment), // PDF opens in the browser, DOCX downloads; not counted for Admin / Elder
                     'destroy_url' => route('attachments.destroy', $attachment),
                 ]),
         ]),
@@ -612,7 +613,14 @@
                                                     :class="file.extension === 'pdf' ? 'fa-file-pdf text-red-400' : 'fa-file-word text-sky-400'"></i>
                                                 <span class="flex-1 min-w-0 truncate text-slate-100" x-text="file.name" :title="file.name"></span>
 
-                                                <span class="shrink-0 text-xs text-slate-400" x-show="!confirming" x-text="file.views"></span>
+                                                <!-- PDF previews in a new tab, DOCX downloads; Admin / Elder clicks aren't counted as views -->
+                                                <a x-show="!confirming" :href="file.show_url"
+                                                    x-data="{ get label() { return file.extension === 'pdf' ? @js(__('dashboard/index.preview_attachment')) : @js(__('dashboard/index.download_attachment')) } }"
+                                                    :target="file.extension === 'pdf' ? '_blank' : null" rel="noopener"
+                                                    :title="label" :aria-label="label + ' (' + file.views + ')'"
+                                                    class="shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 bg-sky-900 hover:bg-sky-950 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
+                                                    <i class="fa-solid fa-eye" aria-hidden="true"></i><span x-text="file.views"></span>
+                                                </a>
                                                 <button type="button" x-show="!confirming" @click="confirming = true"
                                                     aria-label="{{ __('dashboard/index.delete_attachment') }}"
                                                     class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">

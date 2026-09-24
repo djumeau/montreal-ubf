@@ -15,16 +15,18 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class StudyAttachmentController extends Controller
 {
-    // @desc Show a PDF in the browser or download a DOCX, counting the view
+    // @desc Show a PDF in the browser or download a DOCX, counting the view (Admin / Elder previews don't count)
     // @route GET /documents/{attachment}
-    public function show(StudyAttachment $attachment): StreamedResponse
+    public function show(Request $request, StudyAttachment $attachment): StreamedResponse
     {
         $disk = Storage::disk('local');
         $path = $attachment->storage_path;
 
         abort_unless($disk->exists($path), 404);
 
-        $attachment->increment('views');
+        if (! $request->user()?->canManageRoles()) {
+            $attachment->increment('views');
+        }
 
         return $attachment->extension === 'pdf'
             ? $disk->response($path, $attachment->name_with_extension)
