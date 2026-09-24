@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -51,6 +52,31 @@ class BibleStudy extends Model
     }
 
     /**
+     * Search panel filters shared by Manage Studies and the public Bible Studies page.
+     * Series / book narrow the list; every search word must match a title, the passage or the book name (e.g. "Jean 3").
+     * Usage: BibleStudy::filter($series, $book, $search)
+     */
+    public function scopeFilter(Builder $query, ?StudySeries $series, ?BibleBook $book, string $search = ''): void
+    {
+        $terms = $search === '' ? [] : preg_split('/\s+/', $search);
+
+        $query->when($series, fn ($query) => $query->where('study_series_id', $series->id))
+            ->when($book, fn ($query) => $query->where('book_id', $book->id))
+            ->when($terms, function ($query) use ($terms) {
+                foreach ($terms as $term) {
+                    $query->where(function ($query) use ($term) {
+                        $query->whereLike('title_en', "%{$term}%")
+                            ->orWhereLike('title_fr', "%{$term}%")
+                            // Matched from the start, so "3" finds chapter 3 and not 1:19-34; French writes 3.16, the database stores 3:16
+                            ->orWhereLike('bible_passage', str_replace('.', ':', $term) . '%')
+                            ->orWhereHas('book', fn ($book) => $book->whereLike('name_en', "%{$term}%")
+                                ->orWhereLike('name_fr', "%{$term}%"));
+                    });
+                }
+            });
+    }
+
+    /**
      * Dynamic Contextual Language Title Accessor.
      * Usage: $bibleStudy->current_title
      */
@@ -58,6 +84,25 @@ class BibleStudy extends Model
     {
         return Attribute::get(function () {
             return app()->getLocale() === 'fr_CA' ? $this->title_fr : $this->title_en;
+        });
+    }
+
+    /**
+     * Book and passage for display: "Jean 3.1–21" / "John 3:1–21" (French verse separator, en dash for ranges).
+     * Empty when the study has neither a book nor a passage.
+     * Usage: $bibleStudy->display_passage
+     */
+    protected function displayPassage(): Attribute
+    {
+        return Attribute::get(function () {
+            $isFrench = app()->getLocale() === 'fr_CA';
+            $passage = str_replace('-', '–', $this->bible_passage ?? '');
+            if ($isFrench) {
+                $passage = str_replace(':', '.', $passage);
+            }
+            $bookName = $this->book ? ($isFrench ? $this->book->name_fr : $this->book->name_en) : '';
+
+            return trim("{$bookName} {$passage}");
         });
     }
 

@@ -203,11 +203,33 @@ class StudyAttachmentsTest extends TestCase
 
     public function test_missing_file_is_a_404_and_not_counted(): void
     {
-        $attachment = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'lecture', 'filename' => 'jn_01.lec', 'extension' => 'pdf']);
+        $attachment = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_01.q', 'extension' => 'pdf']);
 
         $this->get(route('attachments.show', $attachment))->assertNotFound();
 
         $this->assertSame(0, $attachment->fresh()->views);
+    }
+
+    public function test_lectures_and_other_files_need_a_user_role_or_above(): void
+    {
+        foreach (['lecture', 'other'] as $type) {
+            $attachment = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => $type, 'filename' => "jn_01.{$type}", 'extension' => 'pdf']);
+            Storage::disk('local')->put($attachment->storage_path, 'pdf');
+
+            $this->get(route('attachments.show', $attachment))->assertRedirect(route('login')); // Visitors log in first
+
+            $this->actingAs(User::factory()->create(['role' => Role::GUEST]))
+                ->get(route('attachments.show', $attachment))
+                ->assertForbidden();
+            $this->assertSame(0, $attachment->fresh()->views);
+
+            $this->actingAs(User::factory()->create(['role' => Role::USER]))
+                ->get(route('attachments.show', $attachment))
+                ->assertOk();
+            $this->assertSame(1, $attachment->fresh()->views);
+
+            auth()->logout();
+        }
     }
 
     public function test_admin_and_elder_views_are_not_counted_but_members_are(): void

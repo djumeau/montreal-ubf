@@ -116,6 +116,9 @@
 
     @endif
 
+    {{-- Optional full-width banner from the top of the page, behind the fixed header (e.g. Bible Studies) --}}
+    {{ $hero ?? '' }}
+
     <main class="container mx-auto p-4 mt-4">
         {{ $slot }}
     </main>

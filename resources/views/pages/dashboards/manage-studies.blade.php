@@ -38,16 +38,8 @@
     // Image slots (shared by EN and FR), in the order shown in the Add / Edit modals
     $imageTypes = ['square' => 'image_square', 'desktop' => 'image_desktop', 'mobile' => 'image_mobile'];
 
-    // "Jean 3.1–21" / "John 3:1–21": book name in the current locale, French verse separator, en dash for ranges
-    $formatPassage = function ($study) use ($isFrench) {
-        $passage = str_replace('-', '–', $study->bible_passage ?? '');
-        if ($isFrench) {
-            $passage = str_replace(':', '.', $passage);
-        }
-        $bookName = $study->book ? ($isFrench ? $study->book->name_fr : $study->book->name_en) : '';
-
-        return trim("{$bookName} {$passage}") ?: '—';
-    };
+    // "Jean 3.1–21" / "John 3:1–21" (see BibleStudy::displayPassage), a dash when there's no book or passage
+    $formatPassage = fn ($study) => $study->display_passage ?: '—';
 
     // Attachments modal: one section per language, one group per type
     $attachmentLocales = \App\Models\StudyAttachment::LOCALES;

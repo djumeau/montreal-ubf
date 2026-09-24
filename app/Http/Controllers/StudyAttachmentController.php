@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BibleStudy;
 use App\Models\StudyAttachment;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -19,6 +20,11 @@ class StudyAttachmentController extends Controller
     // @route GET /documents/{attachment}
     public function show(Request $request, StudyAttachment $attachment): StreamedResponse
     {
+        // Lectures and other files need a User role or above: visitors log in first (then come back here), Guest accounts are refused
+        if (! $attachment->isPublic() && ! $request->user()?->canViewAllAttachments()) {
+            $request->user() ? abort(403, __('home/index.unauthorized')) : throw new AuthenticationException();
+        }
+
         $disk = Storage::disk('local');
         $path = $attachment->storage_path;
 

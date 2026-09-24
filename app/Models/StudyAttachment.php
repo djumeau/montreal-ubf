@@ -30,6 +30,15 @@ class StudyAttachment extends Model
     public const LOCALES = ['en_CA', 'fr_CA'];
     public const TYPES = ['question_sheet', 'lecture', 'other'];
     public const EXTENSIONS = ['pdf', 'docx'];
+    public const PUBLIC_TYPES = ['question_sheet']; // Open to everyone; the other types need a User role or above
+
+    /**
+     * Whether this attachment is open to everyone, or needs a User role or above.
+     */
+    public function isPublic(): bool
+    {
+        return in_array($this->type, self::PUBLIC_TYPES);
+    }
 
     /**
      * File name with its extension, e.g. "jn_03.01-21.q.fr.pdf".

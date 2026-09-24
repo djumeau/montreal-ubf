@@ -59,7 +59,6 @@ class DashboardController extends Controller
 
         // Optional ?q= search; every word must match a title, the passage or the book name (e.g. "Jean 3")
         $search = trim($request->string('q'));
-        $terms = $search === '' ? [] : preg_split('/\s+/', $search);
 
         $studies = BibleStudy::with([
                 'series',
@@ -67,20 +66,7 @@ class DashboardController extends Controller
                 'attachments' => fn ($query) => $query->orderBy('filename')->orderBy('extension'), // For the Attachments modal
             ])
             ->withCount('attachments')
-            ->when($currentSeries, fn ($query) => $query->where('study_series_id', $currentSeries->id))
-            ->when($currentBook, fn ($query) => $query->where('book_id', $currentBook->id))
-            ->when($terms, function ($query) use ($terms) {
-                foreach ($terms as $term) {
-                    $query->where(function ($query) use ($term) {
-                        $query->whereLike('title_en', "%{$term}%")
-                            ->orWhereLike('title_fr', "%{$term}%")
-                            // Matched from the start, so "3" finds chapter 3 and not 1:19-34; French writes 3.16, the database stores 3:16
-                            ->orWhereLike('bible_passage', str_replace('.', ':', $term) . '%')
-                            ->orWhereHas('book', fn ($book) => $book->whereLike('name_en', "%{$term}%")
-                                ->orWhereLike('name_fr', "%{$term}%"));
-                    });
-                }
-            })
+            ->filter($currentSeries, $currentBook, $search)
             ->orderBy('id')
             ->paginate(5)
             ->withQueryString(); // Keep ?series= on the pagination links

@@ -95,4 +95,13 @@ class User extends Authenticatable
         return in_array($this->role->value, ['admin', 'elder']);
     }
 
+    /**
+     * Determine if the user can open every attachment type (lectures, other files), not only question sheets.
+     * Any role from User up; Guest accounts are limited to question sheets.
+     */
+    public function canViewAllAttachments(): bool
+    {
+        return $this->role !== Role::GUEST;
+    }
+
 }
