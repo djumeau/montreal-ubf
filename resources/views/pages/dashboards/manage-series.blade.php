@@ -1,5 +1,3 @@
-@props(['user' => null])
-
 @php
     // Current locale's name first, the other locale's name underneath in parentheses
     $isFrench = app()->getLocale() === 'fr_CA';
@@ -146,35 +144,35 @@
                     <!-- Desktop: Table Layout -->
                     <div class="hidden md:block overflow-x-auto px-4 pb-4">
 
-                        <table class="w-full text-left text-sm">
+                        <table class="w-full text-center text-sm">
                             <thead>
                                 <tr class="border-b border-slate-100 text-slate-300 uppercase text-xs tracking-wider">
-                                    <th class="py-2 pr-4">#</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.image') }}</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.name') }}</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.related_book') }}</th>
-                                    <th class="py-2 pr-4 text-center">{{ __('dashboard/index.studies') }}</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.dates') }}</th>
-                                    <th class="py-2 pr-4 text-right">{{ __('dashboard/index.actions') }}</th>
+                                    <th class="py-2 px-2">#</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.image') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.name') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.related_book') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.studies') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.dates') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/index.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($seriesList as $series)
                                     <tr class="border-b border-slate-800 align-middle">
-                                        <td class="py-3 pr-4 text-slate-300">{{ $series->id }}</td>
-                                        <td class="py-3 pr-4">
+                                        <td class="py-3 px-2 text-slate-300">{{ $series->id }}</td>
+                                        <td class="py-3 px-2">
                                             <img src="{{ $series->imageUrl('thumbnail') }}"
                                                 alt="{{ $series->name_en }}"
-                                                class="size-14 rounded-sm object-cover border border-slate-700">
+                                                class="size-14 mx-auto rounded-sm object-cover border border-slate-700">
                                         </td>
-                                        <td class="py-3 pr-4">
+                                        <td class="py-3 px-2">
                                             <div class="text-slate-100">
                                                 {{ $isFrench ? $series->name_fr : $series->name_en }}</div>
                                             <div class="text-slate-400 text-xs">
                                                 ({{ $isFrench ? $series->name_en : $series->name_fr }})
                                             </div>
                                         </td>
-                                        <td class="py-3 pr-4">
+                                        <td class="py-3 px-2">
                                             @if ($book = $series->book)
                                                 <div class="text-slate-100">
                                                     {{ $isFrench ? $book->name_fr : $book->name_en }}</div>
@@ -185,17 +183,17 @@
                                                     class="text-slate-100">{{ __('dashboard/index.multiple') }}</span>
                                             @endif
                                         </td>
-                                        <td class="py-3 pr-4 text-center">
+                                        <td class="py-3 px-2">
                                             <!-- TODO: replace "#" with the route to this series' Bible studies -->
                                             <a href="#" title="{{ __('dashboard/index.view_studies') }}"
                                                 aria-label="{{ __('dashboard/index.view_studies') }}: {{ $series->bible_studies_count }}"
-                                                class="inline-flex items-center justify-center min-w-9 px-2.5 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                                {{ $series->bible_studies_count }}
+                                                class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $series->bible_studies_count }}
                                             </a>
                                         </td>
-                                        <td class="py-3 pr-4 text-slate-300">{{ $series->localized_dates ?? '—' }}</td>
-                                        <td class="py-3 pr-4 text-right whitespace-nowrap">
-                                            <div class="flex items-center justify-end gap-2">
+                                        <td class="py-3 px-2 text-slate-300">{{ $series->localized_dates ?? '—' }}</td>
+                                        <td class="py-3 px-2 whitespace-nowrap">
+                                            <div class="flex items-center justify-center gap-2">
                                                 <button type="button" @click="openEdit(@js($rowData[$series->id]))"
                                                     class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
@@ -244,11 +242,12 @@
                                     </div>
                                     <div class="text-slate-300 text-sm flex items-center gap-2 my-1">
                                         {{ __('dashboard/index.studies') }}:
+                                        <i class="fa-solid fs-pen"></i>
                                         <!-- TODO: replace "#" with the route to this series' Bible studies -->
                                         <a href="#" title="{{ __('dashboard/index.view_studies') }}"
                                             aria-label="{{ __('dashboard/index.view_studies') }}: {{ $series->bible_studies_count }}"
-                                            class="inline-flex items-center justify-center min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                            {{ $series->bible_studies_count }}
+                                            class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $series->bible_studies_count }}
                                         </a>
                                     </div>
                                     <div class="text-slate-300 text-sm mb-3">
@@ -273,8 +272,8 @@
                     </div>
 
                     @if ($seriesList->hasPages())
-                        <div class="px-4 pb-4 mx-4 mb-4 bg-white text-slate-900 rounded-sm">
-                            {{ $seriesList->links() }}
+                        <div class="px-4 pb-4">
+                            {{ $seriesList->links('pagination.dashboard') }}
                         </div>
                     @endif
 

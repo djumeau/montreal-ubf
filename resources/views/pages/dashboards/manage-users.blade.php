@@ -1,5 +1,3 @@
-@props(['user' => null])
-
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <!-- dashboard/index.blade.php -->
@@ -124,8 +122,8 @@
                     </div>
 
                     @if ($users->hasPages())
-                        <div class="px-4 pb-4 mx-4 mb-4 bg-white text-slate-900 rounded-sm">
-                            {{ $users->links() }}
+                        <div class="px-4 pb-4">
+                            {{ $users->links('pagination.dashboard') }}
                         </div>
                     @endif
 

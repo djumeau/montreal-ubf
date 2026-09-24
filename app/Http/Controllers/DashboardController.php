@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\Role;
 use App\Models\BibleBook;
+use App\Models\BibleStudy;
 use App\Models\StudySeries;
 use App\Models\User;
 
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +32,9 @@ class DashboardController extends Controller
         return view('pages.dashboards.manage-users', compact('user', 'users', 'adminCount'));
     }
 
-    // @desc Show the manage study series page
+    // @desc Show the manage series page
     // @route GET /manage-series
-    public function studySeries(): View
+    public function manageSeries(): View
     {
         $user = Auth::user();
         $seriesList = StudySeries::withCount('bibleStudies')
@@ -41,6 +43,54 @@ class DashboardController extends Controller
             ->paginate(10);
         $books = BibleBook::orderBy('id')->get(); // Canonical order, for the Related Book select
         return view('pages.dashboards.manage-series', compact('user', 'seriesList', 'books'));
+    }
+
+    // @desc Show the manage studies page
+    // @route GET /manage-studies
+    public function manageStudies(Request $request): View
+    {
+        $user = Auth::user();
+
+        // Optional ?series={id} filter (e.g. from the Studies button on Manage Series); ignored if the series doesn't exist
+        $currentSeries = StudySeries::find($request->integer('series')) ?: null;
+
+        // Optional ?book={id} filter; ignored if the book doesn't exist
+        $currentBook = BibleBook::find($request->integer('book')) ?: null;
+
+        // Optional ?q= search; every word must match a title, the passage or the book name (e.g. "Jean 3")
+        $search = trim($request->string('q'));
+        $terms = $search === '' ? [] : preg_split('/\s+/', $search);
+
+        $studies = BibleStudy::with([
+                'series',
+                'book',
+                'attachments' => fn ($query) => $query->orderBy('filename')->orderBy('extension'), // For the Attachments modal
+            ])
+            ->withCount('attachments')
+            ->when($currentSeries, fn ($query) => $query->where('study_series_id', $currentSeries->id))
+            ->when($currentBook, fn ($query) => $query->where('book_id', $currentBook->id))
+            ->when($terms, function ($query) use ($terms) {
+                foreach ($terms as $term) {
+                    $query->where(function ($query) use ($term) {
+                        $query->whereLike('title_en', "%{$term}%")
+                            ->orWhereLike('title_fr', "%{$term}%")
+                            // Matched from the start, so "3" finds chapter 3 and not 1:19-34; French writes 3.16, the database stores 3:16
+                            ->orWhereLike('bible_passage', str_replace('.', ':', $term) . '%')
+                            ->orWhereHas('book', fn ($book) => $book->whereLike('name_en', "%{$term}%")
+                                ->orWhereLike('name_fr', "%{$term}%"));
+                    });
+                }
+            })
+            ->orderBy('id')
+            ->paginate(5)
+            ->withQueryString(); // Keep ?series= on the pagination links
+
+        // Study counts show next to each name in the filter dropdowns, e.g. "The Gospel of John (7)"
+        $seriesList = StudySeries::withCount('bibleStudies')->orderBy('id')->get(); // For the series filter and the dialog's Series select
+
+        $books = BibleBook::withCount('bibleStudies')->orderBy('id')->get(); // Canonical order, for the Book select
+
+        return view('pages.dashboards.manage-studies', compact('user', 'studies', 'currentSeries', 'currentBook', 'search', 'seriesList', 'books'));
     }
 
 }

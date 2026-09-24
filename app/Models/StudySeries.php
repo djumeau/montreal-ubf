@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 
 class StudySeries extends Model
 {
@@ -67,7 +66,8 @@ class StudySeries extends Model
     }
 
     /**
-     * Public URL for one of the series images.
+     * Public URL for one of the series images, served through the public/storage symlink.
+     * asset() uses the current request's host, so URLs work locally and in production whatever APP_URL is.
      * Falls back to images/study-series/default-{type}.jpg when not set.
      * Usage: $series->imageUrl('desktop' | 'mobile' | 'thumbnail')
      */
@@ -75,11 +75,8 @@ class StudySeries extends Model
     {
         $file = $this->images[$type] ?? null;
 
-        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
-        $disk = Storage::disk('public');
-
         return $file
-            ? $disk->url($this->imageDirectory() . '/' . $file)
-            : $disk->url("images/study-series/default-{$type}.jpg");
+            ? asset('storage/' . $this->imageDirectory() . '/' . $file)
+            : asset("storage/images/study-series/default-{$type}.jpg");
     }
 }

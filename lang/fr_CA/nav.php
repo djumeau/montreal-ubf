@@ -52,5 +52,9 @@ return [
                         "url" => "/gerer-serie",
                         "name" => "gerer-serie",
                  ],
+    "manage-studies" => [ "title" => "Gérer les études",
+                        "url" => "/gerer-etudes",
+                        "name" => "gerer-etudes",
+                 ],
 
 ];

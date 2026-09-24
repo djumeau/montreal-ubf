@@ -71,8 +71,16 @@ class StudySeriesController extends Controller
             abort(403, __('home/index.unauthorized'));
         }
 
-        // Bible studies in this series are kept; the foreign key sets study_series_id to null
+        // Bible studies in this series are kept; the foreign key sets study_series_id to null,
+        // so move their images from images/series_{id}/study_{id} to images/series_none/study_{id}
+        foreach ($series->bibleStudies as $study) {
+            $oldDirectory = $study->imageDirectory();
+            $study->study_series_id = null;
+            $study->moveImagesFrom($oldDirectory);
+        }
+
         Storage::disk('public')->deleteDirectory($series->imageDirectory());
+        Storage::disk('public')->deleteDirectory("images/series_{$series->id}"); // Now-empty folder that held the study images
 
         $name = $series->name_en;
         $series->delete();

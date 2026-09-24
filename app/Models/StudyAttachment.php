@@ -27,15 +27,27 @@ class StudyAttachment extends Model
         return $this->belongsTo(BibleStudy::class, 'bible_study_id');
     }
 
+    public const LOCALES = ['en_CA', 'fr_CA'];
+    public const TYPES = ['question_sheet', 'lecture', 'other'];
+    public const EXTENSIONS = ['pdf', 'docx'];
+
     /**
-     * Composite accessor payload mapping the dynamic database storage location path seamlessly.
-     * Usage: Storage::download($attachment->storage_path)
+     * File name with its extension, e.g. "jn_03.01-21.q.fr.pdf".
+     * (Not "fileName()": PHP method names ignore case, so that would clash with the "filename" column.)
+     * Usage: $attachment->name_with_extension
+     */
+    protected function nameWithExtension(): Attribute
+    {
+        return Attribute::get(fn () => "{$this->filename}.{$this->extension}");
+    }
+
+    /**
+     * Path on the private "local" disk: documents/series_{id}/{locale}/study_{id}/{filename}.{extension}
+     * Usage: Storage::disk('local')->download($attachment->storage_path)
      */
     protected function storagePath(): Attribute
     {
-        return Attribute::get(function () {
-            return "studies/{$this->type}/{$this->filename}.{$this->extension}";
-        });
+        return Attribute::get(fn () => $this->bibleStudy->documentDirectory($this->locale) . '/' . $this->name_with_extension);
     }
 
 }

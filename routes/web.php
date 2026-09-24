@@ -15,6 +15,7 @@ use App\Http\Controllers\BibleBookController;
 use App\Http\Controllers\StudySeriesController;
 
 use App\Http\Controllers\BibleStudyController;
+use App\Http\Controllers\StudyAttachmentController;
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ConfidentialityPolicyController;
@@ -100,7 +101,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-users', [DashboardController::class, 'manageUsers'])->name('manage-users');
 
-    Route::get('/manage-series', [DashboardController::class, 'studySeries'])->name('manage-series');
+    Route::get('/manage-series', [DashboardController::class, 'manageSeries'])->name('manage-series');
+
+    Route::get('/manage-studies', [DashboardController::class, 'manageStudies'])->name('manage-studies');
 
     // Manage Users actions - Add User, Change Role, Reset Password
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
@@ -113,12 +116,23 @@ Route::middleware('auth')->group(function () {
     Route::put('/manage-series/{series}', [StudySeriesController::class, 'update'])->name('series.update');
     Route::delete('/manage-series/{series}', [StudySeriesController::class, 'destroy'])->name('series.destroy');
 
+    // Manage Studies actions - Add, Edit, Delete
+    Route::post('/manage-studies', [BibleStudyController::class, 'store'])->name('study.store');
+    Route::put('/manage-studies/{study}', [BibleStudyController::class, 'update'])->name('study.update');
+    Route::delete('/manage-studies/{study}', [BibleStudyController::class, 'destroy'])->name('study.destroy');
+
+    // Manage Study Attachments actions - Upload, Delete
+    Route::post('/manage-studies/{study}/attachments', [StudyAttachmentController::class, 'store'])->name('attachments.store');
+    Route::delete('/manage-studies/attachments/{attachment}', [StudyAttachmentController::class, 'destroy'])->name('attachments.destroy');
+
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
 
     Route::get('/gerer-utilisateurs', [DashboardController::class, 'manageUsers'])->name('gerer-utilisateurs');
 
-    Route::get('/gerer-serie', [DashboardController::class, 'studySeries'])->name('gerer-serie');
+    Route::get('/gerer-serie', [DashboardController::class, 'manageSeries'])->name('gerer-serie');
+
+    Route::get('/gerer-etudes', [DashboardController::class, 'manageStudies'])->name('gerer-etudes');
 
     // Profile related routes - Avatar, User name and User Password
 

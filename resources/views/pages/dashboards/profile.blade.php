@@ -1,14 +1,9 @@
-@props(['user' => null])
-
 <x-layout class="bg-slate-900" textColor="text-white">
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('dashboard/index.title') }}</x-slot>
 
-    <div class="flex justify-between items-center pt-18 pb-6">
-
-        <h2 class='text-right text-2xl font-bold'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}</h2>
-
-    </div>
+    <h2 class='text-right text-2xl font-bold pt-18 pb-6'>{{ __('dashboard/index.welcome', ['name' => $user->name]) }}
+    </h2>
 
     <!-- UI - Left sidebar with main area -->
     <div x-data="{

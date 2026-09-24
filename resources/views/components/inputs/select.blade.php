@@ -4,6 +4,7 @@
     'label' => null,
     'value' => '',
     'options' => [], // value => label, or group label => [value => label] for an <optgroup>
+    'disabled' => [], // Option values shown greyed out and not selectable
     'bag' => 'default', // Named error bag (e.g. validateWithBag('createSeries', ...))
     'model' => null, // Optional AlpineJS x-model binding for the select
 ])
@@ -28,13 +29,15 @@
                 @if (is_array($optionLabel))
                     <optgroup label="{{ $optionValue }}">
                         @foreach ($optionLabel as $groupValue => $groupLabel)
-                            <option value="{{ $groupValue }}" {{ old($name, $value) == $groupValue ? 'selected' : '' }}>
+                            <option value="{{ $groupValue }}" {{ old($name, $value) == $groupValue ? 'selected' : '' }}
+                                @if (in_array($groupValue, $disabled)) disabled class="text-slate-500" @endif>
                                 {{ $groupLabel }}
                             </option>
                         @endforeach
                     </optgroup>
                 @else
-                    <option value="{{ $optionValue }}" {{ old($name, $value) == $optionValue ? 'selected' : '' }}>
+                    <option value="{{ $optionValue }}" {{ old($name, $value) == $optionValue ? 'selected' : '' }}
+                        @if (in_array($optionValue, $disabled)) disabled class="text-slate-500" @endif>
                         {{ $optionLabel }}
                     </option>
                 @endif

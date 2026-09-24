@@ -8,10 +8,10 @@ return [
                 "bible_passage" => "1:1-18",
                 "title_en" => "In Him Was Life",
                 "title_fr" => "En elle il y avait la vie",
-                "image_links" => [
-                        "square"=> "jn_01.1-18.jpg",
-                        "desktop" => "jn_01.1-18-desktop.jpg",
-                        "mobile" => "jn_01.1-18-mobile.jpg"],
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_01.01-18-square.jpg",
+                        "desktop" => "jn_01.01-18-desktop.jpg",
+                        "mobile" => "jn_01.01-18-mobile.jpg"],
 
                 // Pure relational array structures easily ingested by loops
                 "attachments" => [
@@ -33,8 +33,8 @@ return [
                 "bible_passage" => "1:19-34",
                 "title_en" => "John the Baptist Testifies about Jesus",
                 "title_fr" => "Jean-Baptiste rend témoignage à Jésus",
-                "image_links" => [
-                        "square"=> "jn_01.19-34.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_01.19-34-square.jpg",
                         "desktop" => "jn_01.19-34-desktop.jpg",
                         "mobile" => "jn_01.19-34-mobile.jpg"],
 
@@ -58,8 +58,8 @@ return [
                 "bible_passage" => "1:35-51",
                 "title_en" => '"Come, and You Will See"',
                 "title_fr" => "« Venez et voyez »",
-                "image_links" => [
-                        "square"=> "jn_01.35-51.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_01.35-51-square.jpg",
                         "desktop" => "jn_01.35-51-desktop.jpg",
                         "mobile" => "jn_01.35-51-mobile.jpg"],
 
@@ -83,8 +83,8 @@ return [
                 "bible_passage" => "2:1-12",
                 "title_en" => "The First Sign of Jesus",
                 "title_fr" => "Le premier signe de Jésus",
-                "image_links" => [
-                        "square"=> "jn_02.01-12.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_02.01-12-square.jpg",
                         "desktop" => "jn_02.01-12-desktop.jpg",
                         "mobile" => "jn_02.01-12-mobile.jpg"],
 
@@ -108,8 +108,8 @@ return [
                 "bible_passage" => "2:13-25",
                 "title_en" => "Jesus is the Temple",
                 "title_fr" => "Jésus est le temple",
-                "image_links" => [
-                        "square"=> "jn_02.13-25.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_02.13-25-square.jpg",
                         "desktop" => "jn_02.13-25-desktop.jpg",
                         "mobile" => "jn_02.13-25-mobile.jpg"],
 
@@ -133,8 +133,8 @@ return [
                 "bible_passage" => "3:1-21",
                 "title_en" => "For God So Loved the World",
                 "title_fr" => "Dieu a tant aimé le monde",
-                "image_links" => [
-                        "square"=> "jn_03.01-21.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_03.01-21-square.jpg",
                         "desktop" => "jn_03.01-21-desktop.jpg",
                         "mobile" => "jn_03.01-21-mobile.jpg"],
 
@@ -158,8 +158,8 @@ return [
                 "bible_passage" => "3:22-36",
                 "title_en" => "Jesus Must Become Greater",
                 "title_fr" => "Il faut que Jésus grandisse",
-                "image_links" => [
-                        "square"=> "jn_03.22-36.jpg",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "jn_03.22-36-square.jpg",
                         "desktop" => "jn_03.22-36-desktop.jpg",
                         "mobile" => "jn_03.22-36-mobile.jpg"],
 
