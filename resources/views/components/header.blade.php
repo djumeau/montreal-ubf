@@ -10,7 +10,8 @@
     $homeActive = request()->routeIs('home');
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
-    $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
+    $resourcesActive = request()->routeIs('bible-studies', 'etudes-bibliques');
+    $givingActive =request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
     $contactActive = request()->routeIs('contact');
 
@@ -94,6 +95,8 @@
 
             </div>
 
+            <x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive" >{{__('nav.resources.title')}}</x-nav-link>
+
             <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" >{{__('nav.giving.title')}}</x-nav-link>
 
             <x-nav-link url="{{ __('nav.contact.url') }}" :active="$contactActive" >{{__('nav.contact.title')}}</x-nav-link>
@@ -136,6 +139,8 @@
         <div class="pl-6">
             <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
         </div>
+
+        <x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive" :isMobile='true'>{{__('nav.resources.title')}}</x-nav-link>
 
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>
 

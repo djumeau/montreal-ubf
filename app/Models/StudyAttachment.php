@@ -33,6 +33,24 @@ class StudyAttachment extends Model
     public const PUBLIC_TYPES = ['question_sheet']; // Open to everyone; the other types need a User role or above
 
     /**
+     * Group Bible Study question sheet (".gbs" in the name, e.g. jn_02.01-12.gbs.q.fr.pdf):
+     * simpler questions that complement the standard question sheet.
+     */
+    public function isGroupStudy(): bool
+    {
+        return str_contains($this->filename, '.gbs');
+    }
+
+    /**
+     * Type shown to readers: "Question sheet", "Group Bible Study", "Lecture" or "Other" in the current locale.
+     * Usage: $attachment->type_label
+     */
+    protected function typeLabel(): Attribute
+    {
+        return Attribute::get(fn () => __('dashboard/index.attachment_' . ($this->isGroupStudy() ? 'group_study' : $this->type)));
+    }
+
+    /**
      * Whether this attachment is open to everyone, or needs a User role or above.
      */
     public function isPublic(): bool

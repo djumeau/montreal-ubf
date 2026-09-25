@@ -107,6 +107,7 @@ return [
     "language_en_CA" => "Anglais",
     "language_fr_CA" => "Français",
     "attachment_question_sheet" => "Questionnaire",
+    "attachment_group_study" => "Étude biblique en groupe", // Questionnaire avec « .gbs » dans son nom (questions plus simples)
     "attachment_lecture" => "Leçon",
     "attachment_other" => "Autre",
     "attachment_views" => "{0} Aucune consultation|{1} :count consultation|[2,*] :count consultations",

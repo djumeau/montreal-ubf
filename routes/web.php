@@ -63,9 +63,9 @@ Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('
 
 // fr_CA
 Route::get('/etudes-bibliques', [BibleStudyController::class, 'index'])->name('etudes-bibliques');
-Route::get('/etudes-bibliques/create', [BibleStudyController::class, 'create'])->name('etudes-bibliques.creer');
-Route::post('/bible-studies/store', [BibleStudyController::class, 'store'])->name('etudes-bibliques.sauvarder');
-Route::get('/bible-studies/{id}', [BibleStudyController::class, 'show'])->name('etudes-bibliques.visionner');
+Route::get('/etudes-bibliques/creer', [BibleStudyController::class, 'create'])->name('etudes-bibliques.creer');
+Route::post('/etudes-bibliques/sauvegarder', [BibleStudyController::class, 'store'])->name('etudes-bibliques.sauvegarder');
+Route::get('/etudes-bibliques/{id}', [BibleStudyController::class, 'show'])->name('etudes-bibliques.visionner');
 
 // Authentication Routes
 

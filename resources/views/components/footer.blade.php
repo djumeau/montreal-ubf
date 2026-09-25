@@ -2,6 +2,7 @@
 
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
+    $resourcesActive = request()->routeIs('bible-studies') || request()->routeIs('etudes-bibliques');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
     $contactActive = request()->routeIs('confidentiality') || request()->routeIs('contact');
@@ -70,6 +71,10 @@
 
                 <div class="pl-4"><x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive"
                         icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
+                </div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive"
+                        icon="angle-right">{{__('nav.resources.title')}}</x-nav-link>
                 </div>
 
                 <div class="pl-4"><x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive"

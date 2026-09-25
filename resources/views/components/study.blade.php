@@ -1,6 +1,5 @@
 @props([
-    'imagesDir' => 'images',
-    'image' => 'montreal_skyline-mobile.jpg',
+    'imageUrl' => null, // Falls back to the Montréal skyline when there is no featured study
     'heading' => '',
     'book' => '',
     'dateStamp' => '',
@@ -13,7 +12,7 @@
 <!-- Bible Study Section -->
 
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat min-h-75 md:min-h-85']) }}
-    style="background-image: url('{{ asset( "storage/" . $imagesDir . "/" . $image ) }}')">
+    style="background-image: url('{{ $imageUrl ?? asset('images/montreal_skyline-mobile.jpg') }}')">
 
     <div class="overlay bg-slate-900/60"></div>
 

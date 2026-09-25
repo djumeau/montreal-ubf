@@ -107,6 +107,7 @@ return [
     "language_en_CA" => "English",
     "language_fr_CA" => "French",
     "attachment_question_sheet" => "Question sheet",
+    "attachment_group_study" => "Group Bible Study", // Question sheet with ".gbs" in its name (simpler questions)
     "attachment_lecture" => "Lecture",
     "attachment_other" => "Other",
     "attachment_views" => "{0} No views|{1} :count view|[2,*] :count views",

@@ -9,8 +9,10 @@
     $title = $study->current_title ?: ($study->title_en ?: ($study->title_fr ?: "#{$study->id}"));
     $seriesName = $study->series ? ($isFrench ? $study->series->name_fr : $study->series->name_en) : null;
 
-    // Files in type order (question sheets first), then by name as loaded
-    $files = $study->attachments->sortBy(fn ($attachment) => array_search($attachment->type, \App\Models\StudyAttachment::TYPES))->values();
+    // Files in type order (question sheets first, Group Bible Study right after), then by name as loaded
+    $files = $study->attachments
+        ->sortBy(fn ($attachment) => [array_search($attachment->type, \App\Models\StudyAttachment::TYPES), $attachment->isGroupStudy()])
+        ->values();
 @endphp
 
 <!-- Bible Study Card (view only) -->
@@ -44,7 +46,7 @@
                 @foreach ($files as $file)
                     @php
                         $isPdf = $file->extension === 'pdf';
-                        $label = __('dashboard/index.attachment_' . $file->type) . ' (' . strtoupper($file->extension) . ')';
+                        $label = $file->type_label . ' (' . strtoupper($file->extension) . ')';
                     @endphp
                     <li>
                         <a href="{{ route('attachments.show', $file) }}" @if ($isPdf) target="_blank" rel="noopener" @endif

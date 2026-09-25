@@ -3,6 +3,7 @@
     'bgGradient' => null,
     'textColor' => 'text-black',
     'questionSheets' => null, // Home page only: featured study's question sheets keyed by extension (HomeController)
+    'studyImages' => [], // Home page only: featured study's image URLs keyed by 'mobile' / 'desktop' (HomeController)
 ])
 
 @php
@@ -74,8 +75,7 @@
             </div>
 
             <x-study
-                :imagesDir="__('home/study.imagesDir')"
-                :image="__('home/study.image.mobile')"
+                :imageUrl="$studyImages['mobile'] ?? null"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 :dateStamp="__('home/study.dateStamp')"
@@ -101,8 +101,7 @@
             </x-hero>
 
             <x-study
-                :imagesDir="__('home/study.imagesDir')"
-                :image="__('home/study.image.desktop')"
+                :imageUrl="$studyImages['desktop'] ?? null"
                 :heading="__('home/study.heading')"
                 :book="__('home/study.book')"
                 dateStamp="{{__('home/study.dateStamp')}}"

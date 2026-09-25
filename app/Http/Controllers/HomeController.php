@@ -16,6 +16,9 @@ class HomeController extends Controller
 
         return view('pages.index', [
             'questionSheets' => $featuredStudy?->localizedAttachments('question_sheet')->keyBy('extension') ?? collect(),
+            'studyImages' => $featuredStudy
+                ? ['mobile' => $featuredStudy->imageUrl('mobile'), 'desktop' => $featuredStudy->imageUrl('desktop')]
+                : [],
         ]);
     }
 }

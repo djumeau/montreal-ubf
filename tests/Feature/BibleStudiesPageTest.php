@@ -62,6 +62,17 @@ class BibleStudiesPageTest extends TestCase
             ->assertSee('Other (DOCX)');
     }
 
+    public function test_group_bible_study_sheets_get_their_own_label_after_the_question_sheet(): void
+    {
+        config(['app.locale' => 'fr_CA']);
+        $this->study->attachments()->create(['locale' => 'fr_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.01-21.gbs.q.fr', 'extension' => 'pdf']);
+        $this->study->attachments()->create(['locale' => 'fr_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.01-21.q.fr', 'extension' => 'pdf']);
+
+        $this->get('/bible-studies')
+            ->assertOk()
+            ->assertSeeInOrder(['Questionnaire (PDF)', 'Étude biblique en groupe (PDF)']);
+    }
+
     public function test_search_and_series_filters(): void
     {
         BibleStudy::create(['title_en' => 'The Good Shepherd']);

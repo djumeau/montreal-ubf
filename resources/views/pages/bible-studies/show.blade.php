@@ -7,6 +7,6 @@
 
     <x-slot name="title">{{ __('bible-study/index.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pb-8 pt-18'>{{ $title }}</h1>
+    <h1 class='text-right text-4xl font-bold pb-8 pt-18'>{{ $biblestudy->current_title }}</h1>
 
 </x-layout>
