@@ -42,12 +42,13 @@ class StudyAttachment extends Model
     }
 
     /**
-     * Type shown to readers: "Question sheet", "Group Bible Study", "Lecture" or "Other" in the current locale.
-     * Usage: $attachment->type_label
+     * One-letter type shown after the file name on study cards, in the current locale:
+     * "Q" (question sheet), "L" (lecture), "O" (other) / "A" (autre).
+     * Usage: $attachment->type_code
      */
-    protected function typeLabel(): Attribute
+    protected function typeCode(): Attribute
     {
-        return Attribute::get(fn () => __('dashboard/index.attachment_' . ($this->isGroupStudy() ? 'group_study' : $this->type)));
+        return Attribute::get(fn () => __('dashboard/index.attachment_code_' . $this->type));
     }
 
     /**

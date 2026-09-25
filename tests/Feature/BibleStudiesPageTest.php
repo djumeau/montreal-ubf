@@ -35,7 +35,7 @@ class BibleStudiesPageTest extends TestCase
             ->assertSee('A New Birth')
             ->assertSee('3:1–21')
             ->assertSee('Series: The Gospel of John')
-            ->assertSee('Question sheet (PDF)')
+            ->assertSee('jn_03.q.pdf (Q)')
             ->assertSee(route('attachments.show', $pdf))
             ->assertDontSee(route('attachments.show', $fr))
             ->assertDontSee('Edit'); // View only
@@ -58,11 +58,21 @@ class BibleStudiesPageTest extends TestCase
             ->get('/bible-studies')
             ->assertSee(route('attachments.show', $lecture))
             ->assertSee(route('attachments.show', $other))
-            ->assertSee('Lecture (PDF)')
-            ->assertSee('Other (DOCX)');
+            ->assertSee('jn_03.lec.pdf (L)')
+            ->assertSee('jn_03.map.docx (O)');
     }
 
-    public function test_group_bible_study_sheets_get_their_own_label_after_the_question_sheet(): void
+    public function test_other_files_are_marked_a_for_autre_in_french(): void
+    {
+        config(['app.locale' => 'fr_CA']);
+        $this->study->attachments()->create(['locale' => 'fr_CA', 'type' => 'other', 'filename' => 'jn_03.carte.fr', 'extension' => 'docx']);
+
+        $this->actingAs(User::factory()->create(['role' => Role::USER]))
+            ->get('/bible-studies')
+            ->assertSee('jn_03.carte.fr.docx (A)');
+    }
+
+    public function test_group_bible_study_sheets_are_listed_after_the_question_sheet(): void
     {
         config(['app.locale' => 'fr_CA']);
         $this->study->attachments()->create(['locale' => 'fr_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.01-21.gbs.q.fr', 'extension' => 'pdf']);
@@ -70,7 +80,7 @@ class BibleStudiesPageTest extends TestCase
 
         $this->get('/bible-studies')
             ->assertOk()
-            ->assertSeeInOrder(['Questionnaire (PDF)', 'Étude biblique en groupe (PDF)']);
+            ->assertSeeInOrder(['jn_03.01-21.q.fr.pdf (Q)', 'jn_03.01-21.gbs.q.fr.pdf (Q)']);
     }
 
     public function test_search_and_series_filters(): void

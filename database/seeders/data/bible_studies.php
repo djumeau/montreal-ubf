@@ -577,4 +577,31 @@ return [
                 ]
         ],
 
+        26 => [
+                "study_series_id" => 2,
+                "book_id" => 6,
+                "bible_passage" => "1:1-18",
+                "title_en" => "Be Strong and Courageous",
+                "title_fr" => "Fortifie-toi et prends courage",
+                "image_links" => [ // Shared by EN and FR, in images/series_{id}/study_{id}/
+                        "square" => "joshua_01-square.jpg",
+                        "desktop" => "joshua_01-desktop.jpg",
+                        "mobile" => "joshua_01-mobile.jpg"],
+
+                "attachments" => [
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "joshua_01.01-18.lec", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18.q", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "lecture", "filename" => "joshua_01.01-18.lec", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18_novices.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18_novices.q", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "joshua_01.01-18.lec.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18.q.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "joshua_01.01-18.lec.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18_novices.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_01.01-18_novices.q.fr", "extension" => "pdf"],
+                ]
+        ],
+
 ];

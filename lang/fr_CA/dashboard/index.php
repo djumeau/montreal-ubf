@@ -107,9 +107,11 @@ return [
     "language_en_CA" => "Anglais",
     "language_fr_CA" => "Français",
     "attachment_question_sheet" => "Questionnaire",
-    "attachment_group_study" => "Étude biblique en groupe", // Questionnaire avec « .gbs » dans son nom (questions plus simples)
     "attachment_lecture" => "Leçon",
     "attachment_other" => "Autre",
+    "attachment_code_question_sheet" => "Q", // Affiché après le nom du fichier sur les cartes d'étude
+    "attachment_code_lecture" => "L",
+    "attachment_code_other" => "A",
     "attachment_views" => "{0} Aucune consultation|{1} :count consultation|[2,*] :count consultations",
     "preview_attachment" => "Aperçu dans un nouvel onglet",
     "download_attachment" => "Télécharger",

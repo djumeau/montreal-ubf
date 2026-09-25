@@ -46,11 +46,11 @@
                 @foreach ($files as $file)
                     @php
                         $isPdf = $file->extension === 'pdf';
-                        $label = $file->type_label . ' (' . strtoupper($file->extension) . ')';
+                        $label = $file->name_with_extension . ' (' . $file->type_code . ')';
                     @endphp
                     <li>
                         <a href="{{ route('attachments.show', $file) }}" @if ($isPdf) target="_blank" rel="noopener" @endif
-                            title="{{ $file->name_with_extension }}"
+                            title="{{ $label }}"
                             class="flex items-center gap-2 px-3 py-2 text-sm text-slate-100 border border-slate-600 rounded-sm bg-slate-900/50 hover:bg-sky-950 hover:border-slate-400 transition-colors">
                             <i class="fa-solid {{ $isPdf ? 'fa-file-pdf text-red-400' : 'fa-file-word text-sky-400' }}" aria-hidden="true"></i>
                             <span class="flex-1 min-w-0 truncate">{{ $label }}</span>
