@@ -62,6 +62,21 @@ class BibleStudiesPageTest extends TestCase
             ->assertSee('jn_03.map.docx (O)');
     }
 
+    public function test_card_title_shows_the_view_count_of_its_files_only_when_not_zero(): void
+    {
+        $sheet = $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.q', 'extension' => 'pdf']);
+
+        $this->get('/bible-studies')->assertDontSee('fa-eye');
+
+        $sheet->update(['views' => 7]);
+        $this->study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.q', 'extension' => 'docx', 'views' => 5]);
+
+        $this->get('/bible-studies')
+            ->assertSee('fa-eye')
+            ->assertSee('– 12')
+            ->assertSee('12 views');
+    }
+
     public function test_other_files_are_marked_a_for_autre_in_french(): void
     {
         config(['app.locale' => 'fr_CA']);

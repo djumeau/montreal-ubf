@@ -13,6 +13,9 @@
     $files = $study->attachments
         ->sortBy(fn ($attachment) => [array_search($attachment->type, \App\Models\StudyAttachment::TYPES), $attachment->isGroupStudy()])
         ->values();
+
+    // Views / downloads of the files listed on this card; hidden while zero
+    $views = $files->sum('views');
 @endphp
 
 <!-- Bible Study Card (view only) -->
@@ -23,7 +26,16 @@
 
     <div class="flex flex-col flex-1 p-4">
 
-        <h3 class="text-lg font-bold text-slate-100 leading-snug">{{ $title }}</h3>
+        <h3 class="text-lg font-bold text-slate-100 leading-snug">
+            {{ $title }}
+            @if ($views > 0)
+                <span class="ml-1 whitespace-nowrap text-sm font-normal text-slate-400"
+                    title="{{ trans_choice('dashboard/index.attachment_views', $views) }}">
+                    <span aria-hidden="true"><i class="fa-solid fa-eye"></i> – {{ $views }}</span>
+                    <span class="sr-only">{{ trans_choice('dashboard/index.attachment_views', $views) }}</span>
+                </span>
+            @endif
+        </h3>
 
         <!-- Passage opens in Bible Gateway (NIV / SG21) -->
         @if ($study->display_passage)
