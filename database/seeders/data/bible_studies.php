@@ -604,18 +604,18 @@ return [
                 "study_series_id" => 1,
                 "book_id" => 43,
                 "bible_passage" => "13:01-17",
-                "title_en" => "A Kernel of Wheat",
-                "title_fr" => "Un grain de blé",
+                "title_en" => "Wash One Another's Feet",
+                "title_fr" => "Se laver les pieds les uns les autres",
                 "image_links" => [ // Shared by EN and FR, in images/{series}/{book}_{passage}/
-                        "square" => "jn_12.20-50-square.jpg",
-                        "desktop" => "jn_12.20-50-desktop.jpg",
-                        "mobile" => "jn_12.20-50-mobile.jpg"],
+                        "square" => "jn_13.01-17-square.jpg",
+                        "desktop" => "jn_13.01-17-desktop.jpg",
+                        "mobile" => "jn_13.01-17-mobile.jpg"],
 
                 "attachments" => [
-                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_12.20-50.q", "extension" => "docx"],
-                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_12.20-50.q", "extension" => "pdf"],
-                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_12.20-50.q.fr", "extension" => "docx"],
-                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_12.20-50.q.fr", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q.fr", "extension" => "pdf"],
                 ]
         ],
 
