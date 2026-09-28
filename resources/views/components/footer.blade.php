@@ -7,6 +7,9 @@
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
     $contactActive = request()->routeIs('confidentiality') || request()->routeIs('contact');
 
+    // Random Bible verse in the current locale, e.g. ['text' => '...', 'reference' => 'Psalm 119:105']
+    $verse = \Illuminate\Support\Arr::random(__('footer.verses'));
+
 @endphp
 
 <!-- Footer -->
@@ -15,7 +18,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Row-1 - Main Footer Content -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x md:divide-slate-600 mb-4">
 
             <!-- Column 1 -->
             <div class="pl-4">
@@ -58,7 +61,7 @@
             </div>
 
             <!-- Column 2 -->
-            <div class="flex flex-col items-left text-left">
+            <div class="flex flex-col items-left text-left md:pl-8">
 
                 <h3 class="font-bold pl-4">{{__('footer.links')}}</h3>
 
@@ -86,6 +89,19 @@
                 </div>
 
             </div>
+
+            <!-- Column 3: Random Bible Verse -->
+            <figure class="flex flex-col justify-center text-center px-4 md:px-8 border-t border-slate-600 pt-6 md:border-t-0 md:pt-0">
+
+                <blockquote class="font-serif italic text-lg leading-relaxed text-white/90">
+                    {{ __('footer.verse_quote', ['verse' => $verse['text']]) }}
+                </blockquote>
+
+                <figcaption class="mt-3 text-sm tracking-wide text-slate-300">
+                    {{ $verse['reference'] }}
+                </figcaption>
+
+            </figure>
 
         </div>
 
