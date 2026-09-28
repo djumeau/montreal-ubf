@@ -2,30 +2,24 @@
     'bgSolid' => 'bg-gray-800',
     'bgGradient' => null,
     'textColor' => 'text-black',
-    'questionSheets' => null, // Home page only: featured study's question sheets keyed by extension (HomeController)
-    'studyImages' => [], // Home page only: featured study's image URLs keyed by 'mobile' / 'desktop' (HomeController)
 ])
 
 @php
-    // Tailwind scans this literal map and guarantees both classes compile into app.css
-    $colorMap = [
-        'light' => 'text-black',
-        'dark' => 'text-white'
-    ];
 
     // Gather all backgrounds passed down via props or direct 'class=""' attributes
     $customClasses = $attributes->get('class', '');
     $combinedBg = implode(' ', array_filter([$bgSolid, $bgGradient, $customClasses]));
 
-    // Match dark numbers (700-950) or the word black
-    $isDark = preg_match('/-(700|800|900|950)\b|black/', $combinedBg);
-
-    // Apply the mutually exclusive choice
-    $finalTextColor = $textColor ?? ($isDark ? $colorMap['dark'] : $colorMap['light']);
-
     // Set fallback layout background if none was passed anywhere
     $hasBgClass = preg_match('/\bbg-/', $combinedBg);
     $fallbackBg = !$hasBgClass ? 'bg-gray-100' : '';
+
+    // Featured study (BibleStudy id) shown under the hero on mobile and desktop
+    $featuredStudyId = 26;
+
+    // Featured study is held on the upcoming Sunday (today, if today is Sunday)
+    $studyDate = today()->isSunday() ? today() : today()->next('Sunday');
+
 @endphp
 
 <!DOCTYPE html>
@@ -46,8 +40,8 @@
 
 {{-- Merge classes while cleanly isolating variables to prevent style duplication conflicts --}}
 <body
-    style="--layout-text: {{ $finalTextColor === 'text-white' ? '#ffffff' : '#000000' }};"
-    {{ $attributes->merge(['class' => implode(' ', array_filter([$fallbackBg, $bgSolid, $bgGradient, $finalTextColor, 'min-h-screen']))]) }}
+    style="--layout-text: {{ $textColor === 'text-white' ? '#ffffff' : '#000000' }};"
+    {{ $attributes->merge(['class' => implode(' ', array_filter([$fallbackBg, $bgSolid, $bgGradient, $textColor, 'min-h-screen']))]) }}
 >
 
     <x-header />
@@ -75,14 +69,8 @@
             </div>
 
             <x-study
-                :imageUrl="$studyImages['mobile'] ?? null"
-                :heading="__('home/study.heading')"
-                :book="__('home/study.book')"
-                :dateStamp="__('home/study.dateStamp')"
-                :biblePassage="__('home/study.biblePassage')"
-                :bibleLink="__('home/study.bibleLink')"
-                :questionSheets="$questionSheets">
-                {{__('home/study.title')}}
+                :studyId="$featuredStudyId"
+                :date="$studyDate">
             </x-study>
 
         </div>
@@ -101,14 +89,8 @@
             </x-hero>
 
             <x-study
-                :imageUrl="$studyImages['desktop'] ?? null"
-                :heading="__('home/study.heading')"
-                :book="__('home/study.book')"
-                dateStamp="{{__('home/study.dateStamp')}}"
-                :biblePassage="__('home/study.biblePassage')"
-                :bibleLink="__('home/study.bibleLink')"
-                :questionSheets="$questionSheets">
-                {{__('home/study.title')}}
+                :studyId="$featuredStudyId"
+                :date="$studyDate">
             </x-study>
 
         </div>

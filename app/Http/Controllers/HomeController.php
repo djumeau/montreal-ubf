@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BibleStudy;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -11,14 +10,7 @@ class HomeController extends Controller
     // @route GET /
     public function index(): View
     {
-        // Study featured under the hero; its question sheets are linked in the current language
-        $featuredStudy = BibleStudy::find(__('home/study.studyId'));
-
-        return view('pages.index', [
-            'questionSheets' => $featuredStudy?->localizedAttachments('question_sheet')->keyBy('extension') ?? collect(),
-            'studyImages' => $featuredStudy
-                ? ['mobile' => $featuredStudy->imageUrl('mobile'), 'desktop' => $featuredStudy->imageUrl('desktop')]
-                : [],
-        ]);
+        // The featured study under the hero is loaded by the study component (see layout.blade.php)
+        return view('pages.index');
     }
 }

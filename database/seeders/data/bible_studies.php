@@ -616,7 +616,7 @@ return [
                         ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q", "extension" => "pdf"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q.fr", "extension" => "docx"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_13.01-17.q.fr", "extension" => "pdf"],
-                ]
+                ],
         ],
 
         28 => [
