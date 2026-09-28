@@ -61,7 +61,7 @@
             </div>
 
             <!-- Column 2 -->
-            <div class="flex flex-col items-left text-left md:pl-8">
+            <div class="flex flex-col items-left text-left md:pl-8 border-t border-slate-600 pt-6 md:border-t-0 md:pt-0">
 
                 <h3 class="font-bold pl-4">{{__('footer.links')}}</h3>
 
