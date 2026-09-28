@@ -41,7 +41,7 @@ class DashboardController extends Controller
             ->with('book')
             ->orderBy('id')
             ->paginate(10);
-        $books = BibleBook::orderBy('id')->get(); // Canonical order, for the Related Book select
+        $books = BibleBook::allCached(); // Canonical order, for the Related Book select
         return view('pages.dashboards.manage-series', compact('user', 'seriesList', 'books'));
     }
 
@@ -55,7 +55,7 @@ class DashboardController extends Controller
         $currentSeries = StudySeries::find($request->integer('series')) ?: null;
 
         // Optional ?book={id} filter; ignored if the book doesn't exist
-        $currentBook = BibleBook::find($request->integer('book')) ?: null;
+        $currentBook = BibleBook::allCached()->find($request->integer('book'));
 
         // Optional ?q= search; every word must match a title, the passage or the book name (e.g. "Jean 3")
         $search = trim($request->string('q'));

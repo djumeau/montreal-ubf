@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\BibleBook;
+use Illuminate\Support\Facades\Cache;
 
 class BibleBookSeeder extends Seeder
 {
@@ -37,6 +38,8 @@ class BibleBookSeeder extends Seeder
                 ]
             );
         }
+        Cache::forget(BibleBook::CACHE_KEY); // So BibleBook::allCached() picks up the reseeded books
+
         echo "Bible books seeded successfully.\n";
     }
 }

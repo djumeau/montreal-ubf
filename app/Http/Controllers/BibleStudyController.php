@@ -18,16 +18,31 @@ class BibleStudyController extends Controller
     // Image slots stored in the "image_links" JSON column (shared by EN and FR)
     private const IMAGE_TYPES = ['square', 'desktop', 'mobile'];
 
-    // @desc Show Bible studies as cards, with the same search and filters as Manage Studies (view only)
+    // @desc Show the study series as cards (most recent first); a series, book or search shows Bible study cards instead (view only)
     // @route GET /bible-studies
     public function index(Request $request): View
     {
         // Optional ?series={id} and ?book={id} filters; ignored if they don't exist
         $currentSeries = StudySeries::find($request->integer('series')) ?: null;
-        $currentBook = BibleBook::find($request->integer('book')) ?: null;
+        $currentBook = BibleBook::allCached()->find($request->integer('book'));
 
         // Optional ?q= search (see BibleStudy::scopeFilter)
         $search = trim($request->string('q'));
+
+        // Study counts show next to each name in the filter dropdowns, e.g. "The Gospel of John (7)"
+        $seriesList = StudySeries::withCount('bibleStudies')->newestFirst()->get();
+        $books = BibleBook::withCount('bibleStudies')->orderBy('id')->get(); // Canonical order
+
+        // Banner: the filtered series' desktop image, else the default series image
+        $heroImage = $currentSeries?->imageUrl('desktop') ?? asset('storage/images/study-series/default-desktop.jpg');
+
+        // No filter yet: start from the series (only those with studies), most recent first
+        if (!$currentSeries && !$currentBook && $search === '') {
+            $seriesCards = $seriesList->where('bible_studies_count', '>', 0)->values();
+            $studies = null;
+
+            return view('pages.bible-studies.index', compact('studies', 'seriesCards', 'currentSeries', 'currentBook', 'search', 'seriesList', 'books', 'heroImage'));
+        }
 
         // Files in the current language only; question sheets for everyone, every type from the User role up
         $locale = app()->getLocale() === 'fr_CA' ? 'fr_CA' : 'en_CA';
@@ -46,14 +61,9 @@ class BibleStudyController extends Controller
             ->paginate(12) // 3 rows of 4 cards
             ->withQueryString(); // Keep ?series=, ?book= and ?q= on the pagination links
 
-        // Study counts show next to each name in the filter dropdowns, e.g. "The Gospel of John (7)"
-        $seriesList = StudySeries::withCount('bibleStudies')->orderBy('id')->get();
-        $books = BibleBook::withCount('bibleStudies')->orderBy('id')->get(); // Canonical order
+        $seriesCards = null;
 
-        // Banner: the filtered series' desktop image, else the default series image
-        $heroImage = $currentSeries?->imageUrl('desktop') ?? asset('storage/images/study-series/default-desktop.jpg');
-
-        return view('pages.bible-studies.index', compact('studies', 'currentSeries', 'currentBook', 'search', 'seriesList', 'books', 'heroImage'));
+        return view('pages.bible-studies.index', compact('studies', 'seriesCards', 'currentSeries', 'currentBook', 'search', 'seriesList', 'books', 'heroImage'));
     }
 
     // @desc Show bible study id

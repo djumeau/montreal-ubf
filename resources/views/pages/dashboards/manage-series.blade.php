@@ -46,7 +46,7 @@
     $bookOptions = ['' => __('dashboard/index.multiple')];
     foreach (['ot' => 'old_testament', 'nt' => 'new_testament'] as $testament => $groupKey) {
         $bookOptions[__('dashboard/index.' . $groupKey)] = $books->where('testament', $testament)
-            ->mapWithKeys(fn ($book) => [$book->id => $isFrench ? $book->name_fr : $book->name_en])
+            ->mapWithKeys(fn ($book) => [$book->id => $book->current_name])
             ->all();
     }
 @endphp

@@ -14,4 +14,6 @@ return [
     "subtitle" => "Explorons ensemble la Parole de Dieu",
     "studies_found" => "{0} Aucune étude biblique trouvée|{1} :count étude biblique trouvée|[2,*] :count études bibliques trouvées",
     "series_label" => "Série : :name",
+    "choose_series" => "Choisissez une série, la plus récente en premier, ou faites une recherche ci-dessus",
+    "series_studies" => "{1} :count étude biblique|[2,*] :count études bibliques",
 ];

@@ -7,7 +7,7 @@
 
     // Series and books by id, as "Name" and, for the filters, "Name (study count)"; no count when there are none
     $seriesName = fn ($series) => $isFrench ? $series->name_fr : $series->name_en;
-    $bookName = fn ($book) => $isFrench ? $book->name_fr : $book->name_en;
+    $bookName = fn ($book) => $book->current_name;
     $withCount = fn ($name) => fn ($item) => $name($item) . ($item->bible_studies_count ? " ({$item->bible_studies_count})" : '');
 
     // Filter options without studies are greyed out and can't be picked (they would show an empty list)

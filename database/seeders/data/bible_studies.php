@@ -92,6 +92,8 @@ return [
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_02.01-12.q.fr", "extension" => "docx"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_02.01-12.gbs.q.fr", "extension" => "pdf"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_02.01-12.q.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_02.01-12.lec.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "lecture", "filename" => "jn_02.01-12.lec.fr", "extension" => "pdf"],
                 ]
         ],
 
@@ -574,6 +576,8 @@ return [
                         ["locale" => "en_CA", "type" => "question_sheet", "filename" => "jn_11.55-12.19.q", "extension" => "pdf"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_11.55-12.19.q.fr", "extension" => "docx"],
                         ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_11.55-12.19.q.fr", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_11.55-12.19.gbs.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "jn_11.55-12.19.gbs.q.fr", "extension" => "pdf"],
                 ]
         ],
 

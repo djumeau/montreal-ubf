@@ -25,7 +25,7 @@
     <td class="py-3 px-2">
         @if ($book)
             <div class="text-slate-100">
-                {{ $isFrench ? $book->name_fr : $book->name_en }}</div>
+                {{ $book->current_name }}</div>
             <div class="text-slate-400 text-xs">
                 ({{ $isFrench ? $book->name_en : $book->name_fr }})</div>
         @else

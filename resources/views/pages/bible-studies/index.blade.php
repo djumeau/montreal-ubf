@@ -5,8 +5,8 @@
     $hasFilters = $search !== '' || $currentSeries || $currentBook;
 
     // Series and books as "Name (study count)" in the current locale; no count when there are none
-    $seriesName = fn ($series) => $isFrench ? $series->name_fr : $series->name_en;
-    $bookName = fn ($book) => $isFrench ? $book->name_fr : $book->name_en;
+    $seriesName = fn ($series) => $series->current_name;
+    $bookName = fn ($book) => $book->current_name;
     $withCount = fn ($name) => fn ($item) => $name($item) . ($item->bible_studies_count ? " ({$item->bible_studies_count})" : '');
 
     // Options without studies are greyed out and can't be picked (they would show an empty list)
@@ -95,10 +95,14 @@
                 :options="$bookFilterOptions" :disabled="$emptyBookIds" :label="__('dashboard/index.bible_book')" />
         </form>
 
-        <!-- Result count, with "Clear filters" when any filter is set -->
+        <!-- Series prompt or result count, with "Clear filters" (back to the series) when any filter is set -->
         <div class="flex items-center justify-between gap-3 text-sm">
             <p class="text-slate-300">
-                {{ trans_choice('bible-study/index.studies_found', $studies->total(), ['count' => $studies->total()]) }}
+                @if ($seriesCards)
+                    {{ __('bible-study/index.choose_series') }}
+                @else
+                    {{ trans_choice('bible-study/index.studies_found', $studies->total(), ['count' => $studies->total()]) }}
+                @endif
             </p>
 
             @if ($hasFilters)
@@ -109,16 +113,27 @@
         </div>
     </div>
 
-    <!-- Study Cards: 1 / 2 / 4 per row, 12 per page -->
-    <div class="mt-6 px-2 md:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        @forelse ($studies as $study)
-            <x-study-card :study="$study" />
-        @empty
-            <p class="col-span-full py-10 text-center text-slate-400">{{ __('dashboard/index.no_studies') }}</p>
-        @endforelse
-    </div>
+    @if ($seriesCards)
+        <!-- Starting point, no filter yet: Series Cards, most recent first, 1 / 2 / 4 per row -->
+        <div class="mt-6 px-2 md:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            @forelse ($seriesCards as $series)
+                <x-series-card :series="$series" />
+            @empty
+                <p class="col-span-full py-10 text-center text-slate-400">{{ __('dashboard/index.no_studies') }}</p>
+            @endforelse
+        </div>
+    @else
+        <!-- Study Cards: 1 / 2 / 4 per row, 12 per page -->
+        <div class="mt-6 px-2 md:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            @forelse ($studies as $study)
+                <x-study-card :study="$study" />
+            @empty
+                <p class="col-span-full py-10 text-center text-slate-400">{{ __('dashboard/index.no_studies') }}</p>
+            @endforelse
+        </div>
+    @endif
 
-    @if ($studies->hasPages())
+    @if ($studies?->hasPages())
         <div class="mt-6 px-2 md:px-6">
             {{ $studies->links('pagination.dashboard') }}
         </div>

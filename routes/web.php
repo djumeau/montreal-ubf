@@ -10,8 +10,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserManagementController;
 
-use App\Http\Controllers\BibleBookController;
-
 use App\Http\Controllers\StudySeriesController;
 
 use App\Http\Controllers\BibleStudyController;
@@ -50,9 +48,6 @@ Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])
 
 // Bible study attachments (question sheets, lectures...) kept in private storage
 Route::get('/documents/{attachment}', [StudyAttachmentController::class, 'show'])->name('attachments.show');
-
-// Bible Books
-Route::get('/bible-books', [BibleBookController::class, 'index'])->name('bible-books');
 
 // Bible Studies
 // en_CA

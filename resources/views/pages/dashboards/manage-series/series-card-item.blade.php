@@ -20,7 +20,7 @@
         <div class="text-slate-300 text-sm">
             {{ __('dashboard/index.related_book') }}:
             @if ($book)
-                {{ $isFrench ? $book->name_fr : $book->name_en }}
+                {{ $book->current_name }}
                 ({{ $isFrench ? $book->name_en : $book->name_fr }})
             @else
                 {{ __('dashboard/index.multiple') }}

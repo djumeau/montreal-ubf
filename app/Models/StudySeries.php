@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,6 +38,25 @@ class StudySeries extends Model
     public function book(): BelongsTo
     {
         return $this->belongsTo(BibleBook::class, 'book_id');
+    }
+
+    /**
+     * Most recent series first. "dates" starts with the ISO start date ("2026-04-01 to present"), so it sorts as text;
+     * series without dates go last.
+     * Usage: StudySeries::newestFirst()->get()
+     */
+    public function scopeNewestFirst(Builder $query): void
+    {
+        $query->orderByRaw('dates IS NULL')->orderByDesc('dates')->orderByDesc('id');
+    }
+
+    /**
+     * Name in the current locale: "L'évangile de Jean" in fr_CA, "John's Gospel" otherwise.
+     * Usage: $series->current_name
+     */
+    protected function currentName(): Attribute
+    {
+        return Attribute::get(fn () => app()->getLocale() === 'fr_CA' ? $this->name_fr : $this->name_en);
     }
 
     /**

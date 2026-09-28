@@ -100,7 +100,7 @@ class BibleStudy extends Model
             if ($isFrench) {
                 $passage = str_replace(':', '.', $passage);
             }
-            $bookName = $this->book ? ($isFrench ? $this->book->name_fr : $this->book->name_en) : '';
+            $bookName = $this->book?->current_name ?? '';
 
             return trim("{$bookName} {$passage}");
         });
@@ -118,7 +118,7 @@ class BibleStudy extends Model
             }
 
             $locale = substr(app()->getLocale(), 0, 2); // Bible Gateway uses "en" / "fr", the app uses "en_CA" / "fr_CA"
-            $bookName = ($locale === 'fr') ? $this->book->name_fr : $this->book->name_en;
+            $bookName = $this->book->current_name;
             $version  = ($locale === 'fr') ? 'SG21' : 'NIV';
             $passage  = $this->bible_passage;
 

@@ -14,4 +14,6 @@ return [
     "subtitle" => "Explore God's Word together",
     "studies_found" => "{0} No Bible studies found|{1} :count Bible study found|[2,*] :count Bible studies found",
     "series_label" => "Series: :name",
+    "choose_series" => "Choose a series, most recent first, or search above",
+    "series_studies" => "{1} :count Bible study|[2,*] :count Bible studies",
 ];
