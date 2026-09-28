@@ -51,7 +51,7 @@ class StudyAttachmentsTest extends TestCase
             ->assertSessionHas('attachments_study', $this->study->id)
             ->assertSessionHasNoErrors();
 
-        $directory = "documents/series_{$this->study->study_series_id}/fr_CA/study_{$this->study->id}";
+        $directory = "documents/johns_gospel/study_{$this->study->id}"; // Series without book or dates, study without passage
         Storage::disk('local')->assertExists("$directory/jn_01.01-18.q.fr.pdf");
         Storage::disk('local')->assertExists("$directory/jean_01_fr.q.fr.docx"); // Lower case, spaces to underscores, brackets dropped, 1 -> 01, ".q.fr" added
 

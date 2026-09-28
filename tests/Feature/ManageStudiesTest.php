@@ -129,12 +129,12 @@ class ManageStudiesTest extends TestCase
         $otherSeries = StudySeries::create(['name_en' => 'Joshua', 'name_fr' => 'Josué']);
 
         $this->actingAs($this->admin)
-            ->put(route('study.update', $study), ['study_series_id' => $otherSeries->id])
+            ->put(route('study.update', $study), ['study_series_id' => $otherSeries->id, 'book_id' => $this->john->id, 'bible_passage' => '3:1-21'])
             ->assertSessionHasNoErrors();
 
         $study->refresh();
         $disk = Storage::disk('public');
-        $this->assertSame("images/series_{$otherSeries->id}/study_{$study->id}", $study->imageDirectory());
+        $this->assertSame("images/joshua/jn_03.01-21", $study->imageDirectory());
         $disk->assertExists($study->imageDirectory() . '/sq.jpg');
         $disk->assertExists($study->imageDirectory() . '/mb.jpg');
         $this->assertFalse($disk->directoryExists($oldDirectory));
@@ -142,7 +142,34 @@ class ManageStudiesTest extends TestCase
         // Documents follow, so the attachment still finds its file
         Storage::disk('local')->assertExists($attachment->fresh()->storage_path);
         Storage::disk('local')->assertMissing($oldDocumentPath);
-        $this->assertStringContainsString("documents/series_{$otherSeries->id}/fr_CA/", $attachment->fresh()->storage_path);
+        $this->assertSame("documents/joshua/jn_03.01-21/jn_03.lec.fr.pdf", $attachment->fresh()->storage_path);
+    }
+
+    public function test_documents_live_in_series_and_passage_folders(): void
+    {
+        $this->series->update(['dates' => '2026-04-01 to present']);
+        $study = BibleStudy::create(['study_series_id' => $this->series->id, 'book_id' => $this->john->id, 'bible_passage' => '4:43-5:15']);
+
+        $this->assertSame('documents/john_2026/jn_04.43-05.15', $study->documentDirectory());
+    }
+
+    public function test_changing_series_dates_moves_the_image_and_document_folders(): void
+    {
+        $study = $this->studyWithImages();
+        $attachment = $study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.q', 'extension' => 'pdf']);
+        Storage::disk('local')->put($attachment->storage_path, 'x');
+        $this->series->update(['images' => ['desktop' => 'series-dt.jpg']]);
+        Storage::disk('public')->put('images/john/series-dt.jpg', 'x');
+
+        $this->actingAs($this->admin)
+            ->put(route('series.update', $this->series), ['name_en' => "John's Gospel", 'name_fr' => "L'évangile de Jean", 'book_id' => $this->john->id, 'dates' => '2026-04-01 to present'])
+            ->assertSessionHasNoErrors();
+
+        Storage::disk('local')->assertExists('documents/john_2026/jn_03.01-21/jn_03.q.pdf');
+        $this->assertFalse(Storage::disk('local')->directoryExists('documents/john'));
+        Storage::disk('public')->assertExists('images/john_2026/series-dt.jpg');
+        Storage::disk('public')->assertExists('images/john_2026/jn_03.01-21/sq.jpg');
+        $this->assertFalse(Storage::disk('public')->directoryExists('images/john'));
     }
 
     public function test_invalid_update_uses_the_update_error_bag(): void
@@ -187,7 +214,7 @@ class ManageStudiesTest extends TestCase
         $study = $this->studyWithImages();
         $attachment = $study->attachments()->create(['locale' => 'en_CA', 'type' => 'lecture', 'filename' => 'jn_03', 'extension' => 'pdf']);
         Storage::disk('local')->put($attachment->storage_path, 'x');
-        $documentDirectory = $study->documentDirectory('en_CA');
+        $documentDirectory = $study->documentDirectory();
         $directory = $study->imageDirectory();
 
         $this->actingAs($this->admin)
@@ -200,7 +227,7 @@ class ManageStudiesTest extends TestCase
         $this->assertFalse(Storage::disk('local')->directoryExists($documentDirectory));
     }
 
-    public function test_deleting_a_series_moves_its_study_images_and_documents_to_series_none(): void
+    public function test_deleting_a_series_moves_its_study_images_and_documents_to_no_series(): void
     {
         $study = $this->studyWithImages();
         $attachment = $study->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_03.q', 'extension' => 'pdf']);
@@ -214,10 +241,10 @@ class ManageStudiesTest extends TestCase
         $this->assertNull($study->study_series_id);
 
         $disk = Storage::disk('public');
-        $disk->assertExists("images/series_none/study_{$study->id}/sq.jpg");
-        $this->assertFalse($disk->directoryExists("images/series_{$this->series->id}"));
-        Storage::disk('local')->assertExists("documents/series_none/en_CA/study_{$study->id}/jn_03.q.pdf");
-        $this->assertFalse(Storage::disk('local')->directoryExists("documents/series_{$this->series->id}"));
+        $disk->assertExists("images/no_series/jn_03.01-21/sq.jpg");
+        $this->assertFalse($disk->directoryExists("images/john"));
+        Storage::disk('local')->assertExists("documents/no_series/jn_03.01-21/jn_03.q.pdf");
+        $this->assertFalse(Storage::disk('local')->directoryExists("documents/john"));
     }
 
     public function test_non_managers_cannot_change_studies(): void

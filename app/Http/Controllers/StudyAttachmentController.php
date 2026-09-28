@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BibleStudy;
 use App\Models\StudyAttachment;
+use App\Support\StudyStorage;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class StudyAttachmentController extends Controller
             'files.*' => ['file', 'mimes:' . implode(',', StudyAttachment::EXTENSIONS), 'max:20480'], // 20 MB each
         ]);
 
-        $directory = $study->documentDirectory($validated['locale']);
+        $directory = $study->documentDirectory();
 
         foreach ($validated['files'] as $file) {
             [$filename, $extension] = $this->safeName($file, $validated['type'], $validated['locale']);
@@ -84,7 +85,7 @@ class StudyAttachmentController extends Controller
             abort(403, __('home/index.unauthorized'));
         }
 
-        Storage::disk('local')->delete($attachment->storage_path);
+        StudyStorage::delete(Storage::disk('local'), [$attachment->name_with_extension], dirname($attachment->storage_path));
 
         $name = $attachment->name_with_extension;
         $studyId = $attachment->bible_study_id;
@@ -122,11 +123,12 @@ class StudyAttachmentController extends Controller
         // Numbers 1-9 get a leading zero so files sort and read in order: "jn_1.1-18" -> "jn_01.01-18"
         $name = preg_replace('/(?<!\d)([1-9])(?!\d)/', '0$1', $name);
 
-        // Language marker goes last, so take it off first: "jn_01.01-18.fr" -> "jn_01.01-18"
-        $localeSuffix = self::LOCALE_SUFFIXES[$locale] ?? null;
-        if ($localeSuffix) {
-            $name = preg_replace('/\.' . $localeSuffix . '$/', '', $name);
+        // Language marker goes last, so take any off first: "jn_01.01-18.fr" -> "jn_01.01-18".
+        // EN and FR files share a folder, so an English "x.fr.pdf" must not replace the French one.
+        foreach (self::LOCALE_SUFFIXES as $suffix) {
+            $name = preg_replace('/\.' . $suffix . '$/', '', $name);
         }
+        $localeSuffix = self::LOCALE_SUFFIXES[$locale] ?? null;
 
         // Add ".q" / ".lec" unless the name already has it (e.g. "jn_01.01-18.q")
         $typeSuffix = self::TYPE_SUFFIXES[$type] ?? null;

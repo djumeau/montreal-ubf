@@ -70,12 +70,12 @@ class StudyAttachment extends Model
     }
 
     /**
-     * Path on the private "local" disk: documents/series_{id}/{locale}/study_{id}/{filename}.{extension}
+     * Path on the private "local" disk: documents/{series}/{passage}/{filename}.{extension}, e.g. documents/john_2026/01.01-18/jn_01.01-18.q.fr.pdf
      * Usage: Storage::disk('local')->download($attachment->storage_path)
      */
     protected function storagePath(): Attribute
     {
-        return Attribute::get(fn () => $this->bibleStudy->documentDirectory($this->locale) . '/' . $this->name_with_extension);
+        return Attribute::get(fn () => $this->bibleStudy->documentDirectory() . '/' . $this->name_with_extension);
     }
 
 }

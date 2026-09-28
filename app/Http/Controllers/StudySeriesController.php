@@ -25,7 +25,7 @@ class StudySeriesController extends Controller
         // Named error bag so validation errors reopen the Add modal (not the Edit modal)
         $validated = $request->validateWithBag('createSeries', $this->rules());
 
-        // Save first so the series has an id for its image folder
+        // Save first, then store the images in its folder (images/{series}, e.g. images/john_2026)
         $series = StudySeries::create([
             'name_en' => $validated['name_en'],
             'name_fr' => $validated['name_fr'],
@@ -51,13 +51,29 @@ class StudySeriesController extends Controller
 
         $validated = $request->validateWithBag('updateSeries', $this->rules());
 
-        $series->update([
+        // Images and documents live in images/{series}/... and documents/{series}/..., named from the book and start year
+        // (e.g. john_2026), so capture the folders before the change and move the files after
+        $studies = $series->bibleStudies()->with('attachments')->get();
+        $oldStudyDirectories = $studies->mapWithKeys(fn ($study) => [$study->id => [$study->imageDirectory(), $study->documentDirectory()]]);
+        $oldDirectory = $series->imageDirectory();
+
+        $series->fill([
             'name_en' => $validated['name_en'],
             'name_fr' => $validated['name_fr'],
             'book_id' => $validated['book_id'] ?? null,
             'dates' => $validated['dates'] ?? null,
-            'images' => $this->storeImages($request, $series),
         ]);
+
+        // Studies first: the old series folder is removed once the series images leave too
+        foreach ($studies as $study) {
+            $study->setRelation('series', $series);
+            $study->moveImagesFrom($oldStudyDirectories[$study->id][0]);
+            $study->moveDocumentsFrom($oldStudyDirectories[$study->id][1]);
+        }
+        $series->moveImagesFrom($oldDirectory);
+
+        $series->images = $this->storeImages($request, $series);
+        $series->save();
 
         return back()->with('status', __('dashboard/index.series_updated', ['name' => $series->name_en]));
     }
@@ -72,19 +88,17 @@ class StudySeriesController extends Controller
         }
 
         // Bible studies in this series are kept; the foreign key sets study_series_id to null,
-        // so move their images from images/series_{id}/study_{id} to images/series_none/study_{id}
-        // and their documents from documents/series_{id}/{locale}/study_{id} to documents/series_none/{locale}/study_{id}
-        foreach ($series->bibleStudies as $study) {
+        // so move their images and documents from {series}/{book}_{passage} to no_series/{book}_{passage}
+        // (the emptied series folders are removed once the last files leave)
+        foreach ($series->bibleStudies()->with('attachments')->get() as $study) {
             $oldDirectory = $study->imageDirectory();
-            $oldDocumentDirectories = $study->documentDirectories();
+            $oldDocumentDirectory = $study->documentDirectory();
             $study->study_series_id = null;
             $study->moveImagesFrom($oldDirectory);
-            $study->moveDocumentsFrom($oldDocumentDirectories);
+            $study->moveDocumentsFrom($oldDocumentDirectory);
         }
 
-        Storage::disk('public')->deleteDirectory($series->imageDirectory());
-        Storage::disk('public')->deleteDirectory("images/series_{$series->id}"); // Now-empty folder that held the study images
-        Storage::disk('local')->deleteDirectory("documents/series_{$series->id}"); // Now-empty folder that held the study documents
+        $series->deleteImages();
 
         $name = $series->name_en;
         $series->delete();
@@ -112,7 +126,7 @@ class StudySeriesController extends Controller
     }
 
     /**
-     * Save any uploaded images to storage/app/public/images/study-series/series_{id}
+     * Save any uploaded images to storage/app/public/images/{series}
      * and return the merged "images" array. Slots without an upload keep their current file.
      */
     private function storeImages(Request $request, StudySeries $series): array

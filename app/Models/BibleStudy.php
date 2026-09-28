@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Filesystem\FilesystemAdapter;
+use App\Support\StudyStorage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BibleStudy extends Model
 {
@@ -137,86 +138,88 @@ class BibleStudy extends Model
 
     /**
      * Folder on the "public" disk holding this study's images (shared by EN and FR).
-     * Resolves to storage/app/public/images/series_{id}/study_{id} (series_none when the study has no series)
+     * Resolves to storage/app/public/images/{series}/{book}_{passage}, e.g. images/john_2026/jn_01.01-18 (see folderPath()).
+     * Capture it before changing the series, book or passage, then pass it to moveImagesFrom().
      */
     public function imageDirectory(): string
     {
-        $series = $this->study_series_id ? "series_{$this->study_series_id}" : 'series_none';
-
-        return "images/{$series}/study_{$this->id}";
+        return 'images/' . $this->folderPath();
     }
 
     /**
-     * Folder on the private "local" disk holding this study's attachments for one locale.
-     * Resolves to storage/app/private/documents/series_{id}/{locale}/study_{id} (series_none when the study has no series)
+     * Folder on the private "local" disk holding this study's attachments (EN and FR: French file names end in ".fr").
+     * Resolves to storage/app/private/documents/{series}/{book}_{passage}, e.g. documents/john_2026/jn_01.01-18 (see folderPath()).
+     * Capture it before changing the series, book or passage, then pass it to moveDocumentsFrom().
      */
-    public function documentDirectory(string $locale): string
+    public function documentDirectory(): string
     {
-        $series = $this->study_series_id ? "series_{$this->study_series_id}" : 'series_none';
-
-        return "documents/{$series}/{$locale}/study_{$this->id}";
+        return 'documents/' . $this->folderPath();
     }
 
     /**
-     * This study's document folders on the "local" disk, keyed by locale.
-     * Capture them before changing study_series_id, then pass them to moveDocumentsFrom().
+     * "{series}/{book}_{passage}" part shared by imageDirectory() and documentDirectory(), e.g. "john_2026/jn_01.01-18".
+     * The series part comes from StudySeries::folderName(), "no_series" when the study has none.
+     * The book is its English abbreviation ("1Co" -> "1co"), left out when the study has no book.
+     * The passage is written like the file names: "1:1-18" -> "01.01-18", "4:43-5:15" -> "04.43-05.15".
+     * Studies without a passage fall back to "study_{id}", the only thing that tells them apart.
      */
-    public function documentDirectories(): array
+    private function folderPath(): string
     {
-        $directories = [];
-
-        foreach (StudyAttachment::LOCALES as $locale) {
-            $directories[$locale] = $this->documentDirectory($locale);
+        // Reload the series / book when their ids changed after they were loaded
+        if ($this->series?->id !== $this->study_series_id) {
+            $this->load('series');
+        }
+        if ($this->book?->id !== $this->book_id) {
+            $this->load('book');
         }
 
-        return $directories;
+        $series = $this->series?->folderName() ?? 'no_series';
+
+        $passage = str_replace(':', '.', strtolower(preg_replace('/\s+/', '', $this->bible_passage ?? '')));
+        $passage = preg_replace('/(?<!\d)(\d)(?!\d)/', '0$1', $passage); // Single digits get a leading zero
+        $passage = trim(preg_replace('/[^a-z0-9.-]+/', '_', $passage), '_'); // "1:1-5,9" -> "01.01-05_09"
+
+        if ($passage === '') {
+            $passage = "study_{$this->id}";
+        } elseif ($this->book) {
+            $passage = Str::slug($this->book->abbreviation_en, '_') . "_{$passage}";
+        }
+
+        return "{$series}/{$passage}";
     }
 
     /**
-     * Move this study's image folder from an old location (e.g. after its series changed) to imageDirectory().
-     * Does nothing when the old folder doesn't exist or already matches.
+     * Move this study's image files from their old folder (taken from imageDirectory() before the change) to imageDirectory().
      */
     public function moveImagesFrom(string $oldDirectory): void
     {
-        self::moveFolder(Storage::disk('public'), $oldDirectory, $this->imageDirectory());
+        StudyStorage::move(Storage::disk('public'), array_values($this->image_links ?? []), $oldDirectory, $this->imageDirectory());
     }
 
     /**
-     * Move this study's document folders from their old locations (taken from documentDirectories()) to documentDirectory(),
-     * so the attachments' storage_path still points at their files after the series changed.
+     * Move this study's attachment files from their old folder (taken from documentDirectory() before the change)
+     * to documentDirectory(), so the attachments' storage_path still points at their files.
      */
-    public function moveDocumentsFrom(array $oldDirectories): void
+    public function moveDocumentsFrom(string $oldDirectory): void
     {
-        foreach ($oldDirectories as $locale => $oldDirectory) {
-            self::moveFolder(Storage::disk('local'), $oldDirectory, $this->documentDirectory($locale));
-        }
+        StudyStorage::move(Storage::disk('local'), $this->documentNames(), $oldDirectory, $this->documentDirectory());
     }
 
     /**
-     * Delete this study's document folders (every locale) from the "local" disk.
+     * Delete this study's image and attachment files, then their folders once empty.
      */
-    public function deleteDocuments(): void
+    public function deleteFiles(): void
     {
-        foreach ($this->documentDirectories() as $directory) {
-            Storage::disk('local')->deleteDirectory($directory);
-        }
+        StudyStorage::delete(Storage::disk('public'), array_values($this->image_links ?? []), $this->imageDirectory());
+        StudyStorage::delete(Storage::disk('local'), $this->documentNames(), $this->documentDirectory());
     }
 
     /**
-     * Move every file in a folder to a new folder on the same disk, then remove the old folder.
-     * Does nothing when the old folder doesn't exist or already matches.
+     * File names of this study's attachments, e.g. ["jn_01.01-18.q.pdf", "jn_01.01-18.q.fr.pdf"].
      */
-    private static function moveFolder(FilesystemAdapter $disk, string $oldDirectory, string $newDirectory): void
+    private function documentNames(): array
     {
-        if ($oldDirectory === $newDirectory || !$disk->directoryExists($oldDirectory)) {
-            return;
-        }
-
-        foreach ($disk->files($oldDirectory) as $path) {
-            $disk->move($path, $newDirectory . '/' . basename($path));
-        }
-
-        $disk->deleteDirectory($oldDirectory);
+        return $this->attachments->map->name_with_extension->all();
     }
 
     /**

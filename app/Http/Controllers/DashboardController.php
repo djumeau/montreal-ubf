@@ -61,7 +61,7 @@ class DashboardController extends Controller
         $search = trim($request->string('q'));
 
         $studies = BibleStudy::with([
-                'series',
+                'series.book',
                 'book',
                 'attachments' => fn ($query) => $query->orderBy('filename')->orderBy('extension'), // For the Attachments modal
             ])
@@ -72,7 +72,7 @@ class DashboardController extends Controller
             ->withQueryString(); // Keep ?series= on the pagination links
 
         // Study counts show next to each name in the filter dropdowns, e.g. "The Gospel of John (7)"
-        $seriesList = StudySeries::withCount('bibleStudies')->orderBy('id')->get(); // For the series filter and the dialog's Series select
+        $seriesList = StudySeries::with('book')->withCount('bibleStudies')->orderBy('id')->get(); // For the series filter and the dialog's Series select
 
         $books = BibleBook::withCount('bibleStudies')->orderBy('id')->get(); // Canonical order, for the Book select
 

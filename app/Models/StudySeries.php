@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Support\StudyStorage;
 
 class StudySeries extends Model
 {
@@ -77,12 +80,47 @@ class StudySeries extends Model
     }
 
     /**
-     * Folder on the "public" disk holding this series' images.
-     * Resolves to storage/app/public/images/study-series/series_{id}
+     * Folder on the "public" disk holding this series' images; its studies' image folders sit inside it.
+     * Resolves to storage/app/public/images/{series}, e.g. images/john_2026
+     * Capture it before changing the book or dates, then pass it to moveImagesFrom().
      */
     public function imageDirectory(): string
     {
-        return "images/study-series/series_{$this->id}";
+        return 'images/' . $this->folderName();
+    }
+
+    /**
+     * Move this series' image files from their old folder (taken from imageDirectory() before the change) to imageDirectory().
+     */
+    public function moveImagesFrom(string $oldDirectory): void
+    {
+        StudyStorage::move(Storage::disk('public'), array_values($this->images ?? []), $oldDirectory, $this->imageDirectory());
+    }
+
+    /**
+     * Delete this series' image files, then its folder once empty.
+     */
+    public function deleteImages(): void
+    {
+        StudyStorage::delete(Storage::disk('public'), array_values($this->images ?? []), $this->imageDirectory());
+    }
+
+    /**
+     * Folder name for this series' images and documents: the book (else the series name) and the start year,
+     * e.g. "john_2026" for John's Gospel starting 2026-04-01, or "johns_gospel" with neither a book nor dates.
+     * It changes with the book or dates, so StudySeriesController::update() moves the files.
+     */
+    public function folderName(): string
+    {
+        // Reload the book when book_id changed after it was loaded
+        if ($this->book?->id !== $this->book_id) {
+            $this->load('book');
+        }
+
+        $name = $this->book?->name_en ?? $this->name_en;
+        $year = preg_match('/^\d{4}/', $this->dates ?? '', $match) ? $match[0] : '';
+
+        return Str::slug("{$name} {$year}", '_') ?: 'series';
     }
 
     /**

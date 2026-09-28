@@ -30,7 +30,7 @@ class BibleStudyController extends Controller
         $search = trim($request->string('q'));
 
         // Study counts show next to each name in the filter dropdowns, e.g. "The Gospel of John (7)"
-        $seriesList = StudySeries::withCount('bibleStudies')->newestFirst()->get();
+        $seriesList = StudySeries::with('book')->withCount('bibleStudies')->newestFirst()->get();
         $books = BibleBook::withCount('bibleStudies')->orderBy('id')->get(); // Canonical order
 
         // Banner: the filtered series' desktop image, else the default series image
@@ -49,7 +49,7 @@ class BibleStudyController extends Controller
         $allTypes = (bool) $request->user()?->canViewAllAttachments();
 
         $studies = BibleStudy::with([
-                'series',
+                'series.book',
                 'book',
                 'attachments' => fn ($query) => $query->where('locale', $locale)
                     ->when(!$allTypes, fn ($query) => $query->whereIn('type', StudyAttachment::PUBLIC_TYPES))
@@ -94,7 +94,7 @@ class BibleStudyController extends Controller
         // Named error bag so validation errors reopen the Add modal (not the Edit modal)
         $validated = $request->validateWithBag('createStudy', $this->rules());
 
-        // Save first so the study has an id for its image folder
+        // Save first so the study has an id for its image folder when it has no passage (images/{series}/study_{id})
         $study = BibleStudy::create($this->studyFields($validated));
 
         $study->update([
@@ -115,12 +115,12 @@ class BibleStudyController extends Controller
 
         $validated = $request->validateWithBag('updateStudy', $this->rules());
 
-        // Images and documents live under the series folder, so a new series means moving them
+        // Images live under the series folder and documents under the series / passage folder, so changing those means moving them
         $oldDirectory = $study->imageDirectory();
-        $oldDocumentDirectories = $study->documentDirectories();
+        $oldDocumentDirectory = $study->documentDirectory();
         $study->fill($this->studyFields($validated));
         $study->moveImagesFrom($oldDirectory);
-        $study->moveDocumentsFrom($oldDocumentDirectories);
+        $study->moveDocumentsFrom($oldDocumentDirectory);
 
         $study->image_links = $this->storeImages($request, $study);
         $study->save();
@@ -138,8 +138,7 @@ class BibleStudyController extends Controller
         }
 
         // Attachment rows go with it (cascadeOnDelete on study_attachments.bible_study_id); their files don't
-        Storage::disk('public')->deleteDirectory($study->imageDirectory());
-        $study->deleteDocuments();
+        $study->deleteFiles();
 
         $name = $this->displayName($study);
         $study->delete();
@@ -178,7 +177,7 @@ class BibleStudyController extends Controller
     }
 
     /**
-     * Save any uploaded images to storage/app/public/images/series_{id}/study_{id}
+     * Save any uploaded images to storage/app/public/images/{series}/{book}_{passage}
      * and return the merged "image_links" array. Slots without an upload keep their current file.
      */
     private function storeImages(Request $request, BibleStudy $study): array
