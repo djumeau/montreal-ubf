@@ -646,4 +646,25 @@ return [
                 ]
         ],
 
+        29 => [
+                "study_series_id" => 2,
+                "book_id" => 6,
+                "bible_passage" => "2:1-24",
+                "title_en" => "God in Heaven Above and on the Earth Below",
+                "title_fr" => "Dieu en haut dans le ciel et sur la terre en bas",
+                "image_links" => [ // Shared by EN and FR, in images/{series}/{book}_{passage}/
+                        "square" => "joshua_02-square.jpg",
+                        "desktop" => "joshua_02-desktop.jpg",
+                        "mobile" => "joshua_02-mobile.jpg"],
+
+                "attachments" => [
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24.q", "extension" => "pdf"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24_novices.q", "extension" => "docx"],
+                        ["locale" => "en_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24_novices.q", "extension" => "pdf"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24.q.fr", "extension" => "docx"],
+                        ["locale" => "fr_CA", "type" => "question_sheet", "filename" => "joshua_02.01-24.q.fr", "extension" => "pdf"],
+                ]
+        ],
+
 ];
