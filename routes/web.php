@@ -20,6 +20,7 @@ use App\Http\Controllers\ConfidentialityPolicyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventAttachmentController;
 
 use App\Http\Controllers\SwitchLanguageController;
 
@@ -48,6 +49,9 @@ Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])
 
 // Bible study attachments (question sheets, lectures...) kept in private storage
 Route::get('/documents/{attachment}', [StudyAttachmentController::class, 'show'])->name('attachments.show');
+
+// Event attachments (documents, media) kept in private storage; access follows the event's minimum profile
+Route::get('/event-documents/{attachment}', [EventAttachmentController::class, 'show'])->name('event-attachments.show');
 
 // Bible Studies
 // en_CA
@@ -160,7 +164,7 @@ Route::get('/migration-status', function () {
 
 // Study storage repair -- Comment out when not in use.
 // /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
-/*
+
 Route::get('/repair-storage', function () {
     Artisan::call('study-storage:repair', [
         '--apply' => request()->boolean('apply'),
@@ -169,7 +173,6 @@ Route::get('/repair-storage', function () {
 
     return response('<pre>' . e(Artisan::output()) . '</pre>');
 })->middleware('auth');
-*/
 
 // Migrations -- Comment out when not in use.
 /*
@@ -212,6 +215,16 @@ Route::get('/run-migrations', function () {
         return 'Success: ' . Artisan::output();
     } catch (\Exception $e) {
         return 'Error: ' . $e->getMessage();
+    }
+});
+
+// Seeds only the events and event_attachments tables (replaces the events there); users and studies are untouched
+Route::get('/run-event-seeder', function () {
+    try {
+        Artisan::call('db:seed', ['--class' => 'EventSeeder', '--force' => true]);
+        return response('<pre>' . e(Artisan::output()) . '</pre>');
+    } catch (\Exception $e) {
+        return response('Failed: ' . $e->getMessage(), 500);
     }
 });
 

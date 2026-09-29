@@ -35,17 +35,15 @@ class DatabaseSeeder extends Seeder
         DB::table('bible_studies')->truncate();
         DB::table('study_attachments')->truncate();
         DB::table('inquiries')->truncate();
-        DB::table('events')->truncate();
-        DB::table('event_attachments')->truncate();
 
         $this->call(InitUserSeeder::class);
         $this->call(BibleBookSeeder::class); // Before StudySeriesSeeder: study_series.book_id references bible_books
         $this->call(StudySeriesSeeder::class);
         $this->call(BibleStudySeeder::class); // Your attachments get created implicitly here
         $this->call(InquirySeeder::class);
-        $this->call(EventSeeder::class); // Attachments are created with each event
+        $this->call(EventSeeder::class); // Empties and resets its own tables, so it can also run on its own
 
-        $this->resetSequences(['users', 'study_series', 'bible_books', 'bible_studies', 'study_attachments', 'inquiries', 'events', 'event_attachments']);
+        self::resetSequences(['users', 'study_series', 'bible_books', 'bible_studies', 'study_attachments', 'inquiries']);
 
     }
 
@@ -53,7 +51,7 @@ class DatabaseSeeder extends Seeder
      * The seeders insert rows with explicit ids, which does not advance PostgreSQL's id sequences.
      * Move each sequence to the table's highest id so the next insert does not reuse an existing id.
      */
-    private function resetSequences(array $tables): void
+    public static function resetSequences(array $tables): void
     {
         if (DB::getDriverName() !== 'pgsql') {
             return;

@@ -1,7 +1,7 @@
 <?php
 
-// Placeholder events. Images are in storage/app/public/images/events/,
-// attachments in storage/app/private/documents/events/{event id}/
+// Placeholder events. Images are in storage/app/public/images/events/{category}/{start date}/,
+// attachments in storage/app/private/documents/events/{category}/{start date}/ (e.g. conference/2026-11-20)
 return [
 
         1 => [
