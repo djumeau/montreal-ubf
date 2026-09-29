@@ -148,6 +148,19 @@ Route::get('/clear-all', function () {
     return 'All caches and compiled views have been cleared!';
 });
 
+// Study storage repair -- Comment out when not in use.
+// /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
+/*
+Route::get('/repair-storage', function () {
+    Artisan::call('study-storage:repair', [
+        '--apply' => request()->boolean('apply'),
+        '--cleanup' => request()->boolean('cleanup'),
+    ]);
+
+    return response('<pre>' . e(Artisan::output()) . '</pre>');
+})->middleware('auth');
+*/
+
 // Migrations -- Comment out when not in use.
 /*
 Route::get('/reset-migrations', function () {

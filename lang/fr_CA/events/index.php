@@ -3,6 +3,7 @@
 return [
 
     "title" => "Événements",
+    "subtitle" => "Glorifions et louons Jésus ensemble!",
     "image-desktop" => "images/events/welcome_week_activities_fr_desktop.jpg",
     "image-mobile" => "images/events/welcome_week_activities_fr_desktop.jpg",
     "upcoming" => "À venir",

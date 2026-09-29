@@ -3,6 +3,7 @@
 return [
 
     "title" => "Events",
+    "subtitle" => "Let's Glorify and Praise Jesus Together!",
     "image-desktop" => "./images/events/welcome_week_activities_en_desktop.jpg",
     "image-mobile" => "./images/events/welcome_week_activities_en_desktop.jpg",
     "upcoming" => "Upcoming",
