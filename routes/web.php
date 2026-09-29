@@ -148,6 +148,16 @@ Route::get('/clear-all', function () {
     return 'All caches and compiled views have been cleared!';
 });
 
+// Migration status (read-only): lists each migration as Ran / Pending
+Route::get('/migration-status', function () {
+    try {
+        Artisan::call('migrate:status');
+        return response('<pre>' . e(Artisan::output()) . '</pre>');
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+})->middleware('auth');
+
 // Study storage repair -- Comment out when not in use.
 // /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
 /*

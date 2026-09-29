@@ -8,6 +8,7 @@ enum Role: string
     case USER = 'user';
     case MUSIC = 'music';
     case MEMBER = 'member';
+    case LEADER = 'leader';
     case ELDER = 'elder';
     case ADMIN = 'admin';
 

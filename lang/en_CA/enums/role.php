@@ -5,6 +5,7 @@ return [
     "user" => "User",
     "music" => "Music",
     "member" => "Member",
+    "leader" => "Leader",
     "elder" => "Elder",
     "admin" => "Administrator",
 ];
