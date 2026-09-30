@@ -129,11 +129,16 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                     </section>
                 @endif
 
-                <!-- Media: scrolling strip with arrows (the scroll position keeps "active" in step with them); images open full size, videos play in place -->
+                <!-- Media: scrolling strip with arrows (the scroll position keeps "active" in step with them).
+                     Clicking an item opens the viewer: a full-screen carousel (‹ › buttons, arrow keys, swipe; Esc or ✕ closes) -->
                 @if ($media->isNotEmpty())
                     <section x-data="{
                         active: 0,
                         count: {{ $media->count() }},
+                        items: @js($media->map(fn ($item) => ['url' => $item->url, 'video' => $item->isVideo(), 'name' => $item->display_name])->values()),
+                        viewerOpen: false,
+                        current: 0,
+                        touchX: null,
                         go(index) {
                             this.active = Math.max(0, Math.min(this.count - 1, index));
                             this.$refs.track.scrollTo({ left: this.$refs.track.children[this.active].offsetLeft, behavior: 'smooth' });
@@ -143,6 +148,24 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                             const max = track.scrollWidth - track.clientWidth;
                             this.active = max > 0 ? Math.round(track.scrollLeft / max * (this.count - 1)) : 0;
                         },
+                        openViewer(index) {
+                            this.current = index;
+                            this.viewerOpen = true;
+                            document.body.classList.add('overflow-hidden');
+                            this.$nextTick(() => this.$refs.close.focus());
+                        },
+                        closeViewer() {
+                            this.viewerOpen = false;
+                            document.body.classList.remove('overflow-hidden');
+                            this.go(this.current); // Strip follows the last item viewed
+                        },
+                        step(offset) {
+                            this.current = (this.current + offset + this.count) % this.count; // Wraps around
+                        },
+                        swipe(endX) {
+                            if (this.touchX !== null && Math.abs(endX - this.touchX) > 50) this.step(endX < this.touchX ? 1 : -1);
+                            this.touchX = null;
+                        },
                     }">
                         <h3 class="border-l-4 border-blue-600 pl-3 text-2xl font-bold">{{ __('events/index.media') }}
                         </h3>
@@ -151,18 +174,18 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                             <div x-ref="track" @scroll.debounce.100ms="sync()"
                                 class="relative flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none">
                                 @foreach ($media as $item)
-                                    <div
-                                        class="snap-start shrink-0 w-48 md:w-56 aspect-4/3 rounded-sm overflow-hidden border border-slate-700 bg-black">
+                                    <button type="button" @click="openViewer({{ $loop->index }})"
+                                        aria-label="{{ __('events/index.view_media', ['name' => $item->display_name]) }}"
+                                        class="group relative snap-start shrink-0 w-48 md:w-56 aspect-4/3 rounded-sm overflow-hidden border border-slate-700 bg-black cursor-zoom-in">
                                         @if ($item->isVideo())
-                                            <video src="{{ $item->url }}" controls preload="metadata"
-                                                class="w-full h-full object-cover"></video>
+                                            <video src="{{ $item->url }}" preload="metadata" muted playsinline
+                                                class="w-full h-full object-cover pointer-events-none"></video>
+                                            <i class="fa-solid fa-circle-play absolute inset-0 m-auto size-fit text-4xl text-white/90 drop-shadow"></i>
                                         @else
-                                            <a href="{{ $item->url }}" target="_blank" rel="noopener">
-                                                <img src="{{ $item->url }}" alt="{{ $item->display_name }}"
-                                                    loading="lazy" class="w-full h-full object-cover hover:opacity-90">
-                                            </a>
+                                            <img src="{{ $item->url }}" alt="{{ $item->display_name }}"
+                                                loading="lazy" class="w-full h-full object-cover group-hover:opacity-90">
                                         @endif
-                                    </div>
+                                    </button>
                                 @endforeach
                             </div>
 
@@ -179,6 +202,51 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                                 </button>
                             @endif
                         </div>
+
+                        <!-- Media Viewer: moved to the end of <body> so it covers the fixed header -->
+                        <template x-teleport="body">
+                            <div x-show="viewerOpen" x-cloak x-transition.opacity
+                                role="dialog" aria-modal="true" aria-label="{{ __('events/index.media') }}"
+                                @keydown.escape.window="viewerOpen && closeViewer()"
+                                @keydown.arrow-left.window="viewerOpen && step(-1)"
+                                @keydown.arrow-right.window="viewerOpen && step(1)"
+                                @touchstart="touchX = $event.changedTouches[0].clientX"
+                                @touchend="swipe($event.changedTouches[0].clientX)"
+                                class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 md:p-12">
+
+                                <!-- Clicking the dark background closes; clicks on the item itself don't -->
+                                <div class="absolute inset-0" @click="closeViewer()"></div>
+
+                                <template x-if="viewerOpen">
+                                    <div class="relative max-w-full max-h-full">
+                                        <template x-if="items[current].video">
+                                            <video :src="items[current].url" controls autoplay playsinline
+                                                class="max-w-full max-h-[85vh] rounded-sm"></video>
+                                        </template>
+                                        <template x-if="!items[current].video">
+                                            <img :src="items[current].url" :alt="items[current].name"
+                                                class="max-w-full max-h-[85vh] object-contain rounded-sm">
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <button type="button" x-ref="close" @click="closeViewer()" aria-label="{{ __('events/index.close') }}"
+                                    class="absolute top-4 right-4 size-11 rounded-full border-2 border-white bg-slate-900/70 hover:bg-slate-900 text-xl cursor-pointer">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+
+                                @if ($media->count() > 1)
+                                    <button type="button" @click="step(-1)" aria-label="{{ __('events/index.previous') }}"
+                                        class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 size-11 rounded-full border-2 border-white bg-slate-900/70 hover:bg-slate-900 cursor-pointer">
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                    </button>
+                                    <button type="button" @click="step(1)" aria-label="{{ __('events/index.next') }}"
+                                        class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 size-11 rounded-full border-2 border-white bg-slate-900/70 hover:bg-slate-900 cursor-pointer">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                @endif
+                            </div>
+                        </template>
                     </section>
                 @endif
 
@@ -193,13 +261,13 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
 
             <div class="lg:col-span-5 flex flex-col gap-6 min-w-0">
 
-                <!-- Attachments: documents in the current language; the heading shows even with none -->
-                <section class="bg-slate-800/60 border border-slate-700 rounded-sm p-4">
-                    <h3 class="border-l-4 border-blue-600 pl-3 text-xl font-bold">
-                        {{ __('events/index.attachments_heading', ['count' => $documents->count()]) }}
-                    </h3>
+                <!-- Attachments: documents in the current language; the whole card is hidden when there are none -->
+                @if ($documents->isNotEmpty())
+                    <section class="bg-slate-800/60 border border-slate-700 rounded-sm p-4">
+                        <h3 class="border-l-4 border-blue-600 pl-3 text-xl font-bold">
+                            {{ __('events/index.attachments_heading', ['count' => $documents->count()]) }}
+                        </h3>
 
-                    @if ($documents->isNotEmpty())
                         <ul class="mt-3 max-h-72 overflow-y-auto flex flex-col gap-2 pr-1">
                             @foreach ($documents as $document)
                                 <li>
@@ -220,8 +288,8 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                                 </li>
                             @endforeach
                         </ul>
-                    @endif
-                </section>
+                    </section>
+                @endif
 
                 <!-- Location map: only for addresses Google Maps can find (not online events) -->
                 @if ($event->hasMap())
@@ -243,7 +311,7 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
             </div>
         </div>
 
-        <x-events::back-button class="{{ $linkButtonClass }}"
+        <x-events::back-button class="{{ $linkButtonClass }} mt-8"
             icon="fa-solid fa-arrow-left">{{ __('events/index.back_to_events') }}</x-events::back-button>
 
     </div>
