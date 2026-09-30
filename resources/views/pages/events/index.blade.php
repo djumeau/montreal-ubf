@@ -95,7 +95,18 @@
             <!-- Table headings from md up (phones will get cards); the arrow on Date and time shows the sort order.
                  Last column is left blank for the "More info" buttons -->
             <div class="hidden md:block mt-4 overflow-x-auto border border-slate-700 rounded-sm">
-                <table class="w-full text-left text-sm">
+                <!-- Fixed layout: the same column widths in every list (Upcoming, Past), whatever the content.
+                     Title and Location share the space left; below 64rem the table scrolls sideways -->
+                <table class="w-full min-w-5xl table-fixed text-left text-sm">
+                    <colgroup>
+                        <col class="w-28">  {{-- Image --}}
+                        <col>               {{-- Title --}}
+                        <col class="w-44">  {{-- Category --}}
+                        <col class="w-60">  {{-- Date and time --}}
+                        <col>               {{-- Location --}}
+                        <col class="w-36">  {{-- Attachments --}}
+                        <col class="w-40">  {{-- More info --}}
+                    </colgroup>
                     <thead>
                         <tr class="bg-slate-800 text-slate-100">
                             <th class="py-2 px-3 font-medium">{{ __('events/index.column_image') }}</th>
