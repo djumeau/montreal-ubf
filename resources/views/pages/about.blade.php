@@ -2,9 +2,14 @@
 
 <x-layout class="bg-slate-900" textColor="text-white">
 
-    <x-slot name="title">{{__('about/index.title')}}</x-slot>
+     <x-slot name="title">{{ __('header.name') }} – {{ __('about/index.title')}}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{__('about/index.title')}}</h1>
+    <x-slot name="hero">
+        <x-page-banner
+        :title="__('about/index.title')"
+        desktop='storage/images/events/2026-05_NAYAC_group-desktop.jpg'
+        mobile='storage/images/events/2026-05_NAYAC_group-mobile.jpg' />
+    </x-slot>
 
     @auth
 

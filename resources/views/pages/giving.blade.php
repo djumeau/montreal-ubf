@@ -22,9 +22,14 @@
 
     <!-- Video source: {{ $filePath }} -->
 
-    <x-slot name="title">{{ __('giving.title') }}</x-slot>
+    <x-slot name="title">{{ __('header.name') }} – {{  __('giving.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('giving.title') }}</h1>
+    <x-slot name="hero">
+        <x-page-banner
+        :title="__('giving.title')"
+        desktop='storage/images/home/confidentiality_policy-desktop.jpg'
+        mobile='storage/images/home/confidentiality_policy-mobile.jpg' />
+    </x-slot>
 
     <x-blurb title="{{ __('giving.scripture') }}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 

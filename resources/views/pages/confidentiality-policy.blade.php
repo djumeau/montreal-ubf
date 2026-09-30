@@ -8,7 +8,12 @@
 
     <x-slot name="title">{{ __('header.name') }} – {{ __('nav.confidentiality.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('nav.confidentiality.title') }}</h1>
+    <x-slot name="hero">
+        <x-page-banner
+        :title="__('nav.confidentiality.title')"
+        desktop='storage/images/home/confidentiality_policy-desktop.jpg'
+        mobile='storage/images/home/confidentiality_policy-mobile.jpg' />
+    </x-slot>
 
     {{-- Dynamic localized date rendering --}}
     <p class="text-xs italic text-slate-100 mb-2">

@@ -2,12 +2,14 @@
 
     <x-slot name="title">{{ __('header.name') }} - {{ __('contact.title') }}</x-slot>
 
-    <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('contact.title') }}</h1>
+    <x-slot name="hero">
+        <x-page-banner
+        :title="__('contact.title')"
+        desktop='storage/images/conferences/2026-07_franco_tour_mtl.jpg'
+        mobile='storage/images/conferences/2026-07_franco_tour_mtl.jpg' />
+    </x-slot>
 
-    <img src="{{ asset('storage/images/conferences/2026-07_franco_tour_mtl.jpg') }}"
-        alt="{{ __('contact.conference_image_alt') }}" class="w-full h-auto rounded-sm mb-4">
-
-    <div class="flex flex-col justify-between items-center border rounded-sm outline-1 outline-slate-100 ">
+    <div class="flex flex-col justify-between items-center border rounded-sm outline-slate-100 ">
 
         <h2 class="p-4 pb-0 text-2xl font-medium text-slate-100">{{ __('contact.subtitle') }}</h2>
 
