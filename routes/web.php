@@ -170,7 +170,6 @@ Route::get('/migration-status', function () {
 })->middleware('auth');
 
 // Migrations -- Comment out when not in use.
-/*
 
 // Study storage repair -- Comment out when not in use.
 // /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
@@ -250,5 +249,3 @@ Route::get('/run-seeders', function () {
     }
 
 });
-
-*/
