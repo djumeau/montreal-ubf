@@ -2,7 +2,8 @@
 
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
     $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
-    $resourcesActive = request()->routeIs('bible-studies') || request()->routeIs('etudes-bibliques');
+    $bibleStudiesActive = request()->routeIs('bible-studies') || request()->routeIs('etudes-bibliques');
+    $scheduleActive = request()->routeIs('bible-study-schedule') || request()->routeIs('horaire-etudes-bibliques');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
     $contactActive = request()->routeIs('confidentiality') || request()->routeIs('contact');
@@ -76,8 +77,12 @@
                         icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
                 </div>
 
-                <div class="pl-4"><x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive"
-                        icon="angle-right">{{__('nav.resources.title')}}</x-nav-link>
+                <div class="pl-4"><x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive"
+                        icon="angle-right">{{__('nav.bible_studies.title')}}</x-nav-link>
+                </div>
+
+                <div class="pl-4"><x-nav-link url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive"
+                        icon="angle-right">{{__('nav.study_schedule.title')}}</x-nav-link>
                 </div>
 
                 <div class="pl-4"><x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive"

@@ -9,8 +9,9 @@
 
     $homeActive = request()->routeIs('home');
     $aboutActive = request()->routeIs('about') || request()->routeIs('apropos');
-    $eventsActive = request()->routeIs('events') || request()->routeIs('evenements');
-    $resourcesActive = request()->routeIs('bible-studies', 'etudes-bibliques');
+    $eventsActive = request()->routeIs('events', 'evenements'); // List page only, so the link stays clickable on event details pages
+    $bibleStudiesActive = request()->routeIs('bible-studies', 'etudes-bibliques');
+    $scheduleActive = request()->routeIs('bible-study-schedule', 'horaire-etudes-bibliques');
     $givingActive =request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
     $contactActive = request()->routeIs('contact');
@@ -95,7 +96,29 @@
 
             </div>
 
-            <x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive" >{{__('nav.resources.title')}}</x-nav-link>
+            <!-- Resources: same dropdown as Info -->
+            <div class="relative inline-flex items-center" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.window="open = false">
+
+                <button type="button" @click="open = !open"
+                    class="inline-flex items-center text-white">
+                    <i class="fa-solid fa-caret-right mr-1 transition-transform duration-200" :class="{ 'rotate-90': open }"></i>
+                    <span class="hover:underline">{{ __('nav.resources.title') }}</span>
+                </button>
+
+                <div x-show="open" x-transition x-cloak
+                    class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-1 z-50">
+
+                    <div class="px-4 py-1 whitespace-nowrap">
+                        <x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive">{{__('nav.bible_studies.title')}}</x-nav-link>
+                    </div>
+
+                    <div class="px-4 py-1 whitespace-nowrap">
+                        <x-nav-link url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive">{{__('nav.study_schedule.title')}}</x-nav-link>
+                    </div>
+
+                </div>
+
+            </div>
 
             <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" >{{__('nav.giving.title')}}</x-nav-link>
 
@@ -140,7 +163,15 @@
             <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
         </div>
 
-        <x-nav-link url="{{ __('nav.resources.url') }}" :active="$resourcesActive" :isMobile='true'>{{__('nav.resources.title')}}</x-nav-link>
+        <div class="p-3 text-gray-300 font-semibold tracking-wide">{{ __('nav.resources.title') }}</div>
+
+        <div class="pl-6">
+            <x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive" :isMobile='true'>{{__('nav.bible_studies.title')}}</x-nav-link>
+        </div>
+
+        <div class="pl-6">
+            <x-nav-link url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive" :isMobile='true'>{{__('nav.study_schedule.title')}}</x-nav-link>
+        </div>
 
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>
 

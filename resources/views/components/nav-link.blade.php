@@ -8,7 +8,8 @@
 @if ($isMobile)
 
     <a  href="{{ $url }}"
-        class="block p-3 hover:bg-blue-700 {{ $active ? 'text-gray-400' : 'text-white' }}">
+        class="block p-3 hover:bg-blue-700 {{ $active ? 'text-gray-400' : 'text-white' }}"
+        {{ $active ? 'aria-disabled=true tabindex=-1' : '' }}>
 
         @if ($icon)
             <i class="fa fa-{{ $icon }} p-0 mr-1"></i>

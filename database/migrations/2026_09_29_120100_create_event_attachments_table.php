@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->enum('type', ['document', 'media']); // document: pdf, docx | media: png, jpg, mp4
             $table->string('document_name');             // 'retreat_schedule.pdf'
+            $table->string('locale', 5)->nullable()->index(); // Documents: 'en_CA', 'fr_CA' | Media: null (shown in both languages)
 
             $table->timestamps();
         });

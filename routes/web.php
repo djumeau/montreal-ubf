@@ -21,6 +21,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAttachmentController;
+use App\Http\Controllers\StudyScheduleController;
 
 use App\Http\Controllers\SwitchLanguageController;
 
@@ -37,11 +38,13 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/confidentiality', [ConfidentialityPolicyController::class, 'index'])->name('confidentiality');
 
 Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::get('/giving', [GivingController::class, 'index'])->name('giving');
 
 // fr_CA
 Route::get('/apropos', [AboutController::class, 'index'])->name('apropos');
 Route::get('/evenements', [EventController::class, 'index'])->name('evenements');
+Route::get('/evenements/{event}', [EventController::class, 'show'])->name('evenements.show');
 Route::get('/donner', [GivingController::class, 'index'])->name('donner');
 Route::get('/confidentialite', [ConfidentialityPolicyController::class, 'index'])->name('confidentialite');
 
@@ -65,6 +68,10 @@ Route::get('/etudes-bibliques', [BibleStudyController::class, 'index'])->name('e
 Route::get('/etudes-bibliques/creer', [BibleStudyController::class, 'create'])->name('etudes-bibliques.creer');
 Route::post('/etudes-bibliques/sauvegarder', [BibleStudyController::class, 'store'])->name('etudes-bibliques.sauvegarder');
 Route::get('/etudes-bibliques/{id}', [BibleStudyController::class, 'show'])->name('etudes-bibliques.visionner');
+
+// Bible Study Schedule
+Route::get('/bible-study-schedule', [StudyScheduleController::class, 'index'])->name('bible-study-schedule');
+Route::get('/horaire-etudes-bibliques', [StudyScheduleController::class, 'index'])->name('horaire-etudes-bibliques');
 
 // Authentication Routes
 

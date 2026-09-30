@@ -4,8 +4,11 @@ namespace App\Models;
 
 use App\Enums\EventCategory;
 use App\Enums\Role;
+use App\Support\SafeHtml;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -13,19 +16,26 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'title',
+        'title_en',
+        'title_fr',
         'images',
         'category',
         'minimum_profile',
+        'bible_study_id',
         'start_date',
         'has_end_date',
         'end_date',
         'recurring',
         'location',
+        'contact_name',
+        'contact_email',
+        'website_url',
         'featured_on_home_page',
         'featured_on_events_page',
-        'description',
-        'post_event',
+        'description_en',
+        'description_fr',
+        'post_event_summary_en',
+        'post_event_summary_fr',
     ];
 
     protected $casts = [
@@ -49,6 +59,14 @@ class Event extends Model
     }
 
     /**
+     * Group Bible studies: the Bible study being covered (null for other events).
+     */
+    public function bibleStudy(): BelongsTo
+    {
+        return $this->belongsTo(BibleStudy::class, 'bible_study_id');
+    }
+
+    /**
      * Events the viewer may see: a Guest minimum profile is open to everyone (visitors too),
      * the others need a role at that level or above.
      * Usage: Event::visibleTo($request->user())
@@ -69,6 +87,23 @@ class Event extends Model
     }
 
     /**
+     * Events shown on the public events page: every category except the group Bible studies.
+     * Usage: Event::publicListing()
+     */
+    public function scopePublicListing(Builder $query): void
+    {
+        $query->whereNotIn('category', array_map(fn (EventCategory $category) => $category->value, EventCategory::BIBLE_STUDIES));
+    }
+
+    /**
+     * Whether the event is a group Bible study (managed on the admin dashboard, not on the events page).
+     */
+    public function isBibleStudy(): bool
+    {
+        return in_array($this->category, EventCategory::BIBLE_STUDIES, true);
+    }
+
+    /**
      * Upcoming events: recurring ones, and those whose end date (or start date without one) is not past yet.
      */
     public function scopeUpcoming(Builder $query): void
@@ -76,6 +111,165 @@ class Event extends Model
         $query->where(fn (Builder $q) => $q
             ->where('recurring', true)
             ->orWhereRaw('COALESCE(end_date, start_date) >= ?', [now()]));
+    }
+
+    /**
+     * Past events: not recurring, and whose end date (or start date without one) is past (the opposite of scopeUpcoming()).
+     */
+    public function scopePast(Builder $query): void
+    {
+        $query->where('recurring', false)
+            ->whereRaw('COALESCE(end_date, start_date) < ?', [now()]);
+    }
+
+    /**
+     * Events matching every word of the search text in their title, location or description (either language).
+     * Usage: Event::search('camp kinkora')
+     */
+    public function scopeSearch(Builder $query, string $search = ''): void
+    {
+        $terms = $search === '' ? [] : preg_split('/\s+/', $search);
+
+        foreach ($terms as $term) {
+            $query->where(fn (Builder $q) => $q
+                ->whereLike('title_en', "%{$term}%")
+                ->orWhereLike('title_fr', "%{$term}%")
+                ->orWhereLike('location', "%{$term}%")
+                ->orWhereLike('description_en', "%{$term}%")
+                ->orWhereLike('description_fr', "%{$term}%"));
+        }
+    }
+
+    /**
+     * Title in the current language, else the other one.
+     * Usage: $event->current_title
+     */
+    protected function currentTitle(): Attribute
+    {
+        return Attribute::get(fn () => $this->translated('title'));
+    }
+
+    /**
+     * Description in the current language, else the other one.
+     * Usage: $event->current_description
+     */
+    protected function currentDescription(): Attribute
+    {
+        return Attribute::get(fn () => $this->translated('description'));
+    }
+
+    /**
+     * Description in the current language as safe HTML: formatting tags kept (<p>, <ul>, <li>, <strong>, <a>...),
+     * anything else removed; plain text keeps its line breaks. Print with {!! !!}.
+     * Usage: {!! $event->description_html !!}
+     */
+    protected function descriptionHtml(): Attribute
+    {
+        return Attribute::get(fn () => SafeHtml::clean($this->current_description));
+    }
+
+    /**
+     * Post-event summary in the current language as safe HTML (same rules as description_html). Print with {!! !!}.
+     * Usage: {!! $event->post_event_summary_html !!}
+     */
+    protected function postEventSummaryHtml(): Attribute
+    {
+        return Attribute::get(fn () => SafeHtml::clean($this->current_post_event_summary));
+    }
+
+    /**
+     * Whether every word of the search text is in the title, location or description (either language),
+     * ignoring HTML tags, so "li" or "strong" don't match the markup. Follows scopeSearch().
+     */
+    public function matchesSearch(string $search): bool
+    {
+        $terms = $search === '' ? [] : preg_split('/\s+/', $search);
+
+        $text = implode(' ', [
+            $this->title_en,
+            $this->title_fr,
+            $this->location,
+            html_entity_decode(strip_tags((string) $this->description_en)),
+            html_entity_decode(strip_tags((string) $this->description_fr)),
+        ]);
+
+        foreach ($terms as $term) {
+            if (mb_stripos($text, $term) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Post-event summary in the current language, else the other one.
+     * Usage: $event->current_post_event_summary
+     */
+    protected function currentPostEventSummary(): Attribute
+    {
+        return Attribute::get(fn () => $this->translated('post_event_summary'));
+    }
+
+    /**
+     * "{field}_fr" or "{field}_en" for the current language, falling back to the other language when empty.
+     */
+    private function translated(string $field): ?string
+    {
+        [$current, $other] = app()->getLocale() === 'fr_CA' ? ['fr', 'en'] : ['en', 'fr'];
+
+        return $this->{"{$field}_{$current}"} ?: $this->{"{$field}_{$other}"};
+    }
+
+    /**
+     * Location name: the part of "location" before the first comma, e.g. "Montreal UBF" from
+     * "Montreal UBF, 2627 rue Ryde, Montréal, QC, H3K 1R7".
+     * Usage: $event->location_name
+     */
+    protected function locationName(): Attribute
+    {
+        return Attribute::get(fn () => $this->location === null ? null : trim(explode(',', $this->location)[0]));
+    }
+
+    /**
+     * Address: the part of "location" after the first comma, e.g. "2627 rue Ryde, Montréal, QC, H3K 1R7"; null without one.
+     * Usage: $event->location_address
+     */
+    protected function locationAddress(): Attribute
+    {
+        return Attribute::get(fn () => str_contains((string) $this->location, ',')
+            ? trim(explode(',', $this->location, 2)[1])
+            : null);
+    }
+
+    /**
+     * Whether the location can be shown on Google Maps: it has an address and the event is not online.
+     */
+    public function hasMap(): bool
+    {
+        return $this->category !== EventCategory::GBS_ONLINE && $this->location_address !== null;
+    }
+
+    /**
+     * Google Maps search for the full location; null when hasMap() is false.
+     * Usage: $event->maps_url
+     */
+    protected function mapsUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->hasMap()
+            ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($this->location)
+            : null);
+    }
+
+    /**
+     * Embedded Google Map of the full location (no API key needed); null when hasMap() is false.
+     * Usage: <iframe src="{{ $event->maps_embed_url }}">
+     */
+    protected function mapsEmbedUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->hasMap()
+            ? 'https://maps.google.com/maps?q=' . urlencode($this->location) . '&output=embed'
+            : null);
     }
 
     /**
