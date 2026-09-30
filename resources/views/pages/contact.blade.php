@@ -4,7 +4,7 @@
 
     <h1 class='text-right text-4xl font-bold pt-18 pb-8'>{{ __('contact.title') }}</h1>
 
-    <img src="{{ asset('images/conferences/2026-07_franco_tour_mtl.jpg') }}"
+    <img src="{{ asset('storage/images/conferences/2026-07_franco_tour_mtl.jpg') }}"
         alt="{{ __('contact.conference_image_alt') }}" class="w-full h-auto rounded-sm mb-4">
 
     <div class="flex flex-col justify-between items-center border rounded-sm outline-1 outline-slate-100 ">
