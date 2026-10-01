@@ -104,6 +104,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-studies', [DashboardController::class, 'manageStudies'])->name('manage-studies');
 
+    Route::get('/manage-schedule', [StudyScheduleController::class, 'manage'])->name('manage-schedule');
+
     // Manage Users actions - Add User, Change Role, Reset Password
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
@@ -132,6 +134,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/gerer-serie', [DashboardController::class, 'manageSeries'])->name('gerer-serie');
 
     Route::get('/gerer-etudes', [DashboardController::class, 'manageStudies'])->name('gerer-etudes');
+
+    Route::get('/gerer-horaire', [StudyScheduleController::class, 'manage'])->name('gerer-horaire');
 
     // Profile related routes - Avatar, User name and User Password
 

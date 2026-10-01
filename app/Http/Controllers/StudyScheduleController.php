@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class StudyScheduleController extends Controller
@@ -15,6 +18,44 @@ class StudyScheduleController extends Controller
     // @desc Show the group Bible study schedule for a week or a month
     // @route GET /bible-study-schedule
     public function index(Request $request): View
+    {
+        $period = $this->period($request);
+
+        // Visitors and members only see the studies open to their profile
+        $studies = $this->studies($period['start'], $period['end'])->visibleTo($request->user())->get();
+
+        return view('pages.bible-study-schedule.index', ['studies' => $studies] + $period);
+    }
+
+    // @desc Show the schedule on the admin dashboard, where group Bible studies are added and edited
+    // @route GET /manage-schedule
+    public function manage(Request $request): View
+    {
+        $user = Auth::user();
+        $period = $this->period($request);
+
+        // Every study, whatever its minimum profile
+        $studies = $this->studies($period['start'], $period['end'])->get();
+
+        return view('pages.dashboards.manage-study-schedule', ['user' => $user, 'studies' => $studies] + $period);
+    }
+
+    /**
+     * Group Bible studies starting between the first and last day shown, in start order.
+     * Recurring studies only show on their start date for now.
+     */
+    private function studies(Carbon $start, Carbon $end): Builder
+    {
+        return Event::bibleStudies()
+            ->with('bibleStudy.book')
+            ->whereBetween('start_date', [$start->copy()->startOfDay(), $end->copy()->endOfDay()])
+            ->orderBy('start_date');
+    }
+
+    /**
+     * Period shown by both schedule pages: view, start, end, previous, next and rangeLabel.
+     */
+    private function period(Request $request): array
     {
         // ?view=week|month|list (anything else is week) and ?date=YYYY-MM-DD (anything else is today)
         $view = in_array($request->query('view'), self::VIEWS, true) ? $request->query('view') : 'week';
@@ -36,7 +77,7 @@ class StudyScheduleController extends Controller
             ? $start->isoFormat(__('bible-study-schedule/index.month_format'))
             : $this->weekLabel($start, $end);
 
-        return view('pages.bible-study-schedule.index', compact('view', 'start', 'end', 'previous', 'next', 'rangeLabel'));
+        return compact('view', 'start', 'end', 'previous', 'next', 'rangeLabel');
     }
 
     /**

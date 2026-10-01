@@ -12,6 +12,8 @@
     $isManageStudiesActive = request()->routeIs('manage-studies') || request()->routeIs('gerer-etudes');
     $manageSeriesName = __('nav.manage-studies.name');
 
+    $isManageScheduleActive = request()->routeIs('manage-schedule') || request()->routeIs('gerer-horaire');
+
 @endphp
 
 <!-- Context Dynamic Links -->
@@ -29,6 +31,9 @@
 
         <x-feature-button :url="__('nav.manage-studies.url')" :isActive="$isManageStudiesActive"
             icon="fa-bible">{{ __('nav.manage-studies.title') }}</x-feature-button>
+
+        <x-feature-button :url="__('nav.manage-schedule.url')" :isActive="$isManageScheduleActive"
+            icon="fa-calendar-alt">{{ __('nav.manage-schedule.title') }}</x-feature-button>
     @endif
 
 </nav>

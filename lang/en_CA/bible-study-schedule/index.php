@@ -23,5 +23,6 @@ return [
     "time" => "Time",
     "day_format" => "MMM D",
     "hour_format" => "h A",
+    "time_format" => "h:mm A",
 
 ];

@@ -65,5 +65,9 @@ return [
                         "url" => "/gerer-etudes",
                         "name" => "gerer-etudes",
                  ],
+    "manage-schedule" => [ "title" => "Gérer l'horaire",
+                        "url" => "/gerer-horaire",
+                        "name" => "gerer-horaire",
+                 ],
 
 ];

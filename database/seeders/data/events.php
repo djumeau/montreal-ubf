@@ -13,8 +13,9 @@ return [
                         "mobile" => "2026-10_gbs_online_john-mobile.jpg",
                         "square" => "2026-10_gbs_online_john-square.jpg"],
                 "category" => "gbs_online",
+                "color" => "#15803D", // Bible Study Schedule block (green-700)
                 "minimum_profile" => "user",
-                "start_date" => "2026-10-07 19:30:00",
+                "start_date" => "2026-10-01 19:00:00",
                 "has_end_date" => false,
                 "end_date" => null,
                 "recurring" => true,
@@ -39,11 +40,12 @@ return [
                 "title_fr" => "Étude biblique de groupe à Concordia",
                 "images" => null, // Default events images
                 "category" => "gbs_in_person",
+                "color" => "#2563EB", // Bible Study Schedule block (blue-600)
                 "minimum_profile" => "guest",
                 "bible_study_id" => 26, // A Kernel of Wheat / Un grain de blé (John 12:20-50)
-                "start_date" => "2026-10-27 12:00:00",
+                "start_date" => "2026-09-29 12:00:00",
                 "has_end_date" => true,
-                "end_date" => "2026-10-27 13:30:00",
+                "end_date" => "2026-09-29 13:30:00",
                 "recurring" => true, // Weekly
                 "location" => "Concordia University - Webster Library",
                 "contact_name" => null,

@@ -63,5 +63,9 @@ return [
                         "url" => "/manage-studies",
                         "name" => "manage-studies",
                  ],
+    "manage-schedule" => [ "title" => "Manage Schedule",
+                        "url" => "/manage-schedule",
+                        "name" => "manage-schedule",
+                 ],
 
 ];

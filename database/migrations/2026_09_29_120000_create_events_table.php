@@ -25,6 +25,9 @@ return new class extends Migration
             $table->enum('category', array_column(EventCategory::cases(), 'value'))
                   ->default(EventCategory::EVENT->value);
 
+            // Hexadecimal colour picked by the Administrator, e.g. "#2563EB" (Bible Study Schedule blocks); null uses the default colours
+            $table->string('color', 7)->nullable();
+
             $table->enum('minimum_profile', [
                 'guest',
                 'user',

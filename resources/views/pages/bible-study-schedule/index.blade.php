@@ -14,7 +14,7 @@
         <div class="hidden md:block mt-6 mx-2 md:mx-6 border border-slate-700 rounded-sm overflow-hidden">
             <table class="w-full table-fixed text-sm">
                 <x-study-schedule::week-head :start="$start" />
-                <x-study-schedule::hour-rows :start="$start" />
+                <x-study-schedule::hour-rows :start="$start" :studies="$studies" />
             </table>
         </div>
     @endif

@@ -20,6 +20,7 @@ class Event extends Model
         'title_fr',
         'images',
         'category',
+        'color',
         'minimum_profile',
         'bible_study_id',
         'start_date',
@@ -96,6 +97,15 @@ class Event extends Model
     }
 
     /**
+     * Group Bible studies only (the Bible Study Schedule), the opposite of scopePublicListing().
+     * Usage: Event::bibleStudies()
+     */
+    public function scopeBibleStudies(Builder $query): void
+    {
+        $query->whereIn('category', array_map(fn (EventCategory $category) => $category->value, EventCategory::BIBLE_STUDIES));
+    }
+
+    /**
      * Whether the event is a group Bible study (managed on the admin dashboard, not on the events page).
      */
     public function isBibleStudy(): bool
@@ -138,6 +148,31 @@ class Event extends Model
                 ->orWhereLike('description_en', "%{$term}%")
                 ->orWhereLike('description_fr', "%{$term}%"));
         }
+    }
+
+    /**
+     * Text colour for the event's colour: white or dark slate, whichever has the higher contrast
+     * (WCAG relative luminance); null when the event has no valid "#RRGGBB" colour.
+     * Usage: $event->color_text
+     */
+    protected function colorText(): Attribute
+    {
+        return Attribute::get(function () {
+            if (! preg_match('/^#[0-9a-f]{6}$/i', (string) $this->color)) {
+                return null;
+            }
+
+            $luminance = fn (string $hex) => collect(str_split(ltrim($hex, '#'), 2))
+                ->map(fn ($pair) => hexdec($pair) / 255)
+                ->map(fn ($c) => $c <= 0.03928 ? $c / 12.92 : (($c + 0.055) / 1.055) ** 2.4)
+                ->pipe(fn ($rgb) => 0.2126 * $rgb[0] + 0.7152 * $rgb[1] + 0.0722 * $rgb[2]);
+
+            $background = $luminance($this->color);
+            $dark = '#0F172A'; // slate-900
+            $contrast = fn (float $a, float $b) => (max($a, $b) + 0.05) / (min($a, $b) + 0.05);
+
+            return $contrast($background, 1.0) >= $contrast($background, $luminance($dark)) ? '#FFFFFF' : $dark;
+        });
     }
 
     /**

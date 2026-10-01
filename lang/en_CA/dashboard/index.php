@@ -125,4 +125,5 @@ return [
     "attachments_uploaded" => "{1} :count attachment uploaded.|[2,*] :count attachments uploaded.",
     "attachment_deleted" => "Attachment :name deleted.",
     "delete_attachment" => "Delete attachment",
+    "manage_schedule" => "Manage the Bible Study Schedule",
 ];

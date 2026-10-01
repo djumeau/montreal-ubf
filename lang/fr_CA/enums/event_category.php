@@ -3,6 +3,6 @@
 return [
     "event" => "Événement",
     "conference" => "Conférence",
-    "gbs_in_person" => "EBG - En personne",
+    "gbs_in_person" => "EBG - En Personne",
     "gbs_online" => "EBG - En ligne",
 ];

@@ -4,6 +4,7 @@
     'previous', // First day of the previous / next period (Carbon)
     'next',
     'rangeLabel', // e.g. "27 sept. – 3 oct. 2026" or "septembre 2026"
+    'overlap' => true, // Pull up over the page banner; false where there is none (Manage Schedule dashboard)
 ])
 
 @php
@@ -14,7 +15,7 @@
 @endphp
 
 <!-- Filter Panel: overlaps the bottom of the banner (pulled up past <main>'s top margin and padding) -->
-<div {{ $attributes->merge(['class' => 'relative z-10 -mt-20 mx-2 md:mx-6 bg-slate-800 border border-slate-700 rounded-sm shadow-xl p-4
+<div {{ $attributes->merge(['class' => ($overlap ? '-mt-20 mx-2 md:mx-6 ' : '') . 'relative z-10 bg-slate-800 border border-slate-700 rounded-sm shadow-xl p-4
     flex flex-col md:flex-row md:items-center md:justify-between gap-3']) }}>
 
     <!-- Period: previous / date (opens a date picker) / next, then Today -->

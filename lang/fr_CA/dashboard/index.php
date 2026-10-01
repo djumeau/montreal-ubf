@@ -125,4 +125,5 @@ return [
     "attachments_uploaded" => "{1} :count pièce jointe téléversée.|[2,*] :count pièces jointes téléversées.",
     "attachment_deleted" => "Pièce jointe :name supprimée.",
     "delete_attachment" => "Supprimer la pièce jointe",
+    "manage_schedule" => "Gérer l'horaire des études bibliques",
 ];
