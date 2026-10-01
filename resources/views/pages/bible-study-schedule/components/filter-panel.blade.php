@@ -20,9 +20,9 @@
     flex flex-col md:flex-row md:items-center md:justify-between gap-3']) }}>
 
     <!-- Period: previous / date (opens a date picker, or the week modal on Manage Schedule) / next,
-         then Today (Reset on Manage Schedule) -->
+         then Today (Reset on Manage Schedule); previous / next are hidden on phones -->
     <div class="flex items-center gap-2">
-        <a href="{{ $linkTo(['view' => $view, 'date' => $previous->toDateString()]) }}" class="{{ $buttonClass }}"
+        <a href="{{ $linkTo(['view' => $view, 'date' => $previous->toDateString()]) }}" class="{{ $buttonClass }} max-md:hidden"
             aria-label="{{ __('bible-study-schedule/index.previous') }}">
             <i class="fa-solid fa-chevron-left"></i>
         </a>
@@ -155,7 +155,7 @@
             </form>
         @endif
 
-        <a href="{{ $linkTo(['view' => $view, 'date' => $next->toDateString()]) }}" class="{{ $buttonClass }}"
+        <a href="{{ $linkTo(['view' => $view, 'date' => $next->toDateString()]) }}" class="{{ $buttonClass }} max-md:hidden"
             aria-label="{{ __('bible-study-schedule/index.next') }}">
             <i class="fa-solid fa-chevron-right"></i>
         </a>
