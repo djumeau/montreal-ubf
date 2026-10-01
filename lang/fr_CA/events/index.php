@@ -33,6 +33,8 @@ return [
     "attachments_heading" => "Pièces jointes (:count)",
     "location_heading" => "Lieu",
     "open_in_maps" => "Ouvrir dans Google Maps",
+    "map_disabled" => "Fonctionnalité désactivée",
+    "map_disabled_hint" => "La carte Google ne s'affiche que si les témoins sont acceptés.",
     "visit_website" => "Visiter le site web",
     "previous" => "Précédent",
     "next" => "Suivant",

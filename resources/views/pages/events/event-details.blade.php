@@ -297,9 +297,27 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                         <h3 class="border-l-4 border-blue-600 pl-3 text-xl font-bold">
                             {{ __('events/index.location_heading') }}</h3>
 
-                        <iframe src="{{ $event->maps_embed_url }}" title="{{ $event->location_name }}"
-                            class="mt-3 w-full h-56 rounded-sm border-0" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <!-- The Google Map only loads once cookies are accepted on the consent banner (see compliance-requirement);
+                             refused or not answered yet: a "Feature disabled" placeholder, and nothing is requested from Google -->
+                        <div x-data="{ consent: null }"
+                            x-init="try { consent = localStorage.getItem('privacy_consent_given') } catch (e) {}"
+                            @privacy-consent-updated.window="consent = $event.detail">
+
+                            <template x-if="consent === 'accept'">
+                                <iframe src="{{ $event->maps_embed_url }}" title="{{ $event->location_name }}"
+                                    class="mt-3 w-full h-56 rounded-sm border-0" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </template>
+
+                            <template x-if="consent !== 'accept'">
+                                <div role="img" aria-label="{{ __('events/index.map_disabled') }}"
+                                    class="mt-3 w-full h-56 flex flex-col items-center justify-center gap-2 px-4 text-center rounded-sm border border-dashed border-slate-500 bg-slate-900 text-slate-300">
+                                    <i class="fa-solid fa-map-location-dot text-4xl text-slate-500" aria-hidden="true"></i>
+                                    <span class="text-lg font-bold text-slate-100">{{ __('events/index.map_disabled') }}</span>
+                                    <span class="text-xs">{{ __('events/index.map_disabled_hint') }}</span>
+                                </div>
+                            </template>
+                        </div>
 
                         <a href="{{ $event->maps_url }}" target="_blank" rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 mt-3 text-sm text-sky-400 hover:text-sky-300 hover:underline">

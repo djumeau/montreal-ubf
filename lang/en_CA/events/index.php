@@ -33,6 +33,8 @@ return [
     "attachments_heading" => "Attachments (:count)",
     "location_heading" => "Location",
     "open_in_maps" => "Open in Google Maps",
+    "map_disabled" => "Feature disabled",
+    "map_disabled_hint" => "The Google map is only shown when cookies are accepted.",
     "visit_website" => "Visit the website",
     "previous" => "Previous",
     "next" => "Next",
