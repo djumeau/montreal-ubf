@@ -1,12 +1,12 @@
 @props([
-    'study', // Group Bible study (Event)
+    'study', // Group Bible study, or any other event on Manage Schedule (Event)
     'from' => 8, // First hour of the grid, to place studies starting earlier at its top
     'to' => 22, // Grid end hour, to cut studies running later
+    'editable' => false, // Manage Schedule: the block is a button opening the Event modal (openEdit() of the page)
+    'stacked' => false, // Day list (List view and phones): full width, one under the other, instead of placed on the week grid
 ])
 
 @php
-    use App\Enums\EventCategory;
-
     // Placed inside the cell of its starting hour; each hour row is 3rem (h-12) tall
     $rowHeight = 3;
     $defaultMinutes = 90; // Length shown when the study has no end time
@@ -40,24 +40,39 @@
         : $palette[crc32((string) ($study->contact_name ?: $study->current_title)) % count($palette)];
     $colourStyle = $study->color_text ? "background-color: {$study->color}; color: {$study->color_text};" : '';
 
-    // Leader, else the short category ("GBS In-Person" / "EBG - En Personne"): titles are too long for the block
-    $leader = $study->contact_name ?: $study->category->label();
+    // Title (cut with "…" when too long for the block; the short category without one), then the contact person below
+    $title = $study->current_title ?: $study->category->label();
+    $leader = $study->contact_name;
 
-    // In person: group icon; online: video icon
-    $icon = $study->category === EventCategory::GBS_ONLINE ? 'fa-video' : 'fa-users';
+    // In person: group icon; online: video icon (see EventCategory::icon)
+    $icon = $study->category->icon();
 
     $time = $startsAt->isoFormat(__('bible-study-schedule/index.time_format'));
     $endTime = $endsAt->isoFormat(__('bible-study-schedule/index.time_format'));
+
+    // Day list: "9 h 00 – 10 h 30" when the event has an end time that day, the start alone otherwise
+    $hasEndTime = $study->has_end_date && $study->end_date?->isSameDay($startsAt) && $study->end_date->gt($startsAt);
+    $shownTime = $stacked && $hasEndTime ? "{$time} – {$endTime}" : $time;
+
+    // On the grid: inside its cell, at its start time and as tall as it is long; in the day list: in the flow
+    $layoutClass = $stacked ? 'relative w-full text-sm' : 'absolute inset-x-1 z-10 text-xs';
+    $layoutStyle = $stacked ? '' : "top: {$top}rem; height: calc({$height}rem - 2px);";
 @endphp
 
-<!-- Study Block: time and leader, height following its length -->
-<div {{ $attributes->merge(['class' => "absolute inset-x-1 z-10 flex items-start gap-2 px-2 py-1 rounded-md shadow overflow-hidden text-xs leading-tight $colour"]) }}
-    style="top: {{ $top }}rem; height: calc({{ $height }}rem - 2px); {{ $colourStyle }}"
+<!-- Study Block: time, title and contact person; on the week grid its height follows its length -->
+<{{ $editable ? 'button' : 'div' }}
+    @if ($editable) type="button" @click="openEdit({{ $study->id }})" @endif
+    {{ $attributes->merge(['class' => "$layoutClass flex items-start gap-2 px-2 py-1 rounded-md shadow overflow-hidden leading-tight text-left $colour"
+        . ($editable ? ' border border-white cursor-pointer hover:ring-2 hover:ring-white focus-visible:ring-2 focus-visible:ring-white focus:outline-none' : '')]) }}
+    style="{{ $layoutStyle }} {{ $colourStyle }}"
     title="{{ $study->category->label() }} · {{ $time }} – {{ $endTime }} · {{ $study->current_title }}">
     <i class="fas {{ $icon }} mt-0.5 text-sm" aria-hidden="true"></i>
-    <div class="min-w-0">
-        <div class="font-medium">{{ $time }}</div>
-        <div class="truncate">{{ $leader }}</div>
+    <span class="block min-w-0">
+        <span class="block font-medium">{{ $shownTime }}</span>
+        <span class="block truncate" aria-hidden="true">{{ $title }}</span>
+        @if ($leader)
+            <span class="block truncate">{{ $leader }}</span>
+        @endif
         <span class="sr-only">{{ $study->category->label() }}, {{ $time }} – {{ $endTime }}, {{ $study->current_title }}</span>
-    </div>
-</div>
+    </span>
+</{{ $editable ? 'button' : 'div' }}>

@@ -33,6 +33,19 @@ enum EventCategory: string
     }
 
     /**
+     * Font Awesome icon shown on the schedule's blocks and in the Event modal.
+     */
+    public function icon(): string
+    {
+        return match ($this) {
+            self::EVENT => 'fa-calendar-day',
+            self::CONFERENCE => 'fa-people-group',
+            self::GBS_IN_PERSON => 'fa-users',
+            self::GBS_ONLINE => 'fa-video',
+        };
+    }
+
+    /**
      * Convenience for populating a <select> in forms.
      */
     public static function options(): array

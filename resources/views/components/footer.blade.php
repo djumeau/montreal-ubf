@@ -6,7 +6,7 @@
     $scheduleActive = request()->routeIs('bible-study-schedule') || request()->routeIs('horaire-etudes-bibliques');
     $givingActive = request()->routeIs('giving') || request()->routeIs('donner');
     $privacyActive = request()->routeIs('confidentiality') || request()->routeIs('confidentialite');
-    $contactActive = request()->routeIs('confidentiality') || request()->routeIs('contact');
+    $contactActive = request()->routeIs('contact');
 
     // Random Bible verse in the current locale, e.g. ['text' => '...', 'reference' => 'Psalm 119:105']
     $verse = \Illuminate\Support\Arr::random(__('footer.verses'));

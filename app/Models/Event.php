@@ -15,6 +15,10 @@ class Event extends Model
 {
     protected $table = 'events';
 
+    // Roles an event can be reserved for, lowest first: the values the minimum_profile column accepts
+    // (see the create_events_table migration; it has no Music role)
+    public const MINIMUM_PROFILES = [Role::GUEST, Role::USER, Role::MEMBER, Role::LEADER, Role::ELDER, Role::ADMIN];
+
     protected $fillable = [
         'title_en',
         'title_fr',

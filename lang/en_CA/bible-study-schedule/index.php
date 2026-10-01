@@ -9,20 +9,30 @@ return [
     "next" => "Next",
     "pick_date" => "Pick a date",
     "today" => "Today",
+    "reset" => "Reset", // Manage Schedule: back to the current week
+    "select_week" => "Select a week",
+    "week_of" => "Week of",
+    "previous_month" => "Previous month",
+    "next_month" => "Next month",
+    "close" => "Close",
     "view_week" => "Week",
-    "view_month" => "Month",
     "view_list" => "List",
 
     // Date range: [start format, end format] (ISO formats)
     "range_same_month" => ["MMMM D", "D, YYYY"],
     "range_same_year" => ["MMM D", "MMM D, YYYY"],
     "range_other_year" => ["MMM D, YYYY", "MMM D, YYYY"],
-    "month_format" => "MMMM YYYY",
 
     // Week grid
     "time" => "Time",
     "day_format" => "MMM D",
     "hour_format" => "h A",
     "time_format" => "h:mm A",
+
+    // Day list (List view and phones)
+    "list_day_format" => "dddd, MMMM Do, YYYY", // Sunday, September 27th, 2026
+    "event_count" => "{0} no events|{1} :count event|[2,*] :count events", // Read by screen readers after the day
+
+    "cell_format" => "dddd, MMMM D, h A", // Day and hour of a cell, read by screen readers
 
 ];

@@ -19,6 +19,8 @@
         </div>
     @endif
 
-    <!-- Month and List views: content to come -->
+    <!-- Day List: the List view, and the Week view on phones (where the grid is hidden) -->
+    <x-study-schedule::day-list :start="$start" :studies="$studies"
+        class="mt-6 mx-2 md:mx-6 {{ $view === 'week' ? 'md:hidden' : '' }}" />
 
 </x-layout>
