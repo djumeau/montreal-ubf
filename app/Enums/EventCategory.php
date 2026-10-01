@@ -33,6 +33,19 @@ enum EventCategory: string
     }
 
     /**
+     * Tailwind classes for the category's pill on the events page, cards and table (dark background, white text, white border).
+     */
+    public function solidBadgeClasses(): string
+    {
+        return match ($this) {
+            self::EVENT => 'bg-pink-800 text-white border-white',
+            self::CONFERENCE => 'bg-purple-800 text-white border-white',
+            self::GBS_IN_PERSON => 'bg-sky-800 text-white border-white',
+            self::GBS_ONLINE => 'bg-green-800 text-white border-white',
+        };
+    }
+
+    /**
      * Font Awesome icon shown on the schedule's blocks and in the Event modal.
      */
     public function icon(): string

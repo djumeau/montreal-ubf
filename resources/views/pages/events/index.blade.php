@@ -1,11 +1,12 @@
 @php
     // Lists shown (null = not selected), only when they have results: upcoming soonest first (up arrow), past latest first (down arrow)
+    // 'id' is the anchor the pagination links jump back to (see EventController::paginate)
     $sections = collect([
-        ['title' => __('events/index.upcoming_events'), 'events' => $upcoming, 'arrow' => 'fa-arrow-up'],
-        ['title' => __('events/index.past'), 'events' => $past, 'arrow' => 'fa-arrow-down'],
+        ['id' => 'upcoming', 'title' => __('events/index.upcoming_events'), 'events' => $upcoming, 'arrow' => 'fa-arrow-up'],
+        ['id' => 'past', 'title' => __('events/index.past'), 'events' => $past, 'arrow' => 'fa-arrow-down'],
     ])->filter(fn ($section) => $section['events']?->isNotEmpty());
 
-    $total = ($upcoming?->count() ?? 0) + ($past?->count() ?? 0);
+    $total = ($upcoming?->total() ?? 0) + ($past?->total() ?? 0);
 
     // Date column, two lines in the current locale (e.g. "14 sept. 2026" / "lun. 19 h 00 – 21 h 00"):
     // over several days, start date – / end date; otherwise the date, then the weekday and time(s)
@@ -86,38 +87,101 @@
     </div>
 
     @foreach ($sections as $section)
-        <!-- Events list: title with a blue accent bar, then the events table -->
-        <section class="mt-8 mx-2 md:mx-6">
+        <!-- Events list: title with a blue accent bar, then the events as cards (below md) or a table (md up), 5 per page -->
+        <section id="{{ $section['id'] }}" class="mt-8 mx-2 md:mx-6 scroll-mt-24">
             <h2 class="border-l-4 border-blue-600 pl-3 text-2xl md:text-3xl font-bold">
                 {{ $section['title'] }}
             </h2>
 
-            <!-- Table headings from md up (phones will get cards); the arrow on Date and time shows the sort order.
+            <!-- Event Cards, below md (1 / 2 per row): image with the category badge, then the same details as the table rows -->
+            <div class="md:hidden mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                @foreach ($section['events'] as $event)
+                    @php [$dateLine, $timeLine] = $dateLines($event); @endphp
+
+                    <article class="flex flex-col bg-slate-800 border border-slate-700 rounded-sm overflow-hidden text-sm">
+                        <div class="relative">
+                            <img src="{{ $event->imageUrl('mobile') }}" alt="{{ $event->current_title }}" loading="lazy"
+                                class="w-full h-40 object-cover">
+                            <span class="absolute top-2 left-2 inline-block whitespace-nowrap px-3 py-0.5 text-xs font-medium border rounded-full shadow {{ $event->category->solidBadgeClasses() }}">
+                                {{ $event->category->label() }}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col flex-1 gap-3 p-4">
+                            <h3 class="text-lg font-semibold text-slate-100 leading-snug">{{ $event->current_title }}</h3>
+
+                            <!-- Recurring events show a repeat icon next to their first date -->
+                            <div class="flex items-start gap-3">
+                                <i class="fa-regular fa-calendar w-4 mt-0.5 text-center text-base text-slate-300"></i>
+                                <div class="text-slate-100 leading-snug">
+                                    <div>
+                                        {{ $dateLine }}
+                                        @if ($event->recurring)
+                                            <i class="fa-solid fa-repeat ml-1 text-xs text-slate-400" title="{{ __('events/index.recurring') }}"></i>
+                                            <span class="sr-only">{{ __('events/index.recurring') }}</span>
+                                        @endif
+                                    </div>
+                                    <div>{{ $timeLine }}</div>
+                                </div>
+                            </div>
+
+                            <!-- Video icon for online Bible studies, map pin otherwise; links to Google Maps when it has an address -->
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid {{ $event->category === \App\Enums\EventCategory::GBS_ONLINE ? 'fa-video' : 'fa-location-dot' }} w-4 mt-0.5 text-center text-base text-slate-300"></i>
+                                @if ($event->maps_url)
+                                    <a href="{{ $event->maps_url }}" target="_blank" rel="noopener noreferrer"
+                                        class="text-sky-400 hover:text-sky-300 hover:underline">{{ $event->location_name }}</a>
+                                @else
+                                    <span class="text-slate-100">{{ $event->location_name }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Attachments count and More info, kept at the bottom of the card -->
+                            <div class="flex items-center justify-between gap-3 mt-auto pt-3 border-t border-slate-700">
+                                <div title="{{ __('events/index.column_attachments') }}">
+                                    <i class="fa-solid fa-paperclip mr-2 text-slate-300"></i>
+                                    <span class="sr-only">{{ __('events/index.column_attachments') }}</span>
+                                    <span class="text-slate-100">{{ $event->documents_count }}</span>
+                                </div>
+
+                                <a href="{{ route(__('nav.events.name') . '.show', $event) }}"
+                                    class="inline-flex items-center gap-2 whitespace-nowrap px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-sm">
+                                    {{ __('events/index.more_info') }}
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+
+            <!-- Table headings from md up (phones get the cards above); the arrow on Date and time shows the sort order.
                  Last column is left blank for the "More info" buttons -->
-            <div class="hidden md:block mt-4 overflow-x-auto border border-slate-700 rounded-sm">
+            <div class="hidden md:block mt-4 border border-slate-700 rounded-sm">
                 <!-- Fixed layout: the same column widths in every list (Upcoming, Past), whatever the content.
-                     Title and Location share the space left; below 64rem the table scrolls sideways -->
-                <table class="w-full min-w-5xl table-fixed text-left text-sm">
+                     Title and Location share the space left. So the table always fits without scrolling sideways,
+                     Category only shows from lg up, Image and Attachments from xl up -->
+                <table class="w-full table-fixed text-left text-sm">
                     <colgroup>
-                        <col class="w-28">  {{-- Image --}}
-                        <col>               {{-- Title --}}
-                        <col class="w-44">  {{-- Category --}}
-                        <col class="w-60">  {{-- Date and time --}}
-                        <col>               {{-- Location --}}
-                        <col class="w-36">  {{-- Attachments --}}
-                        <col class="w-40">  {{-- More info --}}
+                        <col class="hidden xl:table-column w-28">  {{-- Image --}}
+                        <col>                                      {{-- Title --}}
+                        <col class="hidden lg:table-column w-44">  {{-- Category --}}
+                        <col class="w-56">                         {{-- Date and time --}}
+                        <col>                                      {{-- Location --}}
+                        <col class="hidden xl:table-column w-36">  {{-- Attachments --}}
+                        <col class="w-40">                         {{-- More info --}}
                     </colgroup>
                     <thead>
                         <tr class="bg-slate-800 text-slate-100">
-                            <th class="py-2 px-3 font-medium">{{ __('events/index.column_image') }}</th>
-                            <th class="py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_title') }}</th>
-                            <th class="py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_category') }}</th>
+                            <th class="hidden xl:table-cell py-2 px-3 font-medium">{{ __('events/index.column_image') }}</th>
+                            <th class="py-2 px-3 font-medium xl:border-l border-slate-700">{{ __('events/index.column_title') }}</th>
+                            <th class="hidden lg:table-cell py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_category') }}</th>
                             <th class="py-2 px-3 font-medium border-l border-slate-700 whitespace-nowrap">
                                 {{ __('events/index.column_date') }}
                                 <i class="fa-solid {{ $section['arrow'] }} ml-1 text-xs"></i>
                             </th>
                             <th class="py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_location') }}</th>
-                            <th class="py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_attachments') }}</th>
+                            <th class="hidden xl:table-cell py-2 px-3 font-medium border-l border-slate-700">{{ __('events/index.column_attachments') }}</th>
                             <th class="py-2 px-3 border-l border-slate-700"><span class="sr-only">{{ __('events/index.column_actions') }}</span></th>
                         </tr>
                     </thead>
@@ -126,15 +190,15 @@
                             @php [$dateLine, $timeLine] = $dateLines($event); @endphp
 
                             <tr class="border-t border-slate-700 align-middle odd:bg-black/20">
-                                <td class="p-1">
-                                    <img src="{{ $event->imageUrl('square') }}" alt="{{ $event->current_title }}"
+                                <td class="hidden xl:table-cell p-1">
+                                    <img src="{{ $event->imageUrl('square') }}" loading="lazy" alt="{{ $event->current_title }}"
                                         class="w-20 h-12 rounded-sm object-cover">
                                 </td>
 
                                 <td class="py-2 px-3 text-slate-100">{{ $event->current_title }}</td>
 
-                                <td class="py-2 px-3">
-                                    <span class="inline-block whitespace-nowrap px-3 py-0.5 text-xs font-medium border rounded-full {{ $event->category->badgeClasses() }}">
+                                <td class="hidden lg:table-cell py-2 px-3">
+                                    <span class="inline-block whitespace-nowrap px-3 py-0.5 text-xs font-medium border rounded-full {{ $event->category->solidBadgeClasses() }}">
                                         {{ $event->category->label() }}
                                     </span>
                                 </td>
@@ -171,7 +235,7 @@
                                 </td>
 
                                 <!-- Attachments: documents in the current language, media not counted (see EventController) -->
-                                <td class="py-2 px-3 whitespace-nowrap">
+                                <td class="hidden xl:table-cell py-2 px-3 whitespace-nowrap">
                                     <i class="fa-solid fa-paperclip mr-2 text-slate-300"></i>
                                     <span class="text-slate-100">{{ $event->documents_count }}</span>
                                 </td>
@@ -189,6 +253,12 @@
                     </tbody>
                 </table>
             </div>
+
+            @if ($section['events']->hasPages())
+                <div class="mt-4">
+                    {{ $section['events']->links('pagination.dashboard') }}
+                </div>
+            @endif
         </section>
     @endforeach
 
