@@ -1,4 +1,9 @@
 @php
+    // True when the page is shown in French (fr_CA)
+    $isFrench = app()->getLocale() === 'fr_CA';
+
+    // Banner images with the title in the page's language
+    $bannerLanguage = $isFrench ? 'fr' : 'en';
 
     $filename = __('giving.filename');
     // $videoDirPath = asset('storage/videos/' . {{ __('giving.filename') }});
@@ -27,8 +32,9 @@
     <x-slot name="hero">
         <x-page-banner
         :title="__('giving.title')"
-        desktop='storage/images/home/confidentiality_policy-desktop.jpg'
-        mobile='storage/images/home/confidentiality_policy-mobile.jpg' />
+
+        :desktop="'storage/images/home/giving_header_' . $bannerLanguage . '-desktop.jpg'"
+        :mobile="'storage/images/home/giving_header_' . $bannerLanguage . '-mobile.jpg'" />
     </x-slot>
 
     <x-blurb title="{{ __('giving.scripture') }}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
