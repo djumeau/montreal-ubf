@@ -28,6 +28,12 @@ return [
     "day_format" => "D MMM",
     "hour_format" => "H [h]",
     "time_format" => "H [h] mm",
+    "contact_modal_title" => "Participer à cette étude biblique",
+    "contact_modal_message" => "Veuillez faire une demande sur notre page de contact.",
+    "contact_modal_link" => "Page de contact",
+    "when" => "Quand :",
+    "where" => "Où :",
+    "opens_map" => "(ouvre Google Maps dans un nouvel onglet)",
     "via_zoom" => "Par Zoom", // Affiché à la place d'un lien Zoom saisi comme lieu
 
     // Liste des jours (vue Liste et téléphones)

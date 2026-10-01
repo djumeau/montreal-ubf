@@ -41,10 +41,10 @@
                     type="email" value="{{ old('email') }}" />
 
                 <x-inputs.select class="max-w-100" label="{{ __('contact.inquiring_about') }}" id="inquiring_about"
-                    name="inquiring_about" :options="$inquiryOptions" value="{{ old('inquiring_about') }}" />
+                    name="inquiring_about" :options="$inquiryOptions" :value="old('inquiring_about', $prefill['inquiring_about'])" />
 
                 <x-inputs.text-area class="max-w-100" label="{{ __('contact.message') }}" id="message" name="message"
-                    value="{{ old('message') }}" />
+                    :value="old('message', $prefill['message'])" />
 
                 <x-submit>
                     {{ __('contact.send') }}

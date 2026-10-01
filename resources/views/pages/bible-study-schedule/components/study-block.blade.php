@@ -43,11 +43,31 @@
     // Title (cut with "…" when too long for the block; the short category without one), then the contact person below,
     // then the location: its name, or "Via Zoom" / "Par Zoom" for a Zoom link (see Event::locationName)
     $title = $study->current_title ?: $study->category->label();
-    $leader = $study->contact_name;
+    // Visitors (not signed in) are not shown the contact person's name
+    $leader = auth()->guest() ? null : $study->contact_name;
     $location = $study->location_name;
 
-    // "Via Zoom" only links to the meeting for signed-in users with the User role or above; visitors and Guests see the words alone
-    $canJoinZoom = (bool) auth()->user()?->role->atLeast(\App\Enums\Role::USER);
+    // "Via Zoom" only links to the meeting for a signed-in user whose role reaches the event's minimum profile;
+    // everyone else (visitors included, also for a Guest minimum profile) sees the words alone
+    $canJoinZoom = (bool) auth()->user()?->role->atLeast($study->minimum_profile);
+
+    // Public schedule, visitors (not signed in): the block is a button opening the "contact us" modal (openContact() of the page),
+    // whose link leads to the contact page with the subject and message filled in for this study (see ContactController::prefill)
+    $inquire = !$editable && auth()->guest();
+    $contactStudy = [
+        'url' => url(__('nav.contact.url')) . '?study=' . $study->id,
+        'title' => $study->current_title ?: $study->category->label(),
+        'when' => $study->schedule_when,
+        'where' => $study->schedule_where ?? '',
+        // Google Maps search for a physical location (not an online study, not a Zoom link); empty otherwise
+        'map' => $study->location && !$study->zoom_url && $study->category !== \App\Enums\EventCategory::GBS_ONLINE
+            ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($study->location)
+            : '',
+        // The block's colours, for the details box of the modal: the Administrator's colour as a style, else the palette's classes
+        'colourClass' => $colour,
+        'colourStyle' => $colourStyle,
+    ];
+    $clickable = $editable || $inquire;
 
     // In person: group icon; online: video icon (see EventCategory::icon)
     $icon = $study->category->icon();
@@ -65,10 +85,11 @@
 @endphp
 
 <!-- Study Block: time, title, contact person and location; on the week grid its height follows its length -->
-<{{ $editable ? 'button' : 'div' }}
+<{{ $clickable ? 'button' : 'div' }}
     @if ($editable) type="button" @click="openEdit({{ $study->id }})" @endif
+    @if ($inquire) type="button" @click="openContact(@js($contactStudy))" @endif
     {{ $attributes->merge(['class' => "$layoutClass flex items-start gap-2 px-2 py-1 border border-white rounded-md shadow overflow-hidden leading-tight text-left $colour"
-        . ($editable ? ' border-white cursor-pointer hover:ring-2 hover:ring-white focus-visible:ring-2 focus-visible:ring-white focus:outline-none' : '')]) }}
+        . ($clickable ? ' border-white cursor-pointer hover:ring-2 hover:ring-white focus-visible:ring-2 focus-visible:ring-white focus:outline-none' : '')]) }}
     style="{{ $layoutStyle }} {{ $colourStyle }}"
     title="{{ $study->category->label() }} · {{ $time }} – {{ $endTime }} · {{ $study->current_title }}">
     <i class="fas {{ $icon }} mt-0.5 text-sm" aria-hidden="true"></i>
@@ -88,4 +109,4 @@
         @endif
         <span class="sr-only">{{ $study->category->label() }}, {{ $time }} – {{ $endTime }}, {{ $study->current_title }}</span>
     </span>
-</{{ $editable ? 'button' : 'div' }}>
+</{{ $clickable ? 'button' : 'div' }}>

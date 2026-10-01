@@ -62,30 +62,30 @@
 
         <h3 class='justify-left text-left font-bold text-xl md:text-2xl py-4'>{{__('about/index.statement_faith.sf_blurb_1')}}</h3>
 
-        <ul class='list-disc list-outside space-y-4 pl-4'>
-            <li>{{__('about/index.statement_faith.sf_statement_1')}}</li>
+        <ul class='list-none space-y-4'>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_1')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_2')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_2')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_3')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_3')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_4')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_4')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_5')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_5')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_6')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_6')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_7')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_7')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_8')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_8')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_9')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_9')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_10')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_10')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_11')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_11')}}</span></li>
 
-            <li>{{__('about/index.statement_faith.sf_statement_12')}}</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-cross mt-1 shrink-0" aria-hidden="true"></i><span>{{__('about/index.statement_faith.sf_statement_12')}}</span></li>
 
         </ul>
 

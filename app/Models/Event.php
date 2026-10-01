@@ -261,6 +261,34 @@ class Event extends Model
     }
 
     /**
+     * When the event takes place, in the current language: the day, then the start time and the end time when it ends that day,
+     * e.g. "Tuesday, September 29th, 2026, 12:00 PM – 1:30 PM" / "Mardi 29 septembre 2026, 12 h 00 – 13 h 30".
+     * Usage: $event->schedule_when
+     */
+    protected function scheduleWhen(): Attribute
+    {
+        return Attribute::get(function () {
+            $timeFormat = __('bible-study-schedule/index.time_format');
+            $when = ucfirst($this->start_date->isoFormat(__('bible-study-schedule/index.list_day_format')))
+                . ', ' . $this->start_date->isoFormat($timeFormat);
+
+            $endsThatDay = $this->has_end_date && $this->end_date?->isSameDay($this->start_date) && $this->end_date->gt($this->start_date);
+
+            return $endsThatDay ? $when . ' – ' . $this->end_date->isoFormat($timeFormat) : $when;
+        });
+    }
+
+    /**
+     * Where the event takes place: the full location, or "Via Zoom" / "Par Zoom" in place of a Zoom link
+     * (the link itself is never given out here); null without a location.
+     * Usage: $event->schedule_where
+     */
+    protected function scheduleWhere(): Attribute
+    {
+        return Attribute::get(fn () => $this->zoom_url !== null ? $this->location_name : ($this->location ?: null));
+    }
+
+    /**
      * The Zoom meeting link, when "location" holds one (e.g. https://us02web.zoom.us/j/1234567890); null for any other location.
      * Usage: $event->zoom_url
      */

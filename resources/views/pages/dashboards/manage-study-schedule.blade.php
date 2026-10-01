@@ -216,10 +216,10 @@
                 x-transition>
 
                 <div @click.away="showStudyModal = false" role="dialog" aria-modal="true" aria-labelledby="study_modal_title"
-                    class="bg-slate-900 rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-xl border border-slate-500">
+                    class="flex flex-col bg-slate-900 rounded-lg max-w-lg w-full max-h-[90vh] overflow-hidden shadow-xl border border-slate-500">
 
                     <!-- Title and Close -->
-                    <div class="flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
+                    <div class="shrink-0 flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
                         <h3 id="study_modal_title" class="text-lg font-bold">{{ __('dashboard/index.schedule_event') }}</h3>
                         <button type="button" @click="showStudyModal = false" aria-label="{{ __('dashboard/index.close') }}"
                             class="grid place-items-center size-8 text-slate-300 hover:text-white cursor-pointer">
@@ -228,12 +228,15 @@
                     </div>
 
                     <!-- Posts to the store route for a new event, to the event's update route (PUT) otherwise -->
-                    <form class="px-5 pb-5 text-sm" :action="form.id ? form.update_url : storeUrl" method="POST">
+                    <form class="flex flex-col min-h-0 text-sm" :action="form.id ? form.update_url : storeUrl" method="POST">
                         @csrf
                         <input type="hidden" name="_method" value="PUT" :disabled="!form.id">
 
                         <!-- Lets the page reopen this modal for the same event after a failed save -->
                         <input type="hidden" name="event_id" :value="form.id ?? ''">
+
+                        <!-- Fields: the only part that scrolls, so the title and Cancel / Save stay in view -->
+                        <div class="px-5 overflow-y-auto">
 
                         <!-- Type: Event / Conference / Bible study (group, in person or online) -->
                         <fieldset class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 py-4">
@@ -428,15 +431,17 @@
                             </div>
                         </div>
 
-                        <!-- Modal Action Controls -->
-                        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+                        </div>
+
+                        <!-- Modal Action Controls: always in view under the fields -->
+                        <div class="shrink-0 flex justify-end gap-3 px-5 py-4 border-t border-slate-500 bg-slate-800 rounded-b-lg">
                             <button type="button" @click="showStudyModal = false"
-                                class="px-6 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-slate-500 rounded-sm cursor-pointer">
+                                class="px-6 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-white rounded-sm cursor-pointer">
                                 {{ __('dashboard/index.cancel') }}
                             </button>
 
                             <button type="submit"
-                                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-blue-600 rounded-sm cursor-pointer">
+                                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
                                 {{ __('dashboard/index.save') }}
                             </button>
                         </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EventCategory;
 use App\Enums\InquiryType;
 use App\Enums\Role;
+use App\Models\Event;
 use App\Models\Inquiry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,11 +17,38 @@ class ContactController extends Controller
 
     // @desc Show the contact page
     // @route GET /contact
-    public function index(): View
+    public function index(Request $request): View
     {
         session(['contact_form_rendered_at' => now()->timestamp]);
 
-        return view('pages.contact', ['inquiryOptions' => $this->inquiryOptions()]);
+        return view('pages.contact', [
+            'inquiryOptions' => $this->inquiryOptions(),
+            'prefill' => $this->prefill($request),
+        ]);
+    }
+
+    /**
+     * Subject and message filled in when arriving from the Bible Study Schedule (/contact?study={event id}):
+     * in person asks about the location, online asks to subscribe and attend that study. Empty for any other visit,
+     * and for a study the viewer may not see.
+     */
+    private function prefill(Request $request): array
+    {
+        $study = $request->filled('study')
+            ? Event::bibleStudies()->visibleTo($request->user())->find($request->integer('study'))
+            : null;
+
+        return match ($study?->category) {
+            EventCategory::GBS_IN_PERSON => [
+                'inquiring_about' => InquiryType::GROUP_STUDY->value,
+                'message' => __('contact.prefill_in_person') . $this->studyDetails($study),
+            ],
+            EventCategory::GBS_ONLINE => [
+                'inquiring_about' => InquiryType::SUBSCRIBE->value,
+                'message' => __('contact.prefill_online', ['title' => $study->current_title ?: $study->category->label()]) . $this->studyDetails($study, false),
+            ],
+            default => ['inquiring_about' => '', 'message' => ''],
+        };
     }
 
     // @desc Handle contact form submission
@@ -50,6 +79,21 @@ class ContactController extends Controller
         ]);
 
         return back()->with('status', __('contact.status_received'));
+    }
+
+    /**
+     * Lines added under the pre-filled message: the study's title (unless the message already names it),
+     * when it takes place and, when it has a location, where.
+     */
+    private function studyDetails(Event $study, bool $withTitle = true): string
+    {
+        $lines = array_filter([
+            $withTitle && $study->current_title ? __('contact.prefill_study', ['title' => $study->current_title]) : null,
+            __('contact.prefill_when', ['when' => $study->schedule_when]),
+            $study->schedule_where ? __('contact.prefill_where', ['where' => $study->schedule_where]) : null,
+        ]);
+
+        return "\n\n" . implode("\n", $lines);
     }
 
     /**

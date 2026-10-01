@@ -28,6 +28,12 @@ return [
     "day_format" => "MMM D",
     "hour_format" => "h A",
     "time_format" => "h:mm A",
+    "contact_modal_title" => "Join this Bible study",
+    "contact_modal_message" => "Please make a request on our contact page.",
+    "contact_modal_link" => "Contact page",
+    "when" => "When:",
+    "where" => "Where:",
+    "opens_map" => "(opens Google Maps in a new tab)",
     "via_zoom" => "Via Zoom", // Shown in place of a Zoom link entered as the location
 
     // Day list (List view and phones)
