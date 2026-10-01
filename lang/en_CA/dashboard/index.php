@@ -148,7 +148,7 @@ return [
     "no_study_option" => "No study",
     "leader" => "Leader",
     "location" => "Location",
-    "location_placeholder" => "e.g. 2627 Ryde St., Montréal, QC",
+    "location_placeholder" => "Address, or the Zoom link",
     "colour" => "Colour",
     "save" => "Save",
     "schedule_event_created" => "Event added to the schedule.",

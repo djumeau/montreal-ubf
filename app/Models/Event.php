@@ -261,22 +261,42 @@ class Event extends Model
     }
 
     /**
-     * Location name: the part of "location" before the first comma, e.g. "Montreal UBF" from
-     * "Montreal UBF, 2627 rue Ryde, Montréal, QC, H3K 1R7".
+     * The Zoom meeting link, when "location" holds one (e.g. https://us02web.zoom.us/j/1234567890); null for any other location.
+     * Usage: $event->zoom_url
+     */
+    protected function zoomUrl(): Attribute
+    {
+        return Attribute::get(function () {
+            $location = trim((string) $this->location);
+            $host = strtolower((string) parse_url($location, PHP_URL_HOST));
+            $isLink = in_array(parse_url($location, PHP_URL_SCHEME), ['http', 'https'], true);
+
+            return $isLink && preg_match('/(^|\.)zoom\.(us|com)$/', $host) ? $location : null;
+        });
+    }
+
+    /**
+     * Location name: "Via Zoom" / "Par Zoom" for a Zoom link, else the part of "location" before the first comma,
+     * e.g. "Montreal UBF" from "Montreal UBF, 2627 rue Ryde, Montréal, QC, H3K 1R7".
      * Usage: $event->location_name
      */
     protected function locationName(): Attribute
     {
-        return Attribute::get(fn () => $this->location === null ? null : trim(explode(',', $this->location)[0]));
+        return Attribute::get(fn () => match (true) {
+            $this->location === null => null,
+            $this->zoom_url !== null => __('bible-study-schedule/index.via_zoom'),
+            default => trim(explode(',', $this->location)[0]),
+        });
     }
 
     /**
-     * Address: the part of "location" after the first comma, e.g. "2627 rue Ryde, Montréal, QC, H3K 1R7"; null without one.
+     * Address: the part of "location" after the first comma, e.g. "2627 rue Ryde, Montréal, QC, H3K 1R7";
+     * null without one, and for a Zoom link.
      * Usage: $event->location_address
      */
     protected function locationAddress(): Attribute
     {
-        return Attribute::get(fn () => str_contains((string) $this->location, ',')
+        return Attribute::get(fn () => $this->zoom_url === null && str_contains((string) $this->location, ',')
             ? trim(explode(',', $this->location, 2)[1])
             : null);
     }

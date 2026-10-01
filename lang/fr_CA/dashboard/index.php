@@ -148,7 +148,7 @@ return [
     "no_study_option" => "Aucune étude",
     "leader" => "Responsable",
     "location" => "Lieu",
-    "location_placeholder" => "p. ex. 2627, rue Ryde, Montréal, QC",
+    "location_placeholder" => "Adresse, ou le lien Zoom",
     "colour" => "Couleur",
     "save" => "Enregistrer",
     "schedule_event_created" => "Événement ajouté à l'horaire.",

@@ -28,6 +28,7 @@ return [
     "day_format" => "MMM D",
     "hour_format" => "h A",
     "time_format" => "h:mm A",
+    "via_zoom" => "Via Zoom", // Shown in place of a Zoom link entered as the location
 
     // Day list (List view and phones)
     "list_day_format" => "dddd, MMMM Do, YYYY", // Sunday, September 27th, 2026

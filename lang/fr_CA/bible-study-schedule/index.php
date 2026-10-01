@@ -28,6 +28,7 @@ return [
     "day_format" => "D MMM",
     "hour_format" => "H [h]",
     "time_format" => "H [h] mm",
+    "via_zoom" => "Par Zoom", // Affiché à la place d'un lien Zoom saisi comme lieu
 
     // Liste des jours (vue Liste et téléphones)
     "list_day_format" => "dddd Do MMMM YYYY", // Dimanche 27 septembre 2026, jeudi 1er octobre 2026

@@ -160,13 +160,16 @@
             <i class="fa-solid fa-chevron-right"></i>
         </a>
 
-        <a href="{{ $linkTo(['view' => $view]) }}" class="{{ $buttonClass }} ml-2">
-            {{ __('bible-study-schedule/index.' . ($manage ? 'reset' : 'today')) }}
+        <!-- Back to the current week: icon only, named for screen readers and on hover -->
+        <a href="{{ $linkTo(['view' => $view]) }}" class="{{ $buttonClass }} ml-2"
+            aria-label="{{ __('bible-study-schedule/index.' . ($manage ? 'reset' : 'today')) }}"
+            title="{{ __('bible-study-schedule/index.' . ($manage ? 'reset' : 'today')) }}">
+            <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
         </a>
     </div>
 
-    <!-- View: Week / List, keeping the date -->
-    <div class="flex border border-slate-500 rounded-sm overflow-hidden self-start md:self-auto">
+    <!-- View: Week / List, keeping the date; hidden on phones, which always get the day list -->
+    <div class="hidden md:flex border border-slate-500 rounded-sm overflow-hidden">
         @foreach (['week', 'list'] as $option)
             <a href="{{ $linkTo(['view' => $option, 'date' => $start->toDateString()]) }}"
                 @if ($view === $option) aria-current="page" @endif
