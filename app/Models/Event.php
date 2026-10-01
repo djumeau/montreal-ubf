@@ -122,22 +122,21 @@ class Event extends Model
     }
 
     /**
-     * Upcoming events: recurring ones, and those whose end date (or start date without one) is not past yet.
+     * Upcoming events: those whose end date (or start date without one) is not past yet.
+     * Recurring events follow the same rule: each occurrence is its own event
+     * (copied from week to week on Manage Schedule), so a past occurrence is a past event.
      */
     public function scopeUpcoming(Builder $query): void
     {
-        $query->where(fn (Builder $q) => $q
-            ->where('recurring', true)
-            ->orWhereRaw('COALESCE(end_date, start_date) >= ?', [now()]));
+        $query->whereRaw('COALESCE(end_date, start_date) >= ?', [now()]);
     }
 
     /**
-     * Past events: not recurring, and whose end date (or start date without one) is past (the opposite of scopeUpcoming()).
+     * Past events: those whose end date (or start date without one) is past (the opposite of scopeUpcoming()).
      */
     public function scopePast(Builder $query): void
     {
-        $query->where('recurring', false)
-            ->whereRaw('COALESCE(end_date, start_date) < ?', [now()]);
+        $query->whereRaw('COALESCE(end_date, start_date) < ?', [now()]);
     }
 
     /**

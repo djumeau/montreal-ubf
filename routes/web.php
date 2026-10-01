@@ -126,8 +126,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/manage-studies/{study}/attachments', [StudyAttachmentController::class, 'store'])->name('attachments.store');
     Route::delete('/manage-studies/attachments/{attachment}', [StudyAttachmentController::class, 'destroy'])->name('attachments.destroy');
 
-    // Manage Schedule actions - Add, Edit (group Bible studies in the events table)
+    // Manage Schedule actions - Add, Edit, Copy the week's recurring events to the following week
     Route::post('/manage-schedule', [StudyScheduleController::class, 'store'])->name('schedule.store');
+    Route::post('/manage-schedule/copy-week', [StudyScheduleController::class, 'copyWeek'])->name('schedule.copy-week');
     Route::put('/manage-schedule/{event}', [StudyScheduleController::class, 'update'])->name('schedule.update');
 
     // fr_CA

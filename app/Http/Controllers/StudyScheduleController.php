@@ -90,6 +90,54 @@ class StudyScheduleController extends Controller
             ->with('warning', $this->overlapWarning($event));
     }
 
+    // @desc Copy the recurring events of the week shown to the following week, then show that week
+    // @route POST /manage-schedule/copy-week
+    public function copyWeek(Request $request): RedirectResponse
+    {
+        // Double layer check at the controller endpoint
+        if (!$request->user()->canManageRoles()) {
+            abort(403, __('home/index.unauthorized'));
+        }
+
+        // ?date= (any day of the week to copy) and ?view= are on the form's action, read as on the page
+        $period = $this->period($request);
+
+        $recurring = $this->events($period['start'], $period['end'])->where('recurring', true)->get();
+        $nextWeek = $this->events($period['next'], $period['next']->copy()->addDays(6))->get();
+
+        $copied = 0;
+        foreach ($recurring as $event) {
+            $startDate = $event->start_date->copy()->addWeek();
+
+            // Already there (copied before, or added by hand): same category, start, titles and contact person
+            $exists = $nextWeek->contains(fn (Event $other) => $other->category === $event->category
+                && $other->start_date->equalTo($startDate)
+                && $other->title_en === $event->title_en
+                && $other->title_fr === $event->title_fr
+                && $other->contact_name === $event->contact_name);
+
+            if ($exists) {
+                continue;
+            }
+
+            // Images and attachments stay with the original: their folders are named after its start date
+            $copy = $event->replicate(['images']);
+            $copy->start_date = $startDate;
+            $copy->end_date = $event->end_date?->copy()->addWeek();
+            $copy->save();
+            $copied++;
+        }
+
+        $skipped = $recurring->count() - $copied;
+        $status = trans_choice('dashboard/index.schedule_week_copied', $copied, ['count' => $copied])
+            . ($skipped ? ' ' . trans_choice('dashboard/index.schedule_week_skipped', $skipped, ['count' => $skipped]) : '');
+
+        // Back to Manage Schedule (the page the form is on), on the following week
+        $query = http_build_query(['view' => $period['view'], 'date' => $period['next']->toDateString()]);
+
+        return redirect()->to(strtok(url()->previous(), '?') . '?' . $query)->with('status', $status);
+    }
+
     /**
      * Warning shown after saving an event at the same time as others that day, naming them
      * (e.g. "… Genesis (20 h 00 – 21 h 30), Prayer meeting (19 h 00 – 20 h 30)."); null without any.

@@ -173,6 +173,19 @@
             title="{{ __('bible-study-schedule/index.' . ($manage ? 'reset' : 'today')) }}">
             <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
         </a>
+
+        @if ($manage)
+            <!-- Copy the recurring events of the week shown to the following week (asks first), then shows that week -->
+            <form action="{{ route('schedule.copy-week', ['view' => $view, 'date' => $start->toDateString()]) }}" method="POST"
+                onsubmit="return confirm(@js(__('dashboard/index.copy_week_confirm')))">
+                @csrf
+
+                <button type="submit" class="{{ $buttonClass }} cursor-pointer"
+                    aria-label="{{ __('dashboard/index.copy_week') }}" title="{{ __('dashboard/index.copy_week') }}">
+                    <i class="fa-solid fa-copy" aria-hidden="true"></i>
+                </button>
+            </form>
+        @endif
     </div>
 
     @if ($type)
