@@ -13,6 +13,37 @@
     // Studies by "date|hour"; earlier / later ones go in the first / last row (see study-block)
     $studiesByCell = $studies->groupBy(fn ($study) => $study->start_date->toDateString() . '|'
         . min(max($study->start_date->hour, $from), $to - 1));
+
+    // Studies at the same time are drawn side by side: each day, a study takes the first column free at its start,
+    // and every study of a group of overlapping ones gets the same width (the day's width / the group's columns).
+    // $layout: study id => ['column' => place from the left, 'columns' => columns of its group]
+    $layout = [];
+    foreach ($studies->groupBy(fn ($study) => $study->start_date->toDateString()) as $dayStudies) {
+        $spans = $dayStudies->map(fn ($study) => [$study->id, ...$study->scheduleSpan($from, $to)])
+            ->sortBy(fn ($span) => $span[1]->getTimestamp())->values();
+
+        $group = []; // Ids of the overlapping studies being placed
+        $columnEnds = []; // End of the last study in each column of the group
+        foreach ($spans as [$id, $spanStart, $spanEnd]) {
+            // Starts once every column is free: the group is complete, a new one begins
+            if ($columnEnds && $spanStart->gte(max($columnEnds))) {
+                foreach ($group as $groupId) {
+                    $layout[$groupId]['columns'] = count($columnEnds);
+                }
+                [$group, $columnEnds] = [[], []];
+            }
+
+            $column = collect($columnEnds)->search(fn ($end) => $end->lte($spanStart));
+            $column = $column === false ? count($columnEnds) : $column;
+
+            $columnEnds[$column] = $spanEnd;
+            $group[] = $id;
+            $layout[$id] = ['column' => $column, 'columns' => 1];
+        }
+        foreach ($group as $groupId) {
+            $layout[$groupId]['columns'] = count($columnEnds);
+        }
+    }
 @endphp
 
 <!-- Week Grid Hours: one row per hour, labelled in the time column ("8 h" / "8 AM");
@@ -36,7 +67,8 @@
                             aria-label="{{ __('dashboard/index.add_event_at') }} {{ $day->copy()->setTime($hour, 0)->isoFormat(__('bible-study-schedule/index.cell_format')) }}"></button>
                     @endif
                     @foreach ($studiesByCell->get($day->toDateString() . '|' . $hour, []) as $study)
-                        <x-study-schedule::study-block :study="$study" :editable="$editable" :from="$from" :to="$to" />
+                        <x-study-schedule::study-block :study="$study" :editable="$editable" :from="$from" :to="$to"
+                            :column="$layout[$study->id]['column']" :columns="$layout[$study->id]['columns']" />
                     @endforeach
                 </td>
             @endforeach

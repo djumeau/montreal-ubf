@@ -130,6 +130,12 @@
 
             @auth
 
+                <!-- Profile picture chosen on the dashboard's Profile page (default avatar until then); links to the dashboard -->
+                <a href="{{ route(__('nav.dashboard.name')) }}" title="{{ Auth::user()->name }}" class="shrink-0">
+                    <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
+                        class="size-9 rounded-full object-cover border border-white hover:outline-2 outline-white">
+                </a>
+
                 <x-logout-button />
 
             @else
@@ -183,7 +189,15 @@
 
         @auth
 
-            <x-logout-button isMobile='true' />
+            <!-- Profile picture next to the Logout button, as on desktop -->
+            <div class="flex items-center gap-3">
+                <a href="{{ route(__('nav.dashboard.name')) }}" title="{{ Auth::user()->name }}" class="shrink-0">
+                    <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
+                        class="size-9 rounded-full object-cover border border-white">
+                </a>
+
+                <x-logout-button isMobile='true' />
+            </div>
 
         @else
 

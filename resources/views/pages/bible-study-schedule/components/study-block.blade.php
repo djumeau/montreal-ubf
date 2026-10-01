@@ -4,26 +4,27 @@
     'to' => 22, // Grid end hour, to cut studies running later
     'editable' => false, // Manage Schedule: the block is a button opening the Event modal (openEdit() of the page)
     'stacked' => false, // Day list (List view and phones): full width, one under the other, instead of placed on the week grid
+    'column' => 0, // Week grid, among studies at the same time: its place from the left (see hour-rows)
+    'columns' => 1, // Week grid: how many studies share the day's width at that time
 ])
 
 @php
     // Placed inside the cell of its starting hour; each hour row is 3rem (h-12) tall
     $rowHeight = 3;
-    $defaultMinutes = 90; // Length shown when the study has no end time
 
     $startsAt = $study->start_date;
-    $endsAt = $study->has_end_date && $study->end_date?->isSameDay($startsAt) && $study->end_date->gt($startsAt)
-        ? $study->end_date
-        : $startsAt->copy()->addMinutes($defaultMinutes);
+    $endsAt = $study->scheduleEnd(); // Its end time, or a default length without one
 
-    $gridStart = $startsAt->copy()->setTime($from, 0);
-    $gridEnd = $startsAt->copy()->setTime($to, 0);
     // Kept inside the grid: at least half an hour shows, also for studies outside its hours
-    $shownStart = $startsAt->max($gridStart)->min($gridEnd->copy()->subMinutes(30));
-    $shownEnd = $endsAt->min($gridEnd);
+    [$shownStart, $shownEnd] = $study->scheduleSpan($from, $to);
 
     $top = $shownStart->minute / 60 * $rowHeight;
-    $height = max($shownStart->diffInMinutes($shownEnd), 30) / 60 * $rowHeight;
+    $height = $shownStart->diffInMinutes($shownEnd) / 60 * $rowHeight;
+
+    // Studies at the same time share the day's width, side by side: 0.25rem off each edge of the cell, 2px between them
+    $width = "(100% - 0.5rem) / {$columns}";
+    $left = "calc(0.25rem + {$column} * {$width})";
+    $width = $columns > 1 ? "calc({$width} - 2px)" : "calc({$width})";
 
     // The colour picked by the Administrator, with white or dark text (see Event::colorText);
     // without one, one colour per leader (or per title) from the palette:
@@ -80,8 +81,9 @@
     $shownTime = $hasEndTime ? "{$time} – {$endTime}" : $time;
 
     // On the grid: inside its cell, at its start time and as tall as it is long; in the day list: in the flow
-    $layoutClass = $stacked ? 'relative w-full text-sm' : 'absolute inset-x-1 z-10 text-xs';
-    $layoutStyle = $stacked ? '' : "top: {$top}rem; height: calc({$height}rem - 2px);";
+    $layoutClass = $stacked ? 'relative w-full text-sm' : 'absolute z-10 text-xs';
+    $layoutStyle = $stacked ? '' : "top: {$top}rem; height: calc({$height}rem - 2px); left: {$left}; width: {$width};";
+    $narrow = !$stacked && $columns > 1; // Sharing the day's width: the icon is left out to keep room for the text
 @endphp
 
 <!-- Study Block: time, title, contact person and location; on the week grid its height follows its length -->
@@ -92,7 +94,9 @@
         . ($clickable ? ' border-white cursor-pointer hover:ring-2 hover:ring-white focus-visible:ring-2 focus-visible:ring-white focus:outline-none' : '')]) }}
     style="{{ $layoutStyle }} {{ $colourStyle }}"
     title="{{ $study->category->label() }} · {{ $time }} – {{ $endTime }} · {{ $study->current_title }}">
-    <i class="fas {{ $icon }} mt-0.5 text-sm" aria-hidden="true"></i>
+    @unless ($narrow)
+        <i class="fas {{ $icon }} mt-0.5 text-sm" aria-hidden="true"></i>
+    @endunless
     <span class="block min-w-0">
         <span class="block font-medium">{{ $shownTime }}</span>
         <span class="block truncate" aria-hidden="true">{{ $title }}</span>

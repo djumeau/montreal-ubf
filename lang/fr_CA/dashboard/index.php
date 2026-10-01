@@ -153,4 +153,5 @@ return [
     "save" => "Enregistrer",
     "schedule_event_created" => "Événement ajouté à l'horaire.",
     "schedule_event_updated" => "Événement mis à jour dans l'horaire.",
+    "schedule_event_overlaps" => "Remarque : cet événement a lieu en même temps que :events.",
 ];

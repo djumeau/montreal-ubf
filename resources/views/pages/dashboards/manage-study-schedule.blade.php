@@ -182,6 +182,15 @@
                         </div>
                     @endif
 
+                    <!-- Saved, but at the same time as other events of that day (they show side by side on the week grid) -->
+                    @if (session('warning'))
+                        <div class="flex items-center justify-left ml-4 mb-4">
+                            <div role="alert" class="w-fit p-2 border rounded-sm border-amber-500 text-amber-300 text-sm">
+                                <i class="fa-solid fa-triangle-exclamation mr-1" aria-hidden="true"></i>{{ session('warning') }}
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- Period and view toolbar (links stay on this page) -->
                     <x-study-schedule::filter-panel :view="$view" :start="$start" :previous="$previous"
                         :next="$next" :range-label="$rangeLabel" :overlap="false" manage class="mx-4 mb-4" />

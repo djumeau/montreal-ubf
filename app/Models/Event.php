@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 class Event extends Model
 {
@@ -18,6 +19,9 @@ class Event extends Model
     // Roles an event can be reserved for, lowest first: the values the minimum_profile column accepts
     // (see the create_events_table migration; it has no Music role)
     public const MINIMUM_PROFILES = [Role::GUEST, Role::USER, Role::MEMBER, Role::LEADER, Role::ELDER, Role::ADMIN];
+
+    // Length shown on the schedule when the event has no end time (or ends another day)
+    public const SCHEDULE_DEFAULT_MINUTES = 90;
 
     protected $fillable = [
         'title_en',
@@ -276,6 +280,40 @@ class Event extends Model
 
             return $endsThatDay ? $when . ' – ' . $this->end_date->isoFormat($timeFormat) : $when;
         });
+    }
+
+    /**
+     * When the event ends on the schedule: its end time when it ends the day it starts,
+     * otherwise SCHEDULE_DEFAULT_MINUTES after its start.
+     */
+    public function scheduleEnd(): Carbon
+    {
+        $endsThatDay = $this->has_end_date && $this->end_date?->isSameDay($this->start_date) && $this->end_date->gt($this->start_date);
+
+        return $endsThatDay ? $this->end_date->copy() : $this->start_date->copy()->addMinutes(self::SCHEDULE_DEFAULT_MINUTES);
+    }
+
+    /**
+     * [start, end] of the event's block on the week grid, which shows the hours $from to $to:
+     * kept inside the grid, with at least half an hour showing (also for events outside its hours).
+     */
+    public function scheduleSpan(int $from, int $to): array
+    {
+        $gridStart = $this->start_date->copy()->setTime($from, 0);
+        $gridEnd = $this->start_date->copy()->setTime($to, 0);
+
+        $start = $this->start_date->copy()->max($gridStart)->min($gridEnd->copy()->subMinutes(30));
+        $end = $this->scheduleEnd()->min($gridEnd)->max($start->copy()->addMinutes(30));
+
+        return [$start, $end];
+    }
+
+    /**
+     * Whether both events are on the schedule at the same time (one ending when the other starts is not an overlap).
+     */
+    public function overlapsOnSchedule(Event $other): bool
+    {
+        return $this->start_date->lt($other->scheduleEnd()) && $other->start_date->lt($this->scheduleEnd());
     }
 
     /**

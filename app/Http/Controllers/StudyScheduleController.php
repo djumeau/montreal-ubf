@@ -61,9 +61,10 @@ class StudyScheduleController extends Controller
         // Named error bag so validation errors reopen the Event modal
         $validated = $request->validateWithBag('saveSchedule', $this->rules($request), [], $this->attributes());
 
-        Event::create($this->eventFields($validated));
+        $event = Event::create($this->eventFields($validated));
 
-        return back()->with('status', __('dashboard/index.schedule_event_created'));
+        return back()->with('status', __('dashboard/index.schedule_event_created'))
+            ->with('warning', $this->overlapWarning($event));
     }
 
     // @desc Update an event of the schedule
@@ -79,7 +80,30 @@ class StudyScheduleController extends Controller
 
         $event->update($this->eventFields($validated));
 
-        return back()->with('status', __('dashboard/index.schedule_event_updated'));
+        return back()->with('status', __('dashboard/index.schedule_event_updated'))
+            ->with('warning', $this->overlapWarning($event));
+    }
+
+    /**
+     * Warning shown after saving an event at the same time as others that day, naming them
+     * (e.g. "… Genesis (20 h 00 – 21 h 30), Prayer meeting (19 h 00 – 20 h 30)."); null without any.
+     * The event is saved all the same: two groups can meet at the same time.
+     */
+    private function overlapWarning(Event $event): ?string
+    {
+        $event->refresh(); // Dates as stored, cast to Carbon
+
+        $timeFormat = __('bible-study-schedule/index.time_format');
+
+        $overlapping = Event::whereDate('start_date', $event->start_date)
+            ->whereKeyNot($event->id)
+            ->orderBy('start_date')
+            ->get()
+            ->filter(fn (Event $other) => $event->overlapsOnSchedule($other))
+            ->map(fn (Event $other) => ($other->current_title ?: $other->category->label())
+                . ' (' . $other->start_date->isoFormat($timeFormat) . ' – ' . $other->scheduleEnd()->isoFormat($timeFormat) . ')');
+
+        return $overlapping->isEmpty() ? null : __('dashboard/index.schedule_event_overlaps', ['events' => $overlapping->implode(', ')]);
     }
 
     /**

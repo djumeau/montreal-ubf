@@ -153,4 +153,5 @@ return [
     "save" => "Save",
     "schedule_event_created" => "Event added to the schedule.",
     "schedule_event_updated" => "Event updated in the schedule.",
+    "schedule_event_overlaps" => "Note: this event is at the same time as :events.",
 ];
