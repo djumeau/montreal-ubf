@@ -17,7 +17,7 @@
         },
     }">
 
-    <x-study-schedule::filter-panel :view="$view" :start="$start" :previous="$previous" :next="$next" :range-label="$rangeLabel" />
+    <x-study-schedule::filter-panel :view="$view" :start="$start" :previous="$previous" :next="$next" :range-label="$rangeLabel" :type="$type" />
 
     @if ($view === 'week')
         <!-- Week Grid (desktop): Sunday to Saturday header, then the hour rows -->

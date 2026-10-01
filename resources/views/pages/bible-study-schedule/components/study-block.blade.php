@@ -54,7 +54,8 @@
 
     // Public schedule, visitors (not signed in): the block is a button opening the "contact us" modal (openContact() of the page),
     // whose link leads to the contact page with the subject and message filled in for this study (see ContactController::prefill)
-    $inquire = !$editable && auth()->guest();
+    // Events and conferences have no "contact us" modal: they are plain blocks
+    $inquire = !$editable && auth()->guest() && $study->isBibleStudy();
     $contactStudy = [
         'url' => url(__('nav.contact.url')) . '?study=' . $study->id,
         'title' => $study->current_title ?: $study->category->label(),

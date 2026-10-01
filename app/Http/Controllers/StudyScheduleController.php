@@ -20,16 +20,22 @@ class StudyScheduleController extends Controller
     // Schedule views: both show a week, Sunday to Saturday
     private const VIEWS = ['week', 'list'];
 
+    // What the public schedule shows: group Bible studies (default), or events and conferences
+    private const TYPES = ['studies', 'events'];
+
     // @desc Show the group Bible study schedule for a week
     // @route GET /bible-study-schedule
     public function index(Request $request): View
     {
         $period = $this->period($request);
 
-        // Visitors and members only see the studies open to their profile
-        $studies = $this->studies($period['start'], $period['end'])->visibleTo($request->user())->get();
+        // ?type=studies|events (anything else is studies): group Bible studies, or events and conferences
+        $type = in_array($request->query('type'), self::TYPES, true) ? $request->query('type') : 'studies';
 
-        return view('pages.bible-study-schedule.index', ['studies' => $studies] + $period);
+        // Visitors and members only see the studies / events open to their profile
+        $studies = $this->studies($period['start'], $period['end'], $type)->visibleTo($request->user())->get();
+
+        return view('pages.bible-study-schedule.index', ['studies' => $studies, 'type' => $type] + $period);
     }
 
     // @desc Show the schedule on the admin dashboard, where every event (Bible studies included) is added and edited
@@ -190,12 +196,12 @@ class StudyScheduleController extends Controller
     }
 
     /**
-     * Group Bible studies starting between the first and last day shown, in start order.
-     * Recurring studies only show on their start date for now.
+     * Group Bible studies (or, for the "events" type, events and conferences) starting between
+     * the first and last day shown, in start order. Recurring ones only show on their start date for now.
      */
-    private function studies(Carbon $start, Carbon $end): Builder
+    private function studies(Carbon $start, Carbon $end, string $type = 'studies'): Builder
     {
-        return Event::bibleStudies()
+        return ($type === 'events' ? Event::publicListing() : Event::bibleStudies())
             ->with('bibleStudy.book')
             ->whereBetween('start_date', [$start->copy()->startOfDay(), $end->copy()->endOfDay()])
             ->orderBy('start_date');

@@ -17,6 +17,9 @@ return [
     "close" => "Fermer",
     "view_week" => "Semaine",
     "view_list" => "Liste",
+    "type_label" => "Afficher",
+    "type_studies" => "Études bibliques",
+    "type_events" => "Événements et conférences",
 
     // Période : [format de début, format de fin] (formats ISO)
     "range_same_month" => ["D", "D MMMM YYYY"],

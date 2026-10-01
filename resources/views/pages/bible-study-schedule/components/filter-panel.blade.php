@@ -6,18 +6,22 @@
     'rangeLabel', // e.g. "27 sept. – 3 oct. 2026"
     'overlap' => true, // Pull up over the page banner; false where there is none (Manage Schedule dashboard)
     'manage' => false, // Manage Schedule dashboard: "Reset" instead of "Today", and the date button opens the week modal
+    'type' => null, // studies | events: shows the "Bible Studies" / "Events and Conferences" radio buttons; null = none (Manage Schedule shows everything)
 ])
 
 @php
-    // Toolbar links keep the current view; "Today" / "Reset" drops the date
+    // Toolbar links keep the current view and type (left out of the URL when it is the default); "Today" / "Reset" drops the date
     $pageUrl = request()->url();
-    $linkTo = fn (array $query) => $pageUrl . '?' . http_build_query($query);
+    $typeQuery = $type && $type !== 'studies' ? ['type' => $type] : [];
+    $linkTo = fn (array $query) => $pageUrl . '?' . http_build_query($query + $typeQuery);
     $buttonClass = 'inline-flex items-center justify-center gap-2 px-3 py-2 leading-tight border border-slate-500 bg-slate-900 hover:bg-slate-700 text-sm rounded-sm';
 @endphp
 
 <!-- Filter Panel: overlaps the bottom of the banner (pulled up past <main>'s top margin and padding) -->
 <div {{ $attributes->merge(['class' => ($overlap ? '-mt-20 mx-2 md:mx-6 ' : '') . 'relative z-10 bg-slate-800 border border-slate-700 rounded-sm shadow-xl p-4
     flex flex-col md:flex-row md:items-center md:justify-between gap-3']) }}>
+
+    <div class="space-y-3">
 
     <!-- Period: previous / date (opens a date picker, or the week modal on Manage Schedule) / next,
          then Today (Reset on Manage Schedule); previous / next are hidden on phones -->
@@ -144,6 +148,9 @@
             <!-- GET form: picking a date reloads the page on the period holding it -->
             <form action="{{ $pageUrl }}" method="GET" x-data class="relative flex-1 md:flex-none">
                 <input type="hidden" name="view" value="{{ $view }}">
+                @if ($typeQuery)
+                    <input type="hidden" name="type" value="{{ $type }}">
+                @endif
                 <input type="date" name="date" x-ref="picker" value="{{ $start->toDateString() }}"
                     @change="$el.form.submit()" class="absolute inset-0 opacity-0 pointer-events-none" tabindex="-1">
 
@@ -166,6 +173,27 @@
             title="{{ __('bible-study-schedule/index.' . ($manage ? 'reset' : 'today')) }}">
             <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
         </a>
+    </div>
+
+    @if ($type)
+        <!-- Type: Bible Studies (default) / Events and Conferences. GET form: picking one reloads the page, keeping the view and the week -->
+        <form action="{{ $pageUrl }}" method="GET" x-data @change="$el.submit()">
+            <input type="hidden" name="view" value="{{ $view }}">
+            <input type="hidden" name="date" value="{{ $start->toDateString() }}">
+
+            <fieldset class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                <legend class="sr-only">{{ __('bible-study-schedule/index.type_label') }}</legend>
+                @foreach (['events', 'studies'] as $option)
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="type" value="{{ $option }}" @checked($type === $option)
+                            class="size-4 accent-blue-600 cursor-pointer">
+                        {{ __('bible-study-schedule/index.type_' . $option) }}
+                    </label>
+                @endforeach
+            </fieldset>
+        </form>
+    @endif
+
     </div>
 
     <!-- View: Week / List, keeping the date; hidden on phones, which always get the day list -->

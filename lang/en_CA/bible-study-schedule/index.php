@@ -17,6 +17,9 @@ return [
     "close" => "Close",
     "view_week" => "Week",
     "view_list" => "List",
+    "type_label" => "Show",
+    "type_studies" => "Bible Studies",
+    "type_events" => "Events and Conferences",
 
     // Date range: [start format, end format] (ISO formats)
     "range_same_month" => ["MMMM D", "D, YYYY"],
