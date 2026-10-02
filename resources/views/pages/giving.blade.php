@@ -39,8 +39,8 @@
 
     <x-blurb title="{{ __('giving.scripture') }}" :variant="['slate-900', '#1e3a8a']"></x-blurb>
 
-    <x-text-image img="./images/other/hands_glowing_cross.jpg" alt="{{ __('giving.title') }}"
-       imageSize="90">{{ __('giving.introduction') }}</x-text-image>
+    <x-wide-card image="./images/other/hands_glowing_cross.jpg" alt="{{ __('giving.title') }}" bgcolor="bg-slate-900" textcolor="text-white"
+        class="my-6">{{ __('giving.introduction') }}</x-wide-card>
 
     <!-- Responsive Grid Wrapper -->
     <div class='flex flex-col md:flex-row md:items-start flex-wrap justify-center items-center gap-4 pb-6'>
