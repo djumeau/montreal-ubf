@@ -108,7 +108,19 @@
                         </div>
 
                         <div class="flex flex-col flex-1 gap-3 p-4">
-                            <h3 class="text-lg font-semibold text-slate-100 leading-snug">{{ $event->current_title }}</h3>
+                                                        <!-- Title, then the linked Bible study when there is one (e.g. a Sunday service): its title and passage -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-100 leading-snug">{{ $event->current_title }}</h3>
+                                @if ($event->bibleStudy)
+                                    <p class="mt-1 text-slate-300">
+                                        <i class="fa-solid fa-book-bible mr-1" aria-hidden="true"></i>
+                                        {{ $event->bibleStudy->current_title }}
+                                        @if ($event->bibleStudy->display_passage)
+                                            <span class="whitespace-nowrap">· {{ $event->bibleStudy->display_passage }}</span>
+                                        @endif
+                                    </p>
+                                @endif
+                            </div>
 
                             <!-- Recurring events show a repeat icon next to their first date -->
                             <div class="flex items-start gap-3">
@@ -195,7 +207,19 @@
                                         class="w-20 h-12 rounded-sm object-cover">
                                 </td>
 
-                                <td class="py-2 px-3 text-slate-100">{{ $event->current_title }}</td>
+                                                                <!-- Title, then the linked Bible study when there is one (e.g. a Sunday service): its title and passage -->
+                                <td class="py-2 px-3 text-slate-100">
+                                    {{ $event->current_title }}
+                                    @if ($event->bibleStudy)
+                                        <div class="mt-1 text-xs text-slate-300">
+                                            <i class="fa-solid fa-book-bible mr-1" aria-hidden="true"></i>
+                                            {{ $event->bibleStudy->current_title }}
+                                            @if ($event->bibleStudy->display_passage)
+                                                <span class="whitespace-nowrap">· {{ $event->bibleStudy->display_passage }}</span>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </td>
 
                                 <td class="hidden lg:table-cell py-2 px-3">
                                     <span class="inline-block whitespace-nowrap px-3 py-0.5 text-xs font-medium border rounded-full {{ $event->category->solidBadgeClasses() }}">

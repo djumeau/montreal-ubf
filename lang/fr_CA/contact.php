@@ -20,6 +20,7 @@ return [
     // Message rempli à l'arrivée depuis une étude de l'horaire des études bibliques
     "prefill_in_person" => "Veuillez me donner plus d'information sur le lieu de l'étude biblique.",
     "prefill_online" => "Je veux participer à : :title.",
+    "prefill_service" => "Veuillez me donner plus d'information.",
     "prefill_study" => "Étude biblique : :title",
     "prefill_when" => "Quand : :when",
     "prefill_where" => "Où : :where",

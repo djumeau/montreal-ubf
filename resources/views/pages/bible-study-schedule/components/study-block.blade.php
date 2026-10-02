@@ -52,12 +52,15 @@
     // everyone else (visitors included, also for a Guest minimum profile) sees the words alone
     $canJoinZoom = (bool) auth()->user()?->role->atLeast($study->minimum_profile);
 
-    // Public schedule, visitors (not signed in): the block is a button opening the "contact us" modal (openContact() of the page),
+    // Public schedule, everyone (signed in or not): the block is a button opening the "contact us" modal (openContact() of the page),
     // whose link leads to the contact page with the subject and message filled in for this study (see ContactController::prefill)
-    // Events and conferences have no "contact us" modal: they are plain blocks
-    $inquire = !$editable && auth()->guest() && $study->isBibleStudy();
+    // Group Bible studies and Sunday worship services only; events and conferences have no "contact us" modal: they are plain blocks
+    $isService = $study->category === \App\Enums\EventCategory::SUNDAY_SERVICE;
+    $inquire = !$editable && ($study->isBibleStudy() || $isService);
     $contactStudy = [
         'url' => url(__('nav.contact.url')) . '?study=' . $study->id,
+        // Title of the modal: "Join this Bible study" / "Join this worship service"
+        'heading' => __('bible-study-schedule/index.contact_modal_title' . ($isService ? '_service' : '')),
         'title' => $study->current_title ?: $study->category->label(),
         'when' => $study->schedule_when,
         'where' => $study->schedule_where ?? '',
@@ -65,6 +68,8 @@
         'map' => $study->location && !$study->zoom_url && $study->category !== \App\Enums\EventCategory::GBS_ONLINE
             ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($study->location)
             : '',
+        // The Zoom meeting, for a signed-in user allowed to join it: the block being a button, its link is in the modal; empty otherwise
+        'zoom' => $canJoinZoom ? (string) $study->zoom_url : '',
         // The block's colours, for the details box of the modal: the Administrator's colour as a style, else the palette's classes
         'colourClass' => $colour,
         'colourStyle' => $colourStyle,
@@ -105,8 +110,8 @@
             <span class="block truncate">{{ $leader }}</span>
         @endif
         @if ($location)
-            {{-- On Manage Schedule the whole block is already a button, so no link there --}}
-            @if ($study->zoom_url && $canJoinZoom && !$editable)
+            {{-- When the whole block is a button, no link inside it: the Zoom link is in the modal it opens (public schedule) --}}
+            @if ($study->zoom_url && $canJoinZoom && !$clickable)
                 <a href="{{ $study->zoom_url }}" target="_blank" rel="noopener noreferrer" class="block truncate underline hover:no-underline">{{ $location }}</a>
             @else
                 <span class="block truncate">{{ $location }}</span>

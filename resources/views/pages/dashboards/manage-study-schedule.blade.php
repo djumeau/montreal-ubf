@@ -11,7 +11,7 @@
 
     // Type radios, with the icons of the blocks; the Bible study row only shows for the group Bible studies
     $eventTypes = collect(EventCategory::cases())->mapWithKeys(fn ($category) => [$category->value => $category->icon()]);
-    $bibleStudyTypes = array_column(EventCategory::BIBLE_STUDIES, 'value');
+    $bibleStudyTypes = array_column(EventCategory::WITH_BIBLE_STUDY, 'value');
 
     $defaultColour = '#2563EB'; // Shown in the colour picker for events without a colour
 

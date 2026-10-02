@@ -14,11 +14,21 @@
     $hasBgClass = preg_match('/\bbg-/', $combinedBg);
     $fallbackBg = !$hasBgClass ? 'bg-gray-100' : '';
 
-    // Featured study (BibleStudy id) shown under the hero on mobile and desktop
-    $featuredStudyId = 26;
+    // Featured study (BibleStudy id) shown under the hero on mobile and desktop: the Bible study of the next
+    // Sunday worship service that has one (events of the Manage Schedule dashboard). Home page only, where it is shown;
+    // without such a service, nothing is featured (see the study component)
+    $nextService = request()->is('/')
+        ? \App\Models\Event::where('category', \App\Enums\EventCategory::SUNDAY_SERVICE)
+            ->whereNotNull('bible_study_id')
+            ->upcoming()
+            ->orderBy('start_date')
+            ->first()
+        : null;
 
-    // Featured study is held on the upcoming Sunday (today, if today is Sunday)
-    $studyDate = today()->isSunday() ? today() : today()->next('Sunday');
+    $featuredStudyId = $nextService?->bible_study_id;
+
+    // The featured study is held on the day of that service
+    $studyDate = $nextService?->start_date;
 
 @endphp
 

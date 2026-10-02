@@ -29,16 +29,23 @@ class ContactController extends Controller
 
     /**
      * Subject and message filled in when arriving from the Bible Study Schedule (/contact?study={event id}):
-     * in person asks about the location, online asks to subscribe and attend that study. Empty for any other visit,
+     * in person asks about the location, online asks to subscribe and attend that study, a Sunday worship service
+     * asks for more information under the "Worship Service" subject. Empty for any other visit,
      * and for a study the viewer may not see.
      */
     private function prefill(Request $request): array
     {
+        $categories = array_map(fn (EventCategory $category) => $category->value, EventCategory::WITH_BIBLE_STUDY);
+
         $study = $request->filled('study')
-            ? Event::bibleStudies()->visibleTo($request->user())->find($request->integer('study'))
+            ? Event::whereIn('category', $categories)->visibleTo($request->user())->find($request->integer('study'))
             : null;
 
         return match ($study?->category) {
+            EventCategory::SUNDAY_SERVICE => [
+                'inquiring_about' => InquiryType::WORSHIP->value,
+                'message' => __('contact.prefill_service') . $this->studyDetails($study, false),
+            ],
             EventCategory::GBS_IN_PERSON => [
                 'inquiring_about' => InquiryType::GROUP_STUDY->value,
                 'message' => __('contact.prefill_in_person') . $this->studyDetails($study),

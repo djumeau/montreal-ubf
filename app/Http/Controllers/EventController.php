@@ -28,8 +28,10 @@ class EventController extends Controller
         // Group Bible studies are left out (managed on the admin dashboard)
         $events = Event::visibleTo($request->user())
             ->publicListing()
+            ->with('bibleStudy.book')
             ->withCount(['attachments as documents_count' => fn ($query) => $query->where('locale', $locale)->where('type', 'document')])
             ->search($search);
+
 
         // null = list not shown. The database search also matches HTML tags in descriptions (e.g. "li"),
         // so its results are checked again against the text without tags

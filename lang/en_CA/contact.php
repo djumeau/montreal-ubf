@@ -20,6 +20,7 @@ return [
     // Message filled in when arriving from a study of the Bible Study Schedule
     "prefill_in_person" => "Please provide more information on the location of the Bible study.",
     "prefill_online" => "I want to attend :title.",
+    "prefill_service" => "Please provide more information.",
     "prefill_study" => "Bible study: :title",
     "prefill_when" => "When: :when",
     "prefill_where" => "Where: :where",

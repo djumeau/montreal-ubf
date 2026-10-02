@@ -134,6 +134,7 @@ return [
     "event_type_conference" => "Conférence",
     "event_type_gbs_in_person" => "Étude biblique - Groupe, en personne",
     "event_type_gbs_online" => "Étude biblique - Groupe, en ligne",
+    "event_type_sunday_service" => "Service d'adoration",
     "date" => "Date",
     "time" => "Heure",
     "time_to" => "à",

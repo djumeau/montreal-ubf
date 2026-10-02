@@ -134,6 +134,7 @@ return [
     "event_type_conference" => "Conference",
     "event_type_gbs_in_person" => "Bible study - Group, in person",
     "event_type_gbs_online" => "Bible study - Group, online",
+    "event_type_sunday_service" => "Sunday worship service",
     "date" => "Date",
     "time" => "Time",
     "time_to" => "to",

@@ -32,6 +32,7 @@ return [
     "hour_format" => "H [h]",
     "time_format" => "H [h] mm",
     "contact_modal_title" => "Participer à cette étude biblique",
+    "contact_modal_title_service" => "Participer à ce service d'adoration",
     "contact_modal_message" => "Veuillez faire une demande sur notre page de contact.",
     "contact_modal_link" => "Page de contact",
     "when" => "Quand :",

@@ -7,10 +7,10 @@
             mobile='storage/images/events/bible_study_schedule-mobile.jpg' />
     </x-slot>
 
-    <!-- Visitors (not signed in): a block opens the "contact us" modal, whose link goes to the contact page for that study -->
+    <!-- Everyone (signed in or not): a block opens the "contact us" modal, whose link goes to the contact page for that study -->
     <div x-data="{
         showContactModal: false,
-        contactStudy: { url: '', title: '', when: '', where: '', map: '', colourClass: '', colourStyle: '' },
+        contactStudy: { url: '', heading: '', title: '', when: '', where: '', map: '', zoom: '', colourClass: '', colourStyle: '' },
         openContact(study) {
             this.contactStudy = study;
             this.showContactModal = true;
@@ -33,8 +33,7 @@
     <x-study-schedule::day-list :start="$start" :studies="$studies"
         class="mt-6 mx-2 md:mx-6 {{ $view === 'week' ? 'md:hidden' : '' }}" />
 
-    @guest
-        <!-- AlpineJS Modal for visitors: joining a study goes through the contact page -->
+        <!-- AlpineJS Modal: joining a study goes through the contact page -->
         <div x-show="showContactModal" x-cloak @keydown.escape.window="showContactModal = false" x-transition
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity">
 
@@ -43,7 +42,7 @@
 
                 <!-- Title and Close -->
                 <div class="flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
-                    <h3 id="contact_modal_title" class="text-lg font-bold">{{ __('bible-study-schedule/index.contact_modal_title') }}</h3>
+                    <h3 id="contact_modal_title" class="text-lg font-bold" x-text="contactStudy.heading"></h3>
                     <button type="button" @click="showContactModal = false" aria-label="{{ __('bible-study-schedule/index.close') }}"
                         class="grid place-items-center size-8 text-slate-300 hover:text-white cursor-pointer">
                         <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
@@ -66,14 +65,20 @@
                         <p class="flex gap-2" x-show="contactStudy.where">
                             <i class="fa-solid fa-location-dot w-4 mt-0.5 text-center" aria-hidden="true"></i>
                             <span class="sr-only">{{ __('bible-study-schedule/index.where') }}</span>
-                            <!-- A physical location opens Google Maps in a new tab; "Via Zoom" and online studies stay plain text -->
+                            <!-- A physical location opens Google Maps in a new tab; "Via Zoom" opens the meeting for a signed-in user
+                                 allowed to join it (see study-block), and stays plain text for everyone else, as do online studies -->
+                            <a x-show="contactStudy.zoom" :href="contactStudy.zoom" target="_blank" rel="noopener noreferrer"
+                                class="underline hover:no-underline">
+                                <span x-text="contactStudy.where"></span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs" aria-hidden="true"></i>
+                            </a>
                             <a x-show="contactStudy.map" :href="contactStudy.map" target="_blank" rel="noopener noreferrer"
                                 class="underline hover:no-underline">
                                 <span x-text="contactStudy.where"></span>
                                 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs" aria-hidden="true"></i>
                                 <span class="sr-only">{{ __('bible-study-schedule/index.opens_map') }}</span>
                             </a>
-                            <span x-show="!contactStudy.map" x-text="contactStudy.where"></span>
+                            <span x-show="!contactStudy.map && !contactStudy.zoom" x-text="contactStudy.where"></span>
                         </p>
                     </div>
 
@@ -91,7 +96,6 @@
                 </div>
             </div>
         </div>
-    @endguest
 
     </div>
 

@@ -215,7 +215,7 @@ class StudyScheduleController extends Controller
     {
         $endTime = $validated['end_time'] ?? null;
         $endDay = $validated['end_day'] ?? $validated['date'];
-        $isBibleStudy = in_array(EventCategory::from($validated['category']), EventCategory::BIBLE_STUDIES, true);
+        $isBibleStudy = in_array(EventCategory::from($validated['category']), EventCategory::WITH_BIBLE_STUDY, true);
 
         return [
             'category' => $validated['category'],
@@ -244,12 +244,16 @@ class StudyScheduleController extends Controller
     }
 
     /**
-     * Group Bible studies (or, for the "events" type, events and conferences) starting between
-     * the first and last day shown, in start order. Recurring ones only show on their start date for now.
+     * Group Bible studies and Sunday worship services (or, for the "events" type, events, conferences and
+     * Sunday worship services) starting between the first and last day shown, in start order.
+     * Recurring ones only show on their start date for now.
      */
     private function studies(Carbon $start, Carbon $end, string $type = 'studies'): Builder
     {
-        return ($type === 'events' ? Event::publicListing() : Event::bibleStudies())
+        // "Bible Studies" also shows the Sunday worship services, which are listed under "Events and Conferences" too
+        $studies = Event::whereIn('category', array_map(fn (EventCategory $category) => $category->value, EventCategory::WITH_BIBLE_STUDY));
+
+        return ($type === 'events' ? Event::publicListing() : $studies)
             ->with('bibleStudy.book')
             ->whereBetween('start_date', [$start->copy()->startOfDay(), $end->copy()->endOfDay()])
             ->orderBy('start_date');
