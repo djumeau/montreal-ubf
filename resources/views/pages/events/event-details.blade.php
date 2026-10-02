@@ -315,6 +315,11 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
                                     <i class="fa-solid fa-map-location-dot text-4xl text-slate-500" aria-hidden="true"></i>
                                     <span class="text-lg font-bold text-slate-100">{{ __('events/index.map_disabled') }}</span>
                                     <span class="text-xs">{{ __('events/index.map_disabled_hint') }}</span>
+                                    <!-- Reopens the consent banner; accepting there shows the map right away -->
+                                    <button type="button" @click="$dispatch('open-privacy-consent')"
+                                        class="text-sm text-sky-400 hover:text-sky-300 underline cursor-pointer">
+                                        {{ __('home/index.consent.preferences') }}
+                                    </button>
                                 </div>
                             </template>
                         </div>

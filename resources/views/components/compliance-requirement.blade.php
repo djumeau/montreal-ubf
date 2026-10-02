@@ -12,7 +12,8 @@
         // Dispatch custom window event if other parts of your app need to know
         window.dispatchEvent(new CustomEvent('privacy-consent-updated', { detail: choice }));
     }
-}" x-show="showBanner" x-transition:enter="transition ease-out duration-300"
+}" @open-privacy-consent.window="showBanner = true" {{-- "Cookie preferences" links (footer, disabled map) reopen it --}}
+    x-show="showBanner" x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 translate-y-10" x-transition:enter-end="opacity-100 translate-y-0"
     x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 translate-y-10"

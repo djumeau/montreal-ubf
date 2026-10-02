@@ -12,6 +12,7 @@ return [
         "content_3" => "Privacy Policy",
         "accept" => "Accept All",
         "reject" => "Reject All",
+        "preferences" => "Cookie preferences",
     ],
     "privacy" => [
         "title" => "Privacy Policy",

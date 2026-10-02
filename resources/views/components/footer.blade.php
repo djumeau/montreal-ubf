@@ -77,6 +77,15 @@
                         icon="angle-right">{{__('nav.confidentiality.title')}}</x-nav-link>
                 </div>
 
+                <!-- Reopens the consent banner (see compliance-requirement), to change an earlier Accept / Reject -->
+                <div class="pl-4">
+                    <button type="button" onclick="window.dispatchEvent(new CustomEvent('open-privacy-consent'))"
+                        class="inline-flex justify-between items-center text-white cursor-pointer">
+                        <i class="fa fa-angle-right p-0 mr-1"></i>
+                        <span class="hover:underline">{{ __('home/index.consent.preferences') }}</span>
+                    </button>
+                </div>
+
                 <div class="pl-4"><x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive"
                         icon="angle-right">{{__('nav.bible_studies.title')}}</x-nav-link>
                 </div>

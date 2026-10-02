@@ -12,6 +12,7 @@ return [
         "content_3" => "Politique de confidentialité",
         "accept" => "Tout accepter",
         "reject" => "Tout refuser",
+        "preferences" => "Préférences de témoins",
     ],
     "privacy" => [
         "title" => "Politique de confidentialité",
