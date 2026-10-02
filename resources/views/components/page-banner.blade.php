@@ -11,6 +11,7 @@
 
     <div class="absolute inset-0 bg-cover bg-center md:hidden"
         style="background-image: url('{{ asset($mobile) }}')"></div>
+
     <div class="absolute inset-0 bg-cover bg-center hidden md:block"
         style="background-image: url('{{ asset($desktop) }}')"></div>
 
@@ -25,6 +26,8 @@
                 {{ $subtitle }}
             </p>
         @endif
-        <div class="mx-auto mt-4 h-0.5 w-14 bg-white/80"></div>
+        @if ($title !== '' && $subtitle !== null)
+            <div class="mx-auto mt-4 h-0.5 w-14 bg-white/80"></div>
+        @endif
     </div>
 </section>

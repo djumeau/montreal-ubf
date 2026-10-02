@@ -31,8 +31,7 @@
 
     <x-slot name="hero">
         <x-page-banner
-        :title="__('giving.title')"
-
+        title=""
         :desktop="'storage/images/home/giving_header_' . $bannerLanguage . '-desktop.jpg'"
         :mobile="'storage/images/home/giving_header_' . $bannerLanguage . '-mobile.jpg'" />
     </x-slot>
