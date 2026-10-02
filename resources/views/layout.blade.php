@@ -62,7 +62,7 @@
             </x-hero>
 
             <!-- QR Code (Bible Study site) placed under the hero on mobile -->
-            <div class="flex justify-center py-4">
+            <div class="flex justify-center pt-6 mb-4">
                 <a href="https://startbiblestudy.org/montreal-ubf" target="_blank" class="cursor-pointer">
                     <img src="{{ asset(__('home/hero.image_2')) }}" alt="{{ __('home/hero.image_2_alt_text') }}" class="w-40 h-40">
                 </a>

@@ -10,7 +10,7 @@
 ])
 
 <!-- Hero Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-[425px] flex items-center pt-12']) }}
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-145 md:h-165 flex items-center pt-12']) }}
     style="background-image: url('{{ asset($image) }}')">
 
     <div class="overlay bg-black/65"></div>
@@ -32,7 +32,7 @@
                     <!-- Worship Times -->
                     <p class="mb-2">{{ $subtitle }}</p>
 
-                    <div class="flex items-center justify-center gap-6 pt-0">
+                    <div class="flex items-center justify-center gap-6">
 
                         <!-- First column: Right Justified -->
                         <div class="flex items-center justify-end text-right">
@@ -74,7 +74,7 @@
                 <div id="SideImage">
                     <a href="https://startbiblestudy.org/montreal-ubf"
                     alt="{{ __('home/hero.image_2_alt_text') }}" target="_blank" class="cursor-pointer"><img src="{{ asset($image_2) }}"
-                    class="pt-2 hidden md:block w-40 h-40"></a>
+                    class="hidden md:block w-40 h-40"></a>
                 </div>
 
             </div>
