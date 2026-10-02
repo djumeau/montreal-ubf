@@ -20,7 +20,7 @@
         <div class="flex flex-col">
 
             <!-- top row - Heading -->
-            <div class="mb-2 mx-4 pt-22 md:pt-25">
+            <div class="mb-8 mx-4 pt-22 md:pt-25">
                 <h1 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h1>
             </div>
 
