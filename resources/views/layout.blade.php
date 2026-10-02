@@ -69,6 +69,7 @@
             </div>
 
             <x-study
+                heading="{{ __('home/study.upcoming_sunday') }}"
                 :studyId="$featuredStudyId"
                 :date="$studyDate">
             </x-study>
@@ -90,7 +91,8 @@
 
             <x-study
                 :studyId="$featuredStudyId"
-                :date="$studyDate">
+                :date="$studyDate"
+                heading="{{ __('home/study.upcoming_sunday') }}">
             </x-study>
 
         </div>
