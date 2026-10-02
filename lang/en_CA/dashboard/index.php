@@ -126,6 +126,7 @@ return [
     "attachment_deleted" => "Attachment :name deleted.",
     "delete_attachment" => "Delete attachment",
     "manage_schedule" => "Manage Schedule",
+    "manage_inquiries" => "Manage Inquiries",
     "schedule_hint" => "Click on the button to edit. Click on the column to add a new event.",
     "schedule_event" => "Event",
     "add_event_at" => "Add an event:", // Followed by the day and hour of the column clicked

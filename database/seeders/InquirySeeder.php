@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Inquiry;
+use App\Models\ManageInquiry;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class InquirySeeder extends Seeder
@@ -30,6 +32,25 @@ class InquirySeeder extends Seeder
                     'updated_at' => now(),
                 ]
             );
+
+            // Follow-up of the inquiry on the dashboard (manage_inquiries), for the entries that have one
+            if ($management = $inquiry['management'] ?? null) {
+                ManageInquiry::updateOrCreate(
+                    ['inquiry_id' => $id],
+                    [
+                        'read_at' => $management['read_at'],
+                        'answered_at' => $management['answered_at'],
+                        // The data file names who answered by email; null when not answered (or no such user)
+                        'answered_by' => $management['answered_by']
+                            ? User::where('email', $management['answered_by'])->value('id')
+                            : null,
+                        'note' => $management['note'],
+                    ]
+                );
+            }
         }
+
+        // Ids come from the data file: move the id sequences past them, so the next contact form message gets a new id
+        DatabaseSeeder::resetSequences(['inquiries', 'manage_inquiries']);
     }
 }

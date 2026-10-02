@@ -126,6 +126,7 @@ return [
     "attachment_deleted" => "Pièce jointe :name supprimée.",
     "delete_attachment" => "Supprimer la pièce jointe",
     "manage_schedule" => "Gérer l'horaire",
+    "manage_inquiries" => "Gérer les demandes",
     "schedule_hint" => "Cliquez sur le bouton pour modifier. Cliquez sur la colonne pour ajouter un nouvel événement.",
     "schedule_event" => "Événement",
     "add_event_at" => "Ajouter un événement :", // Suivi du jour et de l'heure de la colonne cliquée

@@ -50,4 +50,35 @@ return [
         "message" => "I'm a student journalist writing about faith communities in Montreal. Would anyone be open to a short interview?",
     ],
 
+    // 7 and 8 also have a follow-up ("management" => a manage_inquiries row): read, answered, by whom and a note.
+    // "answered_by" is the email of the user who answered (see user_data.php); the seeder turns it into the user's id
+
+    7 => [
+        "name" => "David Jumeau",
+        "email" => "djumeau@gmail.com",
+        "user" => true,
+        "inquiry" => "worship",
+        "message" => "Is the 9h00 Sunday service held in English or in French, and is there a children's program during the service?",
+        "management" => [
+            "read_at" => "2026-10-01 09:15:00",
+            "answered_at" => "2026-10-01 16:40:00",
+            "answered_by" => "johnhgiesbrecht@gmail.com",
+            "note" => "Replied by email with the service languages and the children's program details.",
+        ],
+    ],
+
+    8 => [
+        "name" => "David Jumeau",
+        "email" => "djumeau@gmail.com",
+        "user" => true,
+        "inquiry" => "subscribe",
+        "message" => "I would like to subscribe to the site to follow the online group Bible study. Please let me know what is needed.",
+        "management" => [
+            "read_at" => "2026-10-02 08:30:00",
+            "answered_at" => null,
+            "answered_by" => null,
+            "note" => "Read, not answered yet. Check which online study he wants to follow before replying.",
+        ],
+    ],
+
 ];

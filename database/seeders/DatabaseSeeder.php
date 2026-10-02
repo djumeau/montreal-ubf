@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         DB::table('bible_books')->truncate();
         DB::table('bible_studies')->truncate();
         DB::table('study_attachments')->truncate();
+        DB::table('manage_inquiries')->truncate();
         DB::table('inquiries')->truncate();
 
         $this->call(InitUserSeeder::class);
