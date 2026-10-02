@@ -155,8 +155,10 @@ return [
     "schedule_event_created" => "Event added to the schedule.",
     "schedule_event_updated" => "Event updated in the schedule.",
     "copy_week" => "Copy this week's recurring events to the following week",
+    "copy_week_title" => "Copy to next week",
+    "copy_week_button" => "Copy",
     "copy_week_confirm" => "Copy this week's recurring events to the following week?",
     "schedule_week_copied" => "{0} No recurring event was copied.|{1} :count recurring event copied to this week.|[2,*] :count recurring events copied to this week.",
-    "schedule_week_skipped" => "{1} :count was already there.|[2,*] :count were already there.",
+    "schedule_week_skipped" => "{1} Not copied, an event already exists at the same day and time: :events.|[2,*] Not copied, events already exist at the same day and time: :events.",
     "schedule_event_overlaps" => "Note: this event is at the same time as :events.",
 ];

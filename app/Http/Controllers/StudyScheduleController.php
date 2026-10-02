@@ -106,17 +106,18 @@ class StudyScheduleController extends Controller
         $nextWeek = $this->events($period['next'], $period['next']->copy()->addDays(6))->get();
 
         $copied = 0;
+        $skipped = []; // Not copied, e.g. "Genesis (Friday, October 9th, 2026, 8:00 PM)"
         foreach ($recurring as $event) {
             $startDate = $event->start_date->copy()->addWeek();
 
-            // Already there (copied before, or added by hand): same category, start, titles and contact person
-            $exists = $nextWeek->contains(fn (Event $other) => $other->category === $event->category
-                && $other->start_date->equalTo($startDate)
-                && $other->title_en === $event->title_en
-                && $other->title_fr === $event->title_fr
-                && $other->contact_name === $event->contact_name);
+            // The following week already has an event starting that day at that time (copied before, or added by hand,
+            // whatever it is): it is kept as it is and nothing is copied over or next to it.
+            // $nextWeek was read before copying, so two events copied together at the same time do not block each other
+            if ($nextWeek->contains(fn (Event $other) => $other->start_date->equalTo($startDate))) {
+                $skipped[] = ($event->current_title ?: $event->category->label())
+                    . ' (' . ucfirst($startDate->isoFormat(__('bible-study-schedule/index.list_day_format')))
+                    . ', ' . $startDate->isoFormat(__('bible-study-schedule/index.time_format')) . ')';
 
-            if ($exists) {
                 continue;
             }
 
@@ -128,14 +129,15 @@ class StudyScheduleController extends Controller
             $copied++;
         }
 
-        $skipped = $recurring->count() - $copied;
-        $status = trans_choice('dashboard/index.schedule_week_copied', $copied, ['count' => $copied])
-            . ($skipped ? ' ' . trans_choice('dashboard/index.schedule_week_skipped', $skipped, ['count' => $skipped]) : '');
+        $status = trans_choice('dashboard/index.schedule_week_copied', $copied, ['count' => $copied]);
+        $warning = $skipped
+            ? trans_choice('dashboard/index.schedule_week_skipped', count($skipped), ['events' => implode(', ', $skipped)])
+            : null;
 
         // Back to Manage Schedule (the page the form is on), on the following week
         $query = http_build_query(['view' => $period['view'], 'date' => $period['next']->toDateString()]);
 
-        return redirect()->to(strtok(url()->previous(), '?') . '?' . $query)->with('status', $status);
+        return redirect()->to(strtok(url()->previous(), '?') . '?' . $query)->with('status', $status)->with('warning', $warning);
     }
 
     /**

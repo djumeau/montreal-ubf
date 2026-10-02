@@ -175,15 +175,56 @@
         </a>
 
         @if ($manage)
-            <!-- Copy the recurring events of the week shown to the following week (asks first), then shows that week -->
-            <form action="{{ route('schedule.copy-week', ['view' => $view, 'date' => $start->toDateString()]) }}" method="POST"
-                onsubmit="return confirm(@js(__('dashboard/index.copy_week_confirm')))">
+            <!-- Copy the recurring events of the week shown to the following week, then shows that week.
+                 The button opens a modal asking first; its "Copy" button submits this form -->
+            <form id="copy_week_form" action="{{ route('schedule.copy-week', ['view' => $view, 'date' => $start->toDateString()]) }}"
+                method="POST" x-data="{ open: false }">
                 @csrf
 
-                <button type="submit" class="{{ $buttonClass }} cursor-pointer"
+                <button type="button" @click="open = true" class="{{ $buttonClass }} cursor-pointer" aria-haspopup="dialog"
                     aria-label="{{ __('dashboard/index.copy_week') }}" title="{{ __('dashboard/index.copy_week') }}">
                     <i class="fa-solid fa-copy" aria-hidden="true"></i>
                 </button>
+
+                <!-- Teleported to <body> so it sits above the week grid's blocks -->
+                <template x-teleport="body">
+                    <div x-show="open" x-cloak @keydown.escape.window="open = false" x-transition
+                        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs text-white">
+
+                        <div @click.outside="open = false" role="dialog" aria-modal="true" aria-labelledby="copy_week_modal_title"
+                            class="bg-slate-900 rounded-lg max-w-md w-full shadow-xl border border-slate-500">
+
+                            <!-- Title and Close -->
+                            <div class="flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
+                                <h3 id="copy_week_modal_title" class="text-lg font-bold">
+                                    <i class="fa-solid fa-copy mr-2" aria-hidden="true"></i>{{ __('dashboard/index.copy_week_title') }}
+                                </h3>
+                                <button type="button" @click="open = false" aria-label="{{ __('bible-study-schedule/index.close') }}"
+                                    class="grid place-items-center size-8 text-slate-300 hover:text-white cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-5">
+                                <p class="mb-2">{{ __('dashboard/index.copy_week_confirm') }}</p>
+                                <p class="mb-5 text-sm text-slate-300">{{ $rangeLabel }}</p>
+
+                                <div class="flex justify-end gap-3">
+                                    <button type="button" @click="open = false"
+                                        class="px-6 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                        {{ __('dashboard/index.cancel') }}
+                                    </button>
+
+                                    <!-- Outside the form once teleported, so it names the form it submits -->
+                                    <button type="submit" form="copy_week_form"
+                                        class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                        {{ __('dashboard/index.copy_week_button') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </form>
         @endif
     </div>

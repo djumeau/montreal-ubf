@@ -155,8 +155,10 @@ return [
     "schedule_event_created" => "Événement ajouté à l'horaire.",
     "schedule_event_updated" => "Événement mis à jour dans l'horaire.",
     "copy_week" => "Copier les événements récurrents de cette semaine vers la semaine suivante",
+    "copy_week_title" => "Copier vers la semaine suivante",
+    "copy_week_button" => "Copier",
     "copy_week_confirm" => "Copier les événements récurrents de cette semaine vers la semaine suivante ?",
     "schedule_week_copied" => "{0} Aucun événement récurrent n'a été copié.|{1} :count événement récurrent copié vers cette semaine.|[2,*] :count événements récurrents copiés vers cette semaine.",
-    "schedule_week_skipped" => "{1} :count s'y trouvait déjà.|[2,*] :count s'y trouvaient déjà.",
+    "schedule_week_skipped" => "{1} Non copié, un événement existe déjà au même jour et à la même heure : :events.|[2,*] Non copiés, des événements existent déjà au même jour et à la même heure : :events.",
     "schedule_event_overlaps" => "Remarque : cet événement a lieu en même temps que :events.",
 ];
