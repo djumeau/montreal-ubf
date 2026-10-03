@@ -34,4 +34,5 @@
     <p class="whitespace-pre-line text-slate-100">{{ $inquiry->message }}</p>
 
     <x-inquiry-items::follow-up :management="$management" class="mt-3" />
+
 </article>
