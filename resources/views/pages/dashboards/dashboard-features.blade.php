@@ -14,6 +14,14 @@
 
     $isManageScheduleActive = request()->routeIs('manage-schedule') || request()->routeIs('gerer-horaire');
 
+    $isManageInquiriesActive = request()->routeIs('manage-inquiries') || request()->routeIs('gerer-demandes');
+
+    // Manage Inquiries button: "(total - N new)"; new = not read yet (no follow-up, or one without a read date)
+    if (auth()->user()->canManageRoles()) {
+        $inquiryCount = \App\Models\Inquiry::count();
+        $newInquiryCount = \App\Models\Inquiry::whereDoesntHave('management', fn ($query) => $query->whereNotNull('read_at'))->count();
+    }
+
 @endphp
 
 <!-- Context Dynamic Links -->
@@ -34,6 +42,9 @@
 
         <x-feature-button :url="__('nav.manage-schedule.url')" :isActive="$isManageScheduleActive"
             icon="fa-calendar-alt">{{ __('nav.manage-schedule.title') }}</x-feature-button>
+
+        <x-feature-button :url="__('nav.manage-inquiries.url')" :isActive="$isManageInquiriesActive"
+            icon="fa-envelope">{{ __('nav.manage-inquiries.title') }} ({{ $inquiryCount }} - {{ __('dashboard/index.inquiries_new_count', ['count' => $newInquiryCount]) }})</x-feature-button>
     @endif
 
 </nav>

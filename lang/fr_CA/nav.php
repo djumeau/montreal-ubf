@@ -69,5 +69,9 @@ return [
                         "url" => "/gerer-horaire",
                         "name" => "gerer-horaire",
                  ],
+    "manage-inquiries" => [ "title" => "Gérer les demandes",
+                        "url" => "/gerer-demandes",
+                        "name" => "gerer-demandes",
+                 ],
 
 ];

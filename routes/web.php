@@ -21,6 +21,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAttachmentController;
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\StudyScheduleController;
 
 use App\Http\Controllers\SwitchLanguageController;
@@ -106,6 +107,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-schedule', [StudyScheduleController::class, 'manage'])->name('manage-schedule');
 
+    Route::get('/manage-inquiries', [InquiryController::class, 'index'])->name('manage-inquiries');
+
+    // Manage Inquiries actions - Delete the ticked ones (Delete Selected), Delete one
+    Route::delete('/manage-inquiries', [InquiryController::class, 'destroySelected'])->name('inquiries.destroy-selected');
+    Route::delete('/manage-inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
+    Route::post('/manage-inquiries/{inquiry}/read', [InquiryController::class, 'markRead'])->name('inquiries.read');
+    Route::put('/manage-inquiries/{inquiry}/answer', [InquiryController::class, 'answer'])->name('inquiries.answer');
+    Route::put('/manage-inquiries/{inquiry}/unanswer', [InquiryController::class, 'unanswer'])->name('inquiries.unanswer');
+
     // Manage Users actions - Add User, Change Role, Reset Password
     Route::post('/manage-users', [UserManagementController::class, 'store'])->name('users.store');
     Route::put('/manage-users/{user}/role', [RoleController::class, 'update'])->name('users.update-role');
@@ -141,6 +151,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/gerer-etudes', [DashboardController::class, 'manageStudies'])->name('gerer-etudes');
 
     Route::get('/gerer-horaire', [StudyScheduleController::class, 'manage'])->name('gerer-horaire');
+
+    Route::get('/gerer-demandes', [InquiryController::class, 'index'])->name('gerer-demandes');
 
     // Profile related routes - Avatar, User name and User Password
 

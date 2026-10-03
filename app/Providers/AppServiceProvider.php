@@ -29,5 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Components kept with the Events pages, e.g. <x-events::back-button />
         Blade::anonymousComponentPath(resource_path('views/pages/events/components'), 'events');
+
+        // Components kept with the Manage Inquiries dashboard page, e.g. <x-inquiry-items::inquiry-item :inquiry="$inquiry" />
+        Blade::anonymousComponentPath(resource_path('views/pages/dashboards/inquiry-items'), 'inquiry-items');
     }
 }
