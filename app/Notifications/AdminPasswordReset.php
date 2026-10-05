@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Support\MailText;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -28,7 +29,7 @@ class AdminPasswordReset extends Notification
             ->subject(__('dashboard/index.password_reset_email_subject'))
             ->greeting(__('dashboard/index.password_reset_email_greeting', ['name' => $notifiable->name]))
             ->line(__('dashboard/index.password_reset_email_line'))
-            ->line(__('dashboard/index.password_reset_email_password', ['password' => $this->password]))
+            ->line(MailText::exact('dashboard/index.password_reset_email_password', ['password' => $this->password]))
             ->line(__('dashboard/index.password_reset_email_action'));
     }
 }

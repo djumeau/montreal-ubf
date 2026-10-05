@@ -25,6 +25,7 @@ return [
     "reset_password" => "Réinitialiser le mot de passe",
     "reset_password_confirm" => "Réinitialiser le mot de passe de cet utilisateur et lui envoyer un nouveau par courriel?",
     "password_reset_sent" => "Mot de passe réinitialisé. Un nouveau mot de passe a été envoyé à :name.",
+    "password_reset_failed" => "Le courriel à :name n'a pas pu être envoyé; le mot de passe n'a donc pas été changé. Veuillez réessayer plus tard.",
     "password_reset_email_subject" => "Votre mot de passe a été réinitialisé",
     "password_reset_email_greeting" => "Bonjour :name,",
     "password_reset_email_line" => "Un administrateur a réinitialisé le mot de passe de votre compte.",

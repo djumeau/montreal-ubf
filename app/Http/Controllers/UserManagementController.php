@@ -6,11 +6,11 @@ use App\Enums\Role;
 use App\Models\User;
 use App\Notifications\AdminPasswordReset;
 use App\Notifications\NewUserWelcome;
+use App\Support\TemporaryPassword;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
 {
@@ -27,7 +27,7 @@ class UserManagementController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
         ]);
 
-        $newPassword = Str::password(8);
+        $newPassword = TemporaryPassword::generate();
 
         $user = User::create([
             'name' => $validated['name'],
@@ -48,13 +48,20 @@ class UserManagementController extends Controller
             abort(403, __('home/index.unauthorized'));
         }
 
-        $newPassword = Str::password(16);
+        $newPassword = TemporaryPassword::generate();
+
+        // Emailed first: if it cannot be sent, the password is left as it was, so the user is not locked out
+        try {
+            $user->notify(new AdminPasswordReset($newPassword));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->with('error', __('dashboard/index.password_reset_failed', ['name' => $user->name]));
+        }
 
         $user->update([
             'password' => $newPassword,
         ]);
-
-        $user->notify(new AdminPasswordReset($newPassword));
 
         return back()->with('status', __('dashboard/index.password_reset_sent', ['name' => $user->name]));
     }

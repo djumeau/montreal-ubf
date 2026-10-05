@@ -72,6 +72,15 @@
                         </div>
                     @endif
 
+                    <!-- Display Error Notifications (e.g. the password reset email could not be sent) -->
+                    @if (session('error'))
+                        <div class="flex items-center justify-left ml-4 mb-4">
+                            <div class="w-fit p-2 border rounded-sm border-red-600 text-red-400 text-sm">
+                                {{ session('error') }}
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- List paginated users (10) -->
 
                     <!-- Desktop: Table Layout -->

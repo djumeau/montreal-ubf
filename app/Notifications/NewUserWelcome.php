@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Support\MailText;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -28,7 +29,7 @@ class NewUserWelcome extends Notification
             ->subject(__('dashboard/index.new_user_email_subject'))
             ->greeting(__('dashboard/index.new_user_email_greeting', ['name' => $notifiable->name]))
             ->line(__('dashboard/index.new_user_email_line'))
-            ->line(__('dashboard/index.new_user_email_credentials', [
+            ->line(MailText::exact('dashboard/index.new_user_email_credentials', [
                 'email' => $notifiable->email,
                 'password' => $this->password,
             ]))

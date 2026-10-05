@@ -25,6 +25,7 @@ return [
     "reset_password" => "Reset Password",
     "reset_password_confirm" => "Reset this user's password and email them a new one?",
     "password_reset_sent" => "Password reset. A new password has been emailed to :name.",
+    "password_reset_failed" => "The email to :name could not be sent, so the password was not changed. Please try again later.",
     "password_reset_email_subject" => "Your password has been reset",
     "password_reset_email_greeting" => "Hello :name,",
     "password_reset_email_line" => "An administrator has reset the password for your account.",
