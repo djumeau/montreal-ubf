@@ -423,11 +423,20 @@ class Event extends Model
     }
 
     /**
-     * Public URL of one of the event's images, falling back to the default events image.
+     * Public URL of one of the event's images. An event linked to a Bible study shows that study's image first,
+     * else its series' image; then comes the event's own image, then the default events image.
      * Usage: $event->imageUrl('square' | 'desktop' | 'mobile')
      */
     public function imageUrl(string $type): string
     {
+        // Only when the study or its series has that image: their own default image is not used for events
+        $study = $this->bibleStudy;
+        $seriesType = $type === 'square' ? 'thumbnail' : $type; // Series images call the square one "thumbnail"
+
+        if (($study?->image_links[$type] ?? null) || ($study?->series?->images[$seriesType] ?? null)) {
+            return $study->imageUrl($type);
+        }
+
         if ($file = $this->images[$type] ?? null) {
             return asset('storage/' . $this->imageDirectory() . '/' . $file);
         }

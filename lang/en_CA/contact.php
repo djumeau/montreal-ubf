@@ -25,4 +25,32 @@ return [
     "prefill_when" => "When: :when",
     "prefill_where" => "Where: :where",
 
+    // Copy sent to the church when the form is submitted, with the full message
+    "email_church_subject" => "New message: :inquiry (:name)",
+    "email_church_greeting" => "New message from the contact page",
+    "email_church_from" => "From: :name (:email)",
+    "email_church_message" => "Message (:inquiry):",
+    "email_church_action" => "Manage Inquiries",
+
+    // Confirmation sent to the visitor when the form is submitted; subject and opening line per inquiry heading
+    "email_greeting" => "Hello :name,",
+    "email_subjects" => [
+        "ministry" => "Thank you for your interest in our ministry",
+        "group_study" => "Your interest in Group Bible Study",
+        "one_to_one" => "Your interest in One-to-One Bible Study",
+        "worship" => "Your question about our Worship Service",
+        "subscribe" => "Your request to subscribe to the site",
+        "other" => "We received your message",
+        "pastoral" => "Your message to the Pastoral Team",
+    ],
+    "email_intros" => [
+        "ministry" => "Thank you for your interest in our ministry. Someone from our church will write back to tell you more about us.",
+        "group_study" => "Thank you for your interest in our group Bible studies. We will write back with the details of the study.",
+        "one_to_one" => "Thank you for your interest in one-to-one Bible study. We will write back to connect you with a mentor.",
+        "worship" => "Thank you for your interest in our worship service. We will write back with the information you need.",
+        "subscribe" => "Thank you for asking to subscribe to the site. We will review your request and write back soon.",
+        "other" => "Thank you for writing to us. We will get back to you soon.",
+        "pastoral" => "Your message has been passed on to the pastoral team, who will get back to you soon.",
+    ],
+
 ];

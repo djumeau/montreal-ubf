@@ -7,9 +7,12 @@ use App\Enums\InquiryType;
 use App\Enums\Role;
 use App\Models\Event;
 use App\Models\Inquiry;
+use App\Notifications\InquiryReceived;
+use App\Notifications\InquirySubmitted;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\View\View;
 
 class ContactController extends Controller
@@ -77,13 +80,28 @@ class ContactController extends Controller
             'message' => ['required', 'string', 'max:5000'],
         ]);
 
-        Inquiry::create([
+        $inquiry = Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'user' => Auth::check(),
             'inquiry' => $validated['inquiring_about'],
             'message' => $validated['message'],
         ]);
+
+        // Two emails: the full message to the church, and a confirmation (without the message) to the visitor.
+        // The message is already saved for the dashboard, so a mail failure is logged rather than shown to the visitor.
+        $emails = [
+            fn () => Notification::route('mail', config('mail.from.address'))->notify(new InquirySubmitted($inquiry)),
+            fn () => Notification::route('mail', [$inquiry->email => $inquiry->name])->notify(new InquiryReceived($inquiry)),
+        ];
+
+        foreach ($emails as $send) {
+            try {
+                $send();
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
 
         return back()->with('status', __('contact.status_received'));
     }

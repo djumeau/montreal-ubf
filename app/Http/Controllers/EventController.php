@@ -28,7 +28,7 @@ class EventController extends Controller
         // Group Bible studies are left out (managed on the admin dashboard)
         $events = Event::visibleTo($request->user())
             ->publicListing()
-            ->with('bibleStudy.book')
+            ->with(['bibleStudy.book', 'bibleStudy.series.book']) // The series (and its book) locate the study's images
             ->withCount(['attachments as documents_count' => fn ($query) => $query->where('locale', $locale)->where('type', 'document')])
             ->search($search);
 
