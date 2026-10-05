@@ -36,7 +36,15 @@ class UserManagementController extends Controller
             'role' => Role::GUEST->value,
         ]);
 
-        $user->notify(new NewUserWelcome($newPassword));
+        // Without the email nobody knows the password: the account is removed so it can be created again
+        try {
+            $user->notify(new NewUserWelcome($newPassword));
+        } catch (\Throwable $e) {
+            report($e);
+            $user->delete();
+
+            return back()->withInput()->with('error', __('dashboard/index.user_email_failed', ['name' => $user->name]));
+        }
 
         return back()->with('status', __('dashboard/index.user_created', ['name' => $user->name]));
     }

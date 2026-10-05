@@ -34,6 +34,7 @@ return [
     "add_user" => "Ajouter un utilisateur",
     "add_new_user" => "Ajouter un nouvel utilisateur",
     "create" => "Créer",
+    "user_email_failed" => "Le courriel à :name n'a pas pu être envoyé; le compte n'a donc pas été créé. Veuillez réessayer plus tard.",
     "user_created" => "Utilisateur créé. Un courriel avec les instructions de connexion a été envoyé à :name.",
     "new_user_email_subject" => "Vous avez maintenant accès au site web",
     "new_user_email_greeting" => "Bonjour :name,",

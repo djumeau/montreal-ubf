@@ -87,6 +87,17 @@ class ResetPasswordTest extends TestCase
         $this->assertTrue(Hash::check('old-password', $this->member->fresh()->password));
     }
 
+    public function test_a_new_user_is_not_kept_when_the_welcome_email_cannot_be_sent(): void
+    {
+        config(['mail.default' => 'smtp', 'mail.mailers.smtp.host' => '127.0.0.1', 'mail.mailers.smtp.port' => 1, 'mail.mailers.smtp.timeout' => 1]);
+
+        $this->actingAs($this->admin)
+            ->post('/manage-users', ['name' => 'Marie Tremblay', 'email' => 'marie@example.com'])
+            ->assertSessionHas('error');
+
+        $this->assertDatabaseMissing('users', ['email' => 'marie@example.com']);
+    }
+
     public function test_only_management_roles_may_reset_a_password(): void
     {
         Notification::fake();

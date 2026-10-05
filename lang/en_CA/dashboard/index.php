@@ -34,6 +34,7 @@ return [
     "add_user" => "Add User",
     "add_new_user" => "Add New User",
     "create" => "Create",
+    "user_email_failed" => "The email to :name could not be sent, so the account was not created. Please try again later.",
     "user_created" => "User created. An email with login instructions has been sent to :name.",
     "new_user_email_subject" => "You've been given access to the website",
     "new_user_email_greeting" => "Hello :name,",
