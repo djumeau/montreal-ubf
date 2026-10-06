@@ -46,6 +46,13 @@
                 <x-inputs.text-area class="max-w-100" label="{{ __('contact.message') }}" id="message" name="message"
                     :value="old('message', $prefill['message'])" />
 
+                <!-- What the name and email are used for, told where they are collected, with a link to the Privacy Policy -->
+                <p class="max-w-100 text-xs text-slate-300">
+                    {{ __('contact.privacy_note') }}
+                    <a href="{{ __('nav.confidentiality.url') }}"
+                        class="underline text-sky-400 hover:text-sky-300">{{ __('nav.confidentiality.title') }}</a>.
+                </p>
+
                 <x-submit>
                     {{ __('contact.send') }}
                 </x-submit>

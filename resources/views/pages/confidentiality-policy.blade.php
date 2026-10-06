@@ -18,11 +18,11 @@
     {{-- Dynamic localized date rendering --}}
     <p class="text-xs italic text-slate-100 mb-2">
         @if ($isFrench)
-            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-01')->isoFormat('D MMMM YYYY')]) }}
-            {{-- Output: Dernière mise à jour : 1 octobre 2026 --}}
+            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-06')->isoFormat('D MMMM YYYY')]) }}
+            {{-- Output: Dernière mise à jour : 6 octobre 2026 --}}
         @else
-            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-01')->isoFormat('MMMM D, YYYY')]) }}
-            {{-- Output: Last Updated: October 1, 2026 --}}
+            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-06')->isoFormat('MMMM D, YYYY')]) }}
+            {{-- Output: Last Updated: October 6, 2026 --}}
         @endif
     </p>
 

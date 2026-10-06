@@ -17,6 +17,9 @@ return [
 
     "inquiring_about" => "Sujet",
 
+    // Avis au-dessus du bouton Envoyer; suivi d'un lien vers la politique de confidentialité
+    "privacy_note" => "Votre nom et votre adresse courriel servent uniquement à confirmer la réception de votre message et à y répondre. Pour en savoir plus, consultez notre",
+
     // Message rempli à l'arrivée depuis une étude de l'horaire des études bibliques
     "prefill_in_person" => "Veuillez me donner plus d'information sur le lieu de l'étude biblique.",
     "prefill_online" => "Je veux participer à : :title.",

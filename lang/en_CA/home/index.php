@@ -17,7 +17,7 @@ return [
     "privacy" => [
         "title" => "Privacy Policy",
         "last_updated" => "Last updated: :date",
-        'intro' => 'Welcome to our web site. We are committed to processing your personal data transparently and securely, in strict compliance with Quebec\'s Law 25. We keep what we collect to a minimum and store it with our web hosting provider.',
+        'intro' => 'Welcome to our web site. We are committed to processing your personal data transparently and securely, in strict compliance with Quebec\'s Law 25. We keep what we collect to a minimum; section 3 explains where it is stored.',
         'sections' => [
             [
                 'title' => '1. The Personal Information We Collect',
@@ -25,19 +25,19 @@ return [
             ],
             [
                 'title' => '2. Why Your Data is Processed',
-                'text' => 'We process your personal details strictly to authenticate your identity, grant secure access to your account profile, send essential account emails (welcome message, password reset), reply to the inquiries you send us through the contact form, and render your preferred language setting across browsing sessions.'
+                'text' => 'We process your personal details strictly to authenticate your identity, grant secure access to your account profile, send essential account emails (welcome message, password reset), confirm by email that we received a message you sent through the contact form and reply to it, and render your preferred language setting across browsing sessions.'
             ],
             [
                 'title' => '3. Data Storage and Retention',
-                'text' => 'Your information is stored with our web hosting provider, whose servers may be located outside Quebec. We retain your account details only for as long as your account remains active; deleting your account permanently removes your profile and profile picture. Contact form messages are kept only for as long as needed to reply and follow up on your inquiry.'
+                'text' => 'Your account and the messages sent through the contact form are stored with our web hosting provider, which also sends the site\'s emails; its servers may be located outside Quebec. A copy of each contact form message, with your name and email address, is also delivered to our church inbox, a Gmail account provided by Google, whose servers are located outside Quebec. We retain your account details only for as long as your account remains active; deleting your account permanently removes your profile and profile picture. Contact form messages, and their copy in our inbox, are kept only for as long as needed to reply and follow up on your inquiry.'
             ],
             [
                 'title' => '4. Third-Party Disclosures',
-                'text' => 'We do not sell, rent, lease, or share your personal details with third-party advertising companies or outside analytics companies. Event pages can display a Google Maps map: it is only loaded if you accept cookies on the consent banner, and otherwise stays disabled. Some pages also link to external services (Google Maps, Zoom, Zeffy, BibleGateway, social media); these services may collect information such as your IP address under their own privacy policies.'
+                'text' => 'We do not sell, rent, lease, or share your personal details with third-party advertising companies or outside analytics companies. Your information is only passed to the service providers we need to run the site: our web hosting provider and, for contact form messages, Google (Gmail), as described in section 3. Event pages can display a Google Maps map: it is only loaded if you accept cookies on the consent banner, and otherwise stays disabled. Some pages also link to external services (Google Maps, Zoom, Zeffy, BibleGateway, social media); these services may collect information such as your IP address under their own privacy policies.'
             ],
             [
                 'title' => '5. Your Legal Rights Under Law 25',
-                'text' => 'You retain total control over your digital footprint. You have the right to access and request a summary of your files, correct inaccuracies, or invoke your right to erasure to demand that we permanently wipe your account.'
+                'text' => 'You retain total control over your digital footprint. You have the right to access and request a summary of your files, to receive the information you gave us in a commonly used electronic format, to correct inaccuracies, to withdraw your consent, and to invoke your right to erasure to demand that we permanently delete your account or the messages you sent us. If you are not satisfied with our reply, you may file a complaint with the Commission d\'accès à l\'information du Québec (cai.gouv.qc.ca).'
             ],
             [
                 'title' => '6. Contact Our Privacy Officer',

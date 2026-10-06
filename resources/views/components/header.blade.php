@@ -77,19 +77,20 @@
                     <span class="hover:underline">{{ __('nav.info.title') }}</span>
                 </button>
 
+                <!-- Each item of the dropdowns has a cross as its bullet (icon="cross") -->
                 <div x-show="open" x-transition x-cloak
                     class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-1 z-50">
 
                     <div class="px-4 py-1">
-                        <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive">{{__('nav.about_us.title')}}</x-nav-link>
+                        <x-nav-link icon="cross" url="{{ __('nav.about_us.url') }}" :active="$aboutActive">{{__('nav.about_us.title')}}</x-nav-link>
                     </div>
 
                     <div class="px-4 py-1">
-                        <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
+                        <x-nav-link icon="cross" url="{{ __('nav.events.url') }}" :active="$eventsActive" >{{__('nav.events.title')}}</x-nav-link>
                     </div>
 
                     <div class="px-4 py-1">
-                        <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive">{{__('nav.confidentiality.title')}}</x-nav-link>
+                        <x-nav-link icon="cross" url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive">{{__('nav.confidentiality.title')}}</x-nav-link>
                     </div>
 
                 </div>
@@ -109,11 +110,11 @@
                     class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-1 z-50">
 
                     <div class="px-4 py-1 whitespace-nowrap">
-                        <x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive">{{__('nav.bible_studies.title')}}</x-nav-link>
+                        <x-nav-link icon="cross" url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive">{{__('nav.bible_studies.title')}}</x-nav-link>
                     </div>
 
                     <div class="px-4 py-1 whitespace-nowrap">
-                        <x-nav-link url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive">{{__('nav.study_schedule.title')}}</x-nav-link>
+                        <x-nav-link icon="cross" url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive">{{__('nav.study_schedule.title')}}</x-nav-link>
                     </div>
 
                 </div>
@@ -158,25 +159,25 @@
         <div class="p-3 text-gray-300 font-semibold tracking-wide">{{ __('nav.info.title') }}</div>
 
         <div class="pl-6">
-            <x-nav-link url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
+            <x-nav-link icon="cross" url="{{ __('nav.about_us.url') }}" :active="$aboutActive" :isMobile='true'>{{__('nav.about_us.title')}}</x-nav-link>
         </div>
 
         <div class="pl-6">
-            <x-nav-link url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
+            <x-nav-link icon="cross" url="{{ __('nav.events.url') }}" :active="$eventsActive" :isMobile='true'>{{__('nav.events.title')}}</x-nav-link>
         </div>
 
         <div class="pl-6">
-            <x-nav-link url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
+            <x-nav-link icon="cross" url="{{ __('nav.confidentiality.url') }}" :active="$privacyActive" :isMobile='true'>{{__('nav.confidentiality.title')}}</x-nav-link>
         </div>
 
         <div class="p-3 text-gray-300 font-semibold tracking-wide">{{ __('nav.resources.title') }}</div>
 
         <div class="pl-6">
-            <x-nav-link url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive" :isMobile='true'>{{__('nav.bible_studies.title')}}</x-nav-link>
+            <x-nav-link icon="cross" url="{{ __('nav.bible_studies.url') }}" :active="$bibleStudiesActive" :isMobile='true'>{{__('nav.bible_studies.title')}}</x-nav-link>
         </div>
 
         <div class="pl-6">
-            <x-nav-link url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive" :isMobile='true'>{{__('nav.study_schedule.title')}}</x-nav-link>
+            <x-nav-link icon="cross" url="{{ __('nav.study_schedule.url') }}" :active="$scheduleActive" :isMobile='true'>{{__('nav.study_schedule.title')}}</x-nav-link>
         </div>
 
         <x-nav-link url="{{ __('nav.giving.url') }}" :active="$givingActive" :isMobile='true'>{{__('nav.giving.title')}}</x-nav-link>

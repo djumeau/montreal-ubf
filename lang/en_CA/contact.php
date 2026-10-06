@@ -17,6 +17,9 @@ return [
 
     "inquiring_about" => "Inquiry",
 
+    // Notice above the Send button; followed by a link to the Privacy Policy
+    "privacy_note" => "Your name and email address are used only to confirm that we received your message and to answer it. To learn more, read our",
+
     // Message filled in when arriving from a study of the Bible Study Schedule
     "prefill_in_person" => "Please provide more information on the location of the Bible study.",
     "prefill_online" => "I want to attend :title.",
