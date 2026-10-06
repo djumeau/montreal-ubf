@@ -38,7 +38,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return back()->with('status', __('dashboard/index.profile_updated'));
+        return back()->with('status', __('dashboard/profile/index.profile_updated'));
     }
 
     /**
@@ -78,7 +78,7 @@ class ProfileController extends Controller
             $user->refresh();
         }
 
-        return back()->with('status', __('dashboard/index.avatar_updated'));
+        return back()->with('status', __('dashboard/profile/index.avatar_updated'));
     }
 
     /**
@@ -103,7 +103,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('success', __('dashboard/index.account_deleted'));
+        return redirect()->route('home')->with('success', __('dashboard/profile/index.account_deleted'));
     }
 
     /**

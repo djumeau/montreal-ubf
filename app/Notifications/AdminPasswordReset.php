@@ -26,10 +26,10 @@ class AdminPasswordReset extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('dashboard/index.password_reset_email_subject'))
-            ->greeting(__('dashboard/index.password_reset_email_greeting', ['name' => $notifiable->name]))
-            ->line(__('dashboard/index.password_reset_email_line'))
-            ->line(MailText::exact('dashboard/index.password_reset_email_password', ['password' => $this->password]))
-            ->line(__('dashboard/index.password_reset_email_action'));
+            ->subject(__('dashboard/manage-users/index.password_reset_email_subject'))
+            ->greeting(__('dashboard/manage-users/index.password_reset_email_greeting', ['name' => $notifiable->name]))
+            ->line(__('dashboard/manage-users/index.password_reset_email_line'))
+            ->line(MailText::exact('dashboard/manage-users/index.password_reset_email_password', ['password' => $this->password]))
+            ->line(__('dashboard/manage-users/index.password_reset_email_action'));
     }
 }

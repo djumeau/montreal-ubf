@@ -32,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Components kept with the Manage Inquiries dashboard page, e.g. <x-inquiry-items::inquiry-item :inquiry="$inquiry" />
         Blade::anonymousComponentPath(resource_path('views/pages/dashboards/inquiry-items'), 'inquiry-items');
+
+        // Components kept with the Manage Users dashboard page, e.g. <x-manage-users::reset-password-button :user="$user" />
+        Blade::anonymousComponentPath(resource_path('views/pages/dashboards/manage-users'), 'manage-users');
     }
 }

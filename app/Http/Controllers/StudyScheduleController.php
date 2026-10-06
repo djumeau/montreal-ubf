@@ -69,7 +69,7 @@ class StudyScheduleController extends Controller
 
         $event = Event::create($this->eventFields($validated));
 
-        return back()->with('status', __('dashboard/index.schedule_event_created'))
+        return back()->with('status', __('dashboard/manage-study-schedule/index.schedule_event_created'))
             ->with('warning', $this->overlapWarning($event));
     }
 
@@ -86,7 +86,7 @@ class StudyScheduleController extends Controller
 
         $event->update($this->eventFields($validated));
 
-        return back()->with('status', __('dashboard/index.schedule_event_updated'))
+        return back()->with('status', __('dashboard/manage-study-schedule/index.schedule_event_updated'))
             ->with('warning', $this->overlapWarning($event));
     }
 
@@ -129,9 +129,9 @@ class StudyScheduleController extends Controller
             $copied++;
         }
 
-        $status = trans_choice('dashboard/index.schedule_week_copied', $copied, ['count' => $copied]);
+        $status = trans_choice('dashboard/manage-study-schedule/index.schedule_week_copied', $copied, ['count' => $copied]);
         $warning = $skipped
-            ? trans_choice('dashboard/index.schedule_week_skipped', count($skipped), ['events' => implode(', ', $skipped)])
+            ? trans_choice('dashboard/manage-study-schedule/index.schedule_week_skipped', count($skipped), ['events' => implode(', ', $skipped)])
             : null;
 
         // Back to Manage Schedule (the page the form is on), on the following week
@@ -159,7 +159,7 @@ class StudyScheduleController extends Controller
             ->map(fn (Event $other) => ($other->current_title ?: $other->category->label())
                 . ' (' . $other->start_date->isoFormat($timeFormat) . ' – ' . $other->scheduleEnd()->isoFormat($timeFormat) . ')');
 
-        return $overlapping->isEmpty() ? null : __('dashboard/index.schedule_event_overlaps', ['events' => $overlapping->implode(', ')]);
+        return $overlapping->isEmpty() ? null : __('dashboard/manage-study-schedule/index.schedule_event_overlaps', ['events' => $overlapping->implode(', ')]);
     }
 
     /**
@@ -193,19 +193,19 @@ class StudyScheduleController extends Controller
     private function attributes(): array
     {
         return [
-            'category' => __('dashboard/index.event_type'),
+            'category' => __('dashboard/manage-study-schedule/index.event_type'),
             'title_en' => __('dashboard/index.title_en'),
             'title_fr' => __('dashboard/index.title_fr'),
-            'date' => __('dashboard/index.date'),
-            'end_day' => __('dashboard/index.end_day'),
-            'start_time' => __('dashboard/index.start_time'),
-            'end_time' => __('dashboard/index.end_time'),
-            'bible_study_id' => __('dashboard/index.schedule_bible_study'),
-            'contact_name' => __('dashboard/index.leader'),
-            'location' => __('dashboard/index.location'),
-            'color' => __('dashboard/index.colour'),
-            'recurring' => __('dashboard/index.recurring'),
-            'minimum_profile' => __('dashboard/index.minimum_profile'),
+            'date' => __('dashboard/manage-study-schedule/index.date'),
+            'end_day' => __('dashboard/manage-study-schedule/index.end_day'),
+            'start_time' => __('dashboard/manage-study-schedule/index.start_time'),
+            'end_time' => __('dashboard/manage-study-schedule/index.end_time'),
+            'bible_study_id' => __('dashboard/manage-study-schedule/index.schedule_bible_study'),
+            'contact_name' => __('dashboard/manage-study-schedule/index.leader'),
+            'location' => __('dashboard/manage-study-schedule/index.location'),
+            'color' => __('dashboard/manage-study-schedule/index.colour'),
+            'recurring' => __('dashboard/manage-study-schedule/index.recurring'),
+            'minimum_profile' => __('dashboard/manage-study-schedule/index.minimum_profile'),
         ];
     }
 

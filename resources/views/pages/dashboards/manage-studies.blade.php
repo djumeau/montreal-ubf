@@ -31,9 +31,9 @@
     $bookFilterOptions = ['' => __('dashboard/index.all_books')] + $bookGroups($withCount($bookName));
 
     // Add / Edit modal selects: plain names; empty option means no series / no book yet
-    $seriesOptions = ['' => __('dashboard/index.no_series_option')]
+    $seriesOptions = ['' => __('dashboard/manage-studies/index.no_series_option')]
         + $seriesList->mapWithKeys(fn ($series) => [$series->id => $seriesName($series)])->all();
-    $bookOptions = ['' => __('dashboard/index.select_book')] + $bookGroups($bookName);
+    $bookOptions = ['' => __('dashboard/manage-studies/index.select_book')] + $bookGroups($bookName);
 
     // Image slots (shared by EN and FR), in the order shown in the Add / Edit modals
     $imageTypes = ['square' => 'image_square', 'desktop' => 'image_desktop', 'mobile' => 'image_mobile'];
@@ -73,7 +73,7 @@
             'desktop' => $study->imageUrl('desktop'), // Preview at the top of the Edit modal
             'name' => $isFrench ? $study->title_fr : $study->title_en,
             'attachments' => $study->attachments_count,
-            'attachments_deleted' => trans_choice('dashboard/index.delete_study_attachments', $study->attachments_count, ['count' => $study->attachments_count]),
+            'attachments_deleted' => trans_choice('dashboard/manage-studies/index.delete_study_attachments', $study->attachments_count, ['count' => $study->attachments_count]),
             'passage' => $formatPassage($study),
             'files' => $groupAttachments($study),
             'attachments_url' => route('attachments.store', $study),
@@ -90,8 +90,8 @@
         'locale' => $failedUpload ? old('locale', '') : ($isFrench ? 'fr_CA' : 'en_CA'),
         'type' => $failedUpload ? old('type', '') : 'question_sheet',
     ];
-    $localeOptions = collect($attachmentLocales)->mapWithKeys(fn ($locale) => [$locale => __('dashboard/index.language_' . $locale)])->all();
-    $typeOptions = collect($attachmentTypes)->mapWithKeys(fn ($type) => [$type => __('dashboard/index.attachment_' . $type)])->all();
+    $localeOptions = collect($attachmentLocales)->mapWithKeys(fn ($locale) => [$locale => __('dashboard/manage-studies/index.language_' . $locale)])->all();
+    $typeOptions = collect($attachmentTypes)->mapWithKeys(fn ($type) => [$type => __('dashboard/manage-studies/index.attachment_' . $type)])->all();
 
     // Add form state; refilled from old input only after a failed create
     $failedCreate = $errors->createStudy->any();
@@ -119,7 +119,7 @@
         : ['id' => null, 'study_series_id' => '', 'book_id' => '', 'bible_passage' => '', 'title_en' => '', 'title_fr' => '', 'images' => [], 'desktop' => null, 'update_url' => ''];
 
     // List heading: "Bible Studies – {series}" when filtered by series
-    $listHeading = __('dashboard/index.bible_studies')
+    $listHeading = __('dashboard/manage-studies/index.bible_studies')
         . ($currentSeries ? ' – ' . ($isFrench ? $currentSeries->name_fr : $currentSeries->name_en) : '');
 @endphp
 
@@ -203,12 +203,12 @@
                 <div class="w-full border rounded-sm border-slate-100">
 
                     <div class="p-4 flex items-center justify-between">
-                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/index.manage_studies') }}
+                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-studies/index.manage_studies') }}
                         </h2>
 
                         <button type="button" @click="showAddStudiesModal = true"
                             class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                            <i class="fas fa-plus mr-1"></i>{{ __('dashboard/index.add_study') }}
+                            <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-studies/index.add_study') }}
                         </button>
                     </div>
 
@@ -280,8 +280,8 @@
                                     <th class="py-2 px-2">#</th>
                                     <th class="py-2 px-2">{{ __('dashboard/index.image') }}</th>
                                     <th class="py-2 px-2 text-left">{{ __('dashboard/index.title_column') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.bible_passage') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.attachments_count') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/manage-studies/index.bible_passage') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/manage-studies/index.attachments_count') }}</th>
                                     <th class="py-2 px-2">{{ __('dashboard/index.actions') }}</th>
                                 </tr>
                             </thead>
@@ -302,8 +302,8 @@
                                         <td class="py-3 px-2 text-slate-300 whitespace-nowrap">{{ $formatPassage($study) }}</td>
                                         <td class="py-3 px-2">
                                             <button type="button" @click="openAttachments(@js($rowData[$study->id]))"
-                                                title="{{ __('dashboard/index.manage_attachments') }}"
-                                                aria-label="{{ __('dashboard/index.attachments') }}: {{ $study->attachments_count }}"
+                                                title="{{ __('dashboard/manage-studies/index.manage_attachments') }}"
+                                                aria-label="{{ __('dashboard/manage-studies/index.attachments') }}: {{ $study->attachments_count }}"
                                                 class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                 <i class="fa-solid fa-paperclip" aria-hidden="true"></i>{{ $study->attachments_count }}
                                             </button>
@@ -314,7 +314,7 @@
                                                     class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
                                                 </button>
-                                                <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/index.delete_study') }}"
+                                                <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/manage-studies/index.delete_study') }}"
                                                     class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
@@ -348,13 +348,13 @@
                                     </div>
 
                                     <div class="text-slate-300 text-sm">
-                                        {{ __('dashboard/index.bible_passage') }}: {{ $formatPassage($study) }}
+                                        {{ __('dashboard/manage-studies/index.bible_passage') }}: {{ $formatPassage($study) }}
                                     </div>
                                     <div class="text-slate-300 text-sm flex items-center gap-2 mt-1 mb-3">
-                                        {{ __('dashboard/index.attachments') }}:
+                                        {{ __('dashboard/manage-studies/index.attachments') }}:
                                         <button type="button" @click="openAttachments(@js($rowData[$study->id]))"
-                                            title="{{ __('dashboard/index.manage_attachments') }}"
-                                            aria-label="{{ __('dashboard/index.attachments') }}: {{ $study->attachments_count }}"
+                                            title="{{ __('dashboard/manage-studies/index.manage_attachments') }}"
+                                            aria-label="{{ __('dashboard/manage-studies/index.attachments') }}: {{ $study->attachments_count }}"
                                             class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fa-solid fa-paperclip" aria-hidden="true"></i>{{ $study->attachments_count }}
                                         </button>
@@ -365,7 +365,7 @@
                                             class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
                                         </button>
-                                        <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/index.delete_study') }}"
+                                        <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/manage-studies/index.delete_study') }}"
                                             class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
@@ -399,7 +399,7 @@
             <div @click.away="showAddStudiesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.add_study') }}</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-studies/index.add_study') }}</h3>
 
                 <form class="w-full" action="{{ route('study.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -414,7 +414,7 @@
                     </div>
 
                     <x-inputs.text class="mb-3" id="add_bible_passage" name="bible_passage" bag="createStudy" model="addStudy.bible_passage"
-                        :label="__('dashboard/index.bible_passage')" :placeholder="__('dashboard/index.passage_placeholder')" />
+                        :label="__('dashboard/manage-studies/index.bible_passage')" :placeholder="__('dashboard/manage-studies/index.passage_placeholder')" />
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3 mb-4">
                         <x-inputs.text id="add_title_en" name="title_en" bag="createStudy" model="addStudy.title_en"
@@ -456,7 +456,7 @@
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">
-                    {{ __('dashboard/index.edit_study') }}
+                    {{ __('dashboard/manage-studies/index.edit_study') }}
                 </h3>
 
                 <form x-ref="editStudyForm" class="w-full" :action="editStudy.update_url" method="POST" enctype="multipart/form-data">
@@ -481,7 +481,7 @@
                     </div>
 
                     <x-inputs.text class="mb-3" id="edit_bible_passage" name="bible_passage" bag="updateStudy" model="editStudy.bible_passage"
-                        :label="__('dashboard/index.bible_passage')" :placeholder="__('dashboard/index.passage_placeholder')" />
+                        :label="__('dashboard/manage-studies/index.bible_passage')" :placeholder="__('dashboard/manage-studies/index.passage_placeholder')" />
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3 mb-4">
                         <x-inputs.text id="edit_title_en" name="title_en" bag="updateStudy" model="editStudy.title_en"
@@ -505,8 +505,8 @@
                         <!-- Same as the list's paperclip button: swaps this modal for the Attachments modal (unsaved edits are dropped) -->
                         <button type="button" x-show="editStudy.attachments_url"
                             @click="showEditStudiesModal = false; openAttachments(editStudy)"
-                            title="{{ __('dashboard/index.manage_attachments') }}"
-                            :aria-label="@js(__('dashboard/index.attachments')) + ': ' + editStudy.attachments"
+                            title="{{ __('dashboard/manage-studies/index.manage_attachments') }}"
+                            :aria-label="@js(__('dashboard/manage-studies/index.attachments')) + ': ' + editStudy.attachments"
                             class="inline-flex items-center justify-center gap-1.5 min-w-9 px-3 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                             <i class="fa-solid fa-paperclip" aria-hidden="true"></i><span x-text="editStudy.attachments"></span>
                         </button>
@@ -534,7 +534,7 @@
             <div @click.away="showDeleteStudiesModal = false"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700 text-center whitespace-normal">
 
-                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/index.delete_study_confirm') }}</h3>
+                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/manage-studies/index.delete_study_confirm') }}</h3>
                 <p class="text-slate-100 mb-2" x-text="deleteStudy.name || '#' + deleteStudy.id"></p>
 
                 <!-- Attachment rows are deleted with the study (cascadeOnDelete) -->
@@ -567,7 +567,7 @@
             <div @click.away="showAttachmentsModal = false"
                 class="bg-slate-800 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold">{{ __('dashboard/index.manage_attachments') }}</h3>
+                <h3 class="text-lg font-bold">{{ __('dashboard/manage-studies/index.manage_attachments') }}</h3>
                 <p class="text-sm text-slate-300 mb-4">
                     <span x-text="attachmentsStudy.name || '#' + attachmentsStudy.id"></span>
                     <span class="text-slate-400" x-text="'· ' + attachmentsStudy.passage"></span>
@@ -586,7 +586,7 @@
                         <section class="border border-slate-600 rounded-sm px-3 pb-3 max-h-80 overflow-y-auto">
                             <!-- Language name stays visible while scrolling -->
                             <h4 class="sticky top-0 z-10 bg-slate-800 pt-3 pb-2 font-bold text-slate-100">
-                                {{ __('dashboard/index.language_' . $locale) }}
+                                {{ __('dashboard/manage-studies/index.language_' . $locale) }}
                                 <!-- Files in this language, all types together; nothing shown when there are none -->
                                 <span x-data="{ get count() { return Object.values(attachmentsStudy.files?.{{ $locale }} ?? {}).reduce((total, files) => total + files.length, 0) } }"
                                     x-text="count ? '(' + count + ')' : ''"></span>
@@ -595,7 +595,7 @@
                             @foreach ($attachmentTypes as $type)
                                 <div class="mb-3 last:mb-0">
                                     <h5 class="text-xs uppercase tracking-wider text-slate-400 mb-1">
-                                        {{ __('dashboard/index.attachment_' . $type) }}
+                                        {{ __('dashboard/manage-studies/index.attachment_' . $type) }}
                                     </h5>
 
                                     <ul class="space-y-1">
@@ -614,7 +614,7 @@
                                                     <i class="fa-solid fa-eye" aria-hidden="true"></i><span x-text="file.views"></span>
                                                 </a>
                                                 <button type="button" x-show="!confirming" @click="confirming = true"
-                                                    aria-label="{{ __('dashboard/index.delete_attachment') }}"
+                                                    aria-label="{{ __('dashboard/manage-studies/index.delete_attachment') }}"
                                                     class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
@@ -624,7 +624,7 @@
                                                     class="shrink-0 flex items-center gap-1 text-xs">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <span class="text-amber-300">{{ __('dashboard/index.delete_attachment') }}?</span>
+                                                    <span class="text-amber-300">{{ __('dashboard/manage-studies/index.delete_attachment') }}?</span>
                                                     <button type="button" @click="confirming = false"
                                                         class="px-1.5 py-0.5 border rounded-sm hover:bg-sky-950/50 cursor-pointer">
                                                         {{ __('dashboard/index.no') }}
@@ -639,7 +639,7 @@
 
                                         <li class="text-sm text-slate-500 italic px-2"
                                             x-show="!(attachmentsStudy.files?.{{ $locale }}?.{{ $type }} ?? []).length">
-                                            {{ __('dashboard/index.no_attachments') }}
+                                            {{ __('dashboard/manage-studies/index.no_attachments') }}
                                         </li>
                                     </ul>
                                 </div>
@@ -656,21 +656,21 @@
                     <!-- Lets the page reopen this modal for the same study after a failed upload -->
                     <input type="hidden" name="attachments_study_id" :value="attachmentsStudy.id">
 
-                    <h4 class="font-bold text-slate-100 mb-2">{{ __('dashboard/index.upload_attachments') }}</h4>
+                    <h4 class="font-bold text-slate-100 mb-2">{{ __('dashboard/manage-studies/index.upload_attachments') }}</h4>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
                         <x-inputs.select id="upload_locale" name="locale" bag="uploadAttachments" model="uploadForm.locale"
-                            :options="$localeOptions" :label="__('dashboard/index.language')" />
+                            :options="$localeOptions" :label="__('dashboard/manage-studies/index.language')" />
 
                         <x-inputs.select id="upload_type" name="type" bag="uploadAttachments" model="uploadForm.type"
-                            :options="$typeOptions" :label="__('dashboard/index.attachment_type')" />
+                            :options="$typeOptions" :label="__('dashboard/manage-studies/index.attachment_type')" />
                     </div>
 
                     <x-inputs.file class="mb-2" id="upload_files" name="files" multiple bag="uploadAttachments"
                         accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        :label="__('dashboard/index.attachment_files')" />
+                        :label="__('dashboard/manage-studies/index.attachment_files')" />
 
-                    <p class="text-xs text-slate-400 mb-3">{{ __('dashboard/index.attachment_files_hint') }}</p>
+                    <p class="text-xs text-slate-400 mb-3">{{ __('dashboard/manage-studies/index.attachment_files_hint') }}</p>
 
                     <div class="flex justify-end">
                         <x-submit>
@@ -684,7 +684,7 @@
                     <!-- Same as the list's Edit button: swaps this modal for the Edit modal of the same study -->
                     <button type="button" @click="showAttachmentsModal = false; openEdit(attachmentsStudy)"
                         class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                        <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit_study') }}
+                        <i class="fas fa-pen mr-1"></i>{{ __('dashboard/manage-studies/index.edit_study') }}
                     </button>
 
                     <button type="button" @click="showAttachmentsModal = false"

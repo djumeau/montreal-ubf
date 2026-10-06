@@ -51,11 +51,11 @@
                     x-data="{ showDeleteModal: false }"
                     class="flex flex-row justify-between items-center">
 
-                    <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/index.update_profile') }}</h2>
+                    <h2 class="p-4 text-lg font-bold mb-2 text-slate-100">{{ __('dashboard/profile/index.update_profile') }}</h2>
 
                     <button type="button" @click="showDeleteModal = true"
                         class="px-2 py-2 mr-4 bg-red-700 hover:bg-red-800 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                        {{ __('dashboard/index.delete_user') }}
+                        {{ __('dashboard/profile/index.delete_user') }}
                     </button>
 
                     <!-- AlpineJS Modal for Delete User Confirmation -->
@@ -110,7 +110,7 @@
 
                         <button type="button" @click="showAvatarModal = true"
                             class="px-2 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                            <i class="fas fa-camera mr-1"></i>{{ __('dashboard/index.change_avatar') }}
+                            <i class="fas fa-camera mr-1"></i>{{ __('dashboard/profile/index.change_avatar') }}
                         </button>
 
                     </div>
@@ -152,7 +152,7 @@
             <div @click.away="showAvatarModal = false; avatarPreview = null"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.upload_new_avatar') }}</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/profile/index.upload_new_avatar') }}</h3>
 
                 <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -179,7 +179,7 @@
                                 <div class="flex flex-col items-center">
                                     <i class="fas fa-cloud-upload-alt text-3xl text-slate-100 mb-2"></i>
                                     <span class="text-sm font-medium text-slate-100">
-                                        {{ __('dashboard/index.select_image') }}
+                                        {{ __('dashboard/profile/index.select_image') }}
                                     </span>
                                 </div>
                             </template>
@@ -191,7 +191,7 @@
                                         class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md">
                                     <span
                                         class="text-xs text-emerald-600  font-semibold bg-white px-2.5 py-1 rounded-full">
-                                        <i class="fas fa-sync-alt mr-1"></i> {{ __('dashboard/index.select_image') }}
+                                        <i class="fas fa-sync-alt mr-1"></i> {{ __('dashboard/profile/index.select_image') }}
                                     </span>
                                 </div>
                             </template>

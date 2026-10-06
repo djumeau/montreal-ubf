@@ -165,11 +165,11 @@
                 <div class="w-full border rounded-sm border-slate-100">
 
                     <div class="p-4">
-                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/index.manage_schedule') }}</h2>
+                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-study-schedule/index.manage_schedule') }}</h2>
 
                         <!-- How to use the grid -->
                         <p class="mt-1 text-sm text-slate-300">
-                            <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i><em>{{ __('dashboard/index.schedule_hint') }}</em>
+                            <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i><em>{{ __('dashboard/manage-study-schedule/index.schedule_hint') }}</em>
                         </p>
                     </div>
 
@@ -229,7 +229,7 @@
 
                     <!-- Title and Close -->
                     <div class="shrink-0 flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
-                        <h3 id="study_modal_title" class="text-lg font-bold">{{ __('dashboard/index.schedule_event') }}</h3>
+                        <h3 id="study_modal_title" class="text-lg font-bold">{{ __('dashboard/manage-study-schedule/index.schedule_event') }}</h3>
                         <button type="button" @click="showStudyModal = false" aria-label="{{ __('dashboard/index.close') }}"
                             class="grid place-items-center size-8 text-slate-300 hover:text-white cursor-pointer">
                             <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
@@ -249,15 +249,15 @@
 
                         <!-- Type: Event / Conference / Bible study (group, in person or online) -->
                         <fieldset class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 py-4">
-                            <legend class="sr-only">{{ __('dashboard/index.event_type') }}</legend>
-                            <span class="font-medium" aria-hidden="true">{{ __('dashboard/index.event_type') }}</span>
+                            <legend class="sr-only">{{ __('dashboard/manage-study-schedule/index.event_type') }}</legend>
+                            <span class="font-medium" aria-hidden="true">{{ __('dashboard/manage-study-schedule/index.event_type') }}</span>
                             <div class="space-y-2">
                                 @foreach ($eventTypes as $type => $typeIcon)
                                     <label class="flex items-center gap-3 cursor-pointer">
                                         <input type="radio" name="category" value="{{ $type }}" x-model="form.category"
                                             class="size-4 accent-blue-600">
                                         <i class="fas {{ $typeIcon }} w-5 text-center" aria-hidden="true"></i>
-                                        {{ __('dashboard/index.event_type_' . $type) }}
+                                        {{ __('dashboard/manage-study-schedule/index.event_type_' . $type) }}
                                     </label>
                                 @endforeach
                                 @if ($scheduleErrors->has('category'))
@@ -288,17 +288,17 @@
                         <!-- Date, then an optional end date for an event ending on another day -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 py-3 border-t border-slate-700">
                             <label for="study_date" class="flex items-center gap-3 font-medium self-start sm:pt-2">
-                                <i class="fa-regular fa-calendar w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.date') }}
+                                <i class="fa-regular fa-calendar w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.date') }}
                             </label>
                             <div>
                                 <div class="flex flex-wrap items-center gap-3">
                                     <input id="study_date" type="date" name="date" x-model="form.date" required
                                         class="{{ $fieldClass('date') }} scheme-dark">
-                                    <span>{{ __('dashboard/index.time_to') }}</span>
+                                    <span>{{ __('dashboard/manage-study-schedule/index.time_to') }}</span>
                                     <input type="date" name="end_day" x-model="form.end_day" :min="form.date"
-                                        aria-label="{{ __('dashboard/index.end_day') }}" class="{{ $fieldClass('end_day') }} scheme-dark">
+                                        aria-label="{{ __('dashboard/manage-study-schedule/index.end_day') }}" class="{{ $fieldClass('end_day') }} scheme-dark">
                                 </div>
-                                <p class="text-xs text-slate-400 mt-1">{{ __('dashboard/index.end_day_hint') }}</p>
+                                <p class="text-xs text-slate-400 mt-1">{{ __('dashboard/manage-study-schedule/index.end_day_hint') }}</p>
                                 @foreach (['date', 'end_day'] as $dateField)
                                     @if ($scheduleErrors->has($dateField))
                                         <p class="text-xs text-red-500 mt-1">{{ $scheduleErrors->first($dateField) }}</p>
@@ -310,15 +310,15 @@
                         <!-- Time: start, then an optional end -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <span class="flex items-center gap-3 font-medium">
-                                <i class="fa-regular fa-clock w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.time') }}
+                                <i class="fa-regular fa-clock w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.time') }}
                             </span>
                             <div>
                                 <div class="flex items-center gap-3">
                                     <input type="time" name="start_time" x-model="form.start_time" required step="300"
-                                        aria-label="{{ __('dashboard/index.start_time') }}" class="{{ $fieldClass('start_time') }} scheme-dark">
-                                    <span>{{ __('dashboard/index.time_to') }}</span>
+                                        aria-label="{{ __('dashboard/manage-study-schedule/index.start_time') }}" class="{{ $fieldClass('start_time') }} scheme-dark">
+                                    <span>{{ __('dashboard/manage-study-schedule/index.time_to') }}</span>
                                     <input type="time" name="end_time" x-model="form.end_time" step="300"
-                                        aria-label="{{ __('dashboard/index.end_time') }}" class="{{ $fieldClass('end_time') }} scheme-dark">
+                                        aria-label="{{ __('dashboard/manage-study-schedule/index.end_time') }}" class="{{ $fieldClass('end_time') }} scheme-dark">
                                 </div>
                                 @foreach (['start_time', 'end_time'] as $timeField)
                                     @if ($scheduleErrors->has($timeField))
@@ -331,7 +331,7 @@
                         <!-- Recurring: unchecked sends the hidden 0 -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <label for="study_recurring" class="flex items-center gap-3 font-medium">
-                                <i class="fa-solid fa-repeat w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.recurring') }}
+                                <i class="fa-solid fa-repeat w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.recurring') }}
                             </label>
                             <div>
                                 <input type="hidden" name="recurring" value="0">
@@ -346,7 +346,7 @@
                         <!-- Minimum profile: who sees the event (this role and above; Guest is everyone, visitors included) -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 py-3 border-t border-slate-700">
                             <label for="study_minimum_profile" class="flex items-center gap-3 font-medium self-start sm:pt-2">
-                                <i class="fa-solid fa-user-lock w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.minimum_profile') }}
+                                <i class="fa-solid fa-user-lock w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.minimum_profile') }}
                             </label>
                             <div>
                                 <select id="study_minimum_profile" name="minimum_profile" x-model="form.minimum_profile"
@@ -355,7 +355,7 @@
                                         <option value="{{ $role->value }}">{{ $role->label() }}</option>
                                     @endforeach
                                 </select>
-                                <p class="text-xs text-slate-400 mt-1">{{ __('dashboard/index.minimum_profile_hint') }}</p>
+                                <p class="text-xs text-slate-400 mt-1">{{ __('dashboard/manage-study-schedule/index.minimum_profile_hint') }}</p>
                                 @if ($scheduleErrors->has('minimum_profile'))
                                     <p class="text-xs text-red-500 mt-1">{{ $scheduleErrors->first('minimum_profile') }}</p>
                                 @endif
@@ -366,7 +366,7 @@
                         <div x-show="bibleStudyTypes.includes(form.category)"
                             class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <label for="study_bible_study_id" class="flex items-center gap-3 font-medium">
-                                <i class="fa-solid fa-book-open w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.schedule_bible_study') }}
+                                <i class="fa-solid fa-book-open w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.schedule_bible_study') }}
                             </label>
                             <div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -382,7 +382,7 @@
                                     <!-- Options follow the series; :selected keeps the choice when the list is redrawn -->
                                     <select id="study_bible_study_id" name="bible_study_id" @change="form.bible_study_id = $event.target.value"
                                         class="{{ $fieldClass('bible_study_id') }} w-full">
-                                        <option value="" :selected="!form.bible_study_id">{{ __('dashboard/index.no_study_option') }}</option>
+                                        <option value="" :selected="!form.bible_study_id">{{ __('dashboard/manage-study-schedule/index.no_study_option') }}</option>
                                         <template x-for="study in seriesStudies" :key="study.id">
                                             <option :value="study.id" x-text="study.label" :selected="study.id === form.bible_study_id"></option>
                                         </template>
@@ -397,7 +397,7 @@
                         <!-- Leader -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <label for="study_contact_name" class="flex items-center gap-3 font-medium">
-                                <i class="fa-solid fa-user w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.leader') }}
+                                <i class="fa-solid fa-user w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.leader') }}
                             </label>
                             <div>
                                 <input id="study_contact_name" type="text" name="contact_name" x-model="form.contact_name" maxlength="100"
@@ -411,11 +411,11 @@
                         <!-- Location -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <label for="study_location" class="flex items-center gap-3 font-medium">
-                                <i class="fa-solid fa-location-dot w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.location') }}
+                                <i class="fa-solid fa-location-dot w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.location') }}
                             </label>
                             <div>
                                 <input id="study_location" type="text" name="location" x-model="form.location" maxlength="1024"
-                                    placeholder="{{ __('dashboard/index.location_placeholder') }}"
+                                    placeholder="{{ __('dashboard/manage-study-schedule/index.location_placeholder') }}"
                                     class="{{ $fieldClass('location') }} w-full placeholder:text-slate-500">
                                 @if ($scheduleErrors->has('location'))
                                     <p class="text-xs text-red-500 mt-1">{{ $scheduleErrors->first('location') }}</p>
@@ -426,7 +426,7 @@
                         <!-- Colour of the event's block on the schedule -->
                         <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
                             <label for="study_color" class="flex items-center gap-3 font-medium">
-                                <i class="fa-solid fa-palette w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/index.colour') }}
+                                <i class="fa-solid fa-palette w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.colour') }}
                             </label>
                             <div>
                                 <div class="flex items-center gap-3">

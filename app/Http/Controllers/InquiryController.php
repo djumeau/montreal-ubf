@@ -70,7 +70,7 @@ class InquiryController extends Controller
         $management->note = $validated['note'] ?? null;
         $management->save();
 
-        return back()->with('status', __('dashboard/index.answer_saved'));
+        return back()->with('status', __('dashboard/manage-inquiries/index.answer_saved'));
     }
 
     // @desc Undo the answer to a message (clicking its "Answered" badge): back to read; the note is kept
@@ -84,7 +84,7 @@ class InquiryController extends Controller
 
         $inquiry->management?->update(['answered_at' => null, 'answered_by' => null]);
 
-        return back()->with('status', __('dashboard/index.answer_undone'));
+        return back()->with('status', __('dashboard/manage-inquiries/index.answer_undone'));
     }
 
     /**
@@ -117,7 +117,7 @@ class InquiryController extends Controller
             $deleted++;
         }
 
-        return back()->with('status', trans_choice('dashboard/index.inquiries_deleted', $deleted, ['count' => $deleted]));
+        return back()->with('status', trans_choice('dashboard/manage-inquiries/index.inquiries_deleted', $deleted, ['count' => $deleted]));
     }
 
     // @desc Delete a contact form message, with its follow-up (manage_inquiries row, removed by the foreign key)
@@ -131,6 +131,6 @@ class InquiryController extends Controller
 
         $inquiry->delete();
 
-        return back()->with('status', __('dashboard/index.inquiry_deleted', ['name' => $inquiry->name]));
+        return back()->with('status', __('dashboard/manage-inquiries/index.inquiry_deleted', ['name' => $inquiry->name]));
     }
 }

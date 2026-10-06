@@ -30,7 +30,7 @@
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700 text-center whitespace-normal">
 
                 @if ($isLastAdmin)
-                    <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.cannot_delete_last_admin_role') }}</h3>
+                    <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-users/index.cannot_delete_last_admin_role') }}</h3>
 
                     <div class="flex justify-center">
                         <button type="button" @click="showDeleteModal = false"

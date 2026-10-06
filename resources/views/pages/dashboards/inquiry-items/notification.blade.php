@@ -23,22 +23,22 @@
                 @click.stop @keydown.enter.stop @keydown.space.stop>
                 @csrf
                 @method('PUT')
-                <button type="submit" title="{{ __('dashboard/index.undo_answered') }}"
+                <button type="submit" title="{{ __('dashboard/manage-inquiries/index.undo_answered') }}"
                     class="px-2 py-0.5 rounded-full border bg-emerald-800 hover:bg-emerald-900 outline-white hover:outline-2 text-white cursor-pointer">
-                    <i class="fa-solid fa-check mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_answered') }}
+                    <i class="fa-solid fa-check mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_answered') }}
                 </button>
             </form>
         @break
 
         @case('read')
             <span class="px-2 py-0.5 rounded-full border bg-slate-600 outline-white text-white">
-                <i class="fa-solid fa-eye mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_read') }}
+                <i class="fa-solid fa-eye mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_read') }}
             </span>
         @break
 
         @case('new')
             <span class="px-2 py-0.5 border outline-white rounded-full bg-sky-500 text-white font-medium">
-                <i class="fa-solid fa-bell mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_new') }}</span>
+                <i class="fa-solid fa-bell mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_new') }}</span>
         @break
     @endswitch
 </div>

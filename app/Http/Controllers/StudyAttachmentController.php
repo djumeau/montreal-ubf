@@ -72,7 +72,7 @@ class StudyAttachmentController extends Controller
         }
 
         return back()
-            ->with('status', trans_choice('dashboard/index.attachments_uploaded', count($validated['files']), ['count' => count($validated['files'])]))
+            ->with('status', trans_choice('dashboard/manage-studies/index.attachments_uploaded', count($validated['files']), ['count' => count($validated['files'])]))
             ->with('attachments_study', $study->id);
     }
 
@@ -92,7 +92,7 @@ class StudyAttachmentController extends Controller
         $attachment->delete();
 
         return back()
-            ->with('status', __('dashboard/index.attachment_deleted', ['name' => $name]))
+            ->with('status', __('dashboard/manage-studies/index.attachment_deleted', ['name' => $name]))
             ->with('attachments_study', $studyId);
     }
 

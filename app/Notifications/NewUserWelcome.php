@@ -26,13 +26,13 @@ class NewUserWelcome extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('dashboard/index.new_user_email_subject'))
-            ->greeting(__('dashboard/index.new_user_email_greeting', ['name' => $notifiable->name]))
-            ->line(__('dashboard/index.new_user_email_line'))
-            ->line(MailText::exact('dashboard/index.new_user_email_credentials', [
+            ->subject(__('dashboard/manage-users/index.new_user_email_subject'))
+            ->greeting(__('dashboard/manage-users/index.new_user_email_greeting', ['name' => $notifiable->name]))
+            ->line(__('dashboard/manage-users/index.new_user_email_line'))
+            ->line(MailText::exact('dashboard/manage-users/index.new_user_email_credentials', [
                 'email' => $notifiable->email,
                 'password' => $this->password,
             ]))
-            ->line(__('dashboard/index.new_user_email_action'));
+            ->line(__('dashboard/manage-users/index.new_user_email_action'));
     }
 }

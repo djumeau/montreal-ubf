@@ -182,7 +182,7 @@
                 @csrf
 
                 <button type="button" @click="open = true" class="{{ $buttonClass }} cursor-pointer" aria-haspopup="dialog"
-                    aria-label="{{ __('dashboard/index.copy_week') }}" title="{{ __('dashboard/index.copy_week') }}">
+                    aria-label="{{ __('dashboard/manage-study-schedule/index.copy_week') }}" title="{{ __('dashboard/manage-study-schedule/index.copy_week') }}">
                     <i class="fa-solid fa-copy" aria-hidden="true"></i>
                 </button>
 
@@ -197,7 +197,7 @@
                             <!-- Title and Close -->
                             <div class="flex items-center justify-between px-5 py-3 bg-slate-800 rounded-t-lg">
                                 <h3 id="copy_week_modal_title" class="text-lg font-bold">
-                                    <i class="fa-solid fa-copy mr-2" aria-hidden="true"></i>{{ __('dashboard/index.copy_week_title') }}
+                                    <i class="fa-solid fa-copy mr-2" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.copy_week_title') }}
                                 </h3>
                                 <button type="button" @click="open = false" aria-label="{{ __('bible-study-schedule/index.close') }}"
                                     class="grid place-items-center size-8 text-slate-300 hover:text-white cursor-pointer">
@@ -206,7 +206,7 @@
                             </div>
 
                             <div class="p-5">
-                                <p class="mb-2">{{ __('dashboard/index.copy_week_confirm') }}</p>
+                                <p class="mb-2">{{ __('dashboard/manage-study-schedule/index.copy_week_confirm') }}</p>
                                 <p class="mb-5 text-sm text-slate-300">{{ $rangeLabel }}</p>
 
                                 <div class="flex justify-end gap-3">
@@ -218,7 +218,7 @@
                                     <!-- Outside the form once teleported, so it names the form it submits -->
                                     <button type="submit" form="copy_week_form"
                                         class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
-                                        {{ __('dashboard/index.copy_week_button') }}
+                                        {{ __('dashboard/manage-study-schedule/index.copy_week_button') }}
                                     </button>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@
     @csrf
     @method('PUT')
     <select name="role" onchange="this.form.submit()" @disabled($isLastAdmin)
-        @if ($isLastAdmin) title="{{ __('dashboard/index.cannot_demote_last_admin') }}" @endif
+        @if ($isLastAdmin) title="{{ __('dashboard/manage-users/index.cannot_demote_last_admin') }}" @endif
         class="bg-slate-900 border border-slate-100 rounded-sm text-sm py-1 px-2 text-white focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
         @foreach (\App\Enums\Role::options() as $option)
             <option value="{{ $option['value'] }}" {{ $user->role->value === $option['value'] ? 'selected' : '' }}>

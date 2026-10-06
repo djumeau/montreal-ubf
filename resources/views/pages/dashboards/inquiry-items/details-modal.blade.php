@@ -20,13 +20,13 @@
 
                             <!-- Same badges as the items (inquiry-items/notification) -->
                             <span x-show="inquiry.status === 'answered'" class="px-2 py-0.5 text-xs rounded-full border bg-emerald-800 outline-white text-white">
-                                <i class="fa-solid fa-check mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_answered') }}
+                                <i class="fa-solid fa-check mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_answered') }}
                             </span>
                             <span x-show="inquiry.status === 'read'" class="px-2 py-0.5 text-xs rounded-full border bg-slate-600 outline-white text-white">
-                                <i class="fa-solid fa-eye mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_read') }}
+                                <i class="fa-solid fa-eye mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_read') }}
                             </span>
                             <span x-show="inquiry.status === 'new'" class="px-2 py-0.5 text-xs border outline-white rounded-full bg-sky-500 text-white font-medium">
-                                <i class="fa-solid fa-bell mr-1" aria-hidden="true"></i>{{ __('dashboard/index.inquiry_new') }}
+                                <i class="fa-solid fa-bell mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.inquiry_new') }}
                             </span>
                         </div>
 
@@ -44,7 +44,7 @@
                             <a :href="'mailto:' + inquiry.email" class="text-sky-400 hover:text-sky-300 hover:underline">
                                 <i class="fa-solid fa-envelope mr-1" aria-hidden="true"></i><span x-text="inquiry.email"></span>
                             </a>
-                            <span x-show="inquiry.signedIn" class="text-xs italic">{{ __('dashboard/index.inquiry_signed_in') }}</span>
+                            <span x-show="inquiry.signedIn" class="text-xs italic">{{ __('dashboard/manage-inquiries/index.inquiry_signed_in') }}</span>
                             <span><i class="fa-regular fa-clock mr-1" aria-hidden="true"></i><span x-text="inquiry.sentAt"></span></span>
                         </div>
 
@@ -55,12 +55,12 @@
                         <div x-show="inquiry.readAt || inquiry.answeredAt" class="text-slate-300 space-y-1">
                             <p x-show="inquiry.readAt">
                                 <i class="fa-solid fa-eye mr-1" aria-hidden="true"></i>
-                                <span x-text="@js(__('dashboard/index.inquiry_read_on')).replace(':date', inquiry.readAt)"></span>
+                                <span x-text="@js(__('dashboard/manage-inquiries/index.inquiry_read_on')).replace(':date', inquiry.readAt)"></span>
                             </p>
                             <p x-show="inquiry.answeredAt">
                                 <i class="fa-solid fa-reply mr-1" aria-hidden="true"></i>
-                                <span x-text="@js(__('dashboard/index.inquiry_answered_on')).replace(':date', inquiry.answeredAt)"></span>
-                                <span x-show="inquiry.answeredBy" x-text="@js(__('dashboard/index.inquiry_answered_by')).replace(':name', inquiry.answeredBy)"></span>
+                                <span x-text="@js(__('dashboard/manage-inquiries/index.inquiry_answered_on')).replace(':date', inquiry.answeredAt)"></span>
+                                <span x-show="inquiry.answeredBy" x-text="@js(__('dashboard/manage-inquiries/index.inquiry_answered_by')).replace(':name', inquiry.answeredBy)"></span>
                             </p>
                         </div>
 
@@ -71,10 +71,10 @@
                             @csrf
                             @method('PUT')
 
-                            <h4 class="border-l-4 border-blue-600 pl-3 text-base font-bold text-slate-100">{{ __('dashboard/index.answer_section') }}</h4>
+                            <h4 class="border-l-4 border-blue-600 pl-3 text-base font-bold text-slate-100">{{ __('dashboard/manage-inquiries/index.answer_section') }}</h4>
 
                             <div class="grid grid-cols-1 sm:grid-cols-[8rem_1fr] gap-x-4 gap-y-1 items-center">
-                                <label for="inquiry_answered_by" class="font-medium">{{ __('dashboard/index.answered_by_label') }}</label>
+                                <label for="inquiry_answered_by" class="font-medium">{{ __('dashboard/manage-inquiries/index.answered_by_label') }}</label>
                                 <!-- Shown only: the server records the signed-in user, never a typed name -->
                                 <input id="inquiry_answered_by" type="text" readonly
                                     :value="inquiry.answeredBy ?? @js(auth()->user()->name)"
@@ -82,9 +82,9 @@
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-[8rem_1fr] gap-x-4 gap-y-1">
-                                <label for="inquiry_note" class="font-medium sm:pt-2">{{ __('dashboard/index.note_label') }}</label>
+                                <label for="inquiry_note" class="font-medium sm:pt-2">{{ __('dashboard/manage-inquiries/index.note_label') }}</label>
                                 <textarea id="inquiry_note" name="note" rows="4" maxlength="5000" x-model="inquiry.note"
-                                    placeholder="{{ __('dashboard/index.note_placeholder') }}"
+                                    placeholder="{{ __('dashboard/manage-inquiries/index.note_placeholder') }}"
                                     class="w-full px-3 py-2 bg-slate-900 border border-slate-500 rounded-sm text-sm focus:outline-none focus:border-white"></textarea>
                             </div>
                         </form>
@@ -99,7 +99,7 @@
                         <button type="submit" form="inquiry_answer_form"
                             class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm hover:outline-2 outline-white cursor-pointer">
                             <i class="fa-solid fa-reply mr-1" aria-hidden="true"></i>
-                            <span x-text="inquiry.answeredAt ? @js(__('dashboard/index.save')) : @js(__('dashboard/index.mark_answered'))"></span>
+                            <span x-text="inquiry.answeredAt ? @js(__('dashboard/index.save')) : @js(__('dashboard/manage-inquiries/index.mark_answered'))"></span>
                         </button>
                     </div>
                 </div>

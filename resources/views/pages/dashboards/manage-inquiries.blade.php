@@ -130,7 +130,7 @@
                 <div class="w-full border rounded-sm border-slate-100">
 
                     <div class="p-4 flex flex-wrap items-center justify-between gap-3">
-                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/index.manage_inquiries') }}</h2>
+                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-inquiries/index.manage_inquiries') }}</h2>
 
                         <!-- Select All / Delete Selected: Delete Selected removes the ticked messages (asks first), so it stays off until one is ticked.
                              The checkboxes of the items belong to this form through form="delete_selected_form" -->
@@ -142,12 +142,12 @@
 
                                 <button type="button" @click="selectAll()"
                                     class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                                    <i class="fa-regular fa-square-check mr-1" aria-hidden="true"></i>{{ __('dashboard/index.select_all') }}
+                                    <i class="fa-regular fa-square-check mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.select_all') }}
                                 </button>
 
                                 <button type="button" @click="showDeleteSelectedModal = true" :disabled="selectedCount === 0"
                                     class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-700 disabled:hover:outline-1">
-                                    <i class="fa-solid fa-trash mr-1" aria-hidden="true"></i>{{ __('dashboard/index.delete_selected') }}
+                                    <i class="fa-solid fa-trash mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-inquiries/index.delete_selected') }}
                                 </button>
 
                                 <!-- Asks before deleting the ticked messages; teleported above the list -->
@@ -159,9 +159,9 @@
                                         <div @click.away="showDeleteSelectedModal = false" role="dialog" aria-modal="true"
                                             class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border border-white text-center whitespace-normal">
 
-                                            <h3 class="text-lg font-bold mb-2">{{ __('dashboard/index.delete_selected_confirm') }}</h3>
+                                            <h3 class="text-lg font-bold mb-2">{{ __('dashboard/manage-inquiries/index.delete_selected_confirm') }}</h3>
                                             <p class="mb-4 text-sm text-slate-300"
-                                                x-text="@js(__('dashboard/index.delete_selected_count')).replace(':count', selectedCount)"></p>
+                                                x-text="@js(__('dashboard/manage-inquiries/index.delete_selected_count')).replace(':count', selectedCount)"></p>
 
                                             <div class="flex justify-center space-x-3">
                                                 <button type="button" @click="showDeleteSelectedModal = false"
@@ -197,7 +197,7 @@
                                 @forelse ($inquiries as $inquiry)
                                     <x-inquiry-items::inquiry-item :inquiry="$inquiry" :striped="$loop->even" />
                                 @empty
-                                    <p class="py-4 text-center text-slate-400">{{ __('dashboard/index.inquiries_none') }}</p>
+                                    <p class="py-4 text-center text-slate-400">{{ __('dashboard/manage-inquiries/index.inquiries_none') }}</p>
                                 @endforelse
                             </div>
 

@@ -18,24 +18,24 @@
         </div>
 
         <div class="text-slate-300 text-sm">
-            {{ __('dashboard/index.related_book') }}:
+            {{ __('dashboard/manage-series/index.related_book') }}:
             @if ($book)
                 {{ $book->current_name }}
                 ({{ $isFrench ? $book->name_en : $book->name_fr }})
             @else
-                {{ __('dashboard/index.multiple') }}
+                {{ __('dashboard/manage-series/index.multiple') }}
             @endif
         </div>
         <div class="text-slate-300 text-sm flex items-center gap-2 my-1">
-            {{ __('dashboard/index.studies') }}:
-            <a href="{{ route(__('nav.manage-studies.name'), ['series' => $series->id]) }}" title="{{ __('dashboard/index.view_studies') }}"
-                aria-label="{{ __('dashboard/index.view_studies') }}: {{ $series->bible_studies_count }}"
+            {{ __('dashboard/manage-series/index.studies') }}:
+            <a href="{{ route(__('nav.manage-studies.name'), ['series' => $series->id]) }}" title="{{ __('dashboard/manage-series/index.view_studies') }}"
+                aria-label="{{ __('dashboard/manage-series/index.view_studies') }}: {{ $series->bible_studies_count }}"
                 class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                 <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $series->bible_studies_count }}
             </a>
         </div>
         <div class="text-slate-300 text-sm mb-3">
-            {{ __('dashboard/index.dates') }}: {{ $series->localized_dates ?? '—' }}
+            {{ __('dashboard/manage-series/index.dates') }}: {{ $series->localized_dates ?? '—' }}
         </div>
 
         <div class="flex items-center gap-2">
@@ -43,7 +43,7 @@
                 class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                 <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
             </button>
-            <button type="button" @click="openDelete(@js($rowData))" aria-label="{{ __('dashboard/index.delete_series') }}"
+            <button type="button" @click="openDelete(@js($rowData))" aria-label="{{ __('dashboard/manage-series/index.delete_series') }}"
                 class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                 <i class="fa-solid fa-trash-can"></i>
             </button>

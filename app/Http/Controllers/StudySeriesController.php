@@ -37,7 +37,7 @@ class StudySeriesController extends Controller
             'images' => $this->storeImages($request, $series),
         ]);
 
-        return back()->with('status', __('dashboard/index.series_created', ['name' => $series->name_en]));
+        return back()->with('status', __('dashboard/manage-series/index.series_created', ['name' => $series->name_en]));
     }
 
     // @desc Update an existing study series
@@ -75,7 +75,7 @@ class StudySeriesController extends Controller
         $series->images = $this->storeImages($request, $series);
         $series->save();
 
-        return back()->with('status', __('dashboard/index.series_updated', ['name' => $series->name_en]));
+        return back()->with('status', __('dashboard/manage-series/index.series_updated', ['name' => $series->name_en]));
     }
 
     // @desc Delete a study series and its image folder
@@ -103,7 +103,7 @@ class StudySeriesController extends Controller
         $name = $series->name_en;
         $series->delete();
 
-        return back()->with('status', __('dashboard/index.series_deleted', ['name' => $name]));
+        return back()->with('status', __('dashboard/manage-series/index.series_deleted', ['name' => $name]));
     }
 
     /**

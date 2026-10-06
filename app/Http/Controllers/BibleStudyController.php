@@ -101,7 +101,7 @@ class BibleStudyController extends Controller
             'image_links' => $this->storeImages($request, $study),
         ]);
 
-        return back()->with('status', __('dashboard/index.study_created', ['name' => $this->displayName($study)]));
+        return back()->with('status', __('dashboard/manage-studies/index.study_created', ['name' => $this->displayName($study)]));
     }
 
     // @desc Update an existing Bible study
@@ -125,7 +125,7 @@ class BibleStudyController extends Controller
         $study->image_links = $this->storeImages($request, $study);
         $study->save();
 
-        return back()->with('status', __('dashboard/index.study_updated', ['name' => $this->displayName($study)]));
+        return back()->with('status', __('dashboard/manage-studies/index.study_updated', ['name' => $this->displayName($study)]));
     }
 
     // @desc Delete a Bible study with its image and document folders
@@ -143,7 +143,7 @@ class BibleStudyController extends Controller
         $name = $this->displayName($study);
         $study->delete();
 
-        return back()->with('status', __('dashboard/index.study_deleted', ['name' => $name]));
+        return back()->with('status', __('dashboard/manage-studies/index.study_deleted', ['name' => $name]));
     }
 
     /**

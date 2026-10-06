@@ -48,7 +48,7 @@ class StudyAttachment extends Model
      */
     protected function typeCode(): Attribute
     {
-        return Attribute::get(fn () => __('dashboard/index.attachment_code_' . $this->type));
+        return Attribute::get(fn () => __('dashboard/manage-studies/index.attachment_code_' . $this->type));
     }
 
     /**

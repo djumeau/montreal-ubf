@@ -10,7 +10,7 @@
     <span class="relative inline-grid place-items-center size-4 shrink-0">
         <input type="checkbox" name="inquiries[]" value="{{ $inquiry->id }}" form="delete_selected_form"
             class="peer appearance-none size-4 m-0 border border-white rounded-sm bg-slate-900 checked:bg-blue-600 cursor-pointer outline-white focus-visible:outline-2 focus-visible:outline-offset-2"
-            aria-label="{{ __('dashboard/index.select_inquiry', ['name' => $inquiry->name]) }}">
+            aria-label="{{ __('dashboard/manage-inquiries/index.select_inquiry', ['name' => $inquiry->name]) }}">
         {{-- opacity, not hidden: Font Awesome's display: inline-block (outside Tailwind's layers) would win over "hidden" --}}
         <i class="fa-solid fa-check absolute text-[10px] text-white opacity-0 peer-checked:opacity-100 pointer-events-none" aria-hidden="true"></i>
     </span>

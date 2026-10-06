@@ -38,14 +38,14 @@ class RoleController extends Controller
         if ($user->role === Role::ADMIN
             && $validated['role'] !== Role::ADMIN->value
             && User::where('role', Role::ADMIN)->count() <= 1) {
-            return back()->with('status', __('dashboard/index.cannot_demote_last_admin'));
+            return back()->with('status', __('dashboard/manage-users/index.cannot_demote_last_admin'));
         }
 
         $user->update([
             'role' => $validated['role']
         ]);
 
-        return back()->with('status', __('dashboard/index.role_updated') );
+        return back()->with('status', __('dashboard/manage-users/index.role_updated') );
     }
 
 }

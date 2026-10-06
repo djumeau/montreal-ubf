@@ -34,7 +34,7 @@
                 @if ($editable)
                     <button type="button" @click="openAdd('{{ $day->toDateString() }}', '{{ $addTime }}')"
                         class="grid place-items-center size-8 shrink-0 border border-white rounded-sm bg-slate-900 hover:bg-slate-700 text-white cursor-pointer"
-                        aria-label="{{ __('dashboard/index.add_event_at') }} {{ $dayLabel }}">
+                        aria-label="{{ __('dashboard/manage-study-schedule/index.add_event_at') }} {{ $dayLabel }}">
                         <i class="fa-solid fa-plus" aria-hidden="true"></i>
                     </button>
                 @endif

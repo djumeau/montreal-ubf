@@ -6,8 +6,8 @@
      .stop on its clicks and keys: the inquiry item around it is clickable too, and must not open -->
 <div x-data="{ showDeleteModal: false }" class="inline-block" @click.stop @keydown.enter.stop @keydown.space.stop>
 
-    <button type="button" @click="showDeleteModal = true" aria-label="{{ __('dashboard/index.delete_inquiry') }}"
-        title="{{ __('dashboard/index.delete_inquiry') }}"
+    <button type="button" @click="showDeleteModal = true" aria-label="{{ __('dashboard/manage-inquiries/index.delete_inquiry') }}"
+        title="{{ __('dashboard/manage-inquiries/index.delete_inquiry') }}"
         class="px-2 py-1 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
         <i class="fa-solid fa-trash" aria-hidden="true"></i>
     </button>
@@ -21,7 +21,7 @@
             <div @click.away="showDeleteModal = false" role="dialog" aria-modal="true"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border border-white text-center whitespace-normal">
 
-                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/index.delete_inquiry_confirm') }}</h3>
+                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/manage-inquiries/index.delete_inquiry_confirm') }}</h3>
                 <p class="mb-4 text-sm text-slate-300">{{ $inquiry->inquiry->label() }} · {{ $inquiry->name }}</p>
 
                 <form action="{{ route('inquiries.destroy', $inquiry) }}" method="POST">

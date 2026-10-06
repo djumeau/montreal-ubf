@@ -64,7 +64,7 @@
                         <!-- Fills the cell, under its blocks: opens the Event modal on this day and hour -->
                         <button type="button" @click="openAdd('{{ $day->toDateString() }}', '{{ sprintf('%02d:00', $hour) }}')"
                             class="absolute inset-0 w-full cursor-pointer hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white"
-                            aria-label="{{ __('dashboard/index.add_event_at') }} {{ $day->copy()->setTime($hour, 0)->isoFormat(__('bible-study-schedule/index.cell_format')) }}"></button>
+                            aria-label="{{ __('dashboard/manage-study-schedule/index.add_event_at') }} {{ $day->copy()->setTime($hour, 0)->isoFormat(__('bible-study-schedule/index.cell_format')) }}"></button>
                     @endif
                     @foreach ($studiesByCell->get($day->toDateString() . '|' . $hour, []) as $study)
                         <x-study-schedule::study-block :study="$study" :editable="$editable" :from="$from" :to="$to"

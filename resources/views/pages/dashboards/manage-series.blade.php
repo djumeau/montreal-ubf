@@ -12,7 +12,7 @@
             'book_id' => (string) ($series->book_id ?? ''), // String: Alpine matches <option> values strictly
             'dates' => $series->dates ?? '',
             'studies' => $series->bible_studies_count,
-            'studies_kept' => trans_choice('dashboard/index.delete_series_studies_kept', $series->bible_studies_count, ['count' => $series->bible_studies_count]),
+            'studies_kept' => trans_choice('dashboard/manage-series/index.delete_series_studies_kept', $series->bible_studies_count, ['count' => $series->bible_studies_count]),
             'thumbnail' => $series->imageUrl('thumbnail'),
             'images' => $series->images ?? [], // Current file names: desktop, mobile, thumbnail
             'update_url' => route('series.update', $series),
@@ -43,7 +43,7 @@
     ];
 
     // Related Book select: empty option means multiple books, then books grouped by testament
-    $bookOptions = ['' => __('dashboard/index.multiple')];
+    $bookOptions = ['' => __('dashboard/manage-series/index.multiple')];
     foreach (['ot' => 'old_testament', 'nt' => 'new_testament'] as $testament => $groupKey) {
         $bookOptions[__('dashboard/index.' . $groupKey)] = $books->where('testament', $testament)
             ->mapWithKeys(fn ($book) => [$book->id => $book->current_name])
@@ -121,12 +121,12 @@
                 <div class="w-full border rounded-sm border-slate-100">
 
                     <div class="p-4 flex items-center justify-between">
-                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/index.manage-series') }}
+                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-series/index.manage-series') }}
                         </h2>
 
                         <button type="button" @click="showAddSeriesModal = true"
                             class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                            <i class="fas fa-plus mr-1"></i>{{ __('dashboard/index.add-series') }}
+                            <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-series/index.add-series') }}
                         </button>
                     </div>
 
@@ -150,9 +150,9 @@
                                     <th class="py-2 px-2">#</th>
                                     <th class="py-2 px-2">{{ __('dashboard/index.image') }}</th>
                                     <th class="py-2 px-2">{{ __('dashboard/index.name') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.related_book') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.studies') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.dates') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/manage-series/index.related_book') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/manage-series/index.studies') }}</th>
+                                    <th class="py-2 px-2">{{ __('dashboard/manage-series/index.dates') }}</th>
                                     <th class="py-2 px-2">{{ __('dashboard/index.actions') }}</th>
                                 </tr>
                             </thead>
@@ -162,7 +162,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="7" class="py-6 text-center text-slate-400">
-                                            {{ __('dashboard/index.no_series') }}</td>
+                                            {{ __('dashboard/manage-series/index.no_series') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -174,7 +174,7 @@
                         @forelse ($seriesList as $series)
                             <x-manage-series.series-card-item :series="$series" :row-data="$rowData[$series->id]" />
                         @empty
-                            <div class="py-6 text-center text-slate-400">{{ __('dashboard/index.no_series') }}</div>
+                            <div class="py-6 text-center text-slate-400">{{ __('dashboard/manage-series/index.no_series') }}</div>
                         @endforelse
                     </div>
 
@@ -200,7 +200,7 @@
             <div @click.away="showAddSeriesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.add-series') }}</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-series/index.add-series') }}</h3>
 
                 <form class="w-full" action="{{ route('series.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -208,17 +208,17 @@
                     <!-- Names (EN / FR) and Dates; errors come from the "createSeries" bag -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3 mb-3">
                         <x-inputs.text id="add_name_en" name="name_en" bag="createSeries" model="addSeries.name_en"
-                            :label="__('dashboard/index.name_en')" />
+                            :label="__('dashboard/manage-series/index.name_en')" />
 
                         <x-inputs.text id="add_name_fr" name="name_fr" bag="createSeries" model="addSeries.name_fr"
-                            :label="__('dashboard/index.name_fr')" />
+                            :label="__('dashboard/manage-series/index.name_fr')" />
                     </div>
 
                     <x-inputs.select class="mb-3" id="add_book_id" name="book_id" bag="createSeries" model="addSeries.book_id"
-                        :options="$bookOptions" :label="__('dashboard/index.related_book')" />
+                        :options="$bookOptions" :label="__('dashboard/manage-series/index.related_book')" />
 
                     <x-inputs.text class="mb-4" id="add_dates" name="dates" bag="createSeries" model="addSeries.dates"
-                        :label="__('dashboard/index.dates')" :placeholder="__('dashboard/index.dates_placeholder')" />
+                        :label="__('dashboard/manage-series/index.dates')" :placeholder="__('dashboard/manage-series/index.dates_placeholder')" />
 
                     <!-- Optional images; any slot left empty uses the default image -->
                     <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/index.images_hint') }}</p>
@@ -256,7 +256,7 @@
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">
-                    {{ __('dashboard/index.edit_series') }} <span class="text-slate-400 font-normal" x-text="'#' + editSeries.id"></span>
+                    {{ __('dashboard/manage-series/index.edit_series') }} <span class="text-slate-400 font-normal" x-text="'#' + editSeries.id"></span>
                 </h3>
 
                 <form x-ref="editSeriesForm" class="w-full" :action="editSeries.update_url" method="POST" enctype="multipart/form-data">
@@ -274,17 +274,17 @@
                     <!-- Names (EN / FR) and Dates; errors come from the "updateSeries" bag -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3 mb-3">
                         <x-inputs.text id="edit_name_en" name="name_en" bag="updateSeries" model="editSeries.name_en"
-                            :label="__('dashboard/index.name_en')" />
+                            :label="__('dashboard/manage-series/index.name_en')" />
 
                         <x-inputs.text id="edit_name_fr" name="name_fr" bag="updateSeries" model="editSeries.name_fr"
-                            :label="__('dashboard/index.name_fr')" />
+                            :label="__('dashboard/manage-series/index.name_fr')" />
                     </div>
 
                     <x-inputs.select class="mb-3" id="edit_book_id" name="book_id" bag="updateSeries" model="editSeries.book_id"
-                        :options="$bookOptions" :label="__('dashboard/index.related_book')" />
+                        :options="$bookOptions" :label="__('dashboard/manage-series/index.related_book')" />
 
                     <x-inputs.text class="mb-4" id="edit_dates" name="dates" bag="updateSeries" model="editSeries.dates"
-                        :label="__('dashboard/index.dates')" :placeholder="__('dashboard/index.dates_placeholder')" />
+                        :label="__('dashboard/manage-series/index.dates')" :placeholder="__('dashboard/manage-series/index.dates_placeholder')" />
 
                     <!-- Optional replacements; slots left empty keep their current image -->
                     <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/index.images_replace_hint') }}</p>
@@ -321,7 +321,7 @@
             <div @click.away="showDeleteSeriesModal = false"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700 text-center whitespace-normal">
 
-                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/index.delete_series_confirm') }}</h3>
+                <h3 class="text-lg font-bold mb-2">{{ __('dashboard/manage-series/index.delete_series_confirm') }}</h3>
                 <p class="text-slate-100 mb-2" x-text="deleteSeries.name"></p>
 
                 <!-- Studies are kept; the foreign key sets their study_series_id to null -->

@@ -43,10 +43,10 @@ class UserManagementController extends Controller
             report($e);
             $user->delete();
 
-            return back()->withInput()->with('error', __('dashboard/index.user_email_failed', ['name' => $user->name]));
+            return back()->withInput()->with('error', __('dashboard/manage-users/index.user_email_failed', ['name' => $user->name]));
         }
 
-        return back()->with('status', __('dashboard/index.user_created', ['name' => $user->name]));
+        return back()->with('status', __('dashboard/manage-users/index.user_created', ['name' => $user->name]));
     }
 
     public function resetPassword(Request $request, User $user): RedirectResponse
@@ -64,14 +64,14 @@ class UserManagementController extends Controller
         } catch (\Throwable $e) {
             report($e);
 
-            return back()->with('error', __('dashboard/index.password_reset_failed', ['name' => $user->name]));
+            return back()->with('error', __('dashboard/manage-users/index.password_reset_failed', ['name' => $user->name]));
         }
 
         $user->update([
             'password' => $newPassword,
         ]);
 
-        return back()->with('status', __('dashboard/index.password_reset_sent', ['name' => $user->name]));
+        return back()->with('status', __('dashboard/manage-users/index.password_reset_sent', ['name' => $user->name]));
     }
 
     public function destroy(Request $request, User $user): RedirectResponse
@@ -92,7 +92,7 @@ class UserManagementController extends Controller
         $name = $user->name;
         $user->delete();
 
-        return back()->with('status', __('dashboard/index.user_deleted', ['name' => $name]));
+        return back()->with('status', __('dashboard/manage-users/index.user_deleted', ['name' => $name]));
     }
 
 }

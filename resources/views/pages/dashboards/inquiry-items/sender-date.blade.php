@@ -22,7 +22,7 @@
     </a>
 
     @if ($inquiry->user)
-        <span class="text-xs italic">{{ __('dashboard/index.inquiry_signed_in') }}</span>
+        <span class="text-xs italic">{{ __('dashboard/manage-inquiries/index.inquiry_signed_in') }}</span>
     @endif
 
     <span><i class="fa-regular fa-clock mr-1" aria-hidden="true"></i>{{ $sentAt }}</span>

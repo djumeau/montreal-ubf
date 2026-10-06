@@ -55,11 +55,11 @@
                 <div class="w-full border rounded-sm border-slate-100">
 
                     <div class="p-4 flex items-center justify-between">
-                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/index.manage_users') }}</h2>
+                        <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-users/index.manage_users') }}</h2>
 
                         <button type="button" @click="showAddUserModal = true"
                             class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
-                            <i class="fas fa-user-cog mr-1"></i>{{ __('dashboard/index.add_user') }}
+                            <i class="fas fa-user-cog mr-1"></i>{{ __('dashboard/manage-users/index.add_user') }}
                         </button>
                     </div>
 
@@ -90,8 +90,8 @@
                             <thead>
                                 <tr class="border-b border-slate-100 text-slate-300 uppercase text-xs tracking-wider">
                                     <th class="py-2 pr-4">{{ __('dashboard/index.name') }}</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.email') }}</th>
-                                    <th class="py-2 pr-4">{{ __('dashboard/index.role') }}</th>
+                                    <th class="py-2 pr-4">{{ __('dashboard/manage-users/index.email') }}</th>
+                                    <th class="py-2 pr-4">{{ __('dashboard/manage-users/index.role') }}</th>
                                     <th class="py-2 pr-4 text-right">{{ __('dashboard/index.actions') }}</th>
                                 </tr>
                             </thead>
@@ -101,12 +101,12 @@
                                         <td class="py-3 pr-4">{{ $listedUser->name }}</td>
                                         <td class="py-3 pr-4 text-slate-300">{{ $listedUser->email }}</td>
                                         <td class="py-3 pr-4">
-                                            <x-manage-users.role-select :user="$listedUser" :admin-count="$adminCount" />
+                                            <x-manage-users::role-select :user="$listedUser" :admin-count="$adminCount" />
                                         </td>
                                         <td class="py-3 pr-4 text-right whitespace-nowrap">
                                             <div class="flex items-center justify-end gap-2">
-                                                <x-manage-users.reset-password-button :user="$listedUser" />
-                                                <x-manage-users.delete-user-button :user="$listedUser" :admin-count="$adminCount" />
+                                                <x-manage-users::reset-password-button :user="$listedUser" />
+                                                <x-manage-users::delete-user-button :user="$listedUser" :admin-count="$adminCount" />
                                             </div>
                                         </td>
                                     </tr>
@@ -122,9 +122,9 @@
                                 <div class="font-bold text-slate-100">{{ $listedUser->name }}</div>
                                 <div class="text-slate-300 text-sm mb-3">{{ $listedUser->email }}</div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <x-manage-users.role-select :user="$listedUser" :admin-count="$adminCount" />
-                                    <x-manage-users.reset-password-button :user="$listedUser" />
-                                    <x-manage-users.delete-user-button :user="$listedUser" :admin-count="$adminCount" />
+                                    <x-manage-users::role-select :user="$listedUser" :admin-count="$adminCount" />
+                                    <x-manage-users::reset-password-button :user="$listedUser" />
+                                    <x-manage-users::delete-user-button :user="$listedUser" :admin-count="$adminCount" />
                                 </div>
                             </div>
                         @endforeach
@@ -143,17 +143,18 @@
 
         </main>
 
-        <!-- AlpineJS Modal for Adding a New User -->
-        <div x-show="showAddUserModal" x-cloak
+        <!-- AlpineJS Modal for Adding a New User. "processing" is set when the form is sent (the welcome email takes a few seconds),
+             and cleared if the page is shown again from the browser's Back button -->
+        <div x-show="showAddUserModal" x-cloak x-data="{ processing: false }" @pageshow.window="processing = false"
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showAddUserModal = false"
+            <div @click.away="if (!processing) showAddUserModal = false"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/index.add_new_user') }}</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-users/index.add_new_user') }}</h3>
 
-                <form class="w-full" action="{{ route('users.store') }}" method="POST">
+                <form class="w-full" action="{{ route('users.store') }}" method="POST" @submit="processing = true">
                     @csrf
 
                     <!-- New users start with the default avatar; they can change it once they log in -->
@@ -165,12 +166,12 @@
                         <x-inputs.text class="w-full" id="name" name="name" placeholder="{{ __('dashboard/index.name') }}"
                             value="{{ old('name') }}" />
 
-                        <x-inputs.text class="w-full" id="email" name="email" type="email" placeholder="{{ __('dashboard/index.email') }}"
+                        <x-inputs.text class="w-full" id="email" name="email" type="email" placeholder="{{ __('dashboard/manage-users/index.email') }}"
                             value="{{ old('email') }}" />
                     </div>
 
-                    <!-- Modal Action Controls -->
-                    <div class="flex justify-end space-x-3">
+                    <!-- Modal Action Controls, replaced by "Processing..." once sent, so it cannot be sent twice -->
+                    <div x-show="!processing" class="flex justify-end space-x-3">
                         <button type="button" @click="showAddUserModal = false"
                             class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
                             {{ __('dashboard/index.cancel') }}
@@ -180,6 +181,8 @@
                             {{ __('dashboard/index.create') }}
                         </x-submit>
                     </div>
+
+                    <x-processing />
                 </form>
             </div>
         </div>

@@ -14,9 +14,9 @@
         @if ($management->answered_at)
             <p>
                 <i class="fa-solid fa-reply mr-1" aria-hidden="true"></i>
-                {{ __('dashboard/index.inquiry_answered_on', ['date' => $dateTime($management->answered_at)]) }}
+                {{ __('dashboard/manage-inquiries/index.inquiry_answered_on', ['date' => $dateTime($management->answered_at)]) }}
                 @if ($management->answeredBy)
-                    {{ __('dashboard/index.inquiry_answered_by', ['name' => $management->answeredBy->name]) }}
+                    {{ __('dashboard/manage-inquiries/index.inquiry_answered_by', ['name' => $management->answeredBy->name]) }}
                 @endif
             </p>
         @endif
