@@ -22,6 +22,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAttachmentController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\PrayerTopicsController;
 use App\Http\Controllers\StudyScheduleController;
 
 use App\Http\Controllers\SwitchLanguageController;
@@ -109,6 +110,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-inquiries', [InquiryController::class, 'index'])->name('manage-inquiries');
 
+    Route::get('/manage-prayer-topics', [PrayerTopicsController::class, 'index'])->name('manage-prayer-topics');
+
+    // Manage Prayer Topics actions - Add, Edit, Delete
+    Route::post('/manage-prayer-topics', [PrayerTopicsController::class, 'store'])->name('prayer-topics.store');
+    Route::put('/manage-prayer-topics/{prayerTopic}', [PrayerTopicsController::class, 'update'])->name('prayer-topics.update');
+    Route::delete('/manage-prayer-topics/{prayerTopic}', [PrayerTopicsController::class, 'destroy'])->name('prayer-topics.destroy');
+
     // Manage Inquiries actions - Delete the ticked ones (Delete Selected), Delete one
     Route::delete('/manage-inquiries', [InquiryController::class, 'destroySelected'])->name('inquiries.destroy-selected');
     Route::delete('/manage-inquiries/{inquiry}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
@@ -154,6 +162,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/gerer-horaire', [StudyScheduleController::class, 'manage'])->name('gerer-horaire');
 
     Route::get('/gerer-demandes', [InquiryController::class, 'index'])->name('gerer-demandes');
+
+    Route::get('/gerer-sujets-de-priere', [PrayerTopicsController::class, 'index'])->name('gerer-sujets-de-priere');
 
     // Profile related routes - Avatar, User name and User Password
 

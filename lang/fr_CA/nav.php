@@ -73,5 +73,9 @@ return [
                         "url" => "/gerer-demandes",
                         "name" => "gerer-demandes",
                  ],
+    "manage-prayer-topics" => [ "title" => "Gérer les sujets de prière",
+                        "url" => "/gerer-sujets-de-priere",
+                        "name" => "gerer-sujets-de-priere",
+                 ],
 
 ];

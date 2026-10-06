@@ -10,6 +10,7 @@ use Database\Seeders\StudySeriesSeeder;
 use Database\Seeders\BibleBookSeeder;
 use Database\Seeders\BibleStudySeeder;
 use Database\Seeders\InquirySeeder;
+use Database\Seeders\PrayerTopicSeeder;
 use Database\Seeders\EventSeeder;
 
 use Illuminate\Support\Facades\DB;
@@ -36,12 +37,14 @@ class DatabaseSeeder extends Seeder
         DB::table('study_attachments')->truncate();
         DB::table('manage_inquiries')->truncate();
         DB::table('inquiries')->truncate();
+        DB::table('prayer_topics')->truncate();
 
         $this->call(InitUserSeeder::class);
         $this->call(BibleBookSeeder::class); // Before StudySeriesSeeder: study_series.book_id references bible_books
         $this->call(StudySeriesSeeder::class);
         $this->call(BibleStudySeeder::class); // Your attachments get created implicitly here
         $this->call(InquirySeeder::class);
+        $this->call(PrayerTopicSeeder::class);
         $this->call(EventSeeder::class); // Empties and resets its own tables, so it can also run on its own
 
         self::resetSequences(['users', 'study_series', 'bible_books', 'bible_studies', 'study_attachments', 'inquiries']);

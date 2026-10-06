@@ -16,6 +16,8 @@
 
     $isManageInquiriesActive = request()->routeIs('manage-inquiries') || request()->routeIs('gerer-demandes');
 
+    $isManagePrayerTopicsActive = request()->routeIs('manage-prayer-topics') || request()->routeIs('gerer-sujets-de-priere');
+
     // Manage Inquiries button: "(total - N new)"; new = not read yet (no follow-up, or one without a read date)
     if (auth()->user()->canManageRoles()) {
         $inquiryCount = \App\Models\Inquiry::count();
@@ -45,6 +47,9 @@
 
         <x-feature-button :url="__('nav.manage-inquiries.url')" :isActive="$isManageInquiriesActive"
             icon="fa-envelope">{{ __('nav.manage-inquiries.title') }} ({{ $inquiryCount }} - {{ __('dashboard/index.inquiries_new_count', ['count' => $newInquiryCount]) }})</x-feature-button>
+
+        <x-feature-button :url="__('nav.manage-prayer-topics.url')" :isActive="$isManagePrayerTopicsActive"
+            icon="fa-hands-praying">{{ __('nav.manage-prayer-topics.title') }}</x-feature-button>
     @endif
 
 </nav>

@@ -71,5 +71,9 @@ return [
                         "url" => "/manage-inquiries",
                         "name" => "manage-inquiries",
                  ],
+    "manage-prayer-topics" => [ "title" => "Manage Prayer Topics",
+                        "url" => "/manage-prayer-topics",
+                        "name" => "manage-prayer-topics",
+                 ],
 
 ];
