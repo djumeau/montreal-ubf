@@ -78,7 +78,7 @@
     </div>
 
     <!-- Attention -->
-    <div class="mx-auto flex flex-start gap-2 bg-red-900 rounded-lg p-4 pb-6 text-white md:max-w-[85%]">
+    <div class="mx-auto flex flex-start gap-2 bg-red-900 rounded-lg border outline-white p-4 pb-6 text-white md:max-w-[85%]">
                     <i class="fa-solid fa-file fa-2x"></i> <p>{{ __('giving.charity') }}</p>
     </div>
 
