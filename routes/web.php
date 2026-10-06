@@ -202,6 +202,31 @@ Route::get('/migration-status', function () {
 })->middleware('auth');
 
 // Migrations -- Comment out when not in use.
+
+Route::get('/run-migrations', function () {
+    try {
+        //1. clear config cache
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        //2. run migrations
+        Artisan::call('migrate', ['--force' => true]);
+        return 'Success: ' . Artisan::output();
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+})->middleware('auth');
+
+// Seeds only the prayer_topics table with the sample topics; the other tables are untouched
+Route::get('/run-prayer-topic-seeder', function () {
+    try {
+        Artisan::call('db:seed', ['--class' => 'PrayerTopicSeeder', '--force' => true]);
+        return response('<pre>' . e(Artisan::output()) . '</pre>');
+    } catch (\Exception $e) {
+        return response('Failed: ' . $e->getMessage(), 500);
+    }
+})->middleware('auth');
+
 /*
 // Study storage repair -- Comment out when not in use.
 // /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
@@ -237,20 +262,6 @@ Route::get('/fresh-migrations', function () {
 
         //2. rollback migrations
         Artisan::call('migrate:fresh', ['--force' => true]);
-        return 'Success: ' . Artisan::output();
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
-
-Route::get('/run-migrations', function () {
-    try {
-        //1. clear config cache
-        Artisan::call('config:clear');
-        Artisan::call('cache:clear');
-
-        //2. run migrations
-        Artisan::call('migrate', ['--force' => true]);
         return 'Success: ' . Artisan::output();
     } catch (\Exception $e) {
         return 'Error: ' . $e->getMessage();
