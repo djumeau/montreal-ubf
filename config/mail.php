@@ -115,4 +115,17 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Inquiries Address
+    |--------------------------------------------------------------------------
+    |
+    | Where the messages sent through the contact page are copied to (the
+    | church's inbox). It is the "From" address unless set on its own, for
+    | when the emails are sent from another address than the one read.
+    |
+    */
+
+    'inquiries_address' => env('MAIL_INQUIRIES_ADDRESS', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+
 ];

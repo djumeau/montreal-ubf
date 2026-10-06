@@ -91,7 +91,7 @@ class ContactController extends Controller
         // Two emails: the full message to the church, and a confirmation (without the message) to the visitor.
         // The message is already saved for the dashboard, so a mail failure is logged rather than shown to the visitor.
         $emails = [
-            fn () => Notification::route('mail', config('mail.from.address'))->notify(new InquirySubmitted($inquiry)),
+            fn () => Notification::route('mail', config('mail.inquiries_address'))->notify(new InquirySubmitted($inquiry)),
             fn () => Notification::route('mail', [$inquiry->email => $inquiry->name])->notify(new InquiryReceived($inquiry)),
         ];
 

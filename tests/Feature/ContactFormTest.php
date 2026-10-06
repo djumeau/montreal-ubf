@@ -52,7 +52,7 @@ class ContactFormTest extends TestCase
     public function test_submitting_the_form_sends_the_full_message_to_the_church_with_the_visitor_as_reply_to(): void
     {
         Notification::fake();
-        config(['mail.from.address' => 'church@example.com']);
+        config(['mail.inquiries_address' => 'church@example.com']);
 
         $this->submit();
 
