@@ -236,6 +236,29 @@ Route::get('/mail-check', function () {
         $lines[] = "{$label}\n    {$address}\n    {$result} [{$time}]";
     }
 
+    // Login with the username and password in .env (still sends nothing). The password itself is never shown
+    $password = (string) config('mail.mailers.smtp.password');
+    $lines[] = '';
+    $lines[] = 'Username: ' . config('mail.mailers.smtp.username');
+    $lines[] = 'Password: ' . strlen($password) . ' characters' . ($password !== trim($password) ? ', WITH A SPACE AT THE START OR END' : '');
+    $lines[] = 'From: ' . config('mail.from.address') . ' / contact page messages go to: ' . config('mail.inquiries_address');
+
+    try {
+        $transport = Mail::mailer()->getSymfonyTransport();
+        $transport->start();
+        $lines[] = 'Login: ACCEPTED';
+
+        // /mail-check?send=1 also sends a test email to the signed-in user
+        if (request()->boolean('send')) {
+            Mail::raw('Test email from /mail-check.', fn ($message) => $message->to(request()->user()->email)->subject('Mail check'));
+            $lines[] = 'Test email: ACCEPTED by the mail server, sent to ' . request()->user()->email;
+        }
+
+        $transport->stop();
+    } catch (\Throwable $e) {
+        $lines[] = 'FAILED - ' . $e->getMessage();
+    }
+
     return response('<pre>' . e(implode("\n", $lines)) . '</pre>');
 })->middleware('auth');
 
