@@ -90,6 +90,27 @@ class StudyScheduleController extends Controller
             ->with('warning', $this->overlapWarning($event));
     }
 
+    // @desc Delete an event of the schedule; its images and attachments too when "delete_files" is ticked
+    // @route DELETE /manage-schedule/{event}
+    public function destroy(Request $request, Event $event): RedirectResponse
+    {
+        // Double layer check at the controller endpoint
+        if (!$request->user()->canManageRoles()) {
+            abort(403, __('home/index.unauthorized'));
+        }
+
+        // Attachment rows always go with it (cascadeOnDelete on event_attachments.event_id);
+        // the files only when asked for, otherwise they stay in the event's folders
+        if ($request->boolean('delete_files')) {
+            $event->deleteFiles();
+        }
+
+        $name = $event->current_title ?: $event->category->label();
+        $event->delete();
+
+        return back()->with('status', __('dashboard/manage-study-schedule/index.schedule_event_deleted', ['name' => $name]));
+    }
+
     // @desc Copy the recurring events of the week shown to the following week, then show that week
     // @route POST /manage-schedule/copy-week
     public function copyWeek(Request $request): RedirectResponse

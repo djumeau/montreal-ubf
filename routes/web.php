@@ -140,6 +140,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/manage-schedule', [StudyScheduleController::class, 'store'])->name('schedule.store');
     Route::post('/manage-schedule/copy-week', [StudyScheduleController::class, 'copyWeek'])->name('schedule.copy-week');
     Route::put('/manage-schedule/{event}', [StudyScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/manage-schedule/{event}', [StudyScheduleController::class, 'destroy'])->name('schedule.destroy');
 
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');

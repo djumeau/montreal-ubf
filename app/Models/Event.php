@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Enums\EventCategory;
 use App\Enums\Role;
 use App\Support\SafeHtml;
+use App\Support\StudyStorage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -412,6 +414,25 @@ class Event extends Model
     public function documentDirectory(): string
     {
         return 'documents/events/' . $this->folderPath();
+    }
+
+    /**
+     * Delete this event's image and attachment files, then their folders once empty.
+     * Events of the same category starting the same day share those folders: the files they use are kept.
+     */
+    public function deleteFiles(): void
+    {
+        $others = self::with('attachments')
+            ->where('category', $this->category->value)
+            ->whereDate('start_date', $this->start_date)
+            ->whereKeyNot($this->id)
+            ->get();
+
+        $images = array_diff(array_values($this->images ?? []), $others->flatMap(fn (Event $event) => array_values($event->images ?? []))->all());
+        $documents = array_diff($this->attachments->pluck('document_name')->all(), $others->flatMap(fn (Event $event) => $event->attachments->pluck('document_name'))->all());
+
+        StudyStorage::delete(Storage::disk('public'), $images, $this->imageDirectory());
+        StudyStorage::delete(Storage::disk('local'), $documents, $this->documentDirectory());
     }
 
     /**

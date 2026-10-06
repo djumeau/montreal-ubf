@@ -36,6 +36,7 @@
             'recurring' => (bool) $study->recurring,
             'minimum_profile' => $study->minimum_profile->value,
             'update_url' => route('schedule.update', $study),
+            'delete_url' => route('schedule.destroy', $study),
         ],
     ]);
 
@@ -57,6 +58,7 @@
         'recurring' => false,
         'minimum_profile' => 'guest',
         'update_url' => '',
+        'delete_url' => '',
     ];
 
     // After a failed save, the modal reopens with what was typed (event_id is empty for a new event)
@@ -79,6 +81,7 @@
             'recurring' => (bool) old('recurring', false),
             'minimum_profile' => old('minimum_profile', 'guest'),
             'update_url' => old('event_id') ? route('schedule.update', (int) old('event_id')) : '',
+            'delete_url' => old('event_id') ? route('schedule.destroy', (int) old('event_id')) : '',
         ]
         : $newStudy;
 
@@ -87,11 +90,13 @@
         'id' => (string) $series->id,
         'name' => $isFrench ? $series->name_fr : $series->name_en,
     ]);
+
     $studyOptions = $bibleStudies->map(fn ($bibleStudy) => [
         'id' => (string) $bibleStudy->id,
         'series_id' => (string) ($bibleStudy->study_series_id ?? ''),
         'label' => implode(' – ', array_filter([$bibleStudy->display_passage, $bibleStudy->current_title])) ?: '#' . $bibleStudy->id,
     ]);
+
 @endphp
 
 <x-layout class="bg-slate-900" textColor="text-white">
@@ -105,6 +110,8 @@
     <div x-data="{
         sidebarOpen: true,
         showStudyModal: {{ $failedSave ? 'true' : 'false' }},
+        confirmDelete: false, // Delete was clicked in the Event modal: asks before deleting
+        deleteFiles: false, // Ticked in that confirmation: the images and attachments are deleted too
         form: @js($formState),
         newStudy: @js($newStudy),
         studyRows: @js($rowData),
@@ -121,10 +128,14 @@
             const end = Math.min(hour * 60 + minute + 90, 23 * 60 + 59);
             const endTime = String(Math.floor(end / 60)).padStart(2, '0') + ':' + String(end % 60).padStart(2, '0');
             this.form = { ...this.newStudy, date, start_time: time, end_time: endTime };
+            this.confirmDelete = false;
+            this.deleteFiles = false;
             this.showStudyModal = true;
         },
         openEdit(id) {
             this.form = { ...this.studyRows[id] };
+            this.confirmDelete = false;
+            this.deleteFiles = false;
             this.showStudyModal = true;
         },
     }" class="flex min-h-screen text-white">
@@ -244,7 +255,7 @@
                         <!-- Lets the page reopen this modal for the same event after a failed save -->
                         <input type="hidden" name="event_id" :value="form.id ?? ''">
 
-                        <!-- Fields: the only part that scrolls, so the title and Cancel / Save stay in view -->
+                        <!-- Fields: the only part that scrolls, so the title and Delete / Save stay in view -->
                         <div class="px-5 overflow-y-auto">
 
                         <!-- Type: Event / Conference / Bible study (group, in person or online) -->
@@ -443,20 +454,68 @@
                         </div>
 
                         <!-- Modal Action Controls: always in view under the fields -->
-                        <div class="shrink-0 flex justify-end gap-3 px-5 py-4 border-t border-slate-500 bg-slate-800 rounded-b-lg">
-                            <button type="button" @click="showStudyModal = false"
-                                class="px-6 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-white rounded-sm cursor-pointer">
-                                {{ __('dashboard/index.cancel') }}
+                        <div class="shrink-0 flex flex-wrap items-center justify-end gap-3 px-5 py-4 border-t border-slate-500 bg-slate-800 rounded-b-lg">
+
+                            <!-- Delete (trash can), on the left, for an existing event only: asks first, then sends the delete form under this one -->
+                            <div x-show="form.id" class="flex-1 flex flex-wrap items-center gap-3">
+
+                                <button type="button" x-show="!confirmDelete" @click="confirmDelete = true"
+                                    title="{{ __('dashboard/manage-study-schedule/index.delete_event') }}" aria-label="{{ __('dashboard/manage-study-schedule/index.delete_event') }}"
+                                    class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                    {{ __('dashboard/manage-study-schedule/index.delete_event') }}
+                                </button>
+
+                                <div x-show="confirmDelete" x-cloak role="alert" class="flex flex-wrap items-center gap-3">
+                                    <div class="text-amber-300">
+
+                                        <p>{{ __('dashboard/manage-study-schedule/index.delete_event_confirm') }}</p>
+
+                                        <!-- Belongs to the delete form (form="..."), so it is not sent with Save. Unticked: the files stay on the server -->
+                                        <label class="flex items-center gap-2 mt-1 cursor-pointer">
+                                            <input type="checkbox" name="delete_files" value="1" form="delete_event_form" x-model="deleteFiles"
+                                                class="size-4 accent-blue-600 cursor-pointer">
+                                            {{ __('dashboard/manage-study-schedule/index.delete_event_files') }}
+                                        </label>
+
+                                    </div>
+
+                                    <button type="button" @click="confirmDelete = false"
+                                        class="px-4 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                        {{ __('dashboard/index.no') }}
+                                    </button>
+
+                                    <button type="submit" form="delete_event_form"
+                                        class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                        {{ __('dashboard/index.yes') }}
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <!-- Save (disk icon), hidden while the delete confirmation shows: "No" brings back the trash can and Save.
+                                 No Cancel / Close button here: the X at the top, Escape or a click outside closes the modal -->
+
+                            <button type="submit" x-show="!confirmDelete"
+                                title="{{ __('dashboard/index.save') }}" aria-label="{{ __('dashboard/index.save') }}"
+                                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                <i class="fa-solid fa-floppy-disk fa-lg" aria-hidden="true"></i> {{ __('dashboard/index.save') }}
                             </button>
 
-                            <button type="submit"
-                                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
-                                {{ __('dashboard/index.save') }}
-                            </button>
                         </div>
+
                     </form>
+
+                    <!-- Sent by "Yes" above (a form cannot sit inside another one) -->
+                    <form id="delete_event_form" :action="form.delete_url" method="POST" class="hidden">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+
                 </div>
+
             </div>
+
         @endif
 
     </div>
