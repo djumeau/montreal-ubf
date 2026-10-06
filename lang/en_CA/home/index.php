@@ -21,7 +21,7 @@ return [
         'sections' => [
             [
                 'title' => '1. The Personal Information We Collect',
-                'text' => 'We intentionally limit our data gathering to the minimum required to operate the site safely. Accounts are created by an administrator and hold your full name, email address, role and, if you add one, a profile picture. The contact form collects your name, email address, the subject of your inquiry and your message. We only use first-party, necessary cookies: one to remember your language preference, and one to keep you signed in and protect forms; the session may record your IP address and browser type. Your choice on the consent banner is saved in your browser.'
+                'text' => 'We intentionally limit our data gathering to the minimum required to operate the site safely. Accounts are created by an administrator and hold your full name, email address, role and, if you add one, a profile picture. The contact form collects your name, email address, the subject of your inquiry and your message. We only use first-party, necessary cookies: one to remember your language preference, and one to keep you signed in and protect forms; the session may record your IP address and browser type. Your choice on the consent banner is saved in your browser for 30 days, after which we ask again.'
             ],
             [
                 'title' => '2. Why Your Data is Processed',

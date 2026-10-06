@@ -1,12 +1,39 @@
 {{-- cookie-banner.blade.php or directly inside components/layout.blade.php --}}
+@php
+    // Fingerprint of what the visitor agrees to: this banner, the Privacy Policy page and their wording in both languages.
+    // It changes by itself whenever one of them is edited, and a choice made under another fingerprint is asked again
+    $consentVersion = substr(md5(
+        file_get_contents(resource_path('views/components/compliance-requirement.blade.php'))
+        . file_get_contents(resource_path('views/pages/confidentiality-policy.blade.php'))
+        . json_encode(array_map(fn ($locale) => [trans('home/index.consent', [], $locale), trans('home/index.privacy', [], $locale)], ['en_CA', 'fr_CA']))
+    ), 0, 12);
+@endphp
 <div x-data="{
     showBanner: false,
+    validDays: 30, // The choice is asked again after this many days
+    version: '{{ $consentVersion }}', // ...and when the banner or the Privacy Policy has changed since (see above)
     init() {
-        // Check localStorage on load; show banner if choice is not made
-        this.showBanner = !localStorage.getItem('privacy_consent_given');
+        // Check localStorage on load; show banner if no choice is made, if it was made more than validDays ago,
+        // or if it was made for another version (a choice saved before its date and version were kept counts as expired)
+        const choice = localStorage.getItem('privacy_consent_given');
+        const age = Date.now() - Number(localStorage.getItem('privacy_consent_given_at'));
+        const current = age < this.validDays * 24 * 60 * 60 * 1000 && localStorage.getItem('privacy_consent_given_version') === this.version;
+        const expired = choice && !current;
+
+        if (expired) {
+            // Forgotten, so the page goes back to no consent (e.g. the map of an event is disabled again)
+            localStorage.removeItem('privacy_consent_given');
+            localStorage.removeItem('privacy_consent_given_at');
+            localStorage.removeItem('privacy_consent_given_version');
+            window.dispatchEvent(new CustomEvent('privacy-consent-updated', { detail: null }));
+        }
+
+        this.showBanner = !choice || expired;
     },
     setConsent(choice) {
         localStorage.setItem('privacy_consent_given', choice);
+        localStorage.setItem('privacy_consent_given_at', Date.now());
+        localStorage.setItem('privacy_consent_given_version', this.version);
         this.showBanner = false;
 
         // Dispatch custom window event if other parts of your app need to know
