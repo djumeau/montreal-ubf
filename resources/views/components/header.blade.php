@@ -77,7 +77,7 @@
                     <span class="hover:underline">{{ __('nav.info.title') }}</span>
                 </button>
 
-                <!-- Each item of the dropdowns has a cross as its bullet (icon="cross") -->
+                <!-- Each item of the dropdowns has a thin cross as its bullet (icon="cross", drawn in nav-link) -->
                 <div x-show="open" x-transition x-cloak
                     class="absolute left-0 top-full mt-2 min-w-40 bg-slate-800 border border-white rounded shadow-lg py-1 z-50">
 
