@@ -8,6 +8,7 @@ enum InquiryType: string
     case GROUP_STUDY = 'group_study';
     case ONE_TO_ONE = 'one_to_one';
     case WORSHIP = 'worship';
+    case PRAYER = 'prayer';
     case SUBSCRIBE = 'subscribe';
     case OTHER = 'other';
     case PASTORAL = 'pastoral';
