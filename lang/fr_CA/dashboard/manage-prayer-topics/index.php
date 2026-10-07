@@ -3,6 +3,10 @@
 return [
     "manage-prayer-topics" => "Gérer les sujets de prière",
     "add-topic" => "Créer un nouveau sujet de prière",
+    "add_subtopic" => "Ajouter un sous-sujet",
+    "subtopics" => "Sous-sujets",
+    "subtopics_count" => "{0} Aucun sous-sujet|{1} :count sous-sujet|[2,*] :count sous-sujets",
+    "no_subtopics" => "Aucun sous-sujet pour le moment.",
     "edit_topic" => "Modifier le sujet de prière",
     "delete_topic" => "Supprimer le sujet de prière",
     "delete_topic_confirm" => "Supprimer ce sujet de prière?",

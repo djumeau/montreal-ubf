@@ -52,7 +52,8 @@ class ManagePrayerTopicsTest extends TestCase
         $this->actingAs($this->admin)
             ->get(route('manage-prayer-topics'))
             ->assertOk()
-            ->assertSeeInOrder(['Pray for the fall conference', 'Pray for the speakers']);
+            ->assertSeeInOrder(['Pray for the fall conference', 'Pray for the speakers'])
+            ->assertSee('1 sous-sujet'); // "# Subtopics" button of the main topic (the test locale is fr_CA)
 
         $this->actingAs(User::factory()->create(['role' => Role::MEMBER]))
             ->get(route('manage-prayer-topics'))

@@ -26,11 +26,11 @@ class PrayerTopicsController extends Controller
 
         $user = $request->user();
 
-        // 10 main topics per page; their subtopics come with them, whatever their number
+        // 5 main topics per page; their subtopics come with them, whatever their number
         $prayerTopics = PrayerTopic::whereNull('parent_id')
             ->with('subtopics')
             ->ordered()
-            ->paginate(10);
+            ->paginate(5);
 
         // Every main topic, for the "Subtopic of" select
         $mainTopics = PrayerTopic::whereNull('parent_id')->ordered()->get();

@@ -53,10 +53,18 @@
         }
     }
 
+    // Subtopics modal: the row data of each main topic's subtopics, keyed by the main topic's id
+    $subtopicRows = $prayerTopics->getCollection()->mapWithKeys(fn ($prayerTopic) => [
+        $prayerTopic->id => $prayerTopic->subtopics->map(fn ($subtopic) => $rowData[$subtopic->id])->values(),
+    ]);
+
     // Add form state; refilled from old input only after a failed create
     $failedCreate = $errors->createPrayerTopic->any();
+    // "+ Add Sub-topic" on a main topic opens this form for a subtopic of it: parent_id is sent, parent_label is shown
+    $addParent = $failedCreate ? $mainTopics->firstWhere('id', (int) old('parent_id')) : null;
     $addTopic = [
-        'parent_id' => $failedCreate ? (string) old('parent_id', '') : '',
+        'parent_id' => $addParent ? (string) $addParent->id : '',
+        'parent_label' => $addParent ? '#' . $addParent->id . ' ' . $addParent->current_topic : '',
         'topic_en' => $failedCreate ? old('topic_en', '') : '',
         'topic_fr' => $failedCreate ? old('topic_fr', '') : '',
         'category' => $failedCreate ? old('category', PrayerCategory::GENERAL->value) : PrayerCategory::GENERAL->value,
@@ -111,9 +119,28 @@
         showAddTopicModal: {{ $failedCreate ? 'true' : 'false' }},
         showEditTopicModal: {{ $failedUpdateId ? 'true' : 'false' }},
         showDeleteTopicModal: false,
+        showSubtopicsModal: false,
+        subtopicsTopic: {}, // The main topic whose subtopics the modal lists
+        subtopics: [],
         addTopic: @js($addTopic),
         editTopic: @js($editTopic),
         deleteTopic: {},
+        // Create New Prayer Topic button (a main topic), or the Add Sub-topic button on a main topic: a subtopic of it, starting with its category and minimum role
+        openAdd(parent = null) {
+            this.addTopic = {
+                ...this.addTopic,
+                parent_id: parent ? String(parent.id) : '',
+                parent_label: parent ? '#' + parent.id + ' ' + parent.topic : '',
+                ...(parent ? { category: parent.category, min_role: parent.min_role } : {}),
+            };
+            this.showAddTopicModal = true;
+        },
+        // Subtopics button on a main topic: the list of its subtopics, each with its Edit button
+        openSubtopics(topic, subtopics) {
+            this.subtopicsTopic = { ...topic };
+            this.subtopics = subtopics;
+            this.showSubtopicsModal = true;
+        },
         openEdit(topic) {
             // Clear the file input left over from a previously edited row (change event resets the shown file name)
             this.$refs.editTopicForm.querySelectorAll('input[type=file]').forEach(input => {
@@ -169,7 +196,7 @@
                         <h2 class="text-lg font-bold text-slate-100">{{ __('dashboard/manage-prayer-topics/index.manage-prayer-topics') }}
                         </h2>
 
-                        <button type="button" @click="showAddTopicModal = true"
+                        <button type="button" @click="openAdd()"
                             class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                             <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-prayer-topics/index.add-topic') }}
                         </button>
@@ -184,7 +211,7 @@
                         </div>
                     @endif
 
-                    <!-- List paginated main topics (10), in their chosen order (Move up / Move down), each followed by its subtopics -->
+                    <!-- List paginated main topics (5), in their chosen order (Move up / Move down), each followed by its subtopics -->
 
                     <!-- Desktop: Table Layout -->
                     <div class="hidden md:block overflow-x-auto px-4 pb-4">
@@ -213,6 +240,16 @@
                                         <td class="py-3 px-2 text-slate-300 whitespace-nowrap">{{ $prayerTopic->updated_at->isoFormat('ll') }}</td>
                                         <td class="py-3 px-2 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-2">
+                                                @unless ($prayerTopic->parent_id)
+                                                    <button type="button" @click="openSubtopics(@js($rowData[$prayerTopic->id]), @js($subtopicRows[$prayerTopic->id]))"
+                                                        class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                                        <i class="fa-solid fa-list mr-1"></i>{{ trans_choice('dashboard/manage-prayer-topics/index.subtopics_count', $prayerTopic->subtopics->count(), ['count' => $prayerTopic->subtopics->count()]) }}
+                                                    </button>
+                                                    <button type="button" @click="openAdd(@js($rowData[$prayerTopic->id]))"
+                                                        class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                                        <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-prayer-topics/index.add_subtopic') }}
+                                                    </button>
+                                                @endunless
                                                 <button type="button" @click="openEdit(@js($rowData[$prayerTopic->id]))"
                                                     class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
@@ -289,6 +326,16 @@
                                             </button>
                                         </form>
                                     @endforeach
+                                    @unless ($prayerTopic->parent_id)
+                                        <button type="button" @click="openSubtopics(@js($rowData[$prayerTopic->id]), @js($subtopicRows[$prayerTopic->id]))"
+                                            class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                            <i class="fa-solid fa-list mr-1"></i>{{ trans_choice('dashboard/manage-prayer-topics/index.subtopics_count', $prayerTopic->subtopics->count(), ['count' => $prayerTopic->subtopics->count()]) }}
+                                        </button>
+                                        <button type="button" @click="openAdd(@js($rowData[$prayerTopic->id]))"
+                                            class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                            <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-prayer-topics/index.add_subtopic') }}
+                                        </button>
+                                    @endunless
                                     <button type="button" @click="openEdit(@js($rowData[$prayerTopic->id]))"
                                         class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                         <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
@@ -326,10 +373,23 @@
             <div @click.away="showAddTopicModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
-                <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-prayer-topics/index.add-topic') }}</h3>
+                <h3 class="text-lg font-bold mb-4"
+                    x-text="addTopic.parent_id ? @js(__('dashboard/manage-prayer-topics/index.add_subtopic')) : @js(__('dashboard/manage-prayer-topics/index.add-topic'))">
+                    {{ __('dashboard/manage-prayer-topics/index.add-topic') }}</h3>
 
                 <form class="w-full" action="{{ route('prayer-topics.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
+                    <!-- Opened with "+ Add Sub-topic": the main topic it goes under (sent as parent_id); empty for a main topic -->
+                    <input type="hidden" name="parent_id" :value="addTopic.parent_id">
+
+                    <div x-show="addTopic.parent_id" class="w-full mb-3">
+                        <div class="block text-sm font-medium text-slate-100 mb-1.5">{{ __('dashboard/manage-prayer-topics/index.parent') }}</div>
+                        <p class="px-3 py-2 text-sm text-slate-200 bg-slate-900 border border-slate-600 rounded-sm line-clamp-3" x-text="addTopic.parent_label"></p>
+                        @if ($errors->createPrayerTopic->has('parent_id'))
+                            <p class="text-xs text-red-500 mt-1">{{ $errors->createPrayerTopic->first('parent_id') }}</p>
+                        @endif
+                    </div>
 
                     <!-- Topic (EN / FR); errors come from the "createPrayerTopic" bag -->
                     @foreach (['topic_en', 'topic_fr'] as $field)
@@ -343,10 +403,6 @@
                             @endif
                         </div>
                     @endforeach
-
-                    <!-- Subtopic of: a main topic, or none for a main topic -->
-                    <x-inputs.select class="mb-3" id="add_parent_id" name="parent_id" bag="createPrayerTopic" model="addTopic.parent_id"
-                        :options="$parentOptions" :label="__('dashboard/manage-prayer-topics/index.parent')" />
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
                         <x-inputs.select class="mb-3" id="add_category" name="category" bag="createPrayerTopic" model="addTopic.category"
@@ -488,6 +544,59 @@
                         </x-submit>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- AlpineJS Modal Listing a Main Topic's Subtopics (filled by openSubtopics()); Edit swaps it for the Edit modal of that subtopic -->
+        <div x-show="showSubtopicsModal" x-cloak @keydown.escape.window="showSubtopicsModal = false"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
+            x-transition>
+
+            <div @click.away="showSubtopicsModal = false"
+                class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
+
+                <h3 class="text-lg font-bold">{{ __('dashboard/manage-prayer-topics/index.subtopics') }}</h3>
+                <p class="text-sm text-slate-300 mb-4 line-clamp-3">
+                    <span class="text-slate-400" x-text="'#' + subtopicsTopic.id"></span>
+                    <span x-text="subtopicsTopic.topic"></span>
+                </p>
+
+                <ul class="space-y-1 mb-4">
+                    <template x-for="subtopic in subtopics" :key="subtopic.id">
+                        <li class="flex items-start gap-3 text-sm odd:bg-black/50 rounded-sm px-2 py-2">
+                            <span class="shrink-0 text-slate-400" x-text="'#' + subtopic.id"></span>
+
+                            <div class="flex-1 min-w-0">
+                                <p class="text-slate-100 whitespace-pre-line" x-text="subtopic.topic"></p>
+                                <p class="text-xs text-emerald-400" x-show="subtopic.answered">
+                                    <i class="fa-solid fa-square-check mr-1" aria-hidden="true"></i>{{ __('dashboard/manage-prayer-topics/index.answered') }}
+                                </p>
+                            </div>
+
+                            <button type="button" @click="showSubtopicsModal = false; openEdit(subtopic)"
+                                class="shrink-0 px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                                <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
+                            </button>
+                        </li>
+                    </template>
+
+                    <li class="text-sm text-slate-500 italic px-2" x-show="!subtopics.length">
+                        {{ __('dashboard/manage-prayer-topics/index.no_subtopics') }}
+                    </li>
+                </ul>
+
+                <!-- Modal Action Controls: Add Sub-topic on the left (swaps this modal for the Add form), Close on the right -->
+                <div class="flex items-center justify-between gap-3">
+                    <button type="button" @click="showSubtopicsModal = false; openAdd(subtopicsTopic)"
+                        class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                        <i class="fas fa-plus mr-1"></i>{{ __('dashboard/manage-prayer-topics/index.add_subtopic') }}
+                    </button>
+
+                    <button type="button" @click="showSubtopicsModal = false"
+                        class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        {{ __('dashboard/index.close') }}
+                    </button>
+                </div>
             </div>
         </div>
 

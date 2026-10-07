@@ -17,6 +17,29 @@ enum PrayerCategory: string
     }
 
     /**
+     * One line under the category's name on the home page cards.
+     */
+    public function description(): string
+    {
+        return __('enums/prayer_category_description.' . $this->value);
+    }
+
+    /**
+     * Font Awesome icon shown on the category's card on the home page.
+     */
+    public function icon(): string
+    {
+        return match ($this) {
+            self::LOCAL => 'fa-church',
+            self::INDIVIDUAL => 'fa-user-group',
+            self::HEALTH => 'fa-heart-pulse',
+            self::CONFERENCES => 'fa-people-group',
+            self::WORLD_MISSIONS => 'fa-earth-americas',
+            self::GENERAL => 'fa-hands-praying',
+        };
+    }
+
+    /**
      * Convenience for populating a <select> in forms.
      */
     public static function options(): array

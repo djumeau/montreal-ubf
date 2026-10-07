@@ -42,6 +42,9 @@
 
         </div>
 
+        <!-- Prayer topics open to the viewer's role (nothing shows when there are none) -->
+        <x-prayer-topics class="pt-6 pb-6" />
+
     </div>
 
 </x-layout>

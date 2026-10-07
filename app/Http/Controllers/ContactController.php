@@ -57,7 +57,7 @@ class ContactController extends Controller
                 'inquiring_about' => InquiryType::SUBSCRIBE->value,
                 'message' => __('contact.prefill_online', ['title' => $study->current_title ?: $study->category->label()]) . $this->studyDetails($study, false),
             ],
-            default => ['inquiring_about' => '', 'message' => ''],
+            default => ['inquiring_about' => $this->requestedInquiry($request), 'message' => ''],
         };
     }
 
@@ -119,6 +119,17 @@ class ContactController extends Controller
         ]);
 
         return "\n\n" . implode("\n", $lines);
+    }
+
+    /**
+     * Subject chosen by the link that led here (/contact?inquiry=prayer, from "Need prayer?" on the home page):
+     * one of the options the viewer is offered, otherwise none.
+     */
+    private function requestedInquiry(Request $request): string
+    {
+        $inquiry = (string) $request->query('inquiry');
+
+        return array_key_exists($inquiry, $this->inquiryOptions()) ? $inquiry : '';
     }
 
     /**

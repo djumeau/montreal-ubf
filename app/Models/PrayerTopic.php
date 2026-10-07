@@ -56,6 +56,27 @@ class PrayerTopic extends Model
     }
 
     /**
+     * Topics the viewer may see: a Guest minimum role is open to everyone (visitors who are not logged in too),
+     * the others need a role at that level or above.
+     * Usage: PrayerTopic::visibleTo($request->user())
+     */
+    public function scopeVisibleTo(Builder $query, ?User $user): void
+    {
+        $query->visibleToRole($user?->role ?? Role::GUEST);
+    }
+
+    /**
+     * Topics open to a role: those whose minimum role is that role or one below it.
+     * Usage: PrayerTopic::visibleToRole(Role::MEMBER)
+     */
+    public function scopeVisibleToRole(Builder $query, Role $role): void
+    {
+        $roles = array_filter(Role::cases(), fn (Role $minimum) => $role->atLeast($minimum));
+
+        $query->whereIn('min_role', array_map(fn (Role $minimum) => $minimum->value, $roles));
+    }
+
+    /**
      * Topics in the order chosen on the dashboard (Move up / Move down), lowest position first.
      * Usage: PrayerTopic::whereNull('parent_id')->ordered()->get()
      */

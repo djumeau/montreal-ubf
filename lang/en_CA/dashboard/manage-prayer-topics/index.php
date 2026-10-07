@@ -3,6 +3,10 @@
 return [
     "manage-prayer-topics" => "Manage Prayer Topics",
     "add-topic" => "Create New Prayer Topic",
+    "add_subtopic" => "Add Sub-topic",
+    "subtopics" => "Subtopics",
+    "subtopics_count" => "{0} No Subtopics|{1} :count Subtopic|[2,*] :count Subtopics",
+    "no_subtopics" => "No subtopics yet.",
     "edit_topic" => "Edit Prayer Topic",
     "delete_topic" => "Delete Prayer Topic",
     "delete_topic_confirm" => "Delete this prayer topic?",
