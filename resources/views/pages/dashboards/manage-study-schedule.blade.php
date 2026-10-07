@@ -1,5 +1,7 @@
 @php
     use App\Enums\EventCategory;
+    use App\Models\Event;
+    use App\Models\EventAttachment;
 
     $isFrench = app()->getLocale() === 'fr_CA';
 
@@ -15,7 +17,18 @@
 
     $defaultColour = '#2563EB'; // Shown in the colour picker for events without a colour
 
-    // Events of the period, keyed by event id: what openEdit() puts in the modal
+    // An attachment as the Attachments and Images modal lists it
+    $fileData = fn ($attachment) => [
+        'id' => $attachment->id,
+        'name' => $attachment->document_name,
+        'icon' => $attachment->icon,
+        'size' => $attachment->size_label,
+        'downloads' => $attachment->extension === 'docx', // The others (PDF, images, videos) open in the browser
+        'show_url' => $attachment->url,
+        'destroy_url' => route('event-attachments.destroy', $attachment),
+    ];
+
+    // Events of the period, keyed by event id: what openEdit() puts in the modal (and openFiles() in the Attachments and Images modal)
     $rowData = $studies->mapWithKeys(fn ($study) => [
         $study->id => [
             'id' => $study->id,
@@ -37,8 +50,35 @@
             'minimum_profile' => $study->minimum_profile->value,
             'update_url' => route('schedule.update', $study),
             'delete_url' => route('schedule.destroy', $study),
+
+            // Attachments and Images modal
+            'name' => $study->current_title ?: $study->category->label(),
+            'when' => $study->schedule_when,
+            'attachments' => $study->attachments->count(),
+            'documents' => collect(EventAttachment::LOCALES)->mapWithKeys(fn ($locale) => [
+                $locale => $study->attachments->where('type', 'document')->where('locale', $locale)->sortBy('document_name')->values()->map($fileData),
+            ]),
+            'media' => $study->attachments->where('type', 'media')->sortBy('document_name')->values()->map($fileData),
+            'images' => collect(Event::IMAGE_TYPES)->mapWithKeys(fn ($type) => [
+                $type => ($study->images[$type] ?? null) ? ['name' => $study->images[$type], 'url' => $study->ownImageUrl($type)] : null,
+            ]),
+            'has_study_image' => (bool) $study->bible_study_id, // The site shows the Bible study's image before the event's own
+            'attachments_url' => route('event-attachments.store', $study),
+            'images_url' => route('event-images.store', $study),
+            'image_destroy_urls' => collect(Event::IMAGE_TYPES)->mapWithKeys(fn ($type) => [$type => route('event-images.destroy', [$study, $type])]),
         ],
     ]);
+
+    // Attachments and Images modal reopens for the same event after an upload / delete (flashed id) or a failed upload (old input)
+    $failedFilesUpload = $errors->uploadEventFiles->any() || $errors->uploadEventImages->any();
+    $filesEventId = session('files_event') ?? ($failedFilesUpload ? (int) old('files_event_id') : null);
+    $filesEvent = $rowData[$filesEventId] ?? null; // Null if that event isn't in the week shown
+    $uploadForm = [
+        'type' => $errors->uploadEventFiles->any() ? old('type', 'document') : 'document',
+        'locale' => $errors->uploadEventFiles->any() ? old('locale', '') : ($isFrench ? 'fr_CA' : 'en_CA'),
+    ];
+    $fileLocaleOptions = collect(EventAttachment::LOCALES)->mapWithKeys(fn ($locale) => [$locale => __('dashboard/manage-studies/index.language_' . $locale)])->all();
+    $fileTypeOptions = collect(EventAttachment::TYPES)->mapWithKeys(fn ($type) => [$type => __('dashboard/manage-study-schedule/index.attachment_' . $type)])->all();
 
     // New event: openAdd() fills in the day and hour of the cell clicked
     $newStudy = [
@@ -112,6 +152,9 @@
         showStudyModal: {{ $failedSave ? 'true' : 'false' }},
         confirmDelete: false, // Delete was clicked in the Event modal: asks before deleting
         deleteFiles: false, // Ticked in that confirmation: the images and attachments are deleted too
+        showFilesModal: {{ $filesEvent ? 'true' : 'false' }},
+        filesEvent: @js($filesEvent ?? (object) []),
+        uploadForm: @js($uploadForm),
         form: @js($formState),
         newStudy: @js($newStudy),
         studyRows: @js($rowData),
@@ -137,6 +180,17 @@
             this.confirmDelete = false;
             this.deleteFiles = false;
             this.showStudyModal = true;
+        },
+        // Paperclip button of the Event modal: swaps it for the Attachments and Images modal of the same event (unsaved edits are dropped)
+        openFiles(id) {
+            // Clear files chosen for a previously opened event (change event resets the shown file names)
+            this.$refs.filesModal.querySelectorAll('input[type=file]').forEach(input => {
+                input.value = '';
+                input.dispatchEvent(new Event('change'));
+            });
+            this.filesEvent = { ...this.studyRows[id] };
+            this.showStudyModal = false;
+            this.showFilesModal = true;
         },
     }" class="flex min-h-screen text-white">
 
@@ -496,6 +550,15 @@
                             <!-- Save (disk icon), hidden while the delete confirmation shows: "No" brings back the trash can and Save.
                                  No Cancel / Close button here: the X at the top, Escape or a click outside closes the modal -->
 
+                            <!-- Attachments and images (paperclip with the number of attachments), for an existing event of the week shown -->
+                            <button type="button" x-show="!confirmDelete && form.id && studyRows[form.id]" @click="openFiles(form.id)"
+                                title="{{ __('dashboard/manage-study-schedule/index.manage_files') }}"
+                                :aria-label="@js(__('dashboard/manage-study-schedule/index.manage_files')) + ': ' + (studyRows[form.id]?.attachments ?? 0)"
+                                class="px-4 py-2 bg-slate-900 hover:bg-slate-700 text-white font-medium border border-white rounded-sm cursor-pointer">
+                                <i class="fa-solid fa-paperclip" aria-hidden="true"></i>
+                                <span x-text="studyRows[form.id]?.attachments ?? 0"></span>
+                            </button>
+
                             <button type="submit" x-show="!confirmDelete"
                                 title="{{ __('dashboard/index.save') }}" aria-label="{{ __('dashboard/index.save') }}"
                                 class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium border border-white rounded-sm cursor-pointer">
@@ -515,6 +578,8 @@
                 </div>
 
             </div>
+
+            <x-manage-schedule::files-modal :reopened="(bool) $filesEvent" :locale-options="$fileLocaleOptions" :type-options="$fileTypeOptions" />
 
         @endif
 

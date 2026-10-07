@@ -46,7 +46,7 @@ class StudyScheduleController extends Controller
         $period = $this->period($request);
 
         // Every event of the period, whatever its category or minimum profile
-        $studies = $this->events($period['start'], $period['end'])->get();
+        $studies = $this->events($period['start'], $period['end'])->with('attachments')->get(); // Attachments: for the Attachments and Images modal
 
         // For the Event modal: the series select, and the Bible studies it narrows down
         $seriesList = StudySeries::orderBy('id')->get();
@@ -84,7 +84,11 @@ class StudyScheduleController extends Controller
 
         $validated = $request->validateWithBag('saveSchedule', $this->rules($request), [], $this->attributes());
 
+        // Images and attachments live in folders named after the category and the start date: capture them before the change, move the files after
+        $oldLocations = $event->fileLocations();
+
         $event->update($this->eventFields($validated));
+        $event->refresh()->moveFilesFrom($oldLocations);
 
         return back()->with('status', __('dashboard/manage-study-schedule/index.schedule_event_updated'))
             ->with('warning', $this->overlapWarning($event));

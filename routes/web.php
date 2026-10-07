@@ -151,6 +151,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/manage-schedule/{event}', [StudyScheduleController::class, 'update'])->name('schedule.update');
     Route::delete('/manage-schedule/{event}', [StudyScheduleController::class, 'destroy'])->name('schedule.destroy');
 
+    // Manage Schedule attachments and images actions - Upload, Delete
+    Route::post('/manage-schedule/{event}/attachments', [EventAttachmentController::class, 'store'])->name('event-attachments.store');
+    Route::delete('/manage-schedule/attachments/{attachment}', [EventAttachmentController::class, 'destroy'])->name('event-attachments.destroy');
+    Route::post('/manage-schedule/{event}/images', [EventAttachmentController::class, 'storeImages'])->name('event-images.store');
+    Route::delete('/manage-schedule/{event}/images/{type}', [EventAttachmentController::class, 'destroyImage'])->name('event-images.destroy');
+
     // fr_CA
     Route::get('/tableau', [DashboardController::class, 'index'])->name('tableau');
 

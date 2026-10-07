@@ -40,4 +40,22 @@ return [
     "schedule_week_copied" => "{0} Aucun événement ni étude biblique récurrent n'a été copié.|[1,*] Événements/études bibliques récurrents copiés vers la semaine suivante.",
     "schedule_week_skipped" => "{1} Non copié, un événement existe déjà au même jour et à la même heure : :events.|[2,*] Non copiés, des événements existent déjà au même jour et à la même heure : :events.",
     "schedule_event_overlaps" => "Remarque : cet événement a lieu en même temps que :events.",
+
+    // Attachments and Images modal
+    "manage_files" => "Pièces jointes et images",
+    "edit_event" => "Modifier l'événement",
+    "images" => "Images",
+    "images_study_note" => "Cet événement est lié à une étude biblique : le site montre l'image de cette étude (ou de sa série) avant celle de l'événement.",
+    "images_none_chosen" => "Choisissez au moins une image à téléverser.",
+    "images_saved" => "Images enregistrées.",
+    "image_deleted" => "Image supprimée.",
+    "delete_image" => "Supprimer l'image",
+    "documents" => "Documents",
+    "media" => "Médias",
+    "attachment_document" => "Document (PDF, DOCX)",
+    "attachment_media" => "Média (PNG, JPG, MP4)",
+    "attachment_files" => "Fichiers (max. 20 Mo chacun)",
+    "attachment_files_hint" => "Documents : PDF ou DOCX, dans une langue. Médias : PNG, JPG ou MP4, montrés dans les deux langues. Les noms sont mis en minuscules, les espaces deviennent des traits de soulignement. Un fichier du même nom remplace celui qui existe.",
+    "attachments_uploaded" => "{1} :count pièce jointe téléversée.|[2,*] :count pièces jointes téléversées.",
+    "attachment_deleted" => "Pièce jointe :name supprimée.",
 ];

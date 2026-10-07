@@ -8,6 +8,7 @@ use App\Support\SafeHtml;
 use App\Support\StudyStorage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +22,9 @@ class Event extends Model
     // Roles an event can be reserved for, lowest first: the values the minimum_profile column accepts
     // (see the create_events_table migration; it has no Music role)
     public const MINIMUM_PROFILES = [Role::GUEST, Role::USER, Role::MEMBER, Role::LEADER, Role::ELDER, Role::ADMIN];
+
+    // Image slots stored in the "images" JSON column
+    public const IMAGE_TYPES = ['desktop', 'mobile', 'square'];
 
     // Length shown on the schedule when the event has no end time (or ends another day)
     public const SCHEDULE_DEFAULT_MINUTES = 90;
@@ -422,17 +426,105 @@ class Event extends Model
      */
     public function deleteFiles(): void
     {
-        $others = self::with('attachments')
+        $this->deleteImageFiles(array_values($this->images ?? []));
+        $this->deleteDocumentFiles($this->attachments->pluck('document_name')->all());
+    }
+
+    /**
+     * Delete the named image files from this event's image folder (then the folder once empty),
+     * except those another event of the same folder still uses.
+     */
+    public function deleteImageFiles(array $names): void
+    {
+        StudyStorage::delete(Storage::disk('public'), array_diff($names, $this->sharedImages()), $this->imageDirectory());
+    }
+
+    /**
+     * Delete the named attachment files from this event's document folder (then the folder once empty),
+     * except those another event of the same folder still uses.
+     */
+    public function deleteDocumentFiles(array $names): void
+    {
+        StudyStorage::delete(Storage::disk('local'), array_diff($names, $this->sharedDocuments()), $this->documentDirectory());
+    }
+
+    /**
+     * Where this event's files are now, to hand to moveFilesFrom() once its category or start date has changed:
+     * its two folders, and the file names other events of those folders use too.
+     */
+    public function fileLocations(): array
+    {
+        return [
+            'imageDirectory' => $this->imageDirectory(),
+            'documentDirectory' => $this->documentDirectory(),
+            'sharedImages' => $this->sharedImages(),
+            'sharedDocuments' => $this->sharedDocuments(),
+        ];
+    }
+
+    /**
+     * Bring this event's image and attachment files to its folders after its category or start date changed
+     * ($old is fileLocations() from before the change). Files other events still use in the old folders are copied, the rest moved.
+     */
+    public function moveFilesFrom(array $old): void
+    {
+        $moves = [
+            [Storage::disk('public'), array_values($this->images ?? []), $old['imageDirectory'], $this->imageDirectory(), $old['sharedImages']],
+            [Storage::disk('local'), $this->attachments()->pluck('document_name')->all(), $old['documentDirectory'], $this->documentDirectory(), $old['sharedDocuments']],
+        ];
+
+        foreach ($moves as [$disk, $names, $oldDirectory, $newDirectory, $shared]) {
+            if ($oldDirectory === $newDirectory) {
+                continue;
+            }
+
+            foreach (array_intersect($names, $shared) as $name) {
+                if ($disk->exists("{$oldDirectory}/{$name}")) {
+                    $disk->copy("{$oldDirectory}/{$name}", "{$newDirectory}/{$name}");
+                }
+            }
+
+            StudyStorage::move($disk, array_diff($names, $shared), $oldDirectory, $newDirectory);
+        }
+    }
+
+    /**
+     * The other events sharing this event's folders: same category, starting the same day.
+     */
+    private function folderMates(): Collection
+    {
+        return self::with('attachments')
             ->where('category', $this->category->value)
             ->whereDate('start_date', $this->start_date)
             ->whereKeyNot($this->id)
             ->get();
+    }
 
-        $images = array_diff(array_values($this->images ?? []), $others->flatMap(fn (Event $event) => array_values($event->images ?? []))->all());
-        $documents = array_diff($this->attachments->pluck('document_name')->all(), $others->flatMap(fn (Event $event) => $event->attachments->pluck('document_name'))->all());
+    /**
+     * Image file names used by the other events of this event's folder.
+     */
+    private function sharedImages(): array
+    {
+        return $this->folderMates()->flatMap(fn (Event $event) => array_values($event->images ?? []))->unique()->values()->all();
+    }
 
-        StudyStorage::delete(Storage::disk('public'), $images, $this->imageDirectory());
-        StudyStorage::delete(Storage::disk('local'), $documents, $this->documentDirectory());
+    /**
+     * Attachment file names used by the other events of this event's folder.
+     */
+    private function sharedDocuments(): array
+    {
+        return $this->folderMates()->flatMap(fn (Event $event) => $event->attachments->pluck('document_name'))->unique()->values()->all();
+    }
+
+    /**
+     * Public URL of one of the event's own images (not the Bible study's, unlike imageUrl()); null without one.
+     * Usage: $event->ownImageUrl('square' | 'desktop' | 'mobile')
+     */
+    public function ownImageUrl(string $type): ?string
+    {
+        $file = $this->images[$type] ?? null;
+
+        return $file ? asset('storage/' . $this->imageDirectory() . '/' . $file) : null;
     }
 
     /**

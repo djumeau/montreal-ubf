@@ -20,6 +20,7 @@ class EventAttachment extends Model
 
     public const TYPES = ['document', 'media']; // document: pdf, docx | media: png, jpg, mp4
     public const LOCALES = ['en_CA', 'fr_CA']; // Documents only; media have no locale and show in both languages
+    public const EXTENSIONS = ['document' => ['pdf', 'docx'], 'media' => ['png', 'jpg', 'jpeg', 'mp4']]; // Accepted on upload, per type
 
     /**
      * Get parent ownership relationship context.

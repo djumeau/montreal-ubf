@@ -36,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
         // Components kept with the Manage Users dashboard page, e.g. <x-manage-users::reset-password-button :user="$user" />
         Blade::anonymousComponentPath(resource_path('views/pages/dashboards/manage-users'), 'manage-users');
 
+        // Components kept with the Manage Schedule dashboard page, e.g. <x-manage-schedule::files-modal />
+        Blade::anonymousComponentPath(resource_path('views/pages/dashboards/manage-schedule'), 'manage-schedule');
+
         // Components kept with the Manage Prayer Topics dashboard page, e.g. <x-manage-prayer-topics::list.table-head />
         Blade::anonymousComponentPath(resource_path('views/pages/dashboards/manage-prayer-topics'), 'manage-prayer-topics');
     }

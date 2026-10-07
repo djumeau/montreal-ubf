@@ -40,4 +40,22 @@ return [
     "schedule_week_copied" => "{0} No recurring events/Bible studies were copied.|[1,*] Recurring events/Bible studies copied to the following week.",
     "schedule_week_skipped" => "{1} Not copied, an event already exists at the same day and time: :events.|[2,*] Not copied, events already exist at the same day and time: :events.",
     "schedule_event_overlaps" => "Note: this event is at the same time as :events.",
+
+    // Attachments and Images modal
+    "manage_files" => "Attachments and Images",
+    "edit_event" => "Edit Event",
+    "images" => "Images",
+    "images_study_note" => "This event is linked to a Bible study: the site shows that study's image (or its series') before the event's own.",
+    "images_none_chosen" => "Choose at least one image to upload.",
+    "images_saved" => "Images saved.",
+    "image_deleted" => "Image deleted.",
+    "delete_image" => "Delete image",
+    "documents" => "Documents",
+    "media" => "Media",
+    "attachment_document" => "Document (PDF, DOCX)",
+    "attachment_media" => "Media (PNG, JPG, MP4)",
+    "attachment_files" => "Files (max 20 MB each)",
+    "attachment_files_hint" => "Documents: PDF or DOCX, in one language. Media: PNG, JPG or MP4, shown in both languages. Names are made lower case with spaces as underscores. A file with the same name replaces the existing one.",
+    "attachments_uploaded" => "{1} :count attachment uploaded.|[2,*] :count attachments uploaded.",
+    "attachment_deleted" => "Attachment :name deleted.",
 ];
