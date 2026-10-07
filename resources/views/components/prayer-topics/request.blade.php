@@ -11,7 +11,7 @@
     </div>
 
     <a href="{{ route(__('nav.contact.name'), ['inquiry' => \App\Enums\InquiryType::PRAYER->value]) }}"
-        class="shrink-0 inline-flex items-center gap-2 px-5 py-2 leading-tight border border-transparent bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+        class="shrink-0 inline-flex items-center gap-2 p-2 leading-tight border border-transparent bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
         {{ __('home/prayer.need_button') }}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
     </a>
 </aside>
