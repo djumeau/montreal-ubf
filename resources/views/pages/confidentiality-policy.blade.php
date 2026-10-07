@@ -18,11 +18,11 @@
     {{-- Dynamic localized date rendering --}}
     <p class="text-xs italic text-slate-100 mb-2">
         @if ($isFrench)
-            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-06')->isoFormat('D MMMM YYYY')]) }}
-            {{-- Output: Dernière mise à jour : 6 octobre 2026 --}}
+            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-07')->isoFormat('D MMMM YYYY')]) }}
+            {{-- Output: Dernière mise à jour : le 7 octobre 2026 --}}
         @else
-            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-06')->isoFormat('MMMM D, YYYY')]) }}
-            {{-- Output: Last Updated: October 6, 2026 --}}
+            {{ __('home/index.privacy.last_updated', ['date' => \Carbon\Carbon::parse('2026-10-07')->isoFormat('MMMM D, YYYY')]) }}
+            {{-- Output: Last updated: October 7, 2026 --}}
         @endif
     </p>
 
@@ -41,6 +41,14 @@
                 <p class="text-sm leading-relaxed text-slate-200">
                     {{ $section['text'] }}
                 </p>
+                {{-- Optional bulleted list under the paragraph --}}
+                @if (!empty($section['items']))
+                    <ul class="list-disc pl-5 space-y-1 text-sm leading-relaxed text-slate-200">
+                        @foreach ($section['items'] as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                @endif
             </section>
         @endforeach
     </div>
@@ -52,7 +60,7 @@
             : @else:
             @endif
         </span>
-        <span class="italic">{{ __('home/index.privacy.name') }}</italic>
+        <span class="italic">{{ __('home/index.privacy.name') }}</span>
     </p>
 
     {{-- Email --}}
