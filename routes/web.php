@@ -23,7 +23,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAttachmentController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PrayerTopicsController;
-use App\Http\Controllers\StudyScheduleController;
+use App\Http\Controllers\ScheduleController;
 
 use App\Http\Controllers\SwitchLanguageController;
 
@@ -72,8 +72,8 @@ Route::post('/etudes-bibliques/sauvegarder', [BibleStudyController::class, 'stor
 Route::get('/etudes-bibliques/{id}', [BibleStudyController::class, 'show'])->name('etudes-bibliques.visionner');
 
 // Bible Study Schedule
-Route::get('/bible-study-schedule', [StudyScheduleController::class, 'index'])->name('bible-study-schedule');
-Route::get('/horaire-etudes-bibliques', [StudyScheduleController::class, 'index'])->name('horaire-etudes-bibliques');
+Route::get('/bible-study-schedule', [ScheduleController::class, 'index'])->name('bible-study-schedule');
+Route::get('/horaire-etudes-bibliques', [ScheduleController::class, 'index'])->name('horaire-etudes-bibliques');
 
 // Authentication Routes
 
@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-studies', [DashboardController::class, 'manageStudies'])->name('manage-studies');
 
-    Route::get('/manage-schedule', [StudyScheduleController::class, 'manage'])->name('manage-schedule');
+    Route::get('/manage-schedule', [ScheduleController::class, 'manage'])->name('manage-schedule');
 
     Route::get('/manage-inquiries', [InquiryController::class, 'index'])->name('manage-inquiries');
 
@@ -146,10 +146,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/manage-studies/attachments/{attachment}', [StudyAttachmentController::class, 'destroy'])->name('attachments.destroy');
 
     // Manage Schedule actions - Add, Edit, Copy the week's recurring events to the following week
-    Route::post('/manage-schedule', [StudyScheduleController::class, 'store'])->name('schedule.store');
-    Route::post('/manage-schedule/copy-week', [StudyScheduleController::class, 'copyWeek'])->name('schedule.copy-week');
-    Route::put('/manage-schedule/{event}', [StudyScheduleController::class, 'update'])->name('schedule.update');
-    Route::delete('/manage-schedule/{event}', [StudyScheduleController::class, 'destroy'])->name('schedule.destroy');
+    Route::post('/manage-schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+    Route::post('/manage-schedule/copy-week', [ScheduleController::class, 'copyWeek'])->name('schedule.copy-week');
+    Route::put('/manage-schedule/{event}', [ScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/manage-schedule/{event}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
 
     // Manage Schedule attachments and images actions - Upload, Delete
     Route::post('/manage-schedule/{event}/attachments', [EventAttachmentController::class, 'store'])->name('event-attachments.store');
@@ -166,7 +166,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/gerer-etudes', [DashboardController::class, 'manageStudies'])->name('gerer-etudes');
 
-    Route::get('/gerer-horaire', [StudyScheduleController::class, 'manage'])->name('gerer-horaire');
+    Route::get('/gerer-horaire', [ScheduleController::class, 'manage'])->name('gerer-horaire');
 
     Route::get('/gerer-demandes', [InquiryController::class, 'index'])->name('gerer-demandes');
 

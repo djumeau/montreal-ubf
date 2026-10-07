@@ -17,6 +17,7 @@ return [
     "end_day" => "End date",
     "end_day_hint" => "Only for an event ending on another day.",
     "recurring" => "Recurring",
+    "featured_on_home_page" => "Featured on Home Page",
     "minimum_profile" => "Minimum profile",
     "minimum_profile_hint" => "The event is shown to this role and the roles above it. Guest: everyone, visitors included.",
     "start_time" => "Start time",

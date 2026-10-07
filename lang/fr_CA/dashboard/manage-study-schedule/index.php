@@ -17,6 +17,7 @@ return [
     "end_day" => "Date de fin",
     "end_day_hint" => "Seulement pour un événement qui se termine un autre jour.",
     "recurring" => "Récurrent",
+    "featured_on_home_page" => "En vedette sur la page d'accueil",
     "minimum_profile" => "Profil minimum",
     "minimum_profile_hint" => "L'événement est montré à ce rôle et aux rôles supérieurs. Invité : tout le monde, visiteurs compris.",
     "start_time" => "Heure de début",

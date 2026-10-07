@@ -213,4 +213,21 @@ class ManageScheduleFilesTest extends TestCase
             ->assertSee('group_photo.jpg')
             ->assertSee('sq.jpg');
     }
+
+    public function test_an_event_can_be_featured_on_the_home_page_and_unfeatured(): void
+    {
+        $fields = ['category' => 'conference', 'title_en' => 'Fall Conference', 'date' => '2026-11-20', 'start_time' => '19:00', 'minimum_profile' => 'guest'];
+
+        $this->actingAs($this->admin)
+            ->post(route('schedule.store'), $fields + ['featured_on_home_page' => '1'])
+            ->assertSessionHas('status');
+
+        $event = Event::sole();
+        $this->assertTrue($event->featured_on_home_page);
+
+        // Unticked: the form sends the hidden 0
+        $this->actingAs($this->admin)->put(route('schedule.update', $event), $fields + ['featured_on_home_page' => '0']);
+
+        $this->assertFalse($event->refresh()->featured_on_home_page);
+    }
 }

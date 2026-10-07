@@ -47,6 +47,7 @@
             'location' => $study->location ?? '',
             'color' => $study->color_text ? $study->color : $defaultColour,
             'recurring' => (bool) $study->recurring,
+            'featured_on_home_page' => (bool) $study->featured_on_home_page,
             'minimum_profile' => $study->minimum_profile->value,
             'update_url' => route('schedule.update', $study),
             'delete_url' => route('schedule.destroy', $study),
@@ -96,6 +97,7 @@
         'location' => '',
         'color' => $defaultColour,
         'recurring' => false,
+        'featured_on_home_page' => false,
         'minimum_profile' => 'guest',
         'update_url' => '',
         'delete_url' => '',
@@ -119,6 +121,7 @@
             'location' => old('location', ''),
             'color' => old('color', $defaultColour),
             'recurring' => (bool) old('recurring', false),
+            'featured_on_home_page' => (bool) old('featured_on_home_page', false),
             'minimum_profile' => old('minimum_profile', 'guest'),
             'update_url' => old('event_id') ? route('schedule.update', (int) old('event_id')) : '',
             'delete_url' => old('event_id') ? route('schedule.destroy', (int) old('event_id')) : '',
@@ -404,6 +407,21 @@
                                     class="size-4 accent-blue-600 cursor-pointer align-middle">
                                 @if ($scheduleErrors->has('recurring'))
                                     <p class="text-xs text-red-500 mt-1">{{ $scheduleErrors->first('recurring') }}</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        <!-- Featured on Home Page: unchecked sends the hidden 0 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-2 items-center py-3 border-t border-slate-700">
+                            <label for="study_featured_on_home_page" class="flex items-center gap-3 font-medium">
+                                <i class="fa-solid fa-star w-5 text-center text-base" aria-hidden="true"></i>{{ __('dashboard/manage-study-schedule/index.featured_on_home_page') }}
+                            </label>
+                            <div>
+                                <input type="hidden" name="featured_on_home_page" value="0">
+                                <input id="study_featured_on_home_page" type="checkbox" name="featured_on_home_page" value="1" x-model="form.featured_on_home_page"
+                                    class="size-4 accent-blue-600 cursor-pointer align-middle">
+                                @if ($scheduleErrors->has('featured_on_home_page'))
+                                    <p class="text-xs text-red-500 mt-1">{{ $scheduleErrors->first('featured_on_home_page') }}</p>
                                 @endif
                             </div>
                         </div>

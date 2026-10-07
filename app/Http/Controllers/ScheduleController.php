@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class StudyScheduleController extends Controller
+class ScheduleController extends Controller
 {
     // Schedule views: both show a week, Sunday to Saturday
     private const VIEWS = ['week', 'list'];
@@ -52,7 +52,7 @@ class StudyScheduleController extends Controller
         $seriesList = StudySeries::orderBy('id')->get();
         $bibleStudies = BibleStudy::with('book')->orderBy('id')->get();
 
-        return view('pages.dashboards.manage-study-schedule', compact('user', 'studies', 'seriesList', 'bibleStudies') + $period);
+        return view('pages.dashboards.manage-schedule', compact('user', 'studies', 'seriesList', 'bibleStudies') + $period);
     }
 
     // @desc Add an event to the schedule
@@ -208,6 +208,7 @@ class StudyScheduleController extends Controller
             'location' => ['nullable', 'string', 'max:1024'],
             'color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'recurring' => ['nullable', 'boolean'],
+            'featured_on_home_page' => ['nullable', 'boolean'],
             'minimum_profile' => ['required', Rule::in(array_column(Event::MINIMUM_PROFILES, 'value'))],
         ];
     }
@@ -230,6 +231,7 @@ class StudyScheduleController extends Controller
             'location' => __('dashboard/manage-study-schedule/index.location'),
             'color' => __('dashboard/manage-study-schedule/index.colour'),
             'recurring' => __('dashboard/manage-study-schedule/index.recurring'),
+            'featured_on_home_page' => __('dashboard/manage-study-schedule/index.featured_on_home_page'),
             'minimum_profile' => __('dashboard/manage-study-schedule/index.minimum_profile'),
         ];
     }
@@ -256,6 +258,7 @@ class StudyScheduleController extends Controller
             'location' => $validated['location'] ?? null,
             'color' => isset($validated['color']) ? strtoupper($validated['color']) : null,
             'recurring' => (bool) ($validated['recurring'] ?? false),
+            'featured_on_home_page' => (bool) ($validated['featured_on_home_page'] ?? false),
             'minimum_profile' => $validated['minimum_profile'],
         ];
     }
