@@ -36,7 +36,7 @@ $dayFormat = __('bible-study-schedule/index.list_day_format');
             </div>
 
             <!-- Main Content Cluster -->
-            <div class="flex-col text-center translate-y-22 md:translate-y-28 px-4 z-10">
+            <div class="flex-col text-center translate-y-18 md:translate-y-28 px-4 z-10">
 
                 <!-- Event Title -->
                 <h2
