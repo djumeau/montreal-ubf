@@ -24,6 +24,9 @@
                 'category' => $prayerTopic->category->value,
                 'min_role' => $prayerTopic->min_role->value,
                 'url' => $prayerTopic->url ?? '',
+                'image' => $prayerTopic->image ?? '', // Current file name
+                'image_url' => $prayerTopic->image_url,
+                'remove_image' => false,
                 'answered' => $prayerTopic->answered,
                 'subtopics' => $subtopics,
                 'subtopics_kept' => trans_choice('dashboard/manage-prayer-topics/index.delete_subtopics_kept', $subtopics, ['count' => $subtopics]),
@@ -32,6 +35,23 @@
             ],
         ];
     });
+
+    // Move up / Move down buttons, keyed by prayer topic id: off for the first and the last of a list
+    // (the main topics, over every page, or the subtopics of one main topic)
+    $canMove = [];
+    foreach ($prayerTopics as $index => $mainTopic) {
+        $canMove[$mainTopic->id] = [
+            'up' => !($prayerTopics->onFirstPage() && $index === 0),
+            'down' => $prayerTopics->hasMorePages() || $index < $prayerTopics->count() - 1,
+        ];
+
+        foreach ($mainTopic->subtopics->values() as $subIndex => $subtopic) {
+            $canMove[$subtopic->id] = [
+                'up' => $subIndex > 0,
+                'down' => $subIndex < $mainTopic->subtopics->count() - 1,
+            ];
+        }
+    }
 
     // Add form state; refilled from old input only after a failed create
     $failedCreate = $errors->createPrayerTopic->any();
@@ -55,6 +75,9 @@
         'category' => $failedUpdateId ? old('category', '') : '',
         'min_role' => $failedUpdateId ? old('min_role', '') : '',
         'url' => $failedUpdateId ? old('url', '') : '',
+        'image' => $failedUpdateId ? $rowData[$failedUpdateId]['image'] ?? '' : '',
+        'image_url' => $failedUpdateId ? $rowData[$failedUpdateId]['image_url'] ?? null : null,
+        'remove_image' => $failedUpdateId ? (bool) old('remove_image', false) : false,
         'answered' => $failedUpdateId ? (bool) old('answered', false) : false,
         'subtopics' => $failedUpdateId ? $rowData[$failedUpdateId]['subtopics'] ?? 0 : 0,
         'update_url' => $failedUpdateId ? route('prayer-topics.update', $failedUpdateId) : '',
@@ -92,6 +115,11 @@
         editTopic: @js($editTopic),
         deleteTopic: {},
         openEdit(topic) {
+            // Clear the file input left over from a previously edited row (change event resets the shown file name)
+            this.$refs.editTopicForm.querySelectorAll('input[type=file]').forEach(input => {
+                input.value = '';
+                input.dispatchEvent(new Event('change'));
+            });
             this.editTopic = { ...topic };
             this.showEditTopicModal = true;
         },
@@ -156,60 +184,32 @@
                         </div>
                     @endif
 
-                    <!-- List paginated main topics (10), newest first, each followed by its subtopics -->
+                    <!-- List paginated main topics (10), in their chosen order (Move up / Move down), each followed by its subtopics -->
 
                     <!-- Desktop: Table Layout -->
                     <div class="hidden md:block overflow-x-auto px-4 pb-4">
 
                         <table class="w-full text-center text-sm">
-                            <thead>
-                                <tr class="border-b border-slate-100 text-slate-300 uppercase text-xs tracking-wider">
-                                    <th class="py-2 px-2">#</th>
-                                    <th class="py-2 px-2 text-left">{{ __('dashboard/manage-prayer-topics/index.topic') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/manage-prayer-topics/index.category') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/manage-prayer-topics/index.min_role') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/manage-prayer-topics/index.answered') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/manage-prayer-topics/index.updated') }}</th>
-                                    <th class="py-2 px-2">{{ __('dashboard/index.actions') }}</th>
-                                </tr>
-                            </thead>
+                            <x-manage-prayer-topics::list.table-head />
                             <tbody>
                                 @forelse ($rows as $prayerTopic)
                                     <tr @class([
                                         'border-b border-slate-800 align-middle',
-                                        'bg-black/50' => !$prayerTopic->parent_id,
+                                        'bg-black/50' => $loop->odd,
                                     ])>
-                                        <td class="py-3 px-2 text-slate-300">{{ $prayerTopic->id }}</td>
-                                        <td @class(['py-3 px-2 text-left max-w-md', 'pl-8' => $prayerTopic->parent_id])>
-                                            <div class="flex gap-2">
-                                                @if ($prayerTopic->parent_id)
-                                                    <i class="fa-solid fa-turn-up rotate-90 text-slate-500 mt-1" title="{{ __('dashboard/manage-prayer-topics/index.subtopic') }}"></i>
-                                                    <span class="sr-only">{{ __('dashboard/manage-prayer-topics/index.subtopic') }}</span>
-                                                @endif
-                                                <div class="min-w-0">
-                                                    <div class="text-slate-100 line-clamp-3 whitespace-pre-line">{{ $prayerTopic->current_topic }}</div>
-                                                    <div class="text-slate-400 text-xs line-clamp-2 whitespace-pre-line">({{ $isFrench ? $prayerTopic->topic_en : $prayerTopic->topic_fr }})</div>
-                                                    @if ($prayerTopic->url)
-                                                        <a href="{{ $prayerTopic->url }}" target="_blank" rel="noopener noreferrer"
-                                                            title="{{ __('dashboard/manage-prayer-topics/index.open_link') }}"
-                                                            class="inline-block max-w-full truncate text-xs text-sky-400 hover:text-sky-300 underline">
-                                                            <i class="fa-solid fa-link mr-1" aria-hidden="true"></i>{{ $prayerTopic->url }}
-                                                        </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-2 text-slate-300">{{ $prayerTopic->category->label() }}</td>
-                                        <td class="py-3 px-2 text-slate-300">{{ $prayerTopic->min_role->label() }}</td>
-                                        <td class="py-3 px-2">
-                                            @if ($prayerTopic->answered)
-                                                <i class="fa-solid fa-circle-check text-emerald-400" title="{{ __('dashboard/manage-prayer-topics/index.answered') }}"></i>
-                                                <span class="sr-only">{{ __('dashboard/manage-prayer-topics/index.answered') }}</span>
-                                            @else
-                                                <span class="text-slate-500" title="{{ __('dashboard/manage-prayer-topics/index.not_answered') }}">—</span>
-                                                <span class="sr-only">{{ __('dashboard/manage-prayer-topics/index.not_answered') }}</span>
-                                            @endif
-                                        </td>
+
+                                        <x-manage-prayer-topics::list.topic-id :prayer-topic="$prayerTopic" />
+
+                                        <x-manage-prayer-topics::list.topic-move :prayer-topic="$prayerTopic" :can-move="$canMove[$prayerTopic->id]" />
+
+                                        <x-manage-prayer-topics::list.topic-subject :prayer-topic="$prayerTopic" />
+
+                                        <x-manage-prayer-topics::list.topic-category :prayer-topic="$prayerTopic" />
+
+                                        <x-manage-prayer-topics::list.topic-role :prayer-topic="$prayerTopic" />
+
+                                        <x-manage-prayer-topics::list.topic-answered :prayer-topic="$prayerTopic" />
+
                                         <td class="py-3 px-2 text-slate-300 whitespace-nowrap">{{ $prayerTopic->updated_at->isoFormat('ll') }}</td>
                                         <td class="py-3 px-2 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-2">
@@ -226,7 +226,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="py-6 text-center text-slate-400">
+                                        <td colspan="8" class="py-6 text-center text-slate-400">
                                             {{ __('dashboard/manage-prayer-topics/index.no_topics') }}</td>
                                     </tr>
                                 @endforelse
@@ -238,6 +238,10 @@
                     <div class="md:hidden px-4 pb-4 space-y-3">
                         @forelse ($rows as $prayerTopic)
                             <div @class(['border border-slate-800 rounded-sm p-3', 'ml-6' => $prayerTopic->parent_id])>
+                                @if ($prayerTopic->image_url)
+                                    <img src="{{ $prayerTopic->image_url }}" alt=""
+                                        class="size-16 mb-2 rounded-sm object-cover border border-slate-700">
+                                @endif
                                 <div class="text-slate-100 whitespace-pre-line">
                                     <span class="text-slate-400">#{{ $prayerTopic->id }}</span>
                                     {{ $prayerTopic->current_topic }}
@@ -273,6 +277,18 @@
                                 </div>
 
                                 <div class="flex items-center gap-2">
+                                    @foreach (['up' => 'fa-arrow-up', 'down' => 'fa-arrow-down'] as $direction => $icon)
+                                        <form action="{{ route('prayer-topics.move', $prayerTopic) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="direction" value="{{ $direction }}">
+                                            <button type="submit" @disabled(!$canMove[$prayerTopic->id][$direction])
+                                                title="{{ __('dashboard/manage-prayer-topics/index.move_' . $direction) }}" aria-label="{{ __('dashboard/manage-prayer-topics/index.move_' . $direction) }}"
+                                                class="px-2 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer disabled:opacity-30 disabled:cursor-default disabled:hover:bg-slate-700 disabled:hover:outline-1">
+                                                <i class="fa-solid {{ $icon }}"></i>
+                                            </button>
+                                        </form>
+                                    @endforeach
                                     <button type="button" @click="openEdit(@js($rowData[$prayerTopic->id]))"
                                         class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                         <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
@@ -312,7 +328,7 @@
 
                 <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-prayer-topics/index.add-topic') }}</h3>
 
-                <form class="w-full" action="{{ route('prayer-topics.store') }}" method="POST">
+                <form class="w-full" action="{{ route('prayer-topics.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Topic (EN / FR); errors come from the "createPrayerTopic" bag -->
@@ -343,6 +359,11 @@
 
                     <x-inputs.text class="mb-4" id="add_url" name="url" type="url" bag="createPrayerTopic" model="addTopic.url"
                         :label="__('dashboard/manage-prayer-topics/index.url')" :placeholder="__('dashboard/manage-prayer-topics/index.url_placeholder')" />
+
+                    <!-- Optional image -->
+                    <x-inputs.file class="mb-1" id="add_image" name="image" bag="createPrayerTopic" accept="image/jpeg,image/png,image/webp"
+                        :label="__('dashboard/manage-prayer-topics/index.image')" />
+                    <p class="text-xs text-slate-400 mb-4">{{ __('dashboard/manage-prayer-topics/index.image_hint') }}</p>
 
                     <label class="flex items-center gap-2 text-sm font-medium text-slate-100 mb-4 cursor-pointer">
                         <input type="checkbox" name="answered" value="1" x-model="addTopic.answered" class="size-4 cursor-pointer">
@@ -376,7 +397,7 @@
                     {{ __('dashboard/manage-prayer-topics/index.edit_topic') }} <span class="text-slate-400 font-normal" x-text="'#' + editTopic.id"></span>
                 </h3>
 
-                <form class="w-full" :action="editTopic.update_url" method="POST">
+                <form x-ref="editTopicForm" class="w-full" :action="editTopic.update_url" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -433,6 +454,23 @@
                     <x-inputs.text class="mb-4" id="edit_url" name="url" type="url" bag="updatePrayerTopic" model="editTopic.url"
                         :label="__('dashboard/manage-prayer-topics/index.url')" :placeholder="__('dashboard/manage-prayer-topics/index.url_placeholder')" />
 
+                    <!-- Optional image: a new file replaces the current one, shown here for reference; ticking the box removes it -->
+                    <div class="flex items-start gap-3 mb-4">
+                        <img x-show="editTopic.image_url" :src="editTopic.image_url" alt=""
+                            class="size-16 shrink-0 mt-6 rounded-sm object-cover border-2 border-slate-600">
+
+                        <div class="flex-1 min-w-0">
+                            <x-inputs.file class="mb-1" id="edit_image" name="image" bag="updatePrayerTopic" current="editTopic.image" accept="image/jpeg,image/png,image/webp"
+                                :label="__('dashboard/manage-prayer-topics/index.image')" />
+                            <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/manage-prayer-topics/index.image_hint') }}</p>
+
+                            <label x-show="editTopic.image" class="flex items-center gap-2 text-sm text-slate-100 cursor-pointer">
+                                <input type="checkbox" name="remove_image" value="1" x-model="editTopic.remove_image" class="size-4 cursor-pointer">
+                                {{ __('dashboard/manage-prayer-topics/index.remove_image') }}
+                            </label>
+                        </div>
+                    </div>
+
                     <label class="flex items-center gap-2 text-sm font-medium text-slate-100 mb-4 cursor-pointer">
                         <input type="checkbox" name="answered" value="1" x-model="editTopic.answered" class="size-4 cursor-pointer">
                         {{ __('dashboard/manage-prayer-topics/index.answered') }}
@@ -478,7 +516,7 @@
                             {{ __('dashboard/index.no') }}
                         </button>
                         <button type="submit"
-                            class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium rounded-sm transition-colors cursor-pointer">
+                            class="px-4 py-2 bg-red-700 hover:bg-red-800 border text-white font-medium rounded-sm transition-colors cursor-pointer">
                             {{ __('dashboard/index.yes') }}
                         </button>
                     </div>

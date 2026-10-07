@@ -1,13 +1,48 @@
 <?php
 
-// Main topics come before their subtopics: "parent_id" is the id of an entry above (null = a main topic)
+// In the order of the list on the dashboard. Main topics come before their subtopics: "parent_id" is the id of an entry above (null = a main topic).
+// "position" orders the main topics among themselves, and the subtopics within their main topic (lowest first)
 return [
+
+    9 => [
+        "parent_id" => null,
+        "position" => 0,
+        "topic_en" => "Monique Jung to be healed and have a full recovery. They may be able to reduce the medication which is having side effects. Doctors may be able to give an accurate prognosis.",
+        "topic_fr" => "La guérison pour Monique et de se rétablir complètement. Il serait peut-être possible de réduire la dose des médicaments qui provoque des effets secondaires. Prier que les médecins pourraient préciser un pronostic.",
+        "category" => "general",
+        "min_role" => "user",
+        "url" => null,
+        "answered" => false,
+    ],
+
+    7 => [
+        "parent_id" => null,
+        "position" => 1,
+        "topic_en" => "Sam to receive clear guidance from God regarding his residency placement.",
+        "topic_fr" => "Que Sam recevra des indications claires de Dieu concernant son placement en résidence.",
+        "category" => "general",
+        "min_role" => "user",
+        "url" => null,
+        "answered" => false,
+    ],
+
+    8 => [
+        "parent_id" => null,
+        "position" => 2,
+        "topic_en" => "Annael to be able to get a daycare spot for Jared.",
+        "topic_fr" => "Annael a obtenir une place en garderie pour son fils Jared.",
+        "category" => "general",
+        "min_role" => "user",
+        "url" => null,
+        "answered" => false,
+    ],
 
     1 => [
         "parent_id" => null,
-        "topic_en" => "Pray for our Sunday worship service, that many people in Montreal may come and hear the word of God.",
-        "topic_fr" => "Prions pour notre culte du dimanche, afin que beaucoup de gens de Montréal viennent entendre la parole de Dieu.",
-        "category" => "local",
+        "position" => 3,
+        "topic_en" => "God may bless our Fall invitation ministry.",
+        "topic_fr" => "Ministère d'invitation cet automne.",
+        "category" => "general",
         "min_role" => "guest",
         "url" => null,
         "answered" => false,
@@ -15,40 +50,33 @@ return [
 
     2 => [
         "parent_id" => null,
-        "topic_en" => "Pray for the fall Bible conference: for the messengers, the Bible study leaders and everyone who is invited.",
-        "topic_fr" => "Prions pour la conférence biblique d'automne : pour les messagers, les responsables d'études bibliques et toutes les personnes invitées.",
-        "category" => "conferences",
+        "position" => 4,
+        "topic_en" => "Support ministries in Canada and around the world.",
+        "topic_fr" => "Appuyer les ministères au Canada et partout dans le monde.",
+        "category" => "general",
         "min_role" => "guest",
-        "url" => "https://www.montrealubf.org/events",
-        "answered" => false,
-    ],
-
-    3 => [
-        "parent_id" => 2,
-        "topic_en" => "Pray for the conference preparation team: registration, transportation and meals.",
-        "topic_fr" => "Prions pour l'équipe de préparation de la conférence : inscriptions, transport et repas.",
-        "category" => "conferences",
-        "min_role" => "user",
         "url" => null,
         "answered" => false,
     ],
 
     4 => [
         "parent_id" => null,
-        "topic_en" => "Pray for our missionaries serving on university campuses around the world, for their health and their visas.",
-        "topic_fr" => "Prions pour nos missionnaires qui servent sur les campus universitaires à travers le monde, pour leur santé et leurs visas.",
-        "category" => "world_missions",
-        "min_role" => "user",
+        "position" => 5,
+        "topic_en" => "Discipleship of our young adults to grow as shepherds, and new student ministry.",
+        "topic_fr" => "La formation spirituelle de nos jeunes adultes pour qu’ils deviennent des bergers, et la croissance du ministère des étudiants.",
+        "category" => "general",
+        "min_role" => "guest",
         "url" => null,
-        "answered" => true,
+        "answered" => false,
     ],
 
     5 => [
         "parent_id" => null,
-        "topic_en" => "Pray for the recovery of a member of our congregation who is having surgery this month.",
-        "topic_fr" => "Prions pour le rétablissement d'un membre de notre assemblée qui sera opéré ce mois-ci.",
-        "category" => "health",
-        "min_role" => "member",
+        "position" => 6,
+        "topic_en" => "Grow as a loving community. (Ephesians 4:15)",
+        "topic_fr" => "Grandissons en tant que communauté aimante. (Éphésiens 4.15)",
+        "category" => "general",
+        "min_role" => "guest",
         "url" => null,
         "answered" => false,
     ],

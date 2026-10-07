@@ -21,6 +21,7 @@ class PrayerTopicSeeder extends Seeder
                 ['id' => $id],
                 [
                     'parent_id' => $prayerTopic['parent_id'],
+                    'position' => $prayerTopic['position'],
                     'topic_en' => $prayerTopic['topic_en'],
                     'topic_fr' => $prayerTopic['topic_fr'],
                     'category' => $prayerTopic['category'],

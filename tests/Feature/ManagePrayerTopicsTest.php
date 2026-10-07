@@ -7,6 +7,8 @@ use App\Enums\Role;
 use App\Models\PrayerTopic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ManagePrayerTopicsTest extends TestCase
@@ -165,5 +167,130 @@ class ManagePrayerTopicsTest extends TestCase
 
         $this->assertDatabaseMissing('prayer_topics', ['id' => $main->id]);
         $this->assertDatabaseHas('prayer_topics', ['id' => $subtopic->id, 'parent_id' => null]);
+    }
+
+    private function order(?int $parentId = null): array
+    {
+        return PrayerTopic::where('parent_id', $parentId)->ordered()->pluck('topic_en')->all();
+    }
+
+    public function test_a_new_main_topic_goes_to_the_top_and_a_new_subtopic_to_the_bottom(): void
+    {
+        foreach (['First', 'Second'] as $topic) {
+            $this->actingAs($this->admin)->post(route('prayer-topics.store'), $this->form(['topic_en' => $topic]));
+        }
+
+        $this->assertSame(['Second', 'First'], $this->order());
+
+        $main = PrayerTopic::where('topic_en', 'First')->sole();
+
+        foreach (['Sub A', 'Sub B'] as $topic) {
+            $this->actingAs($this->admin)->post(route('prayer-topics.store'), $this->form(['topic_en' => $topic, 'parent_id' => $main->id]));
+        }
+
+        $this->assertSame(['Sub A', 'Sub B'], $this->order($main->id));
+    }
+
+    public function test_a_prayer_topic_can_be_moved_up_and_down_within_its_list(): void
+    {
+        $a = $this->topic(['topic_en' => 'A', 'position' => 1]);
+        $b = $this->topic(['topic_en' => 'B', 'position' => 2]);
+        $c = $this->topic(['topic_en' => 'C', 'position' => 3]);
+        $sub1 = $this->topic(['topic_en' => 'Sub 1', 'parent_id' => $a->id, 'position' => 1]);
+        $sub2 = $this->topic(['topic_en' => 'Sub 2', 'parent_id' => $a->id, 'position' => 2]);
+
+        $this->actingAs($this->admin)->put(route('prayer-topics.move', $c), ['direction' => 'up'])->assertRedirect();
+        $this->assertSame(['A', 'C', 'B'], $this->order());
+
+        $this->actingAs($this->admin)->put(route('prayer-topics.move', $a), ['direction' => 'down']);
+        $this->assertSame(['C', 'A', 'B'], $this->order());
+
+        // Already first or last: stays where it is
+        $this->actingAs($this->admin)->put(route('prayer-topics.move', $c), ['direction' => 'up']);
+        $this->actingAs($this->admin)->put(route('prayer-topics.move', $b), ['direction' => 'down']);
+        $this->assertSame(['C', 'A', 'B'], $this->order());
+
+        // Subtopics move among themselves, and follow their main topic
+        $this->actingAs($this->admin)->put(route('prayer-topics.move', $sub2), ['direction' => 'up']);
+        $this->assertSame(['Sub 2', 'Sub 1'], $this->order($a->id));
+        $this->assertSame(['C', 'A', 'B'], $this->order());
+
+        $this->actingAs($this->admin)
+            ->get(route('manage-prayer-topics'))
+            ->assertSeeInOrder(['(C)', '(A)', '(Sub 2)', '(Sub 1)', '(B)']); // The test locale is fr_CA: the English text is the one in parentheses
+
+        $this->actingAs($this->admin)
+            ->put(route('prayer-topics.move', $a), ['direction' => 'sideways'])
+            ->assertSessionHasErrors('direction');
+
+        $this->actingAs(User::factory()->create(['role' => Role::LEADER]))
+            ->put(route('prayer-topics.move', $a), ['direction' => 'up'])
+            ->assertForbidden();
+    }
+
+    public function test_the_subtopics_of_a_deleted_main_topic_go_to_the_top_in_their_order(): void
+    {
+        $a = $this->topic(['topic_en' => 'A', 'position' => 1]);
+        $b = $this->topic(['topic_en' => 'B', 'position' => 2]);
+        $this->topic(['topic_en' => 'Sub 1', 'parent_id' => $b->id, 'position' => 1]);
+        $this->topic(['topic_en' => 'Sub 2', 'parent_id' => $b->id, 'position' => 2]);
+
+        $this->actingAs($this->admin)->delete(route('prayer-topics.destroy', $b));
+
+        $this->assertSame(['Sub 1', 'Sub 2', 'A'], $this->order());
+    }
+
+    public function test_a_prayer_topic_image_can_be_uploaded_replaced_and_removed(): void
+    {
+        Storage::fake('public');
+
+        $this->actingAs($this->admin)
+            ->post(route('prayer-topics.store'), $this->form(['image' => UploadedFile::fake()->image('conference.jpg')]))
+            ->assertSessionHas('status');
+
+        $topic = PrayerTopic::sole();
+        $first = $topic->image;
+        $this->assertNotNull($first);
+        Storage::disk('public')->assertExists('images/prayer-topics/' . $first);
+
+        $this->actingAs($this->admin)->get(route('manage-prayer-topics'))->assertSee($topic->image_url);
+
+        // A new image replaces the file
+        $this->travel(1)->minutes();
+        $this->actingAs($this->admin)
+            ->put(route('prayer-topics.update', $topic), $this->form(['image' => UploadedFile::fake()->image('other.png')]));
+
+        $second = $topic->refresh()->image;
+        $this->assertNotSame($first, $second);
+        Storage::disk('public')->assertMissing('images/prayer-topics/' . $first);
+        Storage::disk('public')->assertExists('images/prayer-topics/' . $second);
+
+        // Saving without a file keeps it; "Remove the current image" deletes it
+        $this->actingAs($this->admin)->put(route('prayer-topics.update', $topic), $this->form());
+        $this->assertSame($second, $topic->refresh()->image);
+
+        $this->actingAs($this->admin)->put(route('prayer-topics.update', $topic), $this->form(['remove_image' => '1']));
+        $this->assertNull($topic->refresh()->image);
+        Storage::disk('public')->assertMissing('images/prayer-topics/' . $second);
+    }
+
+    public function test_a_prayer_topic_image_must_be_an_image_and_goes_with_the_deleted_topic(): void
+    {
+        Storage::fake('public');
+
+        $this->actingAs($this->admin)
+            ->post(route('prayer-topics.store'), $this->form(['image' => UploadedFile::fake()->create('notes.pdf', 10, 'application/pdf')]))
+            ->assertSessionHasErrorsIn('createPrayerTopic', ['image']);
+
+        $this->assertDatabaseCount('prayer_topics', 0);
+
+        $this->actingAs($this->admin)
+            ->post(route('prayer-topics.store'), $this->form(['image' => UploadedFile::fake()->image('conference.jpg')]));
+
+        $topic = PrayerTopic::sole();
+
+        $this->actingAs($this->admin)->delete(route('prayer-topics.destroy', $topic));
+
+        Storage::disk('public')->assertMissing('images/prayer-topics/' . $topic->image);
     }
 }

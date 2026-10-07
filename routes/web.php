@@ -112,9 +112,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-prayer-topics', [PrayerTopicsController::class, 'index'])->name('manage-prayer-topics');
 
-    // Manage Prayer Topics actions - Add, Edit, Delete
+    // Manage Prayer Topics actions - Add, Edit, Move up / down, Delete
     Route::post('/manage-prayer-topics', [PrayerTopicsController::class, 'store'])->name('prayer-topics.store');
     Route::put('/manage-prayer-topics/{prayerTopic}', [PrayerTopicsController::class, 'update'])->name('prayer-topics.update');
+    Route::put('/manage-prayer-topics/{prayerTopic}/move', [PrayerTopicsController::class, 'move'])->name('prayer-topics.move');
     Route::delete('/manage-prayer-topics/{prayerTopic}', [PrayerTopicsController::class, 'destroy'])->name('prayer-topics.destroy');
 
     // Manage Inquiries actions - Delete the ticked ones (Delete Selected), Delete one
@@ -202,7 +203,7 @@ Route::get('/migration-status', function () {
 })->middleware('auth');
 
 // Migrations -- Comment out when not in use.
-
+/*
 Route::get('/run-migrations', function () {
     try {
         //1. clear config cache
@@ -227,7 +228,6 @@ Route::get('/run-prayer-topic-seeder', function () {
     }
 })->middleware('auth');
 
-/*
 // Study storage repair -- Comment out when not in use.
 // /repair-storage previews, ?apply=1 copies missing files from the old folders, ?cleanup=1 removes leftovers.
 
