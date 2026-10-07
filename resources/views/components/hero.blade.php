@@ -13,7 +13,7 @@
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-145 md:h-165 flex items-center pt-12']) }}
     style="background-image: url('{{ asset($image) }}')">
 
-    <div class="overlay bg-black/65"></div>
+    <div class="overlay bg-black/60"></div>
 
     <div class="container mx-auto text-center z-10">
 

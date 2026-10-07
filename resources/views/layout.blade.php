@@ -81,6 +81,9 @@
                 </a>
             </div>
 
+            <!-- Upcoming events ticked "Featured on Home Page" on Manage Schedule (nothing shows without any) -->
+            <x-featured-on-home-page />
+
             <x-study
                 heading="{{ __('home/study.upcoming_sunday') }}"
                 :studyId="$featuredStudyId"
@@ -90,7 +93,8 @@
         </div>
 
         <!-- Desktop Hero -->
-        <div class='hidden md:block'>
+        <!-- A gap between the hero, each featured event and the Bible study (none added when there is no featured event) -->
+        <div class='hidden md:flex md:flex-col md:gap-1'>
 
             <x-hero
                 image="./images/montreal_skyline-desktop.jpg"
@@ -101,6 +105,9 @@
                 image_2="{{ __('home/hero.image_2') }}">
                 {{__('home/hero.welcome')}}
             </x-hero>
+
+            <!-- Upcoming events ticked "Featured on Home Page" on Manage Schedule (nothing shows without any) -->
+            <x-featured-on-home-page />
 
             <x-study
                 :studyId="$featuredStudyId"

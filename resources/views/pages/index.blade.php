@@ -7,7 +7,7 @@
             <h2 class="text-xl md:text-2xl font-bold text-white">{{__('home/index.background')}}</h2>
         </div>
 
-        <!-- Responsive Grid Wrapper -->
+        <!-- Brief Introduction to the site - 3 cards -->
         <div class='flex flex-col md:flex-row md:items-start flex-wrap justify-center items-center gap-6 pb-6'>
 
             <x-card image='./images/ministry/2026-08-11_mtl_ubf.jpeg' title="{{__('home/card_1.title')}}"
