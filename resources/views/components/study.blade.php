@@ -32,7 +32,7 @@
         </div>
 `
         <!-- Main Content Cluster -->
-        <div class="flex-col text-center translate-y-18 z-10">
+        <div class="flex-col text-center translate-y-12 md:translate-y-18 z-10">
 
             <!-- Series Title -->
             <h2 class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
