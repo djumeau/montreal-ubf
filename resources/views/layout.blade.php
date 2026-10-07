@@ -81,14 +81,19 @@
                 </a>
             </div>
 
-            <!-- Upcoming events ticked "Featured on Home Page" on Manage Schedule (nothing shows without any) -->
-            <x-featured-on-home-page />
+            <!-- A 4px gap between each featured event and the Bible study (none added when there is no featured event) -->
+            <div class="flex flex-col gap-1">
 
-            <x-study
-                heading="{{ __('home/study.upcoming_sunday') }}"
-                :studyId="$featuredStudyId"
-                :date="$studyDate">
-            </x-study>
+                <!-- Upcoming events ticked "Featured on Home Page" on Manage Schedule (nothing shows without any) -->
+                <x-featured-on-home-page />
+
+                <x-study
+                    heading="{{ __('home/study.upcoming_sunday') }}"
+                    :studyId="$featuredStudyId"
+                    :date="$studyDate">
+                </x-study>
+
+            </div>
 
         </div>
 
