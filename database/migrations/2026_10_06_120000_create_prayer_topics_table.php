@@ -24,6 +24,9 @@ return new class extends Migration
                   ->constrained('prayer_topics')
                   ->nullOnDelete();
 
+            // Order chosen on the dashboard (Move up / Move down), lowest first: among the main topics, or among the subtopics of one main topic
+            $table->integer('position')->default(0);
+
             $table->string('topic_en', 2048);
             $table->string('topic_fr', 2048);
 
@@ -36,6 +39,9 @@ return new class extends Migration
 
             // Optional link to more details (a report, a conference page...)
             $table->string('url', 2048)->nullable();
+
+            // Optional image: its file name in storage/app/public/images/prayer-topics; null = no image
+            $table->string('image')->nullable();
 
             $table->boolean('answered')->default(false);
 
