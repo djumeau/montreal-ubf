@@ -299,8 +299,13 @@ $richTextClass = 'mt-3 text-slate-200 leading-relaxed space-y-3
 
                         <!-- The Google Map only loads once cookies are accepted on the consent banner (see compliance-requirement);
                              refused or not answered yet: a "Feature disabled" placeholder, and nothing is requested from Google -->
-                        <div x-data="{ consent: null }"
-                            x-init="try { consent = localStorage.getItem('privacy_consent_given') } catch (e) {}"
+                        <div x-data="{
+                            consent: null,
+                            init() {
+                                // Choice made on an earlier page view (kept in init(): Alpine cannot run a try/catch written in x-init)
+                                try { this.consent = localStorage.getItem('privacy_consent_given') } catch (e) {}
+                            }
+                        }"
                             @privacy-consent-updated.window="consent = $event.detail">
 
                             <template x-if="consent === 'accept'">
