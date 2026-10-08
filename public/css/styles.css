@@ -6,3 +6,18 @@
     height: 100%;
     z-index: 1;
 }
+
+/* Hero heading: a 2px black outline (a shadow on each side, so it follows the letters in every browser),
+   then a slight drop shadow 2px right and 2px down */
+.hero-title {
+    text-shadow:
+        -2px -2px 0 #000,
+        0 -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 0 0 #000,
+        2px 0 0 #000,
+        -2px 2px 0 #000,
+        0 2px 0 #000,
+        2px 2px 0 #000,
+        2px 2px 3px rgb(0 0 0 / 0.7);
+}

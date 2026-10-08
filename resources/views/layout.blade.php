@@ -30,6 +30,12 @@
     // The featured study is held on the day of that service
     $studyDate = $nextService?->start_date;
 
+    // Hero slides uploaded on Manage Home Page (those with both a desktop and a mobile image), newest first.
+    // Home page only; without any, the hero keeps its skyline image
+    $heroSlides = request()->is('/')
+        ? \App\Support\HeroImages::all()->where('complete', true)->values()
+        : collect();
+
 @endphp
 
 <!DOCTYPE html>
@@ -66,6 +72,7 @@
 
             <x-hero
                 image="./images/montreal_skyline-mobile.jpg"
+                :slides="$heroSlides->pluck('mobile.url')->all()"
                 subtitle="{{__('home/hero.subtitle')}}"
                 cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00"
@@ -103,6 +110,7 @@
 
             <x-hero
                 image="./images/montreal_skyline-desktop.jpg"
+                :slides="$heroSlides->pluck('desktop.url')->all()"
                 subtitle="{{__('home/hero.subtitle')}}"
                 cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00"

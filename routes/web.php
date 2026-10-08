@@ -19,6 +19,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ConfidentialityPolicyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAttachmentController;
 use App\Http\Controllers\InquiryController;
@@ -51,6 +52,11 @@ Route::get('/donner', [GivingController::class, 'index'])->name('donner');
 Route::get('/confidentialite', [ConfidentialityPolicyController::class, 'index'])->name('confidentialite');
 
 Route::get('/language/{locale}', [SwitchLanguageController::class, 'setLocale'])->name('locale');
+
+// Home page images (e.g. the hero) kept in private storage; public like the home page itself. Image files only
+Route::get('/private/home/{filename}', [HomeController::class, 'streamImage'])
+    ->where('filename', '[A-Za-z0-9._-]+\.(?i:jpe?g|png|webp|avif|gif)')
+    ->name('private.home');
 
 // Bible study attachments (question sheets, lectures...) kept in private storage
 Route::get('/documents/{attachment}', [StudyAttachmentController::class, 'show'])->name('attachments.show');
@@ -113,6 +119,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/manage-prayer-topics', [PrayerTopicsController::class, 'index'])->name('manage-prayer-topics');
 
     Route::get('/manage-home-page', [DashboardController::class, 'manageHomePage'])->name('manage-home-page');
+
+    // Manage Home Page actions - Upload hero images (desktop / mobile), Delete a slide (both of its images)
+    Route::post('/manage-home-page/hero-images', [HeroImageController::class, 'store'])->name('hero-images.store');
+    Route::delete('/manage-home-page/hero-images/{slide}', [HeroImageController::class, 'destroy'])
+        ->where('slide', '[a-z0-9][a-z0-9-]*')->name('hero-images.destroy');
 
     // Manage Prayer Topics actions - Add, Edit, Move up / down, Delete
     Route::post('/manage-prayer-topics', [PrayerTopicsController::class, 'store'])->name('prayer-topics.store');

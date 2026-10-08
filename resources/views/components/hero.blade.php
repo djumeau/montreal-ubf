@@ -7,13 +7,52 @@
     'cat_2_time' => '11h00',
     'social_media' => 'Réseaux sociaux',
     'image_2' => "images/ig_qr_code_fr.png",
+    'slides' => [], // Image URLs of the slides uploaded on Manage Home Page: shown as a carousel in place of $image
 ])
 
-<!-- Hero Section -->
-<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-145 md:h-165 flex items-center pt-12']) }}
-    style="background-image: url('{{ asset($image) }}')">
+@php $slides = array_values($slides); @endphp
 
-    <div class="overlay bg-black/60"></div>
+<!-- Hero Section: $image as its background, unless there are slides (the carousel is heroCarousel, in resources/js/app.js) -->
+<section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-145 md:h-165 flex items-center pt-12']) }}
+    data-hero
+    @if ($slides)
+        x-data="heroCarousel({{ count($slides) }})"
+    @else
+        style="background-image: url('{{ asset($image) }}')"
+    @endif>
+
+    @if ($slides)
+        <!-- Slides: one layer each, stacked; the first comes with the page, the others are fetched once the hero is on screen -->
+        <div x-ref="slides" class="absolute inset-0 overflow-hidden" aria-hidden="true">
+            @foreach ($slides as $slide)
+                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    @if ($loop->first)
+                        style="background-image: url('{{ $slide }}')"
+                    @else
+                        style="opacity: 0" data-image="{{ $slide }}"
+                    @endif></div>
+            @endforeach
+        </div>
+    @endif
+
+    <!-- Overlay and heading start hidden: when the page loads, the overlay fades in and the heading appears letter by letter
+         (animateHero, in resources/js/app.js). Without JavaScript, both simply show -->
+    <noscript><style>[data-hero-overlay] { opacity: 1 !important; } [data-hero-title] { visibility: visible !important; }</style></noscript>
+
+    <div class="overlay bg-black/60" data-hero-overlay style="opacity: 0"></div>
+
+    @if (count($slides) > 1)
+        <!-- Pill indicators (no arrows): the current slide's is longer and brighter; a click shows that slide -->
+        <div class="absolute inset-x-0 bottom-4 z-10 flex justify-center gap-2">
+            @foreach ($slides as $slide)
+                <button type="button" @click="go({{ $loop->index }})"
+                    aria-label="{{ __('home/hero.show_slide', ['number' => $loop->iteration]) }}"
+                    :aria-current="slide === {{ $loop->index }} ? 'true' : null"
+                    :class="slide === {{ $loop->index }} ? 'w-8 bg-white' : 'w-5 bg-white/40 hover:bg-white/70'"
+                    class="h-1.5 rounded-full transition-all duration-500 cursor-pointer"></button>
+            @endforeach
+        </div>
+    @endif
 
     <div class="container mx-auto text-center z-10">
 
@@ -21,7 +60,7 @@
 
             <!-- top row - Heading -->
             <div class="mb-8 mx-4 pt-22 md:pt-25">
-                <h1 class="text-2xl md:text-4xl text-white font-bold">{{ $slot }}</h1>
+                <h1 class="hero-title text-2xl md:text-4xl text-white font-bold" data-hero-title style="visibility: hidden">{{ $slot }}</h1>
             </div>
 
             <!-- Middle Row + QR code -->

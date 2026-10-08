@@ -9,5 +9,6 @@ return [
     "social_media" => "Réseaux sociaux",
     "image_2" => "images/mtl_study_qr_code_fr.png",
     "image_2_alt_text" => "Lien à notre site d'invitation d'étude biblique",
+    "show_slide" => "Afficher la diapositive :number",
 
 ];

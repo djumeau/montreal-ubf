@@ -9,5 +9,6 @@ return [
     "social_media" => "Social Media",
     "image_2" => "images/mtl_study_qr_code_en.png",
     "image_2_alt_text" => "Link to our Bible Study invitation site",
+    "show_slide" => "Show slide :number",
 
 ];

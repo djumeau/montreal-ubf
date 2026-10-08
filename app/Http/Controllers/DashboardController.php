@@ -7,6 +7,7 @@ use App\Models\BibleBook;
 use App\Models\BibleStudy;
 use App\Models\StudySeries;
 use App\Models\User;
+use App\Support\HeroImages;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -89,7 +90,11 @@ class DashboardController extends Controller
         }
 
         $user = $request->user();
-        return view('pages.dashboards.manage-home-page', compact('user'));
+
+        // Hero Images: the slides (pairs of desktop / mobile images) of storage/app/private/home, newest first
+        $slides = HeroImages::all();
+
+        return view('pages.dashboards.manage-home-page', compact('user', 'slides'));
     }
 
 }
