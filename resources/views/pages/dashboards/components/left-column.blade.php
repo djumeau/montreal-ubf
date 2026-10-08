@@ -1,5 +1,7 @@
 <!-- Left Column: Collapsible Sidebar (follows sidebarOpen of the page's x-data) -->
+<!-- On phones (below the md breakpoint) it starts collapsed, so the page's work space shows first -->
 <aside
+    x-init="if (window.innerWidth < 768) sidebarOpen = false"
     :class="{
         'w-full block': sidebarOpen,
         'md:block md:w-16': !sidebarOpen,
