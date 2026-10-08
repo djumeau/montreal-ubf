@@ -261,7 +261,8 @@
 
                         </div>
 
-                        <!-- Image Library: one card per slide, newest first; clicking a card shows its slide in the preview -->
+                        <!-- Image Library: one card per slide, newest first, in a single row that scrolls sideways (the bar shows under the cards);
+                             clicking a card shows its slide in the preview -->
                         <div class="border border-slate-600 rounded-sm p-3">
                             <h4 class="font-bold text-slate-100 mb-3">{{ $text('image_library') }}</h4>
 
@@ -269,7 +270,7 @@
                                 <p class="py-4 text-center text-sm text-slate-400">{{ $text('library_empty') }}</p>
                             @endif
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3">
+                            <div class="flex gap-3 overflow-x-auto pb-3 [scrollbar-width:thin] [scrollbar-color:var(--color-slate-500)_transparent]">
                                 @foreach ($slides as $slide)
                                     @php $previewIndex = $previewSlides->search(fn ($previewSlide) => $previewSlide['slug'] === $slide['slug']); @endphp
 
@@ -277,7 +278,7 @@
                                         @if ($previewIndex !== false)
                                             @click="slide = {{ $previewIndex }}" :class="slide === {{ $previewIndex }} ? 'border-blue-500' : 'border-slate-600'"
                                         @endif
-                                        @class(['p-2 rounded-sm border bg-black/30 text-xs', 'cursor-pointer' => $previewIndex !== false, 'border-amber-500' => $previewIndex === false])>
+                                        @class(['shrink-0 w-80 max-w-full p-2 rounded-sm border bg-black/30 text-xs', 'cursor-pointer' => $previewIndex !== false, 'border-amber-500' => $previewIndex === false])>
 
                                         <div class="grid grid-cols-[1fr_5rem] gap-2">
                                             @foreach (HeroImages::TYPES as $type)
