@@ -36,6 +36,9 @@
         ? \App\Support\HeroImages::all()->where('complete', true)->values()
         : collect();
 
+    // Each visit starts on a slide picked at random (the same one for the mobile and the desktop hero)
+    $heroStart = $heroSlides->isNotEmpty() ? random_int(0, $heroSlides->count() - 1) : 0;
+
 @endphp
 
 <!DOCTYPE html>
@@ -72,7 +75,7 @@
 
             <x-hero
                 image="./images/montreal_skyline-mobile.jpg"
-                :slides="$heroSlides->pluck('mobile.url')->all()"
+                :slides="$heroSlides->pluck('mobile.url')->all()" :start="$heroStart"
                 subtitle="{{__('home/hero.subtitle')}}"
                 cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00"
@@ -110,7 +113,7 @@
 
             <x-hero
                 image="./images/montreal_skyline-desktop.jpg"
-                :slides="$heroSlides->pluck('desktop.url')->all()"
+                :slides="$heroSlides->pluck('desktop.url')->all()" :start="$heroStart"
                 subtitle="{{__('home/hero.subtitle')}}"
                 cat_1="{{__('home/hero.cat_1')}}" cat_1_time="9h00"
                 cat_2="{{__('home/hero.cat_2')}}" cat_2_time="11h00"

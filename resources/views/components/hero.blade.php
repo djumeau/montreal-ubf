@@ -8,25 +8,29 @@
     'social_media' => 'Réseaux sociaux',
     'image_2' => "images/ig_qr_code_fr.png",
     'slides' => [], // Image URLs of the slides uploaded on Manage Home Page: shown as a carousel in place of $image
+    'start' => 0, // Slide shown first (its position in $slides); the carousel goes on from there
 ])
 
-@php $slides = array_values($slides); @endphp
+@php
+    $slides = array_values($slides);
+    $start = $slides ? $start % count($slides) : 0;
+@endphp
 
 <!-- Hero Section: $image as its background, unless there are slides (the carousel is heroCarousel, in resources/js/app.js) -->
 <section {{ $attributes->merge(['class' => 'relative bg-cover bg-center bg-no-repeat h-145 md:h-165 flex items-center pt-12']) }}
     data-hero
     @if ($slides)
-        x-data="heroCarousel({{ count($slides) }})"
+        x-data="heroCarousel({{ count($slides) }}, {{ $start }})"
     @else
         style="background-image: url('{{ asset($image) }}')"
     @endif>
 
     @if ($slides)
-        <!-- Slides: one layer each, stacked; the first comes with the page, the others are fetched once the hero is on screen -->
+        <!-- Slides: one layer each, stacked; the one shown first comes with the page, the others are fetched once the hero is on screen -->
         <div x-ref="slides" class="absolute inset-0 overflow-hidden" aria-hidden="true">
             @foreach ($slides as $slide)
                 <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    @if ($loop->first)
+                    @if ($loop->index === $start)
                         style="background-image: url('{{ $slide }}')"
                     @else
                         style="opacity: 0" data-image="{{ $slide }}"

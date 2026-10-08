@@ -8,10 +8,11 @@ window.Alpine = Alpine;
 window.gsap = gsap;
 
 // Home page hero (see the hero component): crossfades the slides uploaded on Manage Home Page, each one shown for a few seconds.
-// The pills show the current slide and jump to another. "count" is the number of slides; the slide layers are the children of x-ref="slides"
-Alpine.data("heroCarousel", (count) => ({
-    slide: 0,
-    loaded: false, // Only the first image comes with the page: the others are fetched once this hero is on screen
+// The pills show the current slide and jump to another. "count" is the number of slides and "start" the one shown first (picked at random for each visit);
+// the slide layers are the children of x-ref="slides"
+Alpine.data("heroCarousel", (count, start = 0) => ({
+    slide: start,
+    loaded: false, // Only the image shown first comes with the page: the others are fetched once this hero is on screen
     timer: null,
     delay: 6000,
     reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,

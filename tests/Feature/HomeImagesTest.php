@@ -33,7 +33,7 @@ class HomeImagesTest extends TestCase
 
         $this->get('/')
             ->assertOk()
-            ->assertSee('heroCarousel(2)', false) // Mobile and desktop heroes, two slides each
+            ->assertSee('heroCarousel(2, ', false) // Mobile and desktop heroes, two slides each, starting on one picked at random
             ->assertSee('/private/home/sunset-desktop.jpg?v=', false)
             ->assertSee('/private/home/fall-mobile.jpg?v=', false)
             ->assertDontSee('winter-desktop.jpg') // No mobile image: not a slide yet
