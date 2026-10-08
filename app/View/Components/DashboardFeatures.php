@@ -21,6 +21,6 @@ class DashboardFeatures extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('pages.dashboards.dashboard-features');
+        return view('pages.dashboards.components.dashboard-features');
     }
 }

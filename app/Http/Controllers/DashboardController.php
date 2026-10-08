@@ -79,4 +79,17 @@ class DashboardController extends Controller
         return view('pages.dashboards.manage-studies', compact('user', 'studies', 'currentSeries', 'currentBook', 'search', 'seriesList', 'books'));
     }
 
+    // @desc Show the manage home page page
+    // @route GET /manage-home-page
+    public function manageHomePage(Request $request): View
+    {
+        // Refused below the management roles, not only hidden in the page
+        if (!$request->user()->canManageRoles()) {
+            abort(403, __('home/index.unauthorized'));
+        }
+
+        $user = $request->user();
+        return view('pages.dashboards.manage-home-page', compact('user'));
+    }
+
 }

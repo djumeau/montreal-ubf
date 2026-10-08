@@ -21,6 +21,6 @@ class FeatureButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('pages.dashboards.feature-button');
+        return view('pages.dashboards.components.feature-button');
     }
 }

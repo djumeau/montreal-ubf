@@ -16,33 +16,7 @@
         }"
         class="flex min-h-screen text-white">
 
-        <!-- Left Column: Collapsible Sidebar -->
-        <aside
-            :class="{
-                'w-full block': sidebarOpen,
-                'md:block md:w-16': !sidebarOpen,
-                'md:w-64': sidebarOpen && window.innerWidth >= 768
-            }"
-
-            class="transition-all duration-300 ease-in-out border rounded-sm border-slate-100 flex flex-col justify-between">
-            <div>
-                <!-- Header & Toggle Chevron Button -->
-                <div class="p-2 flex items-center justify-between border-b-2">
-                    <span x-show="sidebarOpen" class="font-bold text-lg text-slate-100">
-                        {{ __('dashboard/index.dashboard') }}
-                    </span>
-                    <button @click="sidebarOpen = !sidebarOpen" class="grid place-items-center size-10 pl-2 text-slate-100 hover:text-slate-300 transition-colors focus:outline-none cursor-pointer">
-                        <i class="fas" :class="sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
-                    </button>
-                </div>
-
-                <x-profile-info-block/>
-
-                <x-dashboard-features></x-dashboard-features>
-
-            </div>
-
-        </aside>
+        <x-dashboards::left-column />
 
         <!-- Right Column: Interactive Work Space Context -->
         <main

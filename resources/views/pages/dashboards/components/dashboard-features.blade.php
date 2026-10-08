@@ -18,6 +18,8 @@
 
     $isManagePrayerTopicsActive = request()->routeIs('manage-prayer-topics') || request()->routeIs('gerer-sujets-de-priere');
 
+    $isManageHomePageActive = request()->routeIs('manage-home-page') || request()->routeIs('gerer-page-accueil');
+
     // Manage Inquiries button: "(total - N new)"; new = not read yet (no follow-up, or one without a read date)
     if (auth()->user()->canManageRoles()) {
         $inquiryCount = \App\Models\Inquiry::count();
@@ -29,10 +31,11 @@
 <!-- Context Dynamic Links -->
 <nav id="features">
 
-    <x-feature-button :url="__('nav.update-profile.url')" :isActive="$isProfileActive"
-        icon="fa-user-cog">{{ __('nav.update-profile.title') }}</x-feature-button>
-
     @if (auth()->user()->canManageRoles())
+
+        <x-feature-button :url="__('nav.manage-home-page.url')" :isActive="$isManageHomePageActive"
+            icon="fa-house">{{ __('nav.manage-home-page.title') }}</x-feature-button>
+
         <x-feature-button :url="__('nav.manage-users.url')" :isActive="$isManageUsersActive"
             icon="fa-users-cog">{{ __('nav.manage-users.title') }}</x-feature-button>
 
@@ -50,6 +53,10 @@
 
         <x-feature-button :url="__('nav.manage-prayer-topics.url')" :isActive="$isManagePrayerTopicsActive"
             icon="fa-hands-praying">{{ __('nav.manage-prayer-topics.title') }}</x-feature-button>
+
     @endif
+
+    <x-feature-button :url="__('nav.update-profile.url')" :isActive="$isProfileActive"
+        icon="fa-user-cog">{{ __('nav.update-profile.title') }}</x-feature-button>
 
 </nav>

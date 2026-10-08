@@ -112,6 +112,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manage-prayer-topics', [PrayerTopicsController::class, 'index'])->name('manage-prayer-topics');
 
+    Route::get('/manage-home-page', [DashboardController::class, 'manageHomePage'])->name('manage-home-page');
+
     // Manage Prayer Topics actions - Add, Edit, Move up / down, Delete
     Route::post('/manage-prayer-topics', [PrayerTopicsController::class, 'store'])->name('prayer-topics.store');
     Route::put('/manage-prayer-topics/{prayerTopic}', [PrayerTopicsController::class, 'update'])->name('prayer-topics.update');
@@ -171,6 +173,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/gerer-demandes', [InquiryController::class, 'index'])->name('gerer-demandes');
 
     Route::get('/gerer-sujets-de-priere', [PrayerTopicsController::class, 'index'])->name('gerer-sujets-de-priere');
+
+    Route::get('/gerer-page-accueil', [DashboardController::class, 'manageHomePage'])->name('gerer-page-accueil');
 
     // Profile related routes - Avatar, User name and User Password
 

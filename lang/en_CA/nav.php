@@ -75,5 +75,9 @@ return [
                         "url" => "/manage-prayer-topics",
                         "name" => "manage-prayer-topics",
                  ],
+    "manage-home-page" => [ "title" => "Manage Home Page",
+                        "url" => "/manage-home-page",
+                        "name" => "manage-home-page",
+                 ],
 
 ];

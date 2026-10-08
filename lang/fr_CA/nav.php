@@ -77,5 +77,9 @@ return [
                         "url" => "/gerer-sujets-de-priere",
                         "name" => "gerer-sujets-de-priere",
                  ],
+    "manage-home-page" => [ "title" => "Gérer la page d'accueil",
+                        "url" => "/gerer-page-accueil",
+                        "name" => "gerer-page-accueil",
+                 ],
 
 ];
