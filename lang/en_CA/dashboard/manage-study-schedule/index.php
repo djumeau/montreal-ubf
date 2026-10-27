@@ -55,7 +55,7 @@ return [
     "media" => "Media",
     "attachment_document" => "Document (PDF, DOCX)",
     "attachment_media" => "Media (PNG, JPG, MP4)",
-    "attachment_files" => "Files (max 20 MB each)",
+    "attachment_files" => "Files (max 8 MB each)",
     "attachment_files_hint" => "Documents: PDF or DOCX, in one language. Media: PNG, JPG or MP4, shown in both languages. Names are made lower case with spaces as underscores. A file with the same name replaces the existing one.",
     "attachments_uploaded" => "{1} :count attachment uploaded.|[2,*] :count attachments uploaded.",
     "attachment_deleted" => "Attachment :name deleted.",

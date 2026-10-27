@@ -30,7 +30,7 @@ return [
     "upload_attachments" => "Upload attachments",
     "language" => "Language",
     "attachment_type" => "Type",
-    "attachment_files" => "Files (PDF or DOCX, max 20 MB each)",
+    "attachment_files" => "Files (PDF or DOCX, max 8 MB each)",
     "attachment_files_hint" => "Names are made lower case with spaces as underscores and numbers 1-9 as 01-09. \".q\" (question sheets) or \".lec\" (lectures) is added, then \".fr\" for French, e.g. jn_01.01-18.q.fr.pdf. A file with the same name in the same language replaces the existing one.",
     "attachments_uploaded" => "{1} :count attachment uploaded.|[2,*] :count attachments uploaded.",
     "attachment_deleted" => "Attachment :name deleted.",

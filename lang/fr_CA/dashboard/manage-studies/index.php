@@ -30,7 +30,7 @@ return [
     "upload_attachments" => "Téléverser des pièces jointes",
     "language" => "Langue",
     "attachment_type" => "Type",
-    "attachment_files" => "Fichiers (PDF ou DOCX, 20 Mo max chacun)",
+    "attachment_files" => "Fichiers (PDF ou DOCX, 8 Mo max chacun)",
     "attachment_files_hint" => "Les noms sont mis en minuscules, avec des traits de soulignement à la place des espaces et les nombres 1 à 9 écrits 01 à 09. « .q » (questionnaires) ou « .lec » (leçons) est ajouté, puis « .fr » pour le français, p. ex. jn_01.01-18.q.fr.pdf. Un fichier du même nom dans la même langue remplace celui qui existe.",
     "attachments_uploaded" => "{1} :count pièce jointe téléversée.|[2,*] :count pièces jointes téléversées.",
     "attachment_deleted" => "Pièce jointe :name supprimée.",

@@ -55,7 +55,7 @@ return [
     "media" => "Médias",
     "attachment_document" => "Document (PDF, DOCX)",
     "attachment_media" => "Média (PNG, JPG, MP4)",
-    "attachment_files" => "Fichiers (max. 20 Mo chacun)",
+    "attachment_files" => "Fichiers (max. 8 Mo chacun)",
     "attachment_files_hint" => "Documents : PDF ou DOCX, dans une langue. Médias : PNG, JPG ou MP4, montrés dans les deux langues. Les noms sont mis en minuscules, les espaces deviennent des traits de soulignement. Un fichier du même nom remplace celui qui existe.",
     "attachments_uploaded" => "{1} :count pièce jointe téléversée.|[2,*] :count pièces jointes téléversées.",
     "attachment_deleted" => "Pièce jointe :name supprimée.",

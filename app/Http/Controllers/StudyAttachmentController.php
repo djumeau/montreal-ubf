@@ -54,7 +54,7 @@ class StudyAttachmentController extends Controller
             'locale' => ['required', Rule::in(StudyAttachment::LOCALES)],
             'type' => ['required', Rule::in(StudyAttachment::TYPES)],
             'files' => ['required', 'array'],
-            'files.*' => ['file', 'mimes:' . implode(',', StudyAttachment::EXTENSIONS), 'max:20480'], // 20 MB each
+            'files.*' => ['file', 'mimes:' . implode(',', StudyAttachment::EXTENSIONS), 'max:8192'], // 8 MB each
         ]);
 
         $directory = $study->documentDirectory();

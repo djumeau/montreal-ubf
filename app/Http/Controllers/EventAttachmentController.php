@@ -53,7 +53,7 @@ class EventAttachmentController extends Controller
             'type' => ['required', Rule::in(EventAttachment::TYPES)],
             'locale' => $isMedia ? ['nullable'] : ['required', Rule::in(EventAttachment::LOCALES)],
             'files' => ['required', 'array'],
-            'files.*' => ['file', 'mimes:' . implode(',', $extensions), 'max:20480'], // 20 MB each
+            'files.*' => ['file', 'mimes:' . implode(',', $extensions), 'max:8192'], // 8 MB each
         ]);
 
         $directory = $event->documentDirectory();
