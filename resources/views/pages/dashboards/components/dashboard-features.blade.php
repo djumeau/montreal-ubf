@@ -31,6 +31,9 @@
 <!-- Context Dynamic Links -->
 <nav id="features">
 
+    <x-feature-button :url="__('nav.update-profile.url')" :isActive="$isProfileActive"
+        icon="fa-user-cog">{{ __('nav.update-profile.title') }}</x-feature-button>
+
     @if (auth()->user()->canManageRoles())
 
         <x-feature-button :url="__('nav.manage-home-page.url')" :isActive="$isManageHomePageActive"
@@ -55,8 +58,5 @@
             icon="fa-hands-praying">{{ __('nav.manage-prayer-topics.title') }}</x-feature-button>
 
     @endif
-
-    <x-feature-button :url="__('nav.update-profile.url')" :isActive="$isProfileActive"
-        icon="fa-user-cog">{{ __('nav.update-profile.title') }}</x-feature-button>
 
 </nav>
