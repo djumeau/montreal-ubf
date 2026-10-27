@@ -331,21 +331,33 @@
                     <div class="md:hidden px-4 pb-4 space-y-3">
                         @forelse ($studies as $study)
                             <div class="flex gap-3 border border-slate-800 rounded-sm p-3">
+
+                                <!-- Image thumbnail -->
                                 <img src="{{ $study->imageUrl('square') }}" alt="{{ $study->current_title }}"
                                     class="size-16 shrink-0 rounded-sm object-cover border border-slate-700">
 
                                 <div class="flex-1 min-w-0">
+
                                     <div class="font-bold text-slate-100">
-                                        <span class="text-slate-400 font-normal">#{{ $study->id }}</span>
+
+                                        <!-- Paginated Row number: firstItem() is the 1-based index of the first study on this page, so we add the 0-based $loop->index to get the correct number across all pages -->
+                                        <span class="text-slate-400 font-normal">#{{ $studies->firstItem() + $loop->index }}</span>
+\
+                                        <!-- Title: current locale first, other locale in parentheses -->
                                         {{ $isFrench ? $study->title_fr : $study->title_en }}
                                     </div>
+
+                                    <!-- Other locale in parentheses, e.g. "(John 3:1–21)" -->
                                     <div class="text-slate-400 text-xs mb-2">
                                         ({{ $isFrench ? $study->title_en : $study->title_fr }})
                                     </div>
 
+                                    <!-- Passage and Attachments count, with the paperclip button to open the modal -->
                                     <div class="text-slate-300 text-sm">
                                         {{ __('dashboard/manage-studies/index.bible_passage') }}: {{ $formatPassage($study) }}
                                     </div>
+
+                                    <!-- Attachments count with paperclip button to open the modal -->
                                     <div class="text-slate-300 text-sm flex items-center gap-2 mt-1 mb-3">
                                         {{ __('dashboard/manage-studies/index.attachments') }}:
                                         <button type="button" @click="openAttachments(@js($rowData[$study->id]))"
@@ -354,23 +366,33 @@
                                             class="inline-flex items-center justify-center gap-1.5 min-w-9 px-2.5 py-1 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fa-solid fa-paperclip" aria-hidden="true"></i>{{ $study->attachments_count }}
                                         </button>
+
                                     </div>
 
                                     <div class="flex items-center gap-2">
+
+                                        <!-- Edit Study - Modal -->
                                         <button type="button" @click="openEdit(@js($rowData[$study->id]))"
                                             class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
                                         </button>
+
+                                        <!-- Delete Study - Modal -->
                                         <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/manage-studies/index.delete_study') }}"
                                             class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
+
                                     </div>
+
                                 </div>
+
                             </div>
+
                         @empty
                             <div class="py-6 text-center text-slate-400">{{ __('dashboard/index.no_studies') }}</div>
                         @endforelse
+
                     </div>
 
                     @if ($studies->hasPages())
