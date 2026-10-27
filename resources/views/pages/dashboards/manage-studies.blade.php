@@ -260,20 +260,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <!-- Display rows for each study; empty message if none -->
                                 @forelse ($studies as $study)
                                     <tr class="border-b border-slate-800 align-middle odd:bg-black/50">
-                                        <td class="py-3 px-2 text-slate-300">{{ $study->id }}</td>
+
+                                        <!-- Paginated Row number: firstItem() is the 1-based index of the first study on this page, so we add the 0-based $loop->index to get the correct number across all pages -->
+                                        <td class="py-3 px-2 text-slate-300">{{ $studies->firstItem() + $loop->index }}</td>
+
+                                        <!-- Image thumbnail -->
                                         <td class="py-3 px-2">
                                             <img src="{{ $study->imageUrl('square') }}" alt="{{ $study->current_title }}"
                                                 class="size-14 mx-auto rounded-sm object-cover border border-slate-700">
                                         </td>
+
+                                        <!-- Title -->
                                         <td class="py-3 px-2 text-left">
                                             <div class="text-slate-100">{{ $isFrench ? $study->title_fr : $study->title_en }}</div>
                                             <div class="text-slate-400 text-xs">
                                                 ({{ $isFrench ? $study->title_en : $study->title_fr }})
                                             </div>
                                         </td>
+
+                                        <!-- Passage -->
                                         <td class="py-3 px-2 text-slate-300 whitespace-nowrap">{{ $formatPassage($study) }}</td>
+
+                                        <!-- Attachments count with paperclip button to open the modal -->
                                         <td class="py-3 px-2">
                                             <button type="button" @click="openAttachments(@js($rowData[$study->id]))"
                                                 title="{{ __('dashboard/manage-studies/index.manage_attachments') }}"
@@ -282,18 +294,28 @@
                                                 <i class="fa-solid fa-paperclip" aria-hidden="true"></i>{{ $study->attachments_count }}
                                             </button>
                                         </td>
+
+                                        <!-- Actions -->
                                         <td class="py-3 px-2 whitespace-nowrap">
+
                                             <div class="flex items-center justify-center gap-2">
+
+                                                <!-- Edit Study - Modal -->
                                                 <button type="button" @click="openEdit(@js($rowData[$study->id]))"
                                                     class="px-3 py-1.5 bg-sky-900 hover:bg-sky-950 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fas fa-pen mr-1"></i>{{ __('dashboard/index.edit') }}
                                                 </button>
+
+                                                <!-- Delete Study - Modal -->
                                                 <button type="button" @click="openDelete(@js($rowData[$study->id]))" aria-label="{{ __('dashboard/manage-studies/index.delete_study') }}"
                                                     class="px-2 py-1.5 bg-red-700 hover:bg-red-800 text-white text-xs font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
+
                                             </div>
+
                                         </td>
+
                                     </tr>
                                 @empty
                                     <tr>
