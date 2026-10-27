@@ -171,12 +171,14 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showAddSeriesModal = false"
+            <div @click.away="if (!$store.upload.uploading) showAddSeriesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-series/index.add-series') }}</h3>
 
-                <form class="w-full" action="{{ route('series.store') }}" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form class="w-full" action="{{ route('series.store') }}" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
 
                     <!-- Names (EN / FR) and Dates; errors come from the "createSeries" bag -->
@@ -208,15 +210,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showAddSeriesModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        <button type="button" @click="showAddSeriesModal = false" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             {{ __('dashboard/index.create') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>
@@ -226,14 +230,16 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showEditSeriesModal = false"
+            <div @click.away="if (!$store.upload.uploading) showEditSeriesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">
                     {{ __('dashboard/manage-series/index.edit_series') }} <span class="text-slate-400 font-normal" x-text="'#' + editSeries.id"></span>
                 </h3>
 
-                <form x-ref="editSeriesForm" class="w-full" :action="editSeries.update_url" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form x-ref="editSeriesForm" class="w-full" :action="editSeries.update_url" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
                     @method('PUT')
 
@@ -274,15 +280,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showEditSeriesModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        <button type="button" @click="showEditSeriesModal = false" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             {{ __('dashboard/index.update') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>

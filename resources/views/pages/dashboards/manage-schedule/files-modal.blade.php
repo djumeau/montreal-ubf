@@ -15,11 +15,11 @@
 
 <!-- AlpineJS Modal for Managing an Event's Attachments and Images (filled by openFiles() on the Manage Schedule page,
      which holds showFilesModal, filesEvent and uploadForm) -->
-<div x-show="showFilesModal" x-cloak @keydown.escape.window="showFilesModal = false"
+<div x-show="showFilesModal" x-cloak @keydown.escape.window="if (!$store.upload.uploading) showFilesModal = false"
     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
     x-transition>
 
-    <div x-ref="filesModal" @click.away="showFilesModal = false" role="dialog" aria-modal="true" aria-labelledby="files_modal_title"
+    <div x-ref="filesModal" @click.away="if (!$store.upload.uploading) showFilesModal = false" role="dialog" aria-modal="true" aria-labelledby="files_modal_title"
         class="bg-slate-800 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
         <h3 id="files_modal_title" class="text-lg font-bold">{{ __('dashboard/manage-study-schedule/index.manage_files') }}</h3>
@@ -59,9 +59,9 @@
                                 <div class="flex items-center gap-2 mt-1">
                                     <span class="flex-1 min-w-0 truncate text-xs text-slate-300" x-text="filesEvent.images.{{ $type }}.name" :title="filesEvent.images.{{ $type }}.name"></span>
 
-                                    <button type="button" x-show="!confirming" @click="confirming = true"
+                                    <button type="button" x-show="!confirming" @click="confirming = true" :disabled="$store.upload.uploading"
                                         aria-label="{{ __('dashboard/manage-study-schedule/index.delete_image') }}" title="{{ __('dashboard/manage-study-schedule/index.delete_image') }}"
-                                        class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
+                                        class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </div>
@@ -92,8 +92,9 @@
                 @endforeach
             </div>
 
-            <!-- Upload: only the slots given a file are replaced; errors come from the "uploadEventImages" bag -->
-            <form :action="filesEvent.images_url" method="POST" enctype="multipart/form-data">
+            <!-- Upload: only the slots given a file are replaced; errors come from the "uploadEventImages" bag.
+                 Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+            <form :action="filesEvent.images_url" method="POST" enctype="multipart/form-data" @submit.prevent="$store.upload.send($el)">
                 @csrf
 
                 <!-- Lets the page reopen this modal for the same event after a failed upload -->
@@ -109,10 +110,12 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <x-submit>
+                    <x-submit x-bind:disabled="$store.upload.uploading">
                         <i class="fas fa-upload mr-1"></i>{{ __('dashboard/index.upload') }}
                     </x-submit>
                 </div>
+
+                <x-upload-progress />
             </form>
         </section>
 
@@ -142,9 +145,9 @@
                                         class="shrink-0 px-1.5 py-0.5 bg-sky-900 hover:bg-sky-950 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
                                         <i class="fa-solid" :class="file.downloads ? 'fa-download' : 'fa-eye'" aria-hidden="true"></i>
                                     </a>
-                                    <button type="button" x-show="!confirming" @click="confirming = true"
+                                    <button type="button" x-show="!confirming" @click="confirming = true" :disabled="$store.upload.uploading"
                                         aria-label="{{ __('dashboard/manage-studies/index.delete_attachment') }}"
-                                        class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
+                                        class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
 
@@ -174,8 +177,9 @@
                 @endforeach
             </div>
 
-            <!-- Upload: type, language (documents only) and one or more files; errors come from the "uploadEventFiles" bag -->
-            <form :action="filesEvent.attachments_url" method="POST" enctype="multipart/form-data">
+            <!-- Upload: type, language (documents only) and one or more files; errors come from the "uploadEventFiles" bag.
+                 Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+            <form :action="filesEvent.attachments_url" method="POST" enctype="multipart/form-data" @submit.prevent="$store.upload.send($el)">
                 @csrf
 
                 <!-- Lets the page reopen this modal for the same event after a failed upload -->
@@ -198,22 +202,24 @@
                 <p class="text-xs text-slate-400 mb-3">{{ __('dashboard/manage-study-schedule/index.attachment_files_hint') }}</p>
 
                 <div class="flex justify-end">
-                    <x-submit>
+                    <x-submit x-bind:disabled="$store.upload.uploading">
                         <i class="fas fa-upload mr-1"></i>{{ __('dashboard/index.upload') }}
                     </x-submit>
                 </div>
+
+                <x-upload-progress />
             </form>
         </section>
 
         <!-- Modal Action Controls: back to the Event modal on the left, Close on the right -->
         <div class="flex items-center justify-between gap-3">
-            <button type="button" @click="showFilesModal = false; openEdit(filesEvent.id)"
-                class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+            <button type="button" @click="showFilesModal = false; openEdit(filesEvent.id)" :disabled="$store.upload.uploading"
+                class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                 <i class="fas fa-pen mr-1"></i>{{ __('dashboard/manage-study-schedule/index.edit_event') }}
             </button>
 
-            <button type="button" @click="showFilesModal = false"
-                class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+            <button type="button" @click="showFilesModal = false" :disabled="$store.upload.uploading"
+                class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                 {{ __('dashboard/index.close') }}
             </button>
         </div>

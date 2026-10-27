@@ -121,12 +121,14 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition x-data="{ avatarPreview: null }">
 
-            <div @click.away="showAvatarModal = false; avatarPreview = null"
+            <div @click.away="if (!$store.upload.uploading) { showAvatarModal = false; avatarPreview = null }"
                 class="bg-slate-800 rounded-sm max-w-md w-full p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">{{ __('dashboard/profile/index.upload_new_avatar') }}</h3>
 
-                <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
 
                     <!-- 2. Interactive Drag & Drop / Selection Area -->
@@ -172,15 +174,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showAvatarModal = false; avatarPreview = null"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                        <button type="button" @click="showAvatarModal = false; avatarPreview = null" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
-                        <button type="submit"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer">
+                        <button type="submit" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.upload') }}
                         </button>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>

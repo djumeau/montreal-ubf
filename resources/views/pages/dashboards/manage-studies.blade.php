@@ -414,12 +414,14 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showAddStudiesModal = false"
+            <div @click.away="if (!$store.upload.uploading) showAddStudiesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">{{ __('dashboard/manage-studies/index.add_study') }}</h3>
 
-                <form class="w-full" action="{{ route('study.store') }}" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form class="w-full" action="{{ route('study.store') }}" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
 
                     <!-- Series, Book, Passage and Titles (EN / FR), all optional; errors come from the "createStudy" bag -->
@@ -452,15 +454,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showAddStudiesModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        <button type="button" @click="showAddStudiesModal = false" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             {{ __('dashboard/index.create') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>
@@ -470,14 +474,16 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showEditStudiesModal = false"
+            <div @click.away="if (!$store.upload.uploading) showEditStudiesModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">
                     {{ __('dashboard/manage-studies/index.edit_study') }}
                 </h3>
 
-                <form x-ref="editStudyForm" class="w-full" :action="editStudy.update_url" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form x-ref="editStudyForm" class="w-full" :action="editStudy.update_url" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
                     @method('PUT')
 
@@ -522,24 +528,26 @@
                     <div class="flex items-center justify-between gap-3">
                         <!-- Same as the list's paperclip button: swaps this modal for the Attachments modal (unsaved edits are dropped) -->
                         <button type="button" x-show="editStudy.attachments_url"
-                            @click="showEditStudiesModal = false; openAttachments(editStudy)"
+                            @click="showEditStudiesModal = false; openAttachments(editStudy)" :disabled="$store.upload.uploading"
                             title="{{ __('dashboard/manage-studies/index.manage_attachments') }}"
                             :aria-label="@js(__('dashboard/manage-studies/index.attachments')) + ': ' + editStudy.attachments"
-                            class="inline-flex items-center justify-center gap-1.5 min-w-9 px-3 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                            class="inline-flex items-center justify-center gap-1.5 min-w-9 px-3 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             <i class="fa-solid fa-paperclip" aria-hidden="true"></i><span x-text="editStudy.attachments"></span>
                         </button>
 
                         <div class="flex space-x-3 ml-auto">
-                            <button type="button" @click="showEditStudiesModal = false"
-                                class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                            <button type="button" @click="showEditStudiesModal = false" :disabled="$store.upload.uploading"
+                                class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                 {{ __('dashboard/index.cancel') }}
                             </button>
 
-                            <x-submit>
+                            <x-submit x-bind:disabled="$store.upload.uploading">
                                 {{ __('dashboard/index.update') }}
                             </x-submit>
                         </div>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>
@@ -582,7 +590,7 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showAttachmentsModal = false"
+            <div @click.away="if (!$store.upload.uploading) showAttachmentsModal = false"
                 class="bg-slate-800 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold">{{ __('dashboard/manage-studies/index.manage_attachments') }}</h3>
@@ -631,9 +639,9 @@
                                                     class="shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 bg-sky-900 hover:bg-sky-950 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
                                                     <i class="fa-solid fa-eye" aria-hidden="true"></i><span x-text="file.views"></span>
                                                 </a>
-                                                <button type="button" x-show="!confirming" @click="confirming = true"
+                                                <button type="button" x-show="!confirming" @click="confirming = true" :disabled="$store.upload.uploading"
                                                     aria-label="{{ __('dashboard/manage-studies/index.delete_attachment') }}"
-                                                    class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer">
+                                                    class="shrink-0 px-1.5 py-0.5 bg-red-700 hover:bg-red-800 text-white text-xs rounded outline-1 outline-white hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
 
@@ -666,9 +674,10 @@
                     @endforeach
                 </div>
 
-                <!-- Upload: language, type and one or more files; errors come from the "uploadAttachments" bag -->
+                <!-- Upload: language, type and one or more files; errors come from the "uploadAttachments" bag.
+                     Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
                 <form x-ref="uploadAttachmentsForm" :action="attachmentsStudy.attachments_url" method="POST" enctype="multipart/form-data"
-                    class="border border-slate-600 rounded-sm p-3 mb-4">
+                    @submit.prevent="$store.upload.send($el)" class="border border-slate-600 rounded-sm p-3 mb-4">
                     @csrf
 
                     <!-- Lets the page reopen this modal for the same study after a failed upload -->
@@ -691,22 +700,24 @@
                     <p class="text-xs text-slate-400 mb-3">{{ __('dashboard/manage-studies/index.attachment_files_hint') }}</p>
 
                     <div class="flex justify-end">
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             <i class="fas fa-upload mr-1"></i>{{ __('dashboard/index.upload') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
 
                 <!-- Modal Action Controls: Edit Bible Study on the left, Close on the right -->
                 <div class="flex items-center justify-between gap-3">
                     <!-- Same as the list's Edit button: swaps this modal for the Edit modal of the same study -->
-                    <button type="button" @click="showAttachmentsModal = false; openEdit(attachmentsStudy)"
-                        class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer">
+                    <button type="button" @click="showAttachmentsModal = false; openEdit(attachmentsStudy)" :disabled="$store.upload.uploading"
+                        class="px-4 py-2 bg-sky-900 hover:bg-sky-950 text-white text-sm font-medium rounded outline-1 outline-white hover:outline-2 focus:shadow-outline cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                         <i class="fas fa-pen mr-1"></i>{{ __('dashboard/manage-studies/index.edit_study') }}
                     </button>
 
-                    <button type="button" @click="showAttachmentsModal = false"
-                        class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                    <button type="button" @click="showAttachmentsModal = false" :disabled="$store.upload.uploading"
+                        class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                         {{ __('dashboard/index.close') }}
                     </button>
                 </div>

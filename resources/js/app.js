@@ -83,6 +83,77 @@ Alpine.data("heroCarousel", (count, start = 0) => ({
     },
 }));
 
+// Dashboard uploads (see the upload-progress component): the page sends the form itself to show how much of it has gone,
+// then goes where the server sends it (UploadRedirect middleware), and that page shows the usual status message or errors.
+// A form uses it with @submit.prevent="$store.upload.send($el)"; its buttons with :disabled="$store.upload.uploading". One upload at a time
+Alpine.store("upload", {
+    form: null, // The form being sent: only its upload-progress shows the bar
+    failed: null, // The form whose last upload failed: only its upload-progress says so
+    uploading: false,
+    done: false, // Saved by the server: the page is going to the result
+    progress: 0, // Percentage of the form sent so far
+
+    init() {
+        // Leaving the page (link, reload, closing the tab) while a file is on its way asks first; the browser writes the question
+        window.addEventListener("beforeunload", (event) => {
+            if (this.uploading && !this.done) event.preventDefault();
+        });
+
+        // Page brought back by the browser's Back button: its buttons work again
+        window.addEventListener("pageshow", (event) => {
+            if (event.persisted) {
+                this.form = null;
+                this.uploading = false;
+            }
+        });
+    },
+
+    send(form) {
+        if (this.uploading) return;
+
+        this.form = form;
+        this.failed = null;
+        this.uploading = true;
+        this.done = false;
+        this.progress = 0;
+
+        const request = new XMLHttpRequest();
+        request.open("POST", form.action); // PUT forms send it in their _method field
+        request.setRequestHeader("X-Upload-Progress", "1");
+
+        request.upload.addEventListener("progress", (event) => {
+            if (event.lengthComputable) this.progress = Math.round((event.loaded / event.total) * 100);
+        });
+
+        // Redirected: the bar and the disabled buttons stay until the new page comes, without asking about leaving.
+        // Anything else (file over the server's limit, expired page, no connection) is a failure, and the files chosen
+        // are still there to try again
+        request.addEventListener("load", () => {
+            let redirect = null;
+            try {
+                redirect = JSON.parse(request.responseText).redirect;
+            } catch (e) {}
+
+            if (redirect) {
+                this.done = true;
+                window.location.href = redirect;
+            } else {
+                this.fail(form);
+            }
+        });
+        request.addEventListener("error", () => this.fail(form));
+        request.addEventListener("abort", () => this.fail(form));
+
+        request.send(new FormData(form));
+    },
+
+    fail(form) {
+        this.form = null;
+        this.failed = form;
+        this.uploading = false;
+    },
+});
+
 Alpine.start();
 
 // Home page hero, when the page loads: the dark overlay fades in over 2 seconds and the heading appears letter by letter.

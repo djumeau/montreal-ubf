@@ -6,7 +6,7 @@ return [
     "profile_updated" => "Votre profil est met à jour.",
     "new_password" => "Nouveau mot de passe",
     "confirm_password" => "Confirmer le mot de passe",
-    "upload_new_avatar" => "Télécharger un nouveau avatar",
+    "upload_new_avatar" => "Téléverser un nouvel avatar",
     "select_image" => "Selectionnez l'image (jpeg, png, jpg, webp)",
     "avatar_updated" => "L'avatar est à jour.",
     "delete_user" => "Supprimer l'utilisateur",

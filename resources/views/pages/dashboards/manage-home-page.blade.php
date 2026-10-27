@@ -142,9 +142,10 @@
 
                         <div class="grid grid-cols-1 xl:grid-cols-[1fr_16rem] gap-4">
 
-                            <!-- Upload New Hero Images: one drop zone per image; either or both can be sent -->
+                            <!-- Upload New Hero Images: one drop zone per image; either or both can be sent.
+                                 Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
                             <form action="{{ route('hero-images.store') }}" method="POST" enctype="multipart/form-data"
-                                class="border border-slate-600 rounded-sm p-3">
+                                @submit.prevent="$store.upload.send($el)" class="border border-slate-600 rounded-sm p-3">
                                 @csrf
 
                                 <h4 class="font-bold text-slate-100 mb-3">{{ $text('upload_new') }}</h4>
@@ -221,11 +222,13 @@
                                 <div class="flex flex-wrap items-center justify-between gap-3 mt-3">
                                     <p class="text-xs text-slate-400">{{ $text('replace_hint') }}</p>
 
-                                    <button type="submit"
-                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium border border-white rounded-sm cursor-pointer">
+                                    <button type="submit" :disabled="$store.upload.uploading"
+                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium border border-white rounded-sm cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                         <i class="fas fa-upload mr-1" aria-hidden="true"></i>{{ __('dashboard/index.upload') }}
                                     </button>
                                 </div>
+
+                                <x-upload-progress />
                             </form>
 
                             <!-- Image Guidelines, with the safe center area of each format -->
@@ -306,8 +309,8 @@
 
                                         <!-- Delete: asks first, inline -->
                                         <div class="flex justify-center mt-2" @click.stop>
-                                            <button type="button" x-show="!confirming" @click="confirming = true"
-                                                class="px-3 py-1 bg-red-700 hover:bg-red-800 text-white border border-white rounded-sm cursor-pointer">
+                                            <button type="button" x-show="!confirming" @click="confirming = true" :disabled="$store.upload.uploading"
+                                                class="px-3 py-1 bg-red-700 hover:bg-red-800 text-white border border-white rounded-sm cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                                                 <i class="fa-solid fa-trash-can mr-1" aria-hidden="true"></i>{{ $text('delete_slide') }}
                                             </button>
 

@@ -344,14 +344,16 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showAddTopicModal = false"
+            <div @click.away="if (!$store.upload.uploading) showAddTopicModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4"
                     x-text="addTopic.parent_id ? @js(__('dashboard/manage-prayer-topics/index.add_subtopic')) : @js(__('dashboard/manage-prayer-topics/index.add-topic'))">
                     {{ __('dashboard/manage-prayer-topics/index.add-topic') }}</h3>
 
-                <form class="w-full" action="{{ route('prayer-topics.store') }}" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form class="w-full" action="{{ route('prayer-topics.store') }}" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
 
                     <!-- Opened with "+ Add Sub-topic": the main topic it goes under (sent as parent_id); empty for a main topic -->
@@ -402,15 +404,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showAddTopicModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        <button type="button" @click="showAddTopicModal = false" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             {{ __('dashboard/index.create') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>
@@ -420,14 +424,16 @@
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs transition-opacity"
             x-transition>
 
-            <div @click.away="showEditTopicModal = false"
+            <div @click.away="if (!$store.upload.uploading) showEditTopicModal = false"
                 class="bg-slate-800 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl border dark:border-slate-700">
 
                 <h3 class="text-lg font-bold mb-4">
                     {{ __('dashboard/manage-prayer-topics/index.edit_topic') }} <span class="text-slate-400 font-normal" x-text="'#' + editTopic.id"></span>
                 </h3>
 
-                <form x-ref="editTopicForm" class="w-full" :action="editTopic.update_url" method="POST" enctype="multipart/form-data">
+                <!-- Sent by the page to show its progress (see the upload-progress component); buttons wait until it's done -->
+                <form x-ref="editTopicForm" class="w-full" :action="editTopic.update_url" method="POST" enctype="multipart/form-data"
+                    @submit.prevent="$store.upload.send($el)">
                     @csrf
                     @method('PUT')
 
@@ -508,15 +514,17 @@
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showEditTopicModal = false"
-                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer">
+                        <button type="button" @click="showEditTopicModal = false" :disabled="$store.upload.uploading"
+                            class="px-4 py-2 bg-sky-900/50 text-slate-100 border rounded-sm hover:bg-sky-950/50 transition-colors hover:outline-2 cursor-pointer disabled:opacity-50 disabled:cursor-wait">
                             {{ __('dashboard/index.cancel') }}
                         </button>
 
-                        <x-submit>
+                        <x-submit x-bind:disabled="$store.upload.uploading">
                             {{ __('dashboard/index.update') }}
                         </x-submit>
                     </div>
+
+                    <x-upload-progress />
                 </form>
             </div>
         </div>

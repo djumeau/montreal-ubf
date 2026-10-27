@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 
 use App\Http\Middleware\SetLocale;
+use App\Http\Middleware\UploadRedirect;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             SetLocale::class,
+            UploadRedirect::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
