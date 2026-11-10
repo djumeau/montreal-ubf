@@ -31,12 +31,12 @@ $dayFormat = __('bible-study-schedule/index.list_day_format');
 
             <!-- Top Left Badge -->
             <div
-                class="absolute top-6 left-0 bg-black/60 backdrop-blur-xs text-amber-50 px-8 py-2.5 rounded-r-full font-sans text-sm md:text-base tracking-wide shadow-md z-5">
+                class="absolute top-6 left-0 bg-black/60 backdrop-blur-xs text-amber-50 px-8 py-2.5 rounded-r-full font-sans text-sm lg:text-base tracking-wide shadow-md z-5">
                 {{ __('home/featured.heading') }}
             </div>
 
             <!-- Main Content Cluster -->
-            <div class="flex-col text-center translate-y-18 md:translate-y-20 lg:translate-y-28 px-4 z-10">
+            <div class="flex-col text-center pt-18 md:pt-20 lg:pt-28 pb-10 md:pb-12 px-4 z-10">
 
                 <!-- Event Title -->
                 <h2
