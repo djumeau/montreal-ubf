@@ -36,11 +36,11 @@ $dayFormat = __('bible-study-schedule/index.list_day_format');
             </div>
 
             <!-- Main Content Cluster -->
-            <div class="flex-col text-center translate-y-18 md:translate-y-28 px-4 z-10">
+            <div class="flex-col text-center translate-y-18 md:translate-y-20 lg:translate-y-28 px-4 z-10">
 
                 <!-- Event Title -->
                 <h2
-                    class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
+                    class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
                     {{ $event->current_title ?: $event->category->label() }}
                 </h2>
 
