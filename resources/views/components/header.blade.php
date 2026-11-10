@@ -26,7 +26,7 @@
     id="main-header"
     class="bg-slate-900/95 fixed top-0 left-0 w-full z-50 text-white p-4">
 
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto flex justify-between items-center gap-4">
 
         <div>
 
@@ -36,13 +36,13 @@
                     <div class="mt-2 mb-0 inline-flex items-center">
                         <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
                         alt="{{__('header.logo_alt')}}" />
-                        <h1 class="text-xl lg:text-2xl font-bold">{{__('header.name')}}</h1>
+                        <h1 class="text-xl md:text-lg lg:text-2xl font-bold whitespace-nowrap">{{__('header.name')}}</h1>
                     </div>
                 @else
                     <a href="{{ route('home') }}" class="inline-flex items-center">
                         <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
                         alt="{{__('header.logo_alt')}}" />
-                        <h1 class="text-xl lg:text-2xl font-bold">{{__('header.name')}}</h1>
+                        <h1 class="text-xl md:text-lg lg:text-2xl font-bold whitespace-nowrap">{{__('header.name')}}</h1>
                     </a>
                 @endif
             </div>
@@ -67,7 +67,7 @@
         </div>
 
         <!-- Desktop Menu -->
-        <nav class="hidden md:flex items-center space-x-4">
+        <nav class="hidden md:flex items-center space-x-3 lg:space-x-4">
 
             <div class="relative inline-flex items-center" x-data="{ open: false }" @click.outside="open = false" @keydown.escape.window="open = false">
 
