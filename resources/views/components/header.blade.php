@@ -36,13 +36,13 @@
                     <div class="mt-2 mb-0 inline-flex items-center">
                         <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
                         alt="{{__('header.logo_alt')}}" />
-                        <h1 class="text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                        <h1 class="text-xl lg:text-2xl font-bold">{{__('header.name')}}</h1>
                     </div>
                 @else
                     <a href="{{ route('home') }}" class="inline-flex items-center">
                         <img src="{{ asset( $logoFilePath ) }}" style="width: 80px; height: 60px;"
                         alt="{{__('header.logo_alt')}}" />
-                        <h1 class="text-xl md:text-2xl font-bold">{{__('header.name')}}</h1>
+                        <h1 class="text-xl lg:text-2xl font-bold">{{__('header.name')}}</h1>
                     </a>
                 @endif
             </div>
