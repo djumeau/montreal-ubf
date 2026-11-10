@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "name" => "CBU Montréal UBF",
+    "name" => "CBU Montréal",
     "logo_alt" => "Logo CBU",
     "language_select" => "Sélectionner",
     "login" => "Connexion",
