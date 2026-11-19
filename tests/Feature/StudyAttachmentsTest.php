@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Enums\EventCategory;
 use App\Enums\Role;
 use App\Models\BibleStudy;
+use App\Models\Event;
 use App\Models\StudyAttachment;
 use App\Models\StudySeries;
 use App\Models\User;
@@ -252,7 +254,15 @@ class StudyAttachmentsTest extends TestCase
 
     public function test_home_page_links_the_featured_study_question_sheets_in_the_current_language(): void
     {
-        $featured = BibleStudy::forceCreate(['id' => __('home/study.studyId'), 'title_en' => 'See Your King is Coming!']);
+        // The home page features the Bible study of the next Sunday worship service that has one
+        $featured = BibleStudy::create(['title_en' => 'See Your King is Coming!']);
+        Event::create([
+            'title_en' => 'Sunday Worship Service',
+            'category' => EventCategory::SUNDAY_SERVICE,
+            'minimum_profile' => Role::GUEST,
+            'bible_study_id' => $featured->id,
+            'start_date' => now()->addWeek()->setTime(11, 0),
+        ]);
         $en = $featured->attachments()->create(['locale' => 'en_CA', 'type' => 'question_sheet', 'filename' => 'jn_11.55-12.19.q', 'extension' => 'pdf']);
         $fr = $featured->attachments()->create(['locale' => 'fr_CA', 'type' => 'question_sheet', 'filename' => 'jn_11.55-12.19.q.fr', 'extension' => 'pdf']);
 

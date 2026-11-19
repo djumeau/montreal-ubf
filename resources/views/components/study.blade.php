@@ -30,14 +30,16 @@
         <div class="absolute top-6 left-0 bg-black/60 backdrop-blur-xs text-amber-50 px-8 py-2.5 rounded-r-full font-sans text-sm md:text-base tracking-wide shadow-md z-5">
             @if ($heading) {{ $heading }} @else {{ __('home/study.heading') }} @endif
         </div>
-`
-        <!-- Main Content Cluster -->
-        <div class="flex-col text-center translate-y-12 md:translate-y-18 z-10">
 
-            <!-- Series Title -->
-            <h2 class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
-                {{ $study->series->current_name }}
-            </h2>
+        <!-- Main Content Cluster (padding, not a translate, so the section grows with its content) -->
+        <div class="flex-col text-center pt-12 md:pt-18 pb-6 md:pb-8 px-4 z-10">
+
+            <!-- Series Title (a study can have no series, e.g. after its series was deleted) -->
+            @if ($study->series)
+                <h2 class="text-4xl md:text-6xl font-serif italic font-normal tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] text-white">
+                    {{ $study->series->current_name }}
+                </h2>
+            @endif
 
             <!-- Date Stamp -->
             <p class="font-sans text-xs md:text-base tracking-wider text-white mt-4">
