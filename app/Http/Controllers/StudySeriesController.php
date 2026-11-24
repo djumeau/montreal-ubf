@@ -146,7 +146,8 @@ class StudySeriesController extends Controller
 
             // Timestamp in the name so browsers don't show a cached copy of the old image
             $file = $request->file($type);
-            $filename = $type . '-' . now()->timestamp . '.' . $file->getClientOriginalExtension();
+            // Extension: letters and digits only, so "photo. JPG" can't put a space in the stored name
+            $filename = $type . '-' . now()->timestamp . '.' . preg_replace('/[^a-z0-9]/', '', strtolower($file->getClientOriginalExtension()));
 
             $file->storeAs($series->imageDirectory(), $filename, 'public');
 

@@ -98,12 +98,44 @@ class ManageStudiesTest extends TestCase
         $this->assertSame('3:1-15', $study->bible_passage);
         $this->assertSame('New title', $study->title_en);
         $this->assertNull($study->title_fr); // Optional field cleared
-        $this->assertStringStartsWith('square-', $study->image_links['square']);
+        $this->assertSame('new.jpg', $study->image_links['square']); // Uploaded name kept
         $this->assertSame('dt.jpg', $study->image_links['desktop']); // Not uploaded, kept
 
         $disk = Storage::disk('public');
         $disk->assertMissing($study->imageDirectory() . '/sq.jpg'); // Replaced file removed
-        $disk->assertExists($study->imageDirectory() . '/' . $study->image_links['square']);
+        $disk->assertExists($study->imageDirectory() . '/new.jpg');
+    }
+
+    public function test_uploaded_image_names_are_kept_made_safe_and_never_shared_between_slots(): void
+    {
+        $study = $this->studyWithImages();
+
+        $this->actingAs($this->admin)
+            ->from('/manage-studies')
+            ->put(route('study.update', $study), [
+                'study_series_id' => $this->series->id,
+                'book_id' => $this->john->id,
+                'bible_passage' => '3:1-21',
+                'desktop' => UploadedFile::fake()->image('Jean 3 (Été).JPG'),
+                'mobile' => UploadedFile::fake()->image('Jean 3 (Été).JPG'), // Same name as the desktop upload
+                'square' => UploadedFile::fake()->image('sq.jpg'), // Same name as the file it replaces
+            ])
+            ->assertSessionHasNoErrors();
+
+        $study->refresh();
+        $this->assertSame('jean_3_ete.jpg', $study->image_links['desktop']);
+        $this->assertSame('jean_3_ete-mobile.jpg', $study->image_links['mobile']); // Desktop's file isn't overwritten
+        $this->assertSame('sq.jpg', $study->image_links['square']);
+
+        $disk = Storage::disk('public');
+        foreach (['jean_3_ete.jpg', 'jean_3_ete-mobile.jpg', 'sq.jpg'] as $file) {
+            $disk->assertExists($study->imageDirectory() . '/' . $file);
+        }
+        $disk->assertMissing($study->imageDirectory() . '/dt.jpg');
+        $disk->assertMissing($study->imageDirectory() . '/mb.jpg');
+
+        // The URL carries a version, so browsers fetch a replaced image even when its name didn't change
+        $this->assertStringEndsWith('sq.jpg?v=' . $study->updated_at->timestamp, $study->imageUrl('square'));
     }
 
     public function test_update_with_all_fields_empty_is_allowed(): void

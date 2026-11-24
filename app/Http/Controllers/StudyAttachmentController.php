@@ -108,7 +108,7 @@ class StudyAttachmentController extends Controller
      */
     private function safeName(UploadedFile $file, string $type, string $locale): array
     {
-        $extension = strtolower($file->getClientOriginalExtension());
+        $extension = preg_replace('/[^a-z0-9]/', '', strtolower($file->getClientOriginalExtension())); // "jn_01. PDF" -> "pdf"
         $name = strtolower(Str::ascii(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))); // "Leçon" -> "lecon"
 
         $name = preg_replace('/\s+/', '_', $name);          // Spaces become underscores

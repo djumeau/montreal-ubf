@@ -176,7 +176,7 @@ class EventAttachmentController extends Controller
      */
     private function safeName(UploadedFile $file): string
     {
-        $extension = strtolower($file->getClientOriginalExtension());
+        $extension = preg_replace('/[^a-z0-9]/', '', strtolower($file->getClientOriginalExtension())); // "plan. PDF" -> "pdf"
         $name = strtolower(Str::ascii(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))); // "Horaire d'été" -> "horaire d'ete"
 
         $name = preg_replace('/\s+/', '_', $name);          // Spaces become underscores

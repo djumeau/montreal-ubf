@@ -57,7 +57,8 @@ class ProfileController extends Controller
 
         if ($request->hasFile('avatar')) {
             // 1. Extract the file extension dynamically (e.g., jpg, png)
-            $extension = $request->file('avatar')->getClientOriginalExtension();
+            // (letters and digits only, so "photo. JPG" can't put a space in the stored name)
+            $extension = preg_replace('/[^a-z0-9]/', '', strtolower($request->file('avatar')->getClientOriginalExtension()));
 
             // 2. Build your custom file name
             $filename = 'avatar_' . $user->id . '.' . $extension;

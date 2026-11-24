@@ -41,7 +41,8 @@ class EventImagesTest extends TestCase
         $this->series->update(['images' => ['thumbnail' => 'series-sq.jpg']]);
         $event = $this->event(['bible_study_id' => $this->study->id, 'images' => ['square' => 'event-sq.jpg']]);
 
-        $this->assertStringEndsWith('storage/images/the_gospel_of_john/03.01-21/study-sq.jpg', $event->imageUrl('square'));
+        // Study images carry a version (?v=...) so a replaced image isn't served from the browser cache
+        $this->assertStringContainsString('storage/images/the_gospel_of_john/03.01-21/study-sq.jpg?v=', $event->imageUrl('square'));
     }
 
     public function test_an_event_shows_the_series_image_when_its_bible_study_has_none(): void

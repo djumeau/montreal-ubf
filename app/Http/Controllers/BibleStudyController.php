@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use Illuminate\View\View;
 
@@ -190,21 +192,45 @@ class BibleStudyController extends Controller
                 continue;
             }
 
-            // Remove the file being replaced to keep storage clean
-            if (!empty($images[$type])) {
+            // Files keep their uploaded name (made safe); the three slots share a folder, so a name
+            // already used by another slot gets the slot added: "jn_01.jpg" -> "jn_01-mobile.jpg"
+            $file = $request->file($type);
+            $filename = $this->safeImageName($file, $type);
+
+            $otherSlots = array_diff_key($images, [$type => true]);
+            if (in_array($filename, $otherSlots, true)) {
+                $filename = pathinfo($filename, PATHINFO_FILENAME) . "-{$type}." . pathinfo($filename, PATHINFO_EXTENSION);
+            }
+
+            // Remove the file being replaced to keep storage clean (a file with the same name is simply overwritten)
+            if (!empty($images[$type]) && $images[$type] !== $filename) {
                 $disk->delete($study->imageDirectory() . '/' . $images[$type]);
             }
 
-            // Timestamp in the name so browsers don't show a cached copy of the old image
-            $file = $request->file($type);
-            $filename = $type . '-' . now()->timestamp . '.' . $file->getClientOriginalExtension();
-
+            // Browsers still get the new image when the name doesn't change: imageUrl() adds a version to the URL
             $file->storeAs($study->imageDirectory(), $filename, 'public');
 
             $images[$type] = $filename;
         }
 
         return $images;
+    }
+
+    /**
+     * Uploaded image name, lower case and safe for any file system (like study attachments):
+     * "Jean 1 Desktop.JPG" becomes "jean_1_desktop.jpg". A name with nothing usable left falls back to the slot, e.g. "desktop.jpg".
+     */
+    private function safeImageName(UploadedFile $file, string $type): string
+    {
+        $extension = preg_replace('/[^a-z0-9]/', '', strtolower($file->getClientOriginalExtension())); // "photo. JPG" -> "jpg"
+        $name = strtolower(Str::ascii(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))); // "Leçon" -> "lecon"
+
+        $name = preg_replace('/\s+/', '_', $name);          // Spaces become underscores
+        $name = preg_replace('/[^a-z0-9._-]/', '', $name);  // Drop anything else (brackets, quotes...)
+        $name = preg_replace('/_{2,}/', '_', $name);        // "a _ b" -> "a_b", not "a___b"
+        $name = trim($name, '_-.');
+
+        return ($name !== '' ? $name : $type) . '.' . $extension;
     }
 
     /**

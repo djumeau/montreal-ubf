@@ -21,7 +21,7 @@ return [
     "image" => "Image",
     "edit" => "Edit",
     "images_hint" => "Images are optional (jpeg, png, jpg, webp, max 2 MB). Empty slots use the default image.",
-    "image_desktop" => "Desktop image (16:9)",
+    "image_desktop" => "Desktop Image (16:9)",
     "image_mobile" => "Mobile Image (3:2)",
     "image_square" => "Square Image – Thumbnail (1:1)",
     "preview_desktop" => "Desktop",

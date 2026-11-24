@@ -226,12 +226,15 @@ class BibleStudy extends Model
      * Public URL for one of the study images, served through the public/storage symlink.
      * asset() uses the current request's host, so URLs work locally and in production whatever APP_URL is.
      * Falls back to the series image, then the default series image.
+     * The study's own images carry "?v={last saved}", so browsers fetch a replaced image even when it kept its file name.
      * Usage: $bibleStudy->imageUrl('square' | 'desktop' | 'mobile')
      */
     public function imageUrl(string $type): string
     {
         if ($file = $this->image_links[$type] ?? null) {
-            return asset('storage/' . $this->imageDirectory() . '/' . $file);
+            $version = $this->updated_at ? '?v=' . $this->updated_at->timestamp : '';
+
+            return asset('storage/' . $this->imageDirectory() . '/' . $file) . $version;
         }
 
         // Series images call the square one "thumbnail"
