@@ -13,7 +13,8 @@
             'dates' => $series->dates ?? '',
             'studies' => $series->bible_studies_count,
             'studies_kept' => trans_choice('dashboard/manage-series/index.delete_series_studies_kept', $series->bible_studies_count, ['count' => $series->bible_studies_count]),
-            'thumbnail' => $series->imageUrl('thumbnail'),
+            // Current images shown at the top of the Edit modal (series call the square one "thumbnail")
+            'previews' => ['desktop' => $series->imageUrl('desktop'), 'mobile' => $series->imageUrl('mobile'), 'square' => $series->imageUrl('thumbnail')],
             'images' => $series->images ?? [], // Current file names: desktop, mobile, thumbnail
             'update_url' => route('series.update', $series),
             'destroy_url' => route('series.destroy', $series),
@@ -37,10 +38,14 @@
         'name_fr' => $failedUpdateId ? old('name_fr', '') : '',
         'book_id' => $failedUpdateId ? (string) old('book_id', '') : '',
         'dates' => $failedUpdateId ? old('dates', '') : '',
-        'thumbnail' => $failedUpdateId ? $rowData[$failedUpdateId]['thumbnail'] ?? null : null,
+        'previews' => $failedUpdateId ? $rowData[$failedUpdateId]['previews'] ?? null : null,
         'images' => $failedUpdateId ? $rowData[$failedUpdateId]['images'] ?? [] : [],
         'update_url' => $failedUpdateId ? route('series.update', $failedUpdateId) : '',
     ];
+
+    // Image slots, in the order shown in the Add / Edit modals (same order as Manage Studies);
+    // the square one is stored as "thumbnail" for series
+    $imageTypes = ['desktop' => 'image_desktop', 'mobile' => 'image_mobile', 'thumbnail' => 'image_square'];
 
     // Related Book select: empty option means multiple books, then books grouped by testament
     $bookOptions = ['' => __('dashboard/manage-series/index.multiple')];
@@ -199,14 +204,10 @@
                     <!-- Optional images; any slot left empty uses the default image -->
                     <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/index.images_hint') }}</p>
 
-                    <x-inputs.file id="add_desktop" name="desktop" bag="createSeries" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_desktop')" />
-
-                    <x-inputs.file id="add_mobile" name="mobile" bag="createSeries" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_mobile')" />
-
-                    <x-inputs.file id="add_thumbnail" name="thumbnail" bag="createSeries" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_thumbnail')" />
+                    @foreach ($imageTypes as $type => $typeLabelKey)
+                        <x-inputs.file :id="'add_' . $type" :name="$type" bag="createSeries" accept="image/jpeg,image/png,image/webp"
+                            :label="__('dashboard/index.' . $typeLabelKey)" />
+                    @endforeach
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">
@@ -246,11 +247,6 @@
                     <!-- Lets the page reopen this modal for the same series after a failed update -->
                     <input type="hidden" name="series_id" :value="editSeries.id">
 
-                    <!-- Current thumbnail, for reference while replacing images -->
-                    <div class="mb-4 flex items-center justify-center" x-show="editSeries.thumbnail">
-                        <img :src="editSeries.thumbnail" alt="" class="size-20 rounded-sm object-cover border-2 border-slate-600">
-                    </div>
-
                     <!-- Names (EN / FR) and Dates; errors come from the "updateSeries" bag -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3 mb-3">
                         <x-inputs.text id="edit_name_en" name="name_en" bag="updateSeries" model="editSeries.name_en"
@@ -266,17 +262,17 @@
                     <x-inputs.text class="mb-4" id="edit_dates" name="dates" bag="updateSeries" model="editSeries.dates"
                         :label="__('dashboard/manage-series/index.dates')" :placeholder="__('dashboard/manage-series/index.dates_placeholder')" />
 
+                    <!-- Current images (Desktop, Mobile, Square), for reference while replacing them -->
+                    <x-image-previews model="editSeries.previews" />
+
                     <!-- Optional replacements; slots left empty keep their current image -->
                     <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/index.images_replace_hint') }}</p>
 
-                    <x-inputs.file id="edit_desktop" name="desktop" bag="updateSeries" current="editSeries.images?.desktop" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_desktop')" />
-
-                    <x-inputs.file id="edit_mobile" name="mobile" bag="updateSeries" current="editSeries.images?.mobile" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_mobile')" />
-
-                    <x-inputs.file id="edit_thumbnail" name="thumbnail" bag="updateSeries" current="editSeries.images?.thumbnail" accept="image/jpeg,image/png,image/webp"
-                        :label="__('dashboard/index.image_thumbnail')" />
+                    @foreach ($imageTypes as $type => $typeLabelKey)
+                        <x-inputs.file :id="'edit_' . $type" :name="$type" bag="updateSeries"
+                            :current="'editSeries.images?.' . $type" accept="image/jpeg,image/png,image/webp"
+                            :label="__('dashboard/index.' . $typeLabelKey)" />
+                    @endforeach
 
                     <!-- Modal Action Controls -->
                     <div class="flex justify-end space-x-3">

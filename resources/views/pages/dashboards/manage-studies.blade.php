@@ -35,8 +35,8 @@
         + $seriesList->mapWithKeys(fn ($series) => [$series->id => $seriesName($series)])->all();
     $bookOptions = ['' => __('dashboard/manage-studies/index.select_book')] + $bookGroups($bookName);
 
-    // Image slots (shared by EN and FR), in the order shown in the Add / Edit modals
-    $imageTypes = ['square' => 'image_square', 'desktop' => 'image_desktop', 'mobile' => 'image_mobile'];
+    // Image slots (shared by EN and FR), in the order shown in the Add / Edit modals (same order as Manage Series)
+    $imageTypes = ['desktop' => 'image_desktop', 'mobile' => 'image_mobile', 'square' => 'image_square'];
 
     // "Jean 3.1–21" / "John 3:1–21" (see BibleStudy::displayPassage), a dash when there's no book or passage
     $formatPassage = fn ($study) => $study->display_passage ?: '—';
@@ -70,7 +70,8 @@
             'title_en' => $study->title_en ?? '',
             'title_fr' => $study->title_fr ?? '',
             'images' => $study->image_links ?? [], // Current file names: square, desktop, mobile
-            'desktop' => $study->imageUrl('desktop'), // Preview at the top of the Edit modal
+            // Current images shown at the top of the Edit modal (the series' images where the study has none)
+            'previews' => ['desktop' => $study->imageUrl('desktop'), 'mobile' => $study->imageUrl('mobile'), 'square' => $study->imageUrl('square')],
             'name' => $isFrench ? $study->title_fr : $study->title_en,
             'attachments' => $study->attachments_count,
             'attachments_deleted' => trans_choice('dashboard/manage-studies/index.delete_study_attachments', $study->attachments_count, ['count' => $study->attachments_count]),
@@ -116,7 +117,7 @@
             'title_fr' => old('title_fr', ''),
             'update_url' => route('study.update', $failedUpdateId),
         ])
-        : ['id' => null, 'study_series_id' => '', 'book_id' => '', 'bible_passage' => '', 'title_en' => '', 'title_fr' => '', 'images' => [], 'desktop' => null, 'update_url' => ''];
+        : ['id' => null, 'study_series_id' => '', 'book_id' => '', 'bible_passage' => '', 'title_en' => '', 'title_fr' => '', 'images' => [], 'previews' => null, 'update_url' => ''];
 
     // List heading: "Bible Studies – {series}" when filtered by series
     $listHeading = __('dashboard/manage-studies/index.bible_studies')
@@ -490,11 +491,6 @@
                     <!-- Lets the page reopen this modal for the same study after a failed update -->
                     <input type="hidden" name="study_id" :value="editStudy.id">
 
-                    <!-- Current desktop image (16:9), full width, for reference while replacing images -->
-                    <div class="mb-4 flex items-center justify-center" x-show="editStudy.desktop">
-                        <img :src="editStudy.desktop" alt="" class="w-full aspect-video rounded-sm object-cover border-2 border-slate-600">
-                    </div>
-
                     <!-- Series, Book, Passage and Titles (EN / FR); errors come from the "updateStudy" bag -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
                         <x-inputs.select id="edit_study_series_id" name="study_series_id" bag="updateStudy" model="editStudy.study_series_id"
@@ -514,6 +510,9 @@
                         <x-inputs.text id="edit_title_fr" name="title_fr" bag="updateStudy" model="editStudy.title_fr"
                             :label="__('dashboard/index.title_fr')" />
                     </div>
+
+                    <!-- Current images (Desktop, Mobile, Square), for reference while replacing them -->
+                    <x-image-previews model="editStudy.previews" />
 
                     <!-- Optional replacements (shared by EN and FR); slots left empty keep their current image -->
                     <p class="text-xs text-slate-400 mb-2">{{ __('dashboard/index.images_replace_hint') }}</p>
