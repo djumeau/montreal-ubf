@@ -94,11 +94,15 @@
     $localeOptions = collect($attachmentLocales)->mapWithKeys(fn ($locale) => [$locale => __('dashboard/manage-studies/index.language_' . $locale)])->all();
     $typeOptions = collect($attachmentTypes)->mapWithKeys(fn ($type) => [$type => __('dashboard/manage-studies/index.attachment_' . $type)])->all();
 
+    // Book assigned to each series (Manage Series' "Related Book"), as strings; '' for "Multiple" / none.
+    // The Add modal's Book follows its Series: that book, else "Select a book"
+    $seriesBooks = $seriesList->mapWithKeys(fn ($series) => [$series->id => (string) ($series->book_id ?? '')])->all();
+
     // Add form state; refilled from old input only after a failed create
     $failedCreate = $errors->createStudy->any();
     $addStudy = [
         'study_series_id' => $failedCreate ? (string) old('study_series_id', '') : (string) ($currentSeries?->id ?? ''), // Defaults to the filtered series
-        'book_id' => $failedCreate ? (string) old('book_id', '') : (string) ($currentBook?->id ?? ''),
+        'book_id' => $failedCreate ? (string) old('book_id', '') : ($seriesBooks[$currentSeries?->id] ?? ''), // That series' book
         'bible_passage' => $failedCreate ? old('bible_passage', '') : '',
         'title_en' => $failedCreate ? old('title_en', '') : '',
         'title_fr' => $failedCreate ? old('title_fr', '') : '',
@@ -139,6 +143,7 @@
         showDeleteStudiesModal: false,
         showAttachmentsModal: {{ $attachmentsStudy ? 'true' : 'false' }},
         addStudy: @js($addStudy),
+        seriesBooks: @js((object) $seriesBooks),
         editStudy: @js($editStudy),
         deleteStudy: {},
         attachmentsStudy: @js($attachmentsStudy ?? (object) []),
@@ -427,7 +432,9 @@
 
                     <!-- Series, Book, Passage and Titles (EN / FR), all optional; errors come from the "createStudy" bag -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+                        <!-- Picking a series sets Book to that series' book ("Select a book" for Multiple / no series); it can still be changed -->
                         <x-inputs.select id="add_study_series_id" name="study_series_id" bag="createStudy" model="addStudy.study_series_id"
+                            x-on:change="addStudy.book_id = seriesBooks[$event.target.value] ?? ''"
                             :options="$seriesOptions" :label="__('dashboard/index.study_series')" />
 
                         <x-inputs.select id="add_book_id" name="book_id" bag="createStudy" model="addStudy.book_id"

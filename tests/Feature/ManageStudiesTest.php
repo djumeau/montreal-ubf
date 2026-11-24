@@ -77,6 +77,25 @@ class ManageStudiesTest extends TestCase
             ->assertSee('<option value="' . $this->series->id . '" selected', false);
     }
 
+    public function test_add_modal_book_follows_the_series_book(): void
+    {
+        $multiple = StudySeries::create(['name_en' => 'Psalms and Proverbs', 'name_fr' => 'Psaumes et Proverbes']); // "Multiple": no book
+        // "book_id":"{id}" as @js writes it in the page (quotes escaped), without the surrounding braces
+        $bookId = fn ($id) => \Illuminate\Support\Str::between((string) \Illuminate\Support\Js::from(['book_id' => (string) $id]), '{', '}');
+
+        // Filtered by a series with a book: Add starts on that book, and the series -> book map drives later changes
+        $this->actingAs($this->admin)->get(route(__('nav.manage-studies.name'), ['series' => $this->series->id]))
+            ->assertOk()
+            ->assertSee($bookId($this->john->id), false)
+            ->assertSee('seriesBooks: ' . \Illuminate\Support\Js::from((object) [$this->series->id => (string) $this->john->id, $multiple->id => '']), false)
+            ->assertSee("x-on:change=\"addStudy.book_id = seriesBooks[\$event.target.value] ?? ''\"", false);
+
+        // Filtered by a "Multiple" series: "Select a book" (empty)
+        $this->actingAs($this->admin)->get(route(__('nav.manage-studies.name'), ['series' => $multiple->id]))
+            ->assertOk()
+            ->assertDontSee($bookId($this->john->id), false);
+    }
+
     public function test_update_saves_fields_and_replaces_only_uploaded_images(): void
     {
         $study = $this->studyWithImages();
